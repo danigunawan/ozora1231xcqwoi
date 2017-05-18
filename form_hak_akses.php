@@ -2512,6 +2512,68 @@ else{
 </div> <!-- / of otoritas ekspedisi -->
 
 
+<div class="form-group col-sm-2"> <!-- start otoritas toko -->
+<label>TOKO</label><br>
+
+<?php 
+
+if ($data_otoritas['toko_lihat'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3004" name="toko_lihat" checked="">
+    <label for="checkbox3004">Lihat</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3004" name="toko_lihat">
+    <label for="checkbox3004">Lihat</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['toko_tambah'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3005" name="toko_tambah" checked=""> 
+    <label for="checkbox3005">Tambah</label><br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3005" name="toko_tambah"> 
+    <label for="checkbox3005">Tambah</label><br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['toko_edit'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3006" name="toko_edit" checked="">
+    <label for="checkbox3006">Edit</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3006" name="toko_edit">
+    <label for="checkbox3006">Edit</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['toko_hapus'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3007" name="toko_hapus" checked="">
+    <label for="checkbox3007">Hapus</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3007" name="toko_hapus">
+    <label for="checkbox3007">Hapus</label> <br>';  
+}
+
+ ?>
+
+</div> <!-- / of otoritas toko -->
+
+
 <div class="form-group col-sm-12">
     
 </div>
