@@ -2450,6 +2450,67 @@ else{
 
 </div> <!-- / of otoritas lap_retur pembelian - retur  penjualan -->
 
+<div class="form-group col-sm-2"> <!-- start otoritas ekspedisi -->
+<label>Ekspedisi</label><br>
+
+<?php 
+
+if ($data_otoritas['ekspedisi_lihat'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3000" name="ekspedisi_lihat" checked="">
+    <label for="checkbox3000">Lihat</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3000" name="ekspedisi_lihat">
+    <label for="checkbox3000">Lihat</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['ekspedisi_tambah'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3001" name="ekspedisi_tambah" checked=""> 
+    <label for="checkbox3001">Tambah</label><br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3001" name="ekspedisi_tambah"> 
+    <label for="checkbox3001">Tambah</label><br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['ekspedisi_edit'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3002" name="ekspedisi_edit" checked="">
+    <label for="checkbox3002">Edit</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3002" name="ekspedisi_edit">
+    <label for="checkbox3002">Edit</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['ekspedisi_hapus'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3003" name="ekspedisi_hapus" checked="">
+    <label for="checkbox3003">Hapus</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox3003" name="ekspedisi_hapus">
+    <label for="checkbox3003">Hapus</label> <br>';  
+}
+
+ ?>
+
+</div> <!-- / of otoritas ekspedisi -->
+
 
 <div class="form-group col-sm-12">
     
