@@ -170,12 +170,7 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
           "processing": true,
           "serverSide": true,
           "ajax":{
-            url :"tabel-ekspedisi.php", // json datasource
-            "data": function ( d ) {
-                  d.status = status;
-                  // d.custom = $('#myInput').val();
-                  // etc
-              },
+            url :"tabel-ekspedisi.php", // json datasource 
             type: "post",  // method  , by default get
             error: function(){  // error handling
               $(".employee-grid-error").html("");
@@ -218,30 +213,8 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
     $(".modal").modal("hide");
     }
 
-            $("#tabel_ekspedisi").DataTable().destroy();
-          var dataTable = $('#tabel_ekspedisi').DataTable( {
-          "processing": true,
-          "serverSide": true,
-          "ajax":{
-            url :"tabel-ekspedisi.php", // json datasource
-            "data": function ( d ) {
-                  d.status = status;
-                  // d.custom = $('#myInput').val();
-                  // etc
-              },
-            type: "post",  // method  , by default get
-            error: function(){  // error handling
-              $(".employee-grid-error").html("");
-              $("#tabel_ekspedisi").append('<tbody class="employee-grid-error"><tr><th colspan="3">Data Tidak Ditemukan.. !!</th></tr></tbody>');
-              $("#employee-grid_processing").css("display","none");
-              
-            }
-          },
-              "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-              $(nRow).attr('class','tr-id-'+aData[3]+'');
-            },
-
-      }); 
+          var tabel_ekspedisi = $('#tabel_ekspedisi').DataTable();
+              tabel_ekspedisi.draw();
     
     
     });
@@ -277,6 +250,8 @@ $(document).on('click', '#btn_jadi_hapus', function (e) {
     
     $("#modal_hapus").modal('hide');
     $(".tr-id-"+id+"").remove();
+    var tabel_ekspedisi = $('#tabel_ekspedisi').DataTable();
+              tabel_ekspedisi.draw();
     
     }
 
@@ -307,31 +282,8 @@ $(document).on('click', '#btn_jadi_hapus', function (e) {
     $(".alert").show('fast');
     $("#modal_edit").modal('hide');
 
-    
-            $("#tabel_ekspedisi").DataTable().destroy();
-          var dataTable = $('#tabel_ekspedisi').DataTable( {
-          "processing": true,
-          "serverSide": true,
-          "ajax":{
-            url :"tabel-ekspedisi.php", // json datasource
-            "data": function ( d ) {
-                  d.status = status;
-                  // d.custom = $('#myInput').val();
-                  // etc
-              },
-            type: "post",  // method  , by default get
-            error: function(){  // error handling
-              $(".employee-grid-error").html("");
-              $("#tabel_ekspedisi").append('<tbody class="employee-grid-error"><tr><th colspan="3">Data Tidak Ditemukan.. !!</th></tr></tbody>');
-              $("#employee-grid_processing").css("display","none");
-              
-            }
-          },
-              "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-              $(nRow).attr('class','tr-id-'+aData[3]+'');
-            },
-
-      }); 
+          var tabel_ekspedisi = $('#tabel_ekspedisi').DataTable();
+              tabel_ekspedisi.draw(); 
 
     }
     });

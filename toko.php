@@ -234,33 +234,8 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
     setTimeout(tutupalert, 2000);
     $(".modal").modal("hide");
     }
-
-        $("#tabel_toko").DataTable().destroy();
-          var dataTable = $('#tabel_toko').DataTable( {
-          "processing": true,
-          "serverSide": true,
-          "ajax":{
-            url :"tabel-toko.php", // json datasource
-            "data": function ( d ) {
-                  d.status = status;
-                  // d.custom = $('#myInput').val();
-                  // etc
-              },
-            type: "post",  // method  , by default get
-            error: function(){  // error handling
-              $(".employee-grid-error").html("");
-              $("#tabel_toko").append('<tbody class="employee-grid-error"><tr><th colspan="4">Data Tidak Ditemukan.. !!</th></tr></tbody>');
-              $("#employee-grid_processing").css("display","none");
-              
-            }
-          },
-              "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-              $(nRow).attr('class','tr-id-'+aData[4]+'');
-            },
-
-      }); 
-    
-    
+    var tabel_toko = $('#tabel_toko').DataTable();
+              tabel_toko.draw();  
     });
     }
     
@@ -290,11 +265,11 @@ $(document).on('click', '#btn_jadi_hapus', function (e) {
     
     var id = $("#id_hapus").val();
     $.post("proses_hapus_toko.php",{id:id},function(data){
-    if (data != "") {
-    
+    if (data != "") { 
     $("#modal_hapus").modal('hide');
     $(".tr-id-"+id+"").remove();
-    
+    var tabel_toko = $('#tabel_toko').DataTable();
+        tabel_toko.draw(); 
     }
 
     
@@ -337,30 +312,8 @@ $(document).on('click', '#btn_jadi_hapus', function (e) {
 			setTimeout(tutupalert, 2000);
 			$(".modal").modal("hide");
 			}
-		     $("#tabel_toko").DataTable().destroy();
-          var dataTable = $('#tabel_toko').DataTable( {
-          "processing": true,
-          "serverSide": true,
-          "ajax":{
-            url :"tabel-toko.php", // json datasource
-            "data": function ( d ) {
-                  d.status = status;
-                  // d.custom = $('#myInput').val();
-                  // etc
-              },
-            type: "post",  // method  , by default get
-            error: function(){  // error handling
-              $(".employee-grid-error").html("");
-              $("#tabel_toko").append('<tbody class="employee-grid-error"><tr><th colspan="4">Data Tidak Ditemukan.. !!</th></tr></tbody>');
-              $("#employee-grid_processing").css("display","none");
-              
-            }
-          },
-              "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-              $(nRow).attr('class','tr-id-'+aData[4]+'');
-            },
-
-      }); 
+          var tabel_toko = $('#tabel_toko').DataTable();
+              tabel_toko.draw();
 		
 		});
 		} 

@@ -87,7 +87,7 @@ if ($lihat['jabatan_lihat'] > 0){
 }
 
 if ($lihat['toko_lihat'] > 0){                               
-                                echo '<li><a href="toko.php" class="waves-effect">Toko</a></li>';
+                                echo '<li><a href="toko.php" class="waves-effect">Nama Toko</a></li>';
 }
 
 if ($lihat['ekspedisi_lihat'] > 0){                               

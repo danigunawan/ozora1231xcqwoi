@@ -166,12 +166,7 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
           "processing": true,
           "serverSide": true,
           "ajax":{
-            url :"tabel-jabatan.php", // json datasource
-            "data": function ( d ) {
-                  d.status = status;
-                  // d.custom = $('#myInput').val();
-                  // etc
-              },
+            url :"tabel-jabatan.php", // json datasource 
             type: "post",  // method  , by default get
             error: function(){  // error handling
               $(".employee-grid-error").html("");
@@ -214,30 +209,9 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
 		$(".modal").modal("hide");
 		}
 
-		        $("#tabel_jabatan").DataTable().destroy();
-          var dataTable = $('#tabel_jabatan').DataTable( {
-          "processing": true,
-          "serverSide": true,
-          "ajax":{
-            url :"tabel-jabatan.php", // json datasource
-            "data": function ( d ) {
-                  d.status = status;
-                  // d.custom = $('#myInput').val();
-                  // etc
-              },
-            type: "post",  // method  , by default get
-            error: function(){  // error handling
-              $(".employee-grid-error").html("");
-              $("#tabel_jabatan").append('<tbody class="employee-grid-error"><tr><th colspan="3">Data Tidak Ditemukan.. !!</th></tr></tbody>');
-              $("#employee-grid_processing").css("display","none");
-              
-            }
-          },
-              "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-              $(nRow).attr('class','tr-id-'+aData[3]+'');
-            },
-
-      }); 
+		   
+    var tabel_jabatan = $('#tabel_jabatan').DataTable();
+        tabel_jabatan.draw();
 		
 		
 		});
@@ -273,6 +247,10 @@ $(document).on('click', '#btn_jadi_hapus', function (e) {
 		
 		$("#modal_hapus").modal('hide');
 		$(".tr-id-"+id+"").remove();
+       
+    var tabel_jabatan = $('#tabel_jabatan').DataTable();
+        tabel_jabatan.draw();
+    
 		
 		}
 
@@ -302,33 +280,10 @@ $(document).on('click', '#btn_jadi_hapus', function (e) {
 		if (data == 'sukses') {
 		$(".alert").show('fast');
 		$("#modal_edit").modal('hide');
-
-		
-		        $("#tabel_jabatan").DataTable().destroy();
-          var dataTable = $('#tabel_jabatan').DataTable( {
-          "processing": true,
-          "serverSide": true,
-          "ajax":{
-            url :"tabel-jabatan.php", // json datasource
-            "data": function ( d ) {
-                  d.status = status;
-                  // d.custom = $('#myInput').val();
-                  // etc
-              },
-            type: "post",  // method  , by default get
-            error: function(){  // error handling
-              $(".employee-grid-error").html("");
-              $("#tabel_jabatan").append('<tbody class="employee-grid-error"><tr><th colspan="3">Data Tidak Ditemukan.. !!</th></tr></tbody>');
-              $("#employee-grid_processing").css("display","none");
-              
-            }
-          },
-              "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-              $(nRow).attr('class','tr-id-'+aData[3]+'');
-            },
-
-      }); 
-
+ 
+    var tabel_jabatan = $('#tabel_jabatan').DataTable();
+        tabel_jabatan.draw();
+     
 		}
 		});
 		});

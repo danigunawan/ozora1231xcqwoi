@@ -35,8 +35,8 @@ $sql =" SELECT id,nama_toko,alamat_toko ";
 $sql.=" FROM toko ";
 $sql.=" WHERE 1=1 ";
 
-    $sql.=" AND (nama_toko LIKE '".$requestData['search']['value']."%' )";   
-    $sql.=" AND (alamat_toko LIKE '".$requestData['search']['value']."%' )";   
+    $sql.=" AND (nama_toko LIKE '".$requestData['search']['value']."%'";  
+    $sql.=" OR alamat_toko LIKE '".$requestData['search']['value']."%' )";   
 }
 
 

@@ -168,12 +168,7 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
           "processing": true,
           "serverSide": true,
           "ajax":{
-            url :"tabel-kategori.php", // json datasource
-            "data": function ( d ) {
-                  d.status = status;
-                  // d.custom = $('#myInput').val();
-                  // etc
-              },
+            url :"tabel-kategori.php", // json datasource 
             type: "post",  // method  , by default get
             error: function(){  // error handling
               $(".employee-grid-error").html("");
@@ -212,31 +207,8 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
     $(".modal").modal("hide");
     }
 
-        $("#tabel_kategori").DataTable().destroy();
-          var dataTable = $('#tabel_kategori').DataTable( {
-          "processing": true,
-          "serverSide": true,
-          "ajax":{
-            url :"tabel-kategori.php", // json datasource
-            "data": function ( d ) {
-                  d.status = status;
-                  // d.custom = $('#myInput').val();
-                  // etc
-              },
-            type: "post",  // method  , by default get
-            error: function(){  // error handling
-              $(".employee-grid-error").html("");
-              $("#tabel_kategori").append('<tbody class="employee-grid-error"><tr><th colspan="3">Data Tidak Ditemukan.. !!</th></tr></tbody>');
-              $("#employee-grid_processing").css("display","none");
-              
-            }
-          },
-              "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-              $(nRow).attr('class','tr-id-'+aData[3]+'');
-            },
-
-      }); 
-    
+    var tabel_kategori = $('#tabel_kategori').DataTable();
+        tabel_kategori.draw();
     
     });
     }
@@ -270,8 +242,9 @@ $(document).on('click', '#btn_jadi_hapus', function (e) {
     if (data != "") {
     
     $("#modal_hapus").modal('hide');
-    $(".tr-id-"+id+"").remove();
-    
+    $(".tr-id-"+id+"").remove(); 
+    var tabel_kategori = $('#tabel_kategori').DataTable();
+        tabel_kategori.draw();
     }
 
     
@@ -308,30 +281,9 @@ $(document).on('click', '#btn_jadi_hapus', function (e) {
 			setTimeout(tutupalert, 2000);
 			$(".modal").modal("hide");
 			}
-		     $("#tabel_kategori").DataTable().destroy();
-          var dataTable = $('#tabel_kategori').DataTable( {
-          "processing": true,
-          "serverSide": true,
-          "ajax":{
-            url :"tabel-kategori.php", // json datasource
-            "data": function ( d ) {
-                  d.status = status;
-                  // d.custom = $('#myInput').val();
-                  // etc
-              },
-            type: "post",  // method  , by default get
-            error: function(){  // error handling
-              $(".employee-grid-error").html("");
-              $("#tabel_kategori").append('<tbody class="employee-grid-error"><tr><th colspan="3">Data Tidak Ditemukan.. !!</th></tr></tbody>');
-              $("#employee-grid_processing").css("display","none");
-              
-            }
-          },
-              "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-              $(nRow).attr('class','tr-id-'+aData[3]+'');
-            },
-
-      }); 
+		   
+    var tabel_kategori = $('#tabel_kategori').DataTable();
+        tabel_kategori.draw();
 		
 		});
 		} 
