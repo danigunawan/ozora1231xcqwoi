@@ -8,6 +8,8 @@ $no_faktur = $_GET['no_faktur'];
 $kode_pelanggan = $_GET['kode_pelanggan'];
 $nama_gudang = $_GET['nama_gudang'];
 $kode_gudang = $_GET['kode_gudang'];
+$nama_toko = $_GET['nama_toko'];
+$kode_toko = $_GET['kode_toko'];
 
 $perintah3 = $db->query("SELECT * FROM tbs_penjualan WHERE no_faktur = '$no_faktur'");
 $data1 = mysqli_num_rows($perintah3);
@@ -44,7 +46,7 @@ $perintah1 = $db->query("INSERT INTO tbs_penjualan (no_faktur, kode_barang, nama
 
 }
 
- header ('location:edit_penjualan.php?no_faktur='.$no_faktur.'&kode_pelanggan='.$kode_pelanggan.'&nama_gudang='.$nama_gudang.'&kode_gudang='.$kode_gudang.'');
+ header ('location:edit_penjualan.php?no_faktur='.$no_faktur.'&kode_pelanggan='.$kode_pelanggan.'&nama_gudang='.$nama_gudang.'&kode_gudang='.$kode_gudang.'&nama_toko='.$nama_toko.'&kode_toko='.$kode_toko.'');
 
 
 //Untuk Memutuskan Koneksi Ke Database

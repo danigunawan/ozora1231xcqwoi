@@ -148,16 +148,17 @@ $nomor = 1 + $ambil_nomor ;
               
               
               
-              $stmt = $db->prepare("INSERT INTO penjualan (no_faktur, kode_gudang, kode_pelanggan, total, tanggal, tanggal_jt, jam, user, sales, status, potongan, tax, kredit, nilai_kredit, cara_bayar, tunai, status_jual_awal, keterangan, ppn) VALUES (?,?,?,?,?,?,?,?,?,'Simpan Sementara',?,?,?,?,?,?,'Kredit',?,?)");
+              $stmt = $db->prepare("INSERT INTO penjualan (no_faktur, kode_gudang, kode_toko,kode_pelanggan, total, tanggal, tanggal_jt, jam, user, sales, status, potongan, tax, kredit, nilai_kredit, cara_bayar, tunai, status_jual_awal, keterangan, ppn) VALUES (?,?,?,?,?,?,?,?,?,?,'Simpan Sementara',?,?,?,?,?,?,'Kredit',?,?)");
               
 
-              $stmt->bind_param("sssisssssiiiisiss",
-              $no_faktur, $kode_gudang, $kode_pelanggan, $total , $tanggal_sekarang, $tanggal_jt, $jam_sekarang, $user, $sales, $potongan, $tax, $sisa_kredit, $sisa_kredit, $cara_bayar, $pembayaran, $keterangan, $ppn_input);
+              $stmt->bind_param("ssssisssssiiiisiss",
+              $no_faktur, $kode_gudang, $kode_toko, $kode_pelanggan, $total , $tanggal_sekarang, $tanggal_jt, $jam_sekarang, $user, $sales, $potongan, $tax, $sisa_kredit, $sisa_kredit, $cara_bayar, $pembayaran, $keterangan, $ppn_input);
               
               
               $kode_pelanggan = stringdoang($_POST['kode_pelanggan']);
               $keterangan = stringdoang($_POST['keterangan']);
               $kode_gudang = stringdoang($_POST['kode_gudang']);
+              $kode_toko = stringdoang($_POST['kode_toko']);
               $total = angkadoang($_POST['total']);
               $total2 = angkadoang($_POST['total2']);
               $potongan = angkadoang($_POST['potongan']);
