@@ -7,6 +7,7 @@ include 'db.php';
 
 
   $no_faktur = stringdoang($_GET['no_faktur']);
+  $nama_toko = stringdoang($_GET['nama_toko']);
 
     $select_penjualan = $db->query("SELECT p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.potongan,p.potongan_persen, pl.nama_pelanggan,pl.wilayah,da.nama_daftar_akun FROM penjualan p INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan INNER JOIN daftar_akun da ON p.cara_bayar = da.kode_daftar_akun  WHERE p.no_faktur = '$no_faktur' ORDER BY p.id DESC");
     $data0 = mysqli_fetch_array($select_penjualan);
@@ -81,7 +82,8 @@ include 'db.php';
     <div class="col-sm-6">
       <table>
         <tbody>
-          <tr><td width="5%"><font class="satu"> Alamat</font></td> <td> :&nbsp;&nbsp;</td> <td><?php echo $data0['wilayah'];?></td></tr>
+          <tr><td width="5%"><font class="satu">Nama Toko</font></td> <td> :&nbsp;&nbsp;</td> <td><?php echo $nama_toko ?></td></tr>
+          <tr><td width="5%"><font class="dua"> Alamat</font></td> <td> :&nbsp;&nbsp;</td> <td><?php echo $data0['wilayah'];?></td></tr>
         </tbody>
       </table>
     </div> <!--end col-sm-2-->

@@ -7,6 +7,7 @@ include 'db.php';
 
 
   $no_faktur = stringdoang($_GET['no_faktur']);
+  $nama_toko = stringdoang($_GET['nama_toko']);
 
     $query0 = $db->query("SELECT s.nama,p.id,p.no_faktur,p.total,p.kode_pelanggan,p.keterangan,p.cara_bayar,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.kode_gudang,p.tunai,pl.nama_pelanggan,pl.wilayah,dp.satuan,dp.jumlah_barang,dp.subtotal,dp.nama_barang,dp.harga, dp.asal_satuan, dp.kode_barang, da.nama_daftar_akun FROM penjualan p INNER JOIN detail_penjualan dp ON p.no_faktur = dp.no_faktur INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan INNER JOIN daftar_akun da ON p.cara_bayar = da.kode_daftar_akun INNER JOIN satuan s ON dp.satuan = s.id WHERE p.no_faktur = '$no_faktur' ORDER BY p.id DESC");
      $data_inner = mysqli_fetch_array($query0);
@@ -72,6 +73,7 @@ include 'db.php';
 <div class="col-sm-4">
  <table>
   <tbody>
+    <tr><td><font class="satu"> Nama Toko</td> <td> :&nbsp;&nbsp;</td> <td><?php echo $nama_toko; ?></font> </td></tr>
     <tr><td><font class="satu"> Tanggal</td> <td> :&nbsp;&nbsp;</td> <td><?php echo $tanggal; ?></font> </td></tr>
     <tr><td><font class="satu"> Tanggal Terima</td> <td> :&nbsp;&nbsp;</td> <td></font> </td></tr>
   </tbody>

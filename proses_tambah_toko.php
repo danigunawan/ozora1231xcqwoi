@@ -6,13 +6,14 @@
     // mengirim data menggunakan metode POST
 
 
-    $perintah = $db->prepare("INSERT INTO kategori (id,nama_kategori) VALUES (?,?)");
+    $perintah = $db->prepare("INSERT INTO toko (id,nama_toko,alamat_toko) VALUES (?,?,?)");
 
-    $perintah->bind_param("ss",
-        $id, $nama_kategori);
+    $perintah->bind_param("sss",
+        $id, $nama_toko, $alamat_toko);
         
         $id = stringdoang($_POST['id']);
-        $nama_kategori = stringdoang($_POST['nama_kategori']); 
+        $nama_toko = stringdoang($_POST['nama_toko']); 
+        $alamat_toko = stringdoang($_POST['alamat_toko']);   
     
     $perintah->execute();
 
@@ -30,4 +31,5 @@ else
 
 //Untuk Memutuskan Koneksi Ke Database
 mysqli_close($db);   
+
     ?>

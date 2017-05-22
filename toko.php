@@ -11,17 +11,17 @@ include 'db.php';
 
 <div class="container">
 
-<h3><b>DATA KATEGORI</b></h3> <hr>
+<h3><b>DATA TOKO</b></h3> <hr>
 
 <?php 
 include 'db.php';
 
-$pilih_akses_kategori_tambah = $db->query("SELECT kategori_tambah FROM otoritas_master_data WHERE id_otoritas = '$_SESSION[otoritas_id]' AND kategori_tambah = '1'");
-$kategori_tambah = mysqli_num_rows($pilih_akses_kategori_tambah);
+$pilih_akses_toko_tambah = $db->query("SELECT toko_tambah FROM otoritas_master_data WHERE id_otoritas = '$_SESSION[otoritas_id]' AND toko_tambah = '1'");
+$toko_tambah = mysqli_num_rows($pilih_akses_toko_tambah);
 
-if ($kategori_tambah > 0){
+if ($toko_tambah > 0){
 // Trigger the modal with a button -->
-echo '<button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"> </i> KATEGORI</button>';
+echo '<button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"> </i> TOKO</button>';
 
 }
 
@@ -44,26 +44,36 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Tambah Data kategori</h4>
-	      </div>
-		    <div class="modal-body">
-				<form role="form">
-									<div class="form-group">
-									<label> Nama kategori </label><br>
-									<input type="text" name="nama_kategori" id="nama_kategori" class="form-control" autocomplete="off" required="" >
-									<button type="submit" id="submit_tambah" class="btn btn-success">Submit</button>
-									</div> 		
-				</form>
-								
-				<div class="alert alert-success" style="display:none">
-				 	<strong>Berhasil!</strong> Data berhasil Di Tambah
-				</div>
+        <h4 class="modal-title">Tambah Data Toko</h4>
+      </div>
+    <div class="modal-body">
+<form role="form">
+					<div class="form-group">
+					<label> Nama Toko </label><br>
+					<input type="text" name="nama_toko" id="nama_toko" class="form-control" autocomplete="off" required="" >
+					</div>
+					
+					
+					<div class="form-group">
+					<label> Alamat Toko </label><br>
+					<input type="text" name="alamat_toko" id="alamat_toko" class="form-control" autocomplete="off" required="" > 
+					</div>
+					
+					
+					
+					<button type="submit" id="submit_tambah" class="btn btn-success">Submit</button>
+</form>
 
-		 	</div><!-- end of modal body -->
+				
+					<div class="alert alert-success" style="display:none">
+					<strong>Berhasil!</strong> Data berhasil Di Tambah
+					</div>
 
-			<div class ="modal-footer">
-				<button type ="button"  class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
+ 	</div><!-- end of modal body -->
+
+					<div class ="modal-footer">
+					<button type ="button"  class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
 	</div>
 	</div>
 
@@ -80,7 +90,7 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Konfirmasi Hapus kategori</h4>
+        <h4 class="modal-title">Konfirmasi Hapus toko</h4>
       </div>
 
       <div class="modal-body">
@@ -88,8 +98,8 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
    <p>Apakah Anda yakin Ingin Menghapus Data ini ?</p>
    <form >
     <div class="form-group">
-    <label> Nama kategori :</label>
-     <input type="text" id="data_kategori" class="form-control" readonly=""> 
+    <label> Nama toko :</label>
+     <input type="text" id="data_toko" class="form-control" readonly=""> 
      <input type="hidden" id="id_hapus" class="form-control" > 
     </div>
    
@@ -120,17 +130,24 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Edit Data kategori</h4>
+        <h4 class="modal-title">Edit Data toko</h4>
       </div>
       <div class="modal-body">
   <form role="form">
    <div class="form-group">
-    <label for="email">Nama kategori:</label>
+    <label for="email">Nama Toko:</label>
      <input type="text" class="form-control" id="nama_edit" autocomplete="off"> 
-     <input type="hidden" class="form-control" id="id_edit">
-  	 <button type="submit" id="submit_edit" class="btn btn-default">Submit</button>    
-   </div> 
+    
+   </div>
    
+   <div class="form-group">
+    <label for="email">Alamat Toko:</label>
+     <input type="text" class="form-control" id="alamat_edit" autocomplete="off">
+     <input type="hidden" class="form-control" id="id_edit">
+    
+   </div>
+   
+   <button type="submit" id="submit_edit" class="btn btn-default">Submit</button>
   </form>
   <div class="alert alert-success" style="display:none">
    <strong>Berhasil!</strong> Data Berhasil Di Edit
@@ -148,9 +165,10 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
 
 <div class="table-responsive">
 <span id="table-baru">
-<table id="tabel_kategori" class="table table-bordered table-sm">
+<table id="tabel_toko" class="table table-bordered table-sm">
     <thead>
-      <th> Nama Kategori </th>  
+      <th> Nama Toko </th> 
+      <th> Alamat Toko </th> 
       <th> Hapus </th>
       <th> Edit </th>   
     </thead>
@@ -160,15 +178,20 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
 </div>
 
  <script type="text/javascript">
-  // ajax table kategori
+  // ajax table toko
     $(document).ready(function(){
 
-        $("#tabel_kategori").DataTable().destroy();
-          var dataTable = $('#tabel_kategori').DataTable( {
+        $("#tabel_toko").DataTable().destroy();
+          var dataTable = $('#tabel_toko').DataTable( {
           "processing": true,
           "serverSide": true,
           "ajax":{
-            url :"tabel-kategori.php", // json datasource 
+            url :"tabel-toko.php", // json datasource
+            "data": function ( d ) {
+                  d.status = status;
+                  // d.custom = $('#myInput').val();
+                  // etc
+              },
             type: "post",  // method  , by default get
             error: function(){  // error handling
               $(".employee-grid-error").html("");
@@ -178,7 +201,7 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
             }
           },
               "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-              $(nRow).attr('class','tr-id-'+aData[3]+'');
+              $(nRow).attr('class','tr-id-'+aData[4]+'');
             },
 
       }); 
@@ -189,27 +212,30 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
     $(document).ready(function(){
 //fungsi untuk menambahkan data
     $("#submit_tambah").click(function(){
-    var nama_kategori = $("#nama_kategori").val(); 
+    var nama_toko = $("#nama_toko").val();
+    var alamat_toko = $("#alamat_toko").val();
 
-		if (nama_kategori == ""){
-			alert("Nama Kategori Harus Di isi");
-		} 
+		if (nama_toko == ""){
+			alert("Nama Harus Diisi");
+		}
+		if (alamat_toko == ""){
+			alert("Alamat Harus Diisi");
+		}
+  
 
     else{
 
-    $.post('proses_tambah_kategori.php',{nama_kategori:nama_kategori},function(data){
+    $.post('proses_tambah_toko.php',{nama_toko:nama_toko,alamat_toko:alamat_toko},function(data){
 
     if (data != '') {
-    $("#nama_kategori").val('');
+    $("#nama_toko").val('');
     $(".alert").show('fast');
     
     setTimeout(tutupalert, 2000);
     $(".modal").modal("hide");
     }
-
-    var tabel_kategori = $('#tabel_kategori').DataTable();
-        tabel_kategori.draw();
-    
+    var tabel_toko = $('#tabel_toko').DataTable();
+              tabel_toko.draw();  
     });
     }
     
@@ -225,9 +251,9 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
   
 //fungsi hapus data 
 $(document).on('click', '.btn-hapus', function (e) {
-    var nama_kategori = $(this).attr("data-kategori");
+    var nama_toko = $(this).attr("data-toko");
     var id = $(this).attr("data-id");
-    $("#data_kategori").val(nama_kategori);
+    $("#data_toko").val(nama_toko);
     $("#id_hapus").val(id);
     $("#modal_hapus").modal('show');
     
@@ -238,13 +264,12 @@ $(document).on('click', '.btn-hapus', function (e) {
 $(document).on('click', '#btn_jadi_hapus', function (e) {
     
     var id = $("#id_hapus").val();
-    $.post("hapus_kategori.php",{id:id},function(data){
-    if (data != "") {
-    
+    $.post("proses_hapus_toko.php",{id:id},function(data){
+    if (data != "") { 
     $("#modal_hapus").modal('hide');
-    $(".tr-id-"+id+"").remove(); 
-    var tabel_kategori = $('#tabel_kategori').DataTable();
-        tabel_kategori.draw();
+    $(".tr-id-"+id+"").remove();
+    var tabel_toko = $('#tabel_toko').DataTable();
+        tabel_toko.draw(); 
     }
 
     
@@ -257,33 +282,38 @@ $(document).on('click', '#btn_jadi_hapus', function (e) {
     $(document).on('click', '.btn-edit', function (e) {
     
     $("#modal_edit").modal('show');
-    var nama_kategori = $(this).attr("data-kategori");  
+    var nama_toko = $(this).attr("data-toko"); 
+	var alamat_toko = $(this).attr("data-alamat");
     var id  = $(this).attr("data-id");
-    $("#nama_edit").val(nama_kategori); 
+    $("#nama_edit").val(nama_toko);
+	$("#alamat_edit").val(alamat_toko);
     $("#id_edit").val(id); 
     
     });
     
     $("#submit_edit").click(function(){
-    var nama_kategori = $("#nama_edit").val(); 
+    var nama_toko = $("#nama_edit").val();
+    var alamat_toko = $("#alamat_edit").val();
     var id = $("#id_edit").val();
 
-		if (nama_kategori == ""){
+		if (nama_toko == ""){
 			alert("Nama Harus Diisi");
-		} 
+		}
+		if (alamat_toko == ""){
+			alert("Alamat Harus Diisi");
+		}
 		else { 
-					$.post("update_kategori.php",{id:id,nama_kategori:nama_kategori},function(data){
+					$.post("proses_edit_toko.php",{id:id,nama_toko:nama_toko,alamat_toko:alamat_toko},function(data){
 
 			if (data != '') {
 			$(".alert").show('fast');
-			$("#table_baru").load('tabel-kategori.php');
+			$("#table_baru").load('tabel-toko.php');
 			
 			setTimeout(tutupalert, 2000);
 			$(".modal").modal("hide");
 			}
-		   
-    var tabel_kategori = $('#tabel_kategori').DataTable();
-        tabel_kategori.draw();
+          var tabel_toko = $('#tabel_toko').DataTable();
+              tabel_toko.draw();
 		
 		});
 		} 

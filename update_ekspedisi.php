@@ -4,14 +4,14 @@ include 'db.php';
 
 
 
-$query = $db->prepare("UPDATE kategori SET id = ?, nama_kategori = ? 
+$query = $db->prepare("UPDATE ekspedisi SET id = ?, nama_ekspedisi = ? 
 WHERE id = ?");
 
 $query->bind_param("sss",
-	$id, $nama_kategori, $id);
+	$id, $nama, $id);
 	
 	$id = stringdoang($_POST['id']);
-	$nama_kategori = stringdoang($_POST['nama_kategori']);
+	$nama = stringdoang($_POST['nama']);
 
 $query->execute();
 

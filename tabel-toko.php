@@ -13,16 +13,17 @@ $columns = array(
 // datatable column index  => database column name
 
     
-    0=>'Nama jabatan',  
-    1=>'Hapus',
-    2=>'Edit',
-    3=>'id' 
+    0=>'Nama toko', 
+    1=>'Alamat toko', 
+    2=>'Hapus',
+    3=>'Edit',
+    4=>'id' 
 
 );
 
 // getting total number records without any search
-$sql =" SELECT id,nama ";
-$sql.=" FROM jabatan ";
+$sql =" SELECT id,nama_toko,alamat_toko ";
+$sql.=" FROM toko ";
 $sql.="";
 
 $query = mysqli_query($conn, $sql) or die("eror 1");
@@ -30,11 +31,12 @@ $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
-$sql =" SELECT id,nama ";
-$sql.=" FROM jabatan ";
+$sql =" SELECT id,nama_toko,alamat_toko ";
+$sql.=" FROM toko ";
 $sql.=" WHERE 1=1 ";
 
-    $sql.=" AND (nama LIKE '".$requestData['search']['value']."%' )";    
+    $sql.=" AND (nama_toko LIKE '".$requestData['search']['value']."%'";  
+    $sql.=" OR alamat_toko LIKE '".$requestData['search']['value']."%' )";   
 }
 
 
@@ -51,20 +53,21 @@ $data = array();
 while( $row=mysqli_fetch_array($query) ) {  // preparing an array
   $nestedData=array();
 
-         $query_otoritas_master_data_jabatan = $db->query("SELECT jabatan_edit,jabatan_hapus FROM otoritas_master_data WHERE id_otoritas = '$_SESSION[otoritas_id]' ");
-		$data_otoritas_master_data_jabatan = mysqli_fetch_array($query_otoritas_master_data_jabatan);
+         $query_otoritas_master_data_toko = $db->query("SELECT toko_edit,toko_hapus FROM otoritas_master_data WHERE id_otoritas = '$_SESSION[otoritas_id]' ");
+		$data_otoritas_master_data_toko = mysqli_fetch_array($query_otoritas_master_data_toko);
 
 
-          $nestedData[] = $row['nama']; 
-          if ($data_otoritas_master_data_jabatan['jabatan_edit'] == 1){
-          $nestedData[] = "<button class='btn btn-danger btn-hapus btn-sm' data-id='". $row['id'] ."' data-jabatan='". $row['nama'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button>";
+          $nestedData[] = $row['nama_toko'];
+          $nestedData[] = $row['alamat_toko'];
+          if ($data_otoritas_master_data_toko['toko_edit'] == 1){
+          $nestedData[] = "<button class='btn btn-danger btn-hapus btn-sm' data-id='". $row['id'] ."' data-toko='". $row['nama_toko'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button>";
           }
           else{
 			$nestedData[] = "<p></p>";
           }
 
-          if ($data_otoritas_master_data_jabatan['jabatan_hapus'] == 1){
-          $nestedData[] = "<button class='btn btn-success btn-edit btn-sm' data-jabatan='". $row['nama'] ."' data-id='". $row['id'] ."' > <span class='glyphicon glyphicon-edit'> </span> Edit </button>";
+          if ($data_otoritas_master_data_toko['toko_hapus'] == 1){
+          $nestedData[] = "<button class='btn btn-success btn-edit btn-sm' data-toko='". $row['nama_toko'] ."' data-alamat='". $row['alamat_toko'] ."' data-id='". $row['id'] ."' > <span class='glyphicon glyphicon-edit'> </span> Edit </button>";
       	  }
       	  else{
 			$nestedData[] = "<p></p>";

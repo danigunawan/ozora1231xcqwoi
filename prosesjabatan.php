@@ -6,14 +6,12 @@
     // mengirim data menggunakan metode POST
 
 
-    $perintah = $db->prepare("INSERT INTO jabatan (id,nama,wewenang) VALUES (?,?,?)");
+    $perintah = $db->prepare("INSERT INTO jabatan (id,nama) VALUES (?,?)");
 
-    $perintah->bind_param("sss",
-        $id, $nama, $wewenang);
+    $perintah->bind_param("ss",$id, $nama);
         
         $id = stringdoang($_POST['id']);
-        $nama = stringdoang($_POST['nama']); 
-        $wewenang = stringdoang($_POST['wewenang']);   
+        $nama = stringdoang($_POST['nama']);  
     
     $perintah->execute();
 
