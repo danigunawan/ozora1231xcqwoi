@@ -8,10 +8,10 @@ $query = $db->prepare("UPDATE kategori SET id = ?, nama_kategori = ?
 WHERE id = ?");
 
 $query->bind_param("sss",
-	$id, $nama, $id);
+	$id, $nama_kategori, $id);
 	
 	$id = stringdoang($_POST['id']);
-	$nama = stringdoang($_POST['nama']);
+	$nama_kategori = stringdoang($_POST['nama_kategori']);
 
 $query->execute();
 
