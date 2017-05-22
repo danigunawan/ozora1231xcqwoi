@@ -7,6 +7,7 @@ include 'db.php';
 
 
 $no_faktur = $_GET['no_faktur'];
+$nama_toko = $_GET['nama_toko'];
 
     $query0 = $db->query("SELECT * FROM penjualan WHERE no_faktur = '$no_faktur' ");
     $data0 = mysqli_fetch_array($query0);
@@ -35,6 +36,7 @@ $no_faktur = $_GET['no_faktur'];
  	<?php echo $data1['alamat_perusahaan']; ?><br><br>
  	===================<br>
  	No Faktur : <?php echo $data0['no_faktur']; ?> || Kasir : <?php echo $_SESSION['nama']; ?><br>
+  Nama Toko : <?php echo $nama_toko; ?> <br>
  	===================<br>
 
 </font>
