@@ -21,14 +21,14 @@ $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
 
 
 <div class="container"> <!-- start of container -->
-<h3><b>DATA PELANGGAN</b></h3> <hr>
+<h3><b>DATA MARKETPLACE</b></h3> <hr>
 <!-- Trigger the modal with a button -->
 
 <?php 
 
     if ($data_otoritas_pelanggan['pelanggan_tambah'] > 0){
 
-    	echo '<button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal"> <i class="fa fa-plus"> </i> PELANGGAN</button>';
+    	echo '<button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal"> <i class="fa fa-plus"> </i> MARKETPLACE</button>';
 
     }
 
@@ -46,17 +46,17 @@ $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Tambah Data Pelanggan</h4>
+        <h4 class="modal-title">Tambah Data Marketplace</h4>
       </div>
     <div class="modal-body">
 <form role="form">
 		<div class="form-group">
 					
-					<label> Kode Pelanggan </label><br>
+					<label> Kode Marketplace </label><br>
 					<input type="text" name="kode_pelanggan" id="kode_pelanggan" class="form-control" autocomplete="off" required="" >
 					
 
-					<label> Nama Pelanggan </label><br>
+					<label> Nama Marketplace </label><br>
 					<input type="text" name="nama" id="nama_pelanggan" class="form-control" autocomplete="off" required="" >
 
 					<label> Tanggal Lahir </label><br>
@@ -173,7 +173,7 @@ $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Konfirmasi Hapus Data Pelanggan</h4>
+        <h4 class="modal-title">Konfirmasi Hapus Data Marketplace</h4>
       </div>
 
       <div class="modal-body">
@@ -181,7 +181,7 @@ $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
    <p>Apakah Anda yakin Ingin Menghapus Data ini ?</p>
    <form >
     <div class="form-group">
-    <label> Nama Pelanggan :</label>
+    <label> Nama Marketplace :</label>
      <input type="text" id="data_pelanggan" class="form-control" readonly=""> 
      <input type="hidden" id="id_hapus" class="form-control" > 
     </div>
@@ -213,15 +213,15 @@ $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Edit Data Pelanggan</h4>
+        <h4 class="modal-title">Edit Data MarketPlace</h4>
       </div>
       <div class="modal-body">
   <form role="form">
 					<div class="form-group">
-					<label> Kode Pelanggan </label><br>
+					<label> Kode MarketPlace </label><br>
 					<input type="text" name="kode_edit" id="edit_kode" class="form-control" autocomplete="off" required="" >
 						
-					<label> Nama Pelanggan </label><br>
+					<label> Nama MarketPlace </label><br>
 					<input type="text" name="nama_edit" id="edit_nama" class="form-control" autocomplete="off" required="" >
 
 					<label> Tanggal Lahir </label><br>
@@ -291,8 +291,8 @@ tr:nth-child(even){background-color: #f2f2f2}
 <table id="tableuser" class="table table-bordered">
 		<thead>
 			
-			<th style='background-color: #4CAF50; color: white'> Kode Pelanggan </th>
-			<th style='background-color: #4CAF50; color: white'> Nama Pelanggan </th>
+			<th style='background-color: #4CAF50; color: white'> Kode Marketplace </th>
+			<th style='background-color: #4CAF50; color: white'> Nama Marketplace </th>
 			<th style='background-color: #4CAF50; color: white'> Flafon </th>
 			<th style='background-color: #4CAF50; color: white'> Flafon Usia </th>
 			<th style='background-color: #4CAF50; color: white'> Level Harga </th>
@@ -442,12 +442,12 @@ $(document).ready(function(){
 																
 								if (kode_pelanggan == "") {
 
-									alert("Kode Pelanggan Harus Diisi");
+									alert("Kode Marketplace Harus Diisi");
 								}
 
 								else if (nama_pelanggan == "") {
 
-									alert("Nama Pelanggan Harus Diisi");
+									alert("Nama Marketplace Harus Diisi");
 								}
 
 								else if (wilayah == "") {
@@ -567,10 +567,10 @@ $(document).ready(function(){
 								var flafon_usia = $("#edit_flafon_usia").val();
 
 								if (nama == ""){
-									alert("Nama Harus Diisi");
+									alert("Nama Marketplace Harus Diisi");
 								}
 								else if (kode == ""){
-									alert("Kode Pelangggan Harus Diisi");
+									alert("Kode Marketplace Harus Diisi");
 								}
 								else if (nomor == ""){
 									alert("Nomor Telpon Harus Diisi");

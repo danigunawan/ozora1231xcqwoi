@@ -53,7 +53,7 @@ echo '<a href="form_retur_penjualan.php"  class="btn btn-info"><i class="fa fa-p
    <p>Apakah Anda yakin Ingin Menghapus Data ini ?</p>
    <form >
     <div class="form-group">
-    <label> Kode Pelanggan :</label>
+    <label> Kode Marketplace :</label>
      <input type="text" id="data_pelanggan" class="form-control" readonly=""> 
     <label> No faktur :</label>
      <input type="text" id="hapus_faktur" class="form-control" readonly=""> 
@@ -162,7 +162,7 @@ if ($retur_penjualan['retur_penjualan_hapus'] > 0) {
 			
 			<th style='background-color: #4CAF50; color:white'> Cetak </th>
 			<th style='background-color: #4CAF50; color:white'> Nomor Faktur Retur </th>
-			<th style='background-color: #4CAF50; color:white'> Kode Pelanggan </th>
+			<th style='background-color: #4CAF50; color:white'> Kode Marketplace </th>
 			<th style='background-color: #4CAF50; color:white'> Total </th>
 			<th style='background-color: #4CAF50; color:white'> Potongan </th>
 			<th style='background-color: #4CAF50; color:white'> Tax </th>
@@ -207,7 +207,7 @@ $row_alert = mysqli_num_rows($pilih);
 
 	else {
 
-		echo "<td> <button class='btn btn-danger btn-hapus' data-id='". $data1['id'] ."' data-faktur='". $data1['no_faktur_retur'] ."' data-pelanggan='". $data1['kode_pelanggan'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button>  </td>";
+		echo "<td> <button class='btn btn-danger btn-hapus' data-id='". $data1['id'] ."' data-faktur='". $data1['no_faktur_retur'] ."' data-pelanggan='". $data1['nama_pelanggan'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button>  </td>";
 	}
 
 

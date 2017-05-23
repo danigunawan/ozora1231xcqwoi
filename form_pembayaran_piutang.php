@@ -118,7 +118,7 @@
 
       
           <div class="form-group col-sm-4">
-          <label> Kode Pelanggan </label>
+          <label> Kode Marketplace </label>
           <br>
           <select type="text" name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen" required="">
      
@@ -435,7 +435,7 @@ mysqli_close($db);
       alert("Jumlah Bayar Harus Diisi");
       }
       else if (kode_pelanggan == ""){
-      alert("Kode Pelanggan Harus Dipilih");
+      alert("Kode Marketplace Harus Dipilih");
       }
       else if (cara_bayar == ""){
       alert("Cara Bayar Harus Dipilih");
@@ -568,7 +568,7 @@ if (cara_bayar == "")
   
   else if (kode_pelanggan == "")
   {
-  alert("Kode Pelangan Harus Di Isi");
+  alert("Kode Marketplace Harus Di Isi");
   }
 
 

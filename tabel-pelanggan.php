@@ -15,8 +15,8 @@ $query = $db->query("SELECT * FROM pelanggan");
 <table id="tableuser" class="table table-bordered">
 		<thead>
 			
-			<th style='background-color: #4CAF50; color: white'> Kode Pelanggan </th>
-			<th style='background-color: #4CAF50; color: white'> Nama Pelanggan </th>
+			<th style='background-color: #4CAF50; color: white'> Kode Marketplace </th>
+			<th style='background-color: #4CAF50; color: white'> Nama Marketplace </th>
 			<th style='background-color: #4CAF50; color: white'> Flafon </th>
 				<th style='background-color: #4CAF50; color: white'> Flafon Usia </th>
 			<th style='background-color: #4CAF50; color: white'> Level Harga </th>

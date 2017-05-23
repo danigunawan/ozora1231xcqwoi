@@ -32,7 +32,7 @@ $session_id = session_id();
 
 	<div class="row">
     <div class="col-sm-2">
-          <label> Kode Pelanggan </label> </label><br>
+          <label> Kode Marketplace </label> </label><br>
           
           <select data-placeholder="--SILAHKAN PILIH--" name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen">
           
@@ -136,7 +136,7 @@ $session_id = session_id();
     <thead> <!-- untuk memberikan nama pada kolom tabel -->
       
       <th> Nomor Faktur </th>
-      <th> Kode Pelanggan </th>
+      <th> Kode Marketplace </th>
       <th> Kode Barang </th>
       <th> Nama Barang </th>
       <!--
@@ -605,7 +605,7 @@ if (jumlah_retur == ""){
   alert("Jumlah Barang Harus Diisi");
   }
   else if (kode_pelanggan == ""){
-  alert("Kode Pelanggan Harus Dipilih");
+  alert("Kode Marketplace Harus Dipilih");
   }
   else
   {
@@ -735,7 +735,7 @@ $("#cari_produk_pembelian").click(function(){
  else if ( kode_pelanggan == "") 
  {
 
-alert("Kode Pelanggan Harus Di Isi");
+alert("Kode Marketplace Harus Di Isi");
 
  }
 

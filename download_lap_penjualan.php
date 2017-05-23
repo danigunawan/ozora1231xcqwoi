@@ -39,7 +39,7 @@ $sub_total_tax = $ambil_tax['total_tax'];
 <table id="tableuser" class="table table-bordered">
     <thead>
       <th style="background-color: #4CAF50; color: white;"> Nomor Faktur </th>
-      <th style="background-color: #4CAF50; color: white;"> Kode Pelanggan</th>
+      <th style="background-color: #4CAF50; color: white;"> Kode Marketplace</th>
       <th style="background-color: #4CAF50; color: white;"> Total Kotor </th>
       <th style="background-color: #4CAF50; color: white;"> Total Bersih </th>
       <th style="background-color: #4CAF50; color: white;"> Tanggal </th>

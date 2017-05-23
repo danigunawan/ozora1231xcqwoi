@@ -45,7 +45,7 @@ $no_faktur_pembayaran = $_GET['no_faktur_pembayaran'];
       <tr><td width="50%">No Faktur </td><td>:&nbsp;</td><td><?php echo $data0['no_faktur_pembayaran']; ?></td></tr>
       <tr><td width="50%">Cara Bayar</td> <td>:&nbsp;</td><td><?php echo $data0['nama_daftar_akun']; ?></td></tr>
       <tr><td width="50%">Tanggal</td> <td>:&nbsp;</td><td><?php echo tanggal($data0['tanggal']);?></td></tr>
-      <tr><td width="50%">Pelanggan</td><td>:&nbsp;</td><td><?php echo $data0['nama_pelanggan']; ?></td></tr>
+      <tr><td width="50%">Marketplace</td><td>:&nbsp;</td><td><?php echo $data0['nama_pelanggan']; ?></td></tr>
       
   </tbody>
 </table>

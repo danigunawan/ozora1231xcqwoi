@@ -164,7 +164,7 @@ $status = $_GET['status'];
    <p>Apakah Anda yakin Ingin Menghapus Data ini ?</p>
    <form >
     <div class="form-group">
-    <label>Kode Pelanggan :</label>
+    <label>Kode Marketplace :</label>
      <input type="text" id="kode_pelanggan" class="form-control" readonly=""> 
      <input type="hidden" id="id_hapus" class="form-control" > 
      <input type="hidden" id="kode_meja" class="form-control" > 
@@ -384,7 +384,7 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
       <th style='background-color: #4CAF50; color:white'> Gudang </th>
       <th style='background-color: #4CAF50; color:white'> Toko </th>
       <th style='background-color: #4CAF50; color:white'> Bayar </th>
-			<th style='background-color: #4CAF50; color:white'> Kode Pelanggan</th>
+			<th style='background-color: #4CAF50; color:white'> Kode Marketplace</th>
 			<th style='background-color: #4CAF50; color:white'> Total </th>
 			<th style='background-color: #4CAF50; color:white'> Tanggal </th>
       <th style='background-color: #4CAF50; color:white'> Jam </th>

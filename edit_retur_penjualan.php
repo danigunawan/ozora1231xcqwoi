@@ -62,7 +62,7 @@ $ambil = mysqli_fetch_array($perintah);
 
 
     <div class="col-sm-3">
-          <label> Kode Pelanggan </label><br><br>
+          <label> Kode Marketplace </label><br><br>
           <select data-placeholder="--SILAHKAN PILIH--" name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen" required="" >
           <option value="<?php echo $ambil['kode_pelanggan']; ?>"><?php echo $ambil['kode_pelanggan']; ?></option>
           <?php 
@@ -737,7 +737,7 @@ if (jumlah_retur == ""){
   alert("Jumlah Barang Harus Diisi");
   }
   else if (kode_pelanggan == ""){
-  alert("Kode Pelanggan Harus Dipilih");
+  alert("Kode Marketplace Harus Dipilih");
   }
   else
   {
@@ -859,7 +859,7 @@ if (jumlah_retur == ""){
  else if ( kode_pelanggan == "") 
  {
 
-alert("Kode Pelanggan Harus Di Isi");
+alert("Kode Marketplace Harus Di Isi");
 
  }
 

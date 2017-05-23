@@ -71,7 +71,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 <table id="table_lap_penjualan" class="table table-bordered table-sm">
 		<thead>
 			<th style="background-color: #4CAF50; color: white;"> Nomor Faktur </th>
-			<th style="background-color: #4CAF50; color: white;"> Kode Pelanggan</th>
+			<th style="background-color: #4CAF50; color: white;"> Kode Marketplace</th>
 			<th style="background-color: #4CAF50; color: white;"> Total Kotor </th>
 			<th style="background-color: #4CAF50; color: white;"> Total Bersih </th>
 			<th style="background-color: #4CAF50; color: white;"> Tanggal </th>

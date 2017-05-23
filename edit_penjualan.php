@@ -128,7 +128,7 @@ include 'sanitasi.php';
 </div>
 
 <div class="form-group col-sm-2">
-  <label> Kode Pelanggan </label>
+  <label> Kode Marketplace </label>
   <select type="text" name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen"  required="" autofocus="">
   <option value="<?php echo $kode_pelanggan; ?>"><?php echo $kode_pelanggan; ?></option>
           
@@ -1113,7 +1113,7 @@ console.log(ber_stok);
   alert("Jumlah Barang Harus Diisi");
   }
   else if (kode_pelanggan == ''){
-  alert("Kode Pelanggan Harus Dipilih");
+  alert("Kode Marketplace Harus Dipilih");
   }
 
 
@@ -1291,7 +1291,7 @@ console.log(ber_stok);
  else if (kode_pelanggan == "") 
  {
 
-alert("Kode Pelanggan Harus Di Isi");
+alert("Kode Marketplace Harus Di Isi");
 
  }
 else if (pembayaran == "") 
@@ -1441,7 +1441,7 @@ else{
        else if (kode_pelanggan == "") 
        {
        
-       alert("Kode Pelanggan Harus Di Isi");
+       alert("Kode Marketplace Harus Di Isi");
        
        }
        else if (tanggal_jt == "")

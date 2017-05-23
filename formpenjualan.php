@@ -80,7 +80,7 @@ $session_id = session_id();
 </div>
 
 <div class="col-sm-4">
-    <label> Kode Pelanggan </label><br>
+    <label> Kode Marketplace </label><br>
   <select name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen" required="" autofocus="">
  
           
@@ -1501,7 +1501,7 @@ $("#kode_barang").focus();
  else if (kode_pelanggan == "") 
  {
 
-alert("Kode Pelanggan Harus Di Isi");
+alert("Kode Marketplace Harus Di Isi");
 
  }
 else if (pembayaran == "") 
@@ -1710,7 +1710,7 @@ alert("Silakan Bayar Piutang");
  else if (kode_pelanggan == "") 
  {
 
-alert("Kode Pelanggan Harus Di Isi");
+alert("Kode Marketplace Harus Di Isi");
 
  }
 else if (pembayaran == "") 
@@ -1915,7 +1915,7 @@ alert("Silakan Bayar Piutang");
        else if (kode_pelanggan == "") 
        {
        
-       alert("Kode Pelanggan Harus Di Isi");
+       alert("Kode Marketplace Harus Di Isi");
        
        }
        else if (tanggal_jt == "")
@@ -2758,7 +2758,7 @@ function myFunction(event) {
   if (kode_pelanggan == "") 
        {
        
-       alert("Kode Pelanggan Harus Di Isi");
+       alert("Kode Marketplace Harus Di Isi");
        
        }
 
