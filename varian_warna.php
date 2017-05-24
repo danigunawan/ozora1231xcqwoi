@@ -228,7 +228,7 @@ mysqli_close($db);
     $.post('proses_tambah_varian_warna.php',{nama:$("#varian_warna").val()},function(data){
 
     if (data != '') {
-    $("#nama_varian_warna").val('');
+    $("#varian_warna").val('');
 
     $(".alert").show('fast');
     $("#table_baru").load('tabel-varian_warna.php');
