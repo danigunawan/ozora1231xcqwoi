@@ -144,7 +144,8 @@ $no_faktur_penjualan = $data50['no_faktur_penjualan'];
           <div class="form-group col-sm-4">
           <label> Kode Marketplace </label>
           <br>
-          <select type="text" name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen" required="">             
+          <select type="text" name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen" required="">     
+          <option value="">Pilih Kode Marketplace</option>        
           <?php 
           include 'db.php';
           
@@ -155,7 +156,7 @@ $no_faktur_penjualan = $data50['no_faktur_penjualan'];
           while($data = mysqli_fetch_array($query))
           {
           
-          echo "<option value='".$data['id'] ."' >".$data['kode_pelanggan'] ." - ".$data['nama_pelanggan'] ."</option>";
+          echo "<option value='".$data['kode_pelanggan'] ."' >".$data['kode_pelanggan'] ." - ".$data['nama_pelanggan'] ."</option>";
           }
           
           
@@ -374,6 +375,7 @@ $no_faktur_penjualan = $data50['no_faktur_penjualan'];
   $(document).on('click', '.pilih', function (e) {
   document.getElementById("nomorfakturbeli").value = $(this).attr('no-faktur');
   document.getElementById("kredit").value = $(this).attr('kredit');
+  document.getElementById("jumlah_bayar").value = $(this).attr('kredit');
   document.getElementById("total").value = $(this).attr('total');
   document.getElementById("tanggal_jt").value = $(this).attr('tanggal_jt');
   
@@ -478,14 +480,16 @@ $no_faktur_penjualan = $data50['no_faktur_penjualan'];
       $("#jumlah_bayar").keyup(function(){
       var kredit = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#kredit").val()))));
       var jumlah_bayar = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#jumlah_bayar").val()))));
+      var total_bayar = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#totalbayar").val()))));
       var hasil = jumlah_bayar - kredit;
 
       $("#totalbayar").val(jumlah_bayar);
       
       if (hasil > 0 )
       {
-      alert("Jumlah Bayar Anda Melebihi Sisa");
-      
+      alert("Jumlah Bayar Anda Melebihi Sisa"); 
+        $("#jumlah_bayar").val(jumlah_bayar1);   
+      $("#totalbayar").val(total_bayar); 
       }
       
       });
@@ -500,6 +504,7 @@ $no_faktur_penjualan = $data50['no_faktur_penjualan'];
       $("#potongan_penjualan").keyup(function(){
       var kredit = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#kredit").val()))));
       var potongan_penjualan = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#potongan_penjualan").val()))));
+      var total_bayar = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#totalbayar").val()))));
       var hasil = potongan_penjualan - kredit;
 
       $("#totalbayar").val(potongan_penjualan);
@@ -507,7 +512,8 @@ $no_faktur_penjualan = $data50['no_faktur_penjualan'];
       if (hasil > 0 )
       {
       alert("Potongan Anda Melebihi Sisa");
-      $("#potongan_penjualan").val('');
+      $("#potongan_penjualan").val('');  
+      $("#totalbayar").val(total_bayar);
       }
       
       });
@@ -534,8 +540,10 @@ $no_faktur_penjualan = $data50['no_faktur_penjualan'];
    var tanggal = $("#tanggal").val();
 
    
-
-
+      //metode POST untuk mengirim dari file cek_jumlah_kas.php ke dalam variabel "dari akun"
+      $.post('cek_edit_tbs_pembayaran_piutang.php',{no_faktur_pembayaran:no_faktur_pembayaran}, function(data) {
+        /*optional stuff to do after success */
+        console.log(data) 
   if (cara_bayar == ""){
   
   alert("Cara Bayar Harus Di Isi");
@@ -544,8 +552,13 @@ $no_faktur_penjualan = $data50['no_faktur_penjualan'];
   
   else if (kode_pelanggan == "")
   {
-  alert("Kode Pelangan Harus Di Isi");
+  alert("Kode Marketplace Harus Di Isi");
   }
+  else if(data == 0)  
+  {
+     alert("Penjualan Harus Di Isi"); 
+  }
+
 
   else{
   $("#transaksi_baru").show();
@@ -573,6 +586,7 @@ $no_faktur_penjualan = $data50['no_faktur_penjualan'];
 
 //mengambil no_faktur pembelian agar berurutan
  }
+   });
 
  $("form").submit(function(){
     return false;
