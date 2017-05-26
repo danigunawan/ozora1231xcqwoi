@@ -602,6 +602,8 @@ else{
 </div> <!-- / of otoritas jabatan -->
 
 
+
+
 <div class="form-group col-sm-2"> <!-- start otoritas suplier -->
 <label>Suplier</label><br>
 
@@ -2698,6 +2700,69 @@ else{
 ?>
 
 </div> <!-- / of otoritas lap_retur pembelian - harga produk penjualan-->
+
+<div class="form-group col-sm-2"> <!-- start otoritas Varian Warna -->
+<label>Varian Warna</label><br>
+
+<?php 
+
+if ($data_otoritas['warna_lihat'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox282" name="warna_lihat" checked="">
+    <label for="checkbox282">Lihat</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox282" name="warna_lihat">
+    <label for="checkbox282">Lihat</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['warna_tambah'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox283" name="warna_tambah" checked=""> 
+    <label for="checkbox283">Tambah</label><br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox283" name="warna_tambah"> 
+    <label for="checkbox283">Tambah</label><br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['warna_edit'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox284" name="warna_edit" checked="">
+    <label for="checkbox284">Edit</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox284" name="warna_edit">
+    <label for="checkbox284">Edit</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['warna_hapus'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox285" name="warna_hapus" checked="">
+    <label for="checkbox285">Hapus</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox285" name="warna_hapus">
+    <label for="checkbox285">Hapus</label> <br>';  
+}
+
+ ?>
+
+</div> <!-- / of otoritas varian warna -->
+
+
 
 
 <div class="col-sm-12">
