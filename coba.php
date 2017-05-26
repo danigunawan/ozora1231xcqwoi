@@ -135,11 +135,9 @@
           </select>
           
           </div>
+           
           
-          <div class="col-sm-6">
-          <label> Gudang </label><br>
-          
-          <select name="kode_gudang" id="kode_gudang" class="form-control chosen" required="" >
+          <select style="display: none;" name="kode_gudang" id="kode_gudang" class="form-control" required="" >
           <option value="<?php echo $kode_gudang ?>"><?php echo $nama_gudang ?></option>
           <?php 
           
@@ -155,8 +153,7 @@
           
           
           ?>
-          </select>
-          </div>
+          </select> 
 
 
 </div>

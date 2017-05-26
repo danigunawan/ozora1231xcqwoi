@@ -60,10 +60,8 @@
                   ?>
                 </select>
             </div>      
-               
-            <div class="col-sm-3">
-              <label> Gudang </label><br>            
-                <select name="kode_gudang" id="kode_gudang" class="form-control chosen" required="" data-placeholder="SILAKAN PILIH...">
+                        
+                <select style="display: none;" name="kode_gudang" id="kode_gudang"  required="" data-placeholder="SILAKAN PILIH...">
                   <?php 
                     // menampilkan seluruh data yang ada pada tabel suplier
                     $query = $db->query("SELECT * FROM gudang");              
@@ -73,8 +71,7 @@
                       echo "<option value='".$data['kode_gudang'] ."'>".$data['nama_gudang'] ."</option>";
                     }
                   ?>
-                </select>
-            </div>
+                </select> 
 
             <div class="col-sm-3">
               <label>PPN</label>

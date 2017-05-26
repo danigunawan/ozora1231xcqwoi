@@ -25,8 +25,7 @@ $columns = array(
     12 => 'sisa',
     13 => 'kredit',
     14 => 'nama_gudang',
-    15 => 'kode_toko',
-    15 => 'kode_gudang',
+    15 => 'kode_toko', 
     16 => 'nama_pelanggan',
 	17 => 'id'
 );
@@ -180,8 +179,7 @@ else{
 }
 
 			$nestedData[] = "<button class='btn btn-info detail' no_faktur='". $row['no_faktur'] ."' >Detail</button>";
-			$nestedData[] = $row["no_faktur"];
-			$nestedData[] = $row["nama_gudang"];
+			$nestedData[] = $row["no_faktur"]; 
 			$nestedData[] = $row["nama_toko"];
 			
 

@@ -1,4 +1,4 @@
-<?php include 'session_login.php';
+Gudang<?php include 'session_login.php';
 
 
 // memasukan file session login,  header, navbar, db.php,
@@ -148,11 +148,8 @@ include 'sanitasi.php';
     ?>
   </select>
   </div>
-
-  <div class="form-group  col-sm-2">
-          <label> Gudang </label><br>
-          
-          <select name="kode_gudang" id="kode_gudang" class="form-control chosen" required="" >
+  
+          <select name="kode_gudang" id="kode_gudang" class="form-control chosen" style=" display:none;" required="" >
           <option value=<?php echo $kode_gudang; ?>><?php echo $nama_gudang; ?></option>
           <?php 
           
@@ -167,9 +164,9 @@ include 'sanitasi.php';
           }
           
           
-          ?>
+           ?>
           </select>
-</div>
+
 
 <div class="form-group col-sm-2">
   <label> Level Harga </label><br>

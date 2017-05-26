@@ -126,9 +126,9 @@ if ($lihat['komisi_faktur_lihat'] > 0){
                                 echo '<li><a href="fee_faktur.php" class="waves-effect">Komisi Faktur</a></li>';
 }
 
-if ($lihat['gudang_lihat'] > 0){
-                                echo '<li><a href="gudang.php" class="waves-effect">Gudang</a></li>';
-}
+//if ($lihat['gudang_lihat'] > 0){
+//                               echo '<li><a href="gudang.php" class="waves-effect">Gudang</a></li>';
+//}
 
 if ($lihat['daftar_akun_lihat'] > 0){
                                 echo '<li><a href="daftar_akun.php?kategori=semua" class="waves-effect">Daftar Akun</a></li>';

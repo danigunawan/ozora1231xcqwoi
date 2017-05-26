@@ -110,24 +110,14 @@ nama_pelanggan FROM pelanggan");
     
     
     ?>
-    </select><br>
-<label>Sisa Plafon </label>
-    <input type="text" name="sisa_plafon"  id="sisa_plafon" class="form-control">
+    </select><br> 
+    <input type="hidden" name="sisa_plafon"  id="sisa_plafon" class="form-control">
 </div>
-    
-
-<div class="col-sm-2">
-          <label class="gg" > Gudang </label><br>
-          
-          <select style="font-size:15px; height:35px" name="kode_gudang" id="kode_gudang" class="form-control gg" required="" >
-          <?php 
-          
       
-          $query_gudang = $db->query("SELECT default_sett,
-kode_gudang,
-nama_gudang FROM gudang");
           
-
+          <select style="font-size:15px; height:35px; display:none;" name="kode_gudang" id="kode_gudang" class="form-control gg" required="" >
+          <?php  
+          $query_gudang = $db->query("SELECT default_sett,kode_gudang,nama_gudang FROM gudang");        
           while($data_gudang = mysqli_fetch_array($query_gudang))
           {
 
@@ -146,9 +136,9 @@ nama_gudang FROM gudang");
           }
           
           
-          ?>
-          </select>
-</div>
+         ?>
+          </select> 
+
 
 <div class="col-sm-2">
     <label> Level Harga </label><br>

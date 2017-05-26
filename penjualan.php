@@ -380,8 +380,7 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
 			<th style='background-color: #4CAF50; color:white'> Cetak  Tunai </th>
 			<th style='background-color: #4CAF50; color:white'> Cetak Piutang </th>
 			<th style='background-color: #4CAF50; color:white'> Detail </th>
-			<th style='background-color: #4CAF50; color:white'> Nomor Faktur </th>
-      <th style='background-color: #4CAF50; color:white'> Gudang </th>
+			<th style='background-color: #4CAF50; color:white'> Nomor Faktur </th> 
       <th style='background-color: #4CAF50; color:white'> Toko </th>
       <th style='background-color: #4CAF50; color:white'> Bayar </th>
 			<th style='background-color: #4CAF50; color:white'> Kode Marketplace</th>
@@ -494,8 +493,7 @@ else{
 }
 
 			echo "<td> <button class='btn btn-info detail' no_faktur='". $data1['no_faktur'] ."' >Detail</button> </td>
-			<td>". $data1['no_faktur'] ."</td>
-			<td>". $data1['nama_gudang'] ."</td>";
+			<td>". $data1['no_faktur'] ."</td> 
 			
 
 if ($data1['status'] == 'Simpan Sementara') {

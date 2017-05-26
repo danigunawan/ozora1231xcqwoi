@@ -22,10 +22,9 @@ $columns = array(
 	9=> 'tax',
 	10=> 'sisa',
 	11=> 'kredit',
-	12=> 'nama',
-	13=> 'nama_gudang',
-	14=> 'kode_gudang',
-	15=> 'id'
+	12=> 'nama', 
+	13=> 'kode_gudang',
+	14=> 'id'
 );
 
 
@@ -128,8 +127,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 
 				$nestedData[] = "";
 			}
-						$nestedData[] = $row["no_faktur"];
-						$nestedData[] = $row["nama_gudang"];
+						$nestedData[] = $row["no_faktur"]; 
 						$nestedData[] = $row["nama"];
 						$nestedData[] = rp($row["total"]);
 						$nestedData[] = $row["tanggal"];
