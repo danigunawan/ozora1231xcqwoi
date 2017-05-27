@@ -41,6 +41,8 @@ $waktu = $tanggal." ".$jam_sekarang;
             $tanggal = stringdoang($_POST['tanggal']);
             $kode_gudang = stringdoang($_POST['kode_gudang']);
             $kode_toko = stringdoang($_POST['kode_toko']);
+            $nama_konsumen = stringdoang($_POST['nama_konsumen']);
+            $alamat_konsumen = stringdoang($_POST['alamat_konsumen']);
             
             $tanggal_jt = angkadoang($_POST['tanggal_jt']);
             $sisa_kredit = angkadoang($_POST['jumlah_kredit_baru']);
@@ -126,12 +128,12 @@ $waktu = $tanggal." ".$jam_sekarang;
                 echo "1";
             
             // buat prepared statements
-            $stmt2 = $db->prepare("UPDATE penjualan SET no_faktur = ?, kode_gudang = ?,kode_toko = ?, kode_pelanggan = ?, total = ?, tanggal = ?, jam = ?, user = ?, sales = ?, status = 'Lunas', potongan = ?, potongan_persen = ? , tax = ?, sisa = ?, kredit='0', cara_bayar = ?, tunai = ?, status_jual_awal = 'Tunai', ppn = ? WHERE no_faktur = ?");
+            $stmt2 = $db->prepare("UPDATE penjualan SET no_faktur = ?, kode_gudang = ?,kode_toko = ?,nama_konsumen = ?,alamat_konsumen = ?, kode_pelanggan = ?, total = ?, tanggal = ?, jam = ?, user = ?, sales = ?, status = 'Lunas', potongan = ?, potongan_persen = ? , tax = ?, sisa = ?, kredit='0', cara_bayar = ?, tunai = ?, status_jual_awal = 'Tunai', ppn = ? WHERE no_faktur = ?");
             
             
             // hubungkan "data" dengan prepared statements
-            $stmt2->bind_param("ssssissssisiisiss", 
-            $nomor_faktur, $kode_gudang,$kode_toko,  $kode_pelanggan, $total, $tanggal, $jam_sekarang , $user, $sales, $potongan,$potongan_persen, $tax, $sisa, $cara_bayar, $pembayaran, $ppn_input, $nomor_faktur);
+            $stmt2->bind_param("ssssssissssisiisiss", 
+            $nomor_faktur, $kode_gudang,$kode_toko,$nama_konsumen,$alamat_konsumen,  $kode_pelanggan, $total, $tanggal, $jam_sekarang , $user, $sales, $potongan,$potongan_persen, $tax, $sisa, $cara_bayar, $pembayaran, $ppn_input, $nomor_faktur);
 
             
 

@@ -14,6 +14,8 @@ include 'sanitasi.php';
  $kode_gudang = $_GET['kode_gudang'];
  $nama_toko = $_GET['nama_toko'];
  $kode_toko = $_GET['kode_toko'];
+ $nama_konsumen = $_GET['nama_konsumen'];
+ $alamat_konsumen = $_GET['alamat_konsumen'];
 
     $perintah = $db->query("SELECT tanggal FROM penjualan WHERE no_faktur = '$nomor_faktur'");
     $ambil_tanggal = mysqli_fetch_array($perintah);
@@ -220,6 +222,17 @@ include 'sanitasi.php';
 
       <input type="hidden" name="nomor_faktur_penjualan" id="nomor_faktur_penjualan"  value="<?php echo $nomor_faktur; ?>" class="form-control tanggal" >
 
+<div class="col-sm-3">
+    <div class="form-group">
+        <input type="text" style="height:20px" value="<?php echo "$nama_konsumen"; ?>" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">
+    </div>
+</div>
+
+<div class="col-sm-4">
+    <div class="form-group">
+        <input type="text" style="height:20px" value="<?php echo "$alamat_konsumen"; ?>" name="alamat_konsumen" id="alamat_konsumen" class="form-control" placeholder="Alamat Konsumen">
+    </div>
+</div>
 
 </div>
 
@@ -1257,6 +1270,8 @@ console.log(ber_stok);
         var tanggal = $("#tanggal").val();
         var kode_gudang = $("#kode_gudang").val();
         var kode_toko = $("#kode_toko").val();
+        var nama_konsumen = $("#nama_konsumen").val();
+        var alamat_konsumen = $("#alamat_konsumen").val();
         var keterangan = $("#keterangan").val();
         var jumlah_bayar_lama = $("#jumlah_bayar_lama").val();
         var ppn_input = $("#ppn_input").val();
@@ -1285,6 +1300,18 @@ console.log(ber_stok);
  }
 
 
+   else if (nama_konsumen == "")
+ {
+
+alert(" Nama Konsumen Harus Diisi ");
+
+ }
+   else if (alamat_konsumen == "")
+ {
+
+alert(" Alamat Konsumen Harus Diisi ");
+
+ }
  else if (kode_pelanggan == "") 
  {
 
@@ -1308,7 +1335,7 @@ alert("Pembayaran Harus Di Isi");
   $("#piutang").hide();
   $("#transaksi_baru").show();  
 
- $.post("proses_bayar_edit_jual.php",{total2:total2,kode_gudang:kode_gudang,kode_toko:kode_toko,tanggal:tanggal,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,keterangan:keterangan,jumlah_kredit_baru:jumlah_kredit_baru,x:x,ppn_input:ppn_input},function(info) {
+ $.post("proses_bayar_edit_jual.php",{total2:total2,kode_gudang:kode_gudang,kode_toko:kode_toko,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,tanggal:tanggal,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,keterangan:keterangan,jumlah_kredit_baru:jumlah_kredit_baru,x:x,ppn_input:ppn_input},function(info) {
 
      $("#alert_berhasil").show();
      $("#pembayaran_penjualan").val('');
@@ -1410,6 +1437,8 @@ else{
         var tanggal = $("#tanggal").val();
         var kode_gudang = $("#kode_gudang").val();
         var kode_toko = $("#kode_toko").val();
+        var nama_konsumen = $("#nama_konsumen").val();
+        var alamat_konsumen = $("#alamat_konsumen").val();
         var keterangan = $("#keterangan").val();
         var jumlah_bayar_lama = $("#jumlah_bayar_lama").val();
         var ppn_input = $("#ppn_input").val();
@@ -1468,7 +1497,7 @@ else
         $("#piutang").hide();
         $("#transaksi_baru").show(); 
         
-        $.post("proses_bayar_edit_jual.php",{total2:total2,kode_gudang:kode_gudang,kode_toko:kode_toko,tanggal:tanggal,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,keterangan:keterangan,jumlah_kredit_baru:jumlah_kredit_baru,x:x,ppn_input:ppn_input},function(info) {
+        $.post("proses_bayar_edit_jual.php",{total2:total2,kode_gudang:kode_gudang,kode_toko:kode_toko,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,tanggal:tanggal,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,keterangan:keterangan,jumlah_kredit_baru:jumlah_kredit_baru,x:x,ppn_input:ppn_input},function(info) {
         
         $("#alert_berhasil").show();
         $("#pembayaran_penjualan").val('');

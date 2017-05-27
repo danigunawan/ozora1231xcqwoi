@@ -7,6 +7,8 @@ include 'db.php';
 
 
   $no_faktur = stringdoang($_GET['no_faktur']);
+  $nama_konsumen = stringdoang($_GET['nama_konsumen']);
+  $alamat_konsumen = stringdoang($_GET['alamat_konsumen']);
 
     $select_penjualan = $db->query("SELECT p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.potongan,p.potongan_persen, pl.nama_pelanggan,pl.wilayah,da.nama_daftar_akun ,p.tunai FROM penjualan p INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan INNER JOIN daftar_akun da ON p.cara_bayar = da.kode_daftar_akun  WHERE p.no_faktur = '$no_faktur' ORDER BY p.id DESC");
     $data0 = mysqli_fetch_array($select_penjualan);
@@ -69,6 +71,8 @@ include 'db.php';
         <tbody>
             
             <tr><td><font class="satu">  Kepada Yth</td> <td>  :&nbsp;&nbsp;</td> <td>  <?php echo $data0['nama_pelanggan']; ?> </td></tr> 
+            <tr><td  width="25%"><font class="satu">Nama</font></td> <td> :&nbsp;</td> <td><font class="satu"> <?php echo $nama_konsumen; ?> </font></td></tr>
+            <tr><td  width="25%"><font class="satu">Alamat</font></td> <td> :&nbsp;</td> <td><font class="satu"> <?php echo $alamat_konsumen; ?> </font></td></tr>
 
             <tr><td><font class="satu"><br>No Invoice</font></td> <td> <br>:</td> <td><font class="satu"> <br> <?php echo $no_faktur; ?></font></td></tr>
             <tr><td><font class="satu"> Tanggal</td> <td> :&nbsp;&nbsp;</td> <td><?php echo $tanggal; ?></td></tr>
@@ -107,7 +111,7 @@ include 'db.php';
     }
     </style>
 
-<table id="tableuser" class="table1">
+<table id="tableuser" class="table table-bordered table-sm">
         <thead>
 
             <th class="table1" style="width: 5%"> <center> No. </center> </th>
@@ -115,7 +119,7 @@ include 'db.php';
             <th class="table1" style="width: 5%"> <center> Jumlah </center> </th>
             <th class="table1" style="width: 5%"> <center> Satuan </center> </th>
             <th class="table1" style="width: 10%"> <center> Harga Satuan </center> </th>
-            <th class="table1" style="width: 10%"> <center> Harga Jual </center> </th>        
+            <th class="table1" style="width: 10%"> <center> Jumlah Harga </center> </th>        
             
         </thead>
 
