@@ -88,7 +88,7 @@ $kategori = stringdoang($_GET['kategori']);
                   <th> Nomor Faktur </th>                  
                   <th> Tanggal </th>
                   <th> Kategori </th>
-                  <th> Kode Pelanggan</th>
+                  <th> Kode Marketplace</th>
                   <th> Jumlah Barang </th>
                   <th> Total Kotor </th>
                   <th> Potongan </th>

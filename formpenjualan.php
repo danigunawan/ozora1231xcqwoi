@@ -2798,6 +2798,8 @@ function myFunction(event) {
         var keterangan = $("#keterangan").val();   
         var ber_stok = $("#ber_stok").val();
         var ppn_input = $("#ppn_input").val();
+        var nama_konsumen = $("#nama_konsumen").val();
+        var alamat_konsumen = $("#alamat_konsumen").val();
        
        var sisa =  pembayaran - total; 
 
@@ -2818,6 +2820,18 @@ function myFunction(event) {
          alert("Anda Belum Melakukan Pesanan");
          
          }
+         else if ( nama_konsumen == "") 
+         {
+         
+         alert("Nama Konsumen Harus Di Isi");
+         
+         }
+         else if ( alamat_konsumen == "") 
+         {
+         
+         alert("Alamat Konsumen Harus Di Isi");
+         
+         }
          
        else
        {
@@ -2829,6 +2843,8 @@ function myFunction(event) {
         $("#batal_penjualan").hide();
         $("#penjualan").hide();
         $("#total1").val('');
+        $("#nama_konsumen").val('');
+        $("#alamat_konsumen").val('');
 
  $.post("cek_subtotal_penjualan.php",{total:total,session_id:session_id,potongan:potongan,tax:tax,},function(data) {
 
@@ -2839,7 +2855,7 @@ function myFunction(event) {
 
         if (result.status == 0) {
 
-            $.post("proses_simpan_barang.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,sales:sales,kode_gudang:kode_gudang,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
+            $.post("proses_simpan_barang.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,sales:sales,kode_gudang:kode_gudang,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_toko:kode_toko,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
 
             
                 $("#table-baru").html(info);
