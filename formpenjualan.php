@@ -731,14 +731,20 @@ tr:nth-child(even){background-color: #f2f2f2}
      
 
             
-          <button type="submit" id="simpan_sementara" class="btn btn-primary" style="font-size:15px">  Simpan (F10)</button>
+          <!-- TOMBOL SEMENTARA 
+          <button type="submit" id="simpan_sementara" class="btn btn-primary" style="font-size:15px">  Simpan (F10)</button> // -->
           <a href='cetak_penjualan_tunai.php' id="cetak_tunai" style="display: none;" class="btn btn-primary" target="blank"> Cetak Tunai  </a>
 
+       <!--   TOMBOL Bayar / Cetak 
           <button type="submit" id="cetak_langsung" target="blank" class="btn btn-success" style="font-size:15px"> Bayar / Cetak (Ctrl + K) </button>
+          -->
 
           <a href='cetak_penjualan_tunai_besar.php' id="cetak_tunai_besar" style="display: none;" class="btn btn-warning" target="blank"> Cetak Tunai Besar </a>
 
-          <a href='cetak_penjualan_surat_jalan.php' id="cetak_surat_jalan" style="display: none;" class="btn btn-danger" target="blank"> Cetak Surat Jalan </a>
+       <!--   TOMBOL CETAK SURAT JALAN
+
+       <a href='cetak_penjualan_surat_jalan.php' id="cetak_surat_jalan" style="display: none;" class="btn btn-danger" target="blank"> Cetak Surat Jalan </a> 
+       -->
           
      
     
@@ -3225,12 +3231,12 @@ $(document).ready(function(){
     }); 
 
     
-    shortcut.add("f10", function() {
+ //   shortcut.add("f10", function() {
         // Do something
 
-        $("#simpan_sementara").click();
+   //     $("#simpan_sementara").click();
 
-    }); 
+    }// ); 
 
     
     shortcut.add("ctrl+b", function() {
