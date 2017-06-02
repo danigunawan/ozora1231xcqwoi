@@ -2,9 +2,9 @@
 
 include 'db.php';
 
-$kode_barang = $_GET['kode_barang'];
+$session_id = $_POST['session_id'];
 
-$query = $db->query("SELECT kode_barang FROM barang WHERE kode_barang = '$kode_barang'");
+$query = $db->query("SELECT * FROM tbs_penjualan_order WHERE session_id = '$session_id'");
 $jumlah = mysqli_num_rows($query);
 
 
@@ -18,6 +18,8 @@ else {
 
         //Untuk Memutuskan Koneksi Ke Database
 
-        mysqli_close($db);
+        mysqli_close($db); 
         
+
  ?>
+

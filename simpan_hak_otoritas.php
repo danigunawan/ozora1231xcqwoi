@@ -197,6 +197,17 @@ $warna_tambah = stringdoang(isset($_POST['warna_tambah']));
 $warna_edit = stringdoang(isset($_POST['warna_edit']));
 $warna_hapus = stringdoang(isset($_POST['warna_hapus']));
 
+
+$order_lihat = stringdoang(isset($_POST['order_lihat']));
+$order_tambah = stringdoang(isset($_POST['order_tambah']));
+$order_edit = stringdoang(isset($_POST['order_edit']));
+$order_hapus = stringdoang(isset($_POST['order_hapus']));
+
+$tombol_submit_order = stringdoang(isset($_POST['tombol_submit']));
+$tombol_order = stringdoang(isset($_POST['tombol_order']));
+$edit_produk_order = stringdoang(isset($_POST['edit_produk']));
+$hapus_produk_order = stringdoang(isset($_POST['hapus_produk']));
+
 $peringatan_jatuh_tempo_hutang = stringdoang(isset($_POST['peringatan_jatuh_tempo_hutang']));
 
 $update_otoritas_item_keluar = $db->prepare("UPDATE otoritas_item_keluar SET item_keluar_lihat = ?, item_keluar_tambah = ?, item_keluar_edit = ?, item_keluar_hapus = ? WHERE id_otoritas = ?");
@@ -327,6 +338,24 @@ $update_otoritas_setting->bind_param("iii",
     $menu_setting_lihat, $peringatan_jatuh_tempo_hutang, $id);
 
 $update_otoritas_setting->execute();
+
+// oredr penjualan
+$update_otoritas_order_penjualan = $db->prepare("UPDATE otoritas_order_penjualan SET order_lihat = ?, order_tambah = ?, order_edit = ?, order_hapus = ? WHERE id_otoritas = ? ");
+
+$update_otoritas_order_penjualan->bind_param("iiiii",
+    $order_lihat, $order_tambah, $order_edit, $order_hapus, $id);
+
+$update_otoritas_order_penjualan->execute();
+// order penjualan
+
+//form order penjualan
+$update_otoritas_form_order_penjualan = $db->prepare("UPDATE otoritas_form_order_penjualan SET  tombol_submit = ?, tombol_order = ?, edit_produk = ?, hapus_produk = ? WHERE id_otoritas = ? ");
+
+$update_otoritas_form_order_penjualan->bind_param("iiiii",
+    $tombol_submit_order, $tombol_order, $edit_produk_order, $hapus_produk_order , $id);
+
+$update_otoritas_form_order_penjualan->execute();
+//form order penjualan
 
 
 header('location: hak_otoritas.php?nama='.$nama.'&id='.$id.'');
