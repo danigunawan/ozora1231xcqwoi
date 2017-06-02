@@ -56,33 +56,11 @@ $session_id = session_id();
 
 <div class="row">
 
-<div class="col-sm-2">
-          <label class="gg" > Toko </label><br>
-          
-          <select name="kode_toko" id="kode_toko"  class="form-control chosen" required="" autofocus="" >
-          <?php 
-          
-      
-          $query_gudang = $db->query("SELECT id,nama_toko FROM toko");
-          
 
-          while($data_gudang = mysqli_fetch_array($query_gudang))
-          {
- 
-
-                echo "<option selected value='".$data_gudang['id'] ."'>".$data_gudang['nama_toko'] ."</option>"; 
-          
-          }
-          
-          
-          ?>
-          </select>
-</div>
-
-<div class="col-sm-4">
+<div class="col-sm-3">
     <label> Kode Marketplace </label><br>
   <select name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen" required="" autofocus="">
- 
+ <option value="">Pilih Marketplace</option>
           
   <?php 
     
@@ -114,7 +92,32 @@ nama_pelanggan FROM pelanggan");
     <input type="hidden" name="sisa_plafon"  id="sisa_plafon" class="form-control">
 </div>
       
+    
+<div class="col-sm-3">
+          <label class="gg" > Toko </label><br>
           
+          <select name="kode_toko" id="kode_toko"  class="form-control chosen" required="" autofocus="" >
+          <option value="">Pilih Toko</option>
+          <?php 
+          
+      
+          $query_gudang = $db->query("SELECT id,nama_toko FROM toko");
+          
+
+          while($data_gudang = mysqli_fetch_array($query_gudang))
+          {
+ 
+
+                echo "<option value='".$data_gudang['id'] ."'>".$data_gudang['nama_toko'] ."</option>"; 
+          
+          }
+          
+          
+          ?>
+          </select>
+</div>
+
+
           <select style="font-size:15px; height:35px; display:none;" name="kode_gudang" id="kode_gudang" class="form-control gg" required="" >
           <?php  
           $query_gudang = $db->query("SELECT default_sett,kode_gudang,nama_gudang FROM gudang");        
