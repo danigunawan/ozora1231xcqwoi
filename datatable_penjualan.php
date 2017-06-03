@@ -29,7 +29,7 @@ $columns = array(
     16 => 'nama_pelanggan',
 	17 => 'id',
 	18 => 'nama_konsumen',
-	19 => 'alamat_konsumen'
+	19 => 'alamat_konsumen' 
 );
 
 
@@ -218,6 +218,7 @@ else{
 			$nestedData[] = rp($row["tunai"]);
 			$nestedData[] = rp($row["sisa"]);
 			$nestedData[] = rp($row["kredit"]);
+			$nestedData[] = $row["nama_konsumen"];
 
 	$nestedData[] = $row["id"];
 	$data[] = $nestedData;

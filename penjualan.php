@@ -357,6 +357,7 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
       <th style='background-color: #4CAF50; color:white'> Tunai </th>
 			<th style='background-color: #4CAF50; color:white'> Kembalian </th>
 			<th style='background-color: #4CAF50; color:white'> Kredit </th>
+      <th style='background-color: #4CAF50; color:white'> Nama Konsumen </th>
 			
 			
 
