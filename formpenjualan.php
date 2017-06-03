@@ -2352,11 +2352,11 @@ if (stok < 0 )
 
 
     }
-
+    /*
     else if( limit_stok > stok  ){
 
       alert ("Persediaan Barang Ini Sudah Mencapai Batas Limit Stok, Segera Lakukan Pembelian !");
-    }
+    }*/
   });
 })
 

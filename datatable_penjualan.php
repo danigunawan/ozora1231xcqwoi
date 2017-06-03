@@ -181,6 +181,25 @@ else{
 }
 
 			$nestedData[] = "<button class='btn btn-info detail' no_faktur='". $row['no_faktur'] ."' >Detail</button>";
+
+
+
+$query_resi = $db->query("SELECT * FROM resi WHERE id_penjualan = '$row[id]' ");
+$jumlah_resi = mysqli_num_rows($query_resi);
+$data_resi = mysqli_fetch_array($query_resi);
+
+
+if ($jumlah_resi > 0) {
+	# code...
+	$nestedData[] = "<button style='background-color:#aa66cc;width:80px'' class='btn btn-info lihat_resi' nama_ekspedisi='". $data_resi['nama_expedisi'] ."' nomor_resi='". $data_resi['nomor_resi'] ."' ><i class='fa fa-search' aria-hidden='true'></i> Lihat</button>";
+}
+else{
+	$nestedData[] = "<button style='background-color:#2BBBAD;width:80px'' class='btn btn-default input_resi' id_penjualan='". $row['id']."'' ><i class='fa fa-send' aria-hidden='true'></i> Input</button>";
+}
+
+			
+
+
 			$nestedData[] = $row["no_faktur"]; 
 			$nestedData[] = $row["nama_toko"];
 			
