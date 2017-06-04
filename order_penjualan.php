@@ -184,15 +184,14 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
 			<th style='background-color: #4CAF50; color:white'> Cetak Order </th>
 			<th style='background-color: #4CAF50; color:white'> Detail </th>
 			<th style='background-color: #4CAF50; color:white'> Nomor Faktur </th>
+      <th style='background-color: #4CAF50; color:white'> Toko </th>
 			<th style='background-color: #4CAF50; color:white'> Marketplace</th>
-			<th style='background-color: #4CAF50; color:white'> Gudang </th>
+      <th style='background-color: #4CAF50; color:white'> Nama Konsumen </th>
 			<th style='background-color: #4CAF50; color:white'> Tanggal </th>
 			<th style='background-color: #4CAF50; color:white'> Jam </th>
 			<th style='background-color: #4CAF50; color:white'> Petugas </th>
 			<th style='background-color: #4CAF50; color:white'> Total </th>
       <th style='background-color: #4CAF50; color:white'> Status Order </th>
-      <th style='background-color: #4CAF50; color:white'> Nama Konsumen </th>
-      <th style='background-color: #4CAF50; color:white'> Alamat Konsumen </th>
 			<th style='background-color: #4CAF50; color:white'> Keterangan </th>
 
 		</thead>

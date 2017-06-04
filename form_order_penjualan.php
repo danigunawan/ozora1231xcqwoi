@@ -124,7 +124,7 @@ $session_id = session_id();
     </select>
 </div>
 
-<div class="col-sm-2">
+<div class="col-sm-2" style="display: none">
           <label class="gg" > Gudang </label><br>
 
           <select style="font-size:15px; height:35px" name="kode_gudang" id="kode_gudang" class="form-control chosen" required="" >
@@ -170,7 +170,7 @@ $session_id = session_id();
     {
 
 
-    echo "<option value='".$data01['nama'] ."'>".$data01['nama'] ."</option>";
+    echo "<option value='".$data01['id'] ."'>".$data01['nama'] ."</option>";
 
     }
 
@@ -182,10 +182,10 @@ $session_id = session_id();
 
 <div class="col-sm-1">
     <label> Level Harga </label><br>
-  <select style="font-size:15px; height:35px" type="text" name="level_harga" id="level_harga" class="form-control chosen" required="" >
-  <option value="harga_1">Level 1</option>
-  <option value="harga_2">Level 2</option>
-  <option value="harga_3">Level 3</option>
+    <select style="font-size:15px; height:35px" type="text" name="level_harga" id="level_harga" class="form-control chosen" required="" >
+      <option value="Level 1">Level 1</option>
+      <option value="Level 2">Level 2</option>
+      <option value="Level 3">Level 3</option>
     </select>
     </div>
 
@@ -432,23 +432,25 @@ $session_id = session_id();
   <div class="form-group">
     <div class="card card-block">
 
-      <div class="col-sm-12">
-        <label style="font-size:15px"> <b> Subtotal </b></label><br>
-        <input style="height:30px;font-size:30px" type="text" name="total" id="total2" class="form-control" placeholder="Total" readonly="" >
-      </div>
-        
-      <div class="col-sm-6">
-        <input type="text" style="height:20px" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">
-      </div>
+        <div class="col-sm-12">
+          <label style="font-size:15px"> <b> Subtotal </b></label><br>
+          <input style="height:30px;font-size:30px" type="text" name="total" id="total2" class="form-control" placeholder="Subotal" readonly="" >
+        </div>
+          
+        <div class="col-sm-6">
+          <label style="font-size:15px"> <b> Nama Konsumen </b></label><br>
+          <input type="text" style="height:20px" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">
+        </div>
 
-      <div class="col-sm-6">
-        <input type="text" style="height:20px" name="alamat_konsumen" id="alamat_konsumen" class="form-control" placeholder="Alamat Konsumen">
-      </div>
+        <div class="col-sm-6">
+          <label style="font-size:15px"> <b> Alamat Konsumen </b></label><br>
+          <input type="text" style="height:20px" name="alamat_konsumen" id="alamat_konsumen" class="form-control" placeholder="Alamat Konsumen">
+        </div>
 
-      <div class="col-sm-12">
-        <label> Keterangan </label><br>
-        <textarea style="height:40px;font-size:15px" type="text" name="keterangan" id="keterangan" class="form-control"></textarea>
-      </div>
+        <div class="col-sm-12">
+          <label style="font-size:15px"> <b> Keterangan </b></label><br>
+          <textarea style="height:40px;font-size:15px" type="text" name="keterangan" id="keterangan" class="form-control"></textarea>
+        </div>
       
     </div>
   </div><!-- END card-block -->
@@ -627,23 +629,25 @@ var harga_level_1 = $(this).attr('harga');
 var harga_level_2 = $(this).attr('harga_level_2');
 var harga_level_3 = $(this).attr('harga_level_3');
 
-if (level_harga == "harga_1") {
+if (level_harga == "Level 1") {
   $("#harga_produk").val(harga_level_1);
   $("#harga_lama").val(harga_level_1);
   $("#harga_baru").val(harga_level_1);
 }
 
-else if (level_harga == "harga_2") {
+else if (level_harga == "Level 2") {
   $("#harga_produk").val(harga_level_2);
   $("#harga_baru").val(harga_level_2);
   $("#harga_lama").val(harga_level_2);
 }
 
-else if (level_harga == "harga_3") {
+else if (level_harga == "Level 3") {
   $("#harga_produk").val(harga_level_3);
   $("#harga_lama").val(harga_level_3);
   $("#harga_baru").val(harga_level_3);
 }
+
+console.log(level_harga)
 
 
   document.getElementById("jumlahbarang").value = $(this).attr('jumlah-barang');
@@ -687,7 +691,7 @@ if (jumlah_barang == '')
 {
     alert("Jumlah Barang Harus Terisi");
     $("#jumlah_barang").focus();
-    $("#level_harga").val('harga_1');
+    $("#level_harga").val('Level 1');
 
 }
 else
@@ -1139,43 +1143,34 @@ else{
         var ppn = $("#ppn").val();
         var nama_konsumen = $("#nama_konsumen").val();
         var alamat_konsumen = $("#alamat_konsumen").val();
+        var nama_toko = $("#nama_toko").val();
 
 
- if (kode_pelanggan == "")
- {
-
-alert("Kode Pelanggan Harus Di Isi");
-
+ if (kode_pelanggan == ""){
+  alert("Silakan Pilih Marketplace");
  }
-
-   else if (kode_gudang == "")
- {
-
-alert(" Kode Gudang Harus Diisi ");
-
+ else if (nama_konsumen == ""){
+  alert("Silakan Isi Nama Konsumen");
+  $("#nama_konsumen").focus();
  }
-
-  else if (total2 ==  0 || total2 == "")
-        {
-
-        alert("Anda Belum Melakukan Pemesanan");
-
-        }
-
-
- else
-
- {
+ else if (alamat_konsumen == ""){
+  alert("Silakan Isi Alamat Konsumen");
+  $("#alamat_konsumen").focus();
+ }
+ else if (total2 ==  0 || total2 == ""){
+  alert("Anda Belum Melakukan Pemesanan");
+ }
+ else{
 
   $("#batal_penjualan").hide();
   $("#order").hide();
-$("#transaksi_baru").show();
+  $("#transaksi_baru").show();
 
  $.post("cek_subtotal_penjualan_order.php",{total2:total2,session_id:session_id},function(data) {
 
   if (data != 1) {
 
- $.post("proses_order_penjualan.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,kode_pelanggan:kode_pelanggan,harga:harga,sales:sales,kode_gudang:kode_gudang,keterangan:keterangan,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
+ $.post("proses_order_penjualan.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,kode_pelanggan:kode_pelanggan,harga:harga,sales:sales,kode_gudang:kode_gudang,keterangan:keterangan,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,ber_stok:ber_stok,ppn_input:ppn_input, nama_toko:nama_toko},function(info) {
 
 
      $("#table-baru").hide();
@@ -1522,10 +1517,6 @@ $.post("lihat_promo_alert.php",{id:json.id},function(data){
     var harga_jual = $('#opt-produk-'+kode_barang).attr("harga");
     var harga_jual2 = $('#opt-produk-'+kode_barang).attr('harga_jual_2');
     var harga_jual3 = $('#opt-produk-'+kode_barang).attr('harga_jual_3');
-    var harga_jual4 = $('#opt-produk-'+kode_barang).attr('harga_jual_4');
-    var harga_jual5 = $('#opt-produk-'+kode_barang).attr('harga_jual_5');
-    var harga_jual6 = $('#opt-produk-'+kode_barang).attr('harga_jual_6');
-    var harga_jual7 = $('#opt-produk-'+kode_barang).attr('harga_jual_7');
     var jumlah_barang = $('#opt-produk-'+kode_barang).attr("jumlah-barang");
     var satuan = $('#opt-produk-'+kode_barang).attr("satuan");
     var kategori = $('#opt-produk-'+kode_barang).attr("kategori");
@@ -1533,7 +1524,6 @@ $.post("lihat_promo_alert.php",{id:json.id},function(data){
     var suplier = $('#opt-produk-'+kode_barang).attr("suplier");
     var limit_stok = $('#opt-produk-'+kode_barang).attr("limit_stok");
     var ber_stok = $('#opt-produk-'+kode_barang).attr("ber-stok");
-    var tipe_produk = $('#opt-produk-'+kode_barang).attr("tipe_barang");
     var id_barang = $('#opt-produk-'+kode_barang).attr("id-barang");
     var level_harga = $("#level_harga").val();
 
@@ -1550,19 +1540,19 @@ $.post("lihat_promo_alert.php",{id:id_barang},function(data){
 
 });
 
-   if (level_harga == "harga_1") {
+   if (level_harga == "Level 1") {
 
         $('#harga_produk').val(harga_jual);
         $('#harga_baru').val(harga_jual);
         $('#harga_lama').val(harga_jual);
         }
-    else if (level_harga == "harga_2") {
+    else if (level_harga == "Level 2") {
 
         $('#harga_produk').val(harga_jual2);
         $('#harga_baru').val(harga_jual2);
         $('#harga_lama').val(harga_jual2);
         }
-    else if (level_harga == "harga_3") {
+    else if (level_harga == "Level 3") {
 
         $('#harga_produk').val(harga_jual3);
         $('#harga_baru').val(harga_jual3);
@@ -1666,7 +1656,6 @@ $(document).ready(function(){
         var kode_pelanggan = $("#kd_pelanggan").val();
 
         var level_harga = $(".opt-pelanggan-"+kode_pelanggan+"").attr("data-level");
-
 
 
         if(kode_pelanggan == 'Umum')

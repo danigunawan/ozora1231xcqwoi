@@ -33,22 +33,22 @@ $columns = array(
 
 
 // getting total number records without any search
-$sql = " SELECT po.keterangan,po.nama_konsumen,po.alamat_konsumen,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,g.nama_gudang,po.kode_gudang,pl.nama_pelanggan ";
-$sql.=" FROM penjualan_order po INNER JOIN gudang g ON po.kode_gudang = g.kode_gudang INNER JOIN pelanggan pl ON po.kode_pelanggan = pl.id ";
+$sql = " SELECT po.keterangan,po.toko,po.nama_konsumen,po.alamat_konsumen,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko ";
+$sql.=" FROM penjualan_order po INNER JOIN toko t ON po.toko = t.id INNER JOIN pelanggan pl ON po.kode_pelanggan = pl.kode_pelanggan ";
 $query=mysqli_query($conn, $sql) or die("1.php: get employees");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
 
-$sql = "SELECT  po.keterangan,po.nama_konsumen,po.alamat_konsumen,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,g.nama_gudang,po.kode_gudang,pl.nama_pelanggan  ";
-$sql.=" FROM penjualan_order po INNER JOIN gudang g ON po.kode_gudang = g.kode_gudang INNER JOIN pelanggan pl ON po.kode_pelanggan = pl.id  WHERE 1=1 ";
+$sql = "SELECT  po.keterangan,po.toko,po.nama_konsumen,po.alamat_konsumen,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko  ";
+$sql.=" FROM penjualan_order po INNER JOIN toko t ON po.toko = t.id INNER JOIN pelanggan pl ON po.kode_pelanggan = pl.kode_pelanggan  WHERE 1=1 ";
 
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 	$sql.=" AND ( po.no_faktur_order LIKE '".$requestData['search']['value']."%' ";    
 	$sql.=" OR po.kode_pelanggan LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR po.total LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR po.tanggal LIKE '".$requestData['search']['value']."%' ";
-  $sql.=" OR po.kode_gudang LIKE '".$requestData['search']['value']."%' ";
+  $sql.=" OR t.nama_toko LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR po.user LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR po.nama_konsumen LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR pl.nama_pelanggan LIKE '".$requestData['search']['value']."%' )";
@@ -73,7 +73,7 @@ $penjualan_edit = mysqli_num_rows($pilih_akses_penjualan_edit);
 
       
 
-      $nestedData[] = "<a href='proses_edit_penjualan_order.php?no_faktur=". $row['no_faktur_order']."&kode_pelanggan=". $row['kode_pelanggan']."&nama_pelanggan=". $row['nama_pelanggan']."&nama_gudang=".$row['nama_gudang']."&kode_gudang=".$row['kode_gudang']."' class='btn btn-success'>Edit</a>"; 
+      $nestedData[] = "<a href='proses_edit_penjualan_order.php?no_faktur=". $row['no_faktur_order']."&kode_pelanggan=". $row['kode_pelanggan']."&nama_pelanggan=". $row['nama_pelanggan']."&nama_toko=".$row['nama_toko']."&id_toko=".$row['toko']."' class='btn btn-success'>Edit</a>"; 
 
 
     }
@@ -96,15 +96,14 @@ $nestedData[] = "<a href='cetak_penjualan_order.php?no_faktur=".$row['no_faktur_
 
     $nestedData[] = "<button class='btn btn-info detail' no_faktur='". $row['no_faktur_order'] ."' >Detail</button>";
     $nestedData[] = $row['no_faktur_order'];
+    $nestedData[] = $row['nama_toko'];
     $nestedData[] = $row['kode_pelanggan'] ." - ".$row['nama_pelanggan'];
-    $nestedData[] = $row['kode_gudang'];
+    $nestedData[] = $row['nama_konsumen'];
     $nestedData[] = $row['tanggal'];
     $nestedData[] = $row['jam'];
     $nestedData[] = $row['user'];
     $nestedData[] = rp($row['total']);
     $nestedData[] = $row['status_order'];
-    $nestedData[] = $row['nama_konsumen'];
-    $nestedData[] = $row['alamat_konsumen'];
     $nestedData[] = $row['keterangan'];
     $nestedData[] = $row['id'];
 

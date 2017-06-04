@@ -13,7 +13,7 @@ $penjualan = $db->query("SELECT * FROM penjualan_order WHERE no_faktur_order = '
 $data_penjualan = mysqli_fetch_array($penjualan);
 
 
-$insert_penjualan22 = $db->query("INSERT INTO history_penjualan_order (no_faktur_order, kode_gudang, kode_pelanggan, total, tanggal, jam, user, status_order,keterangan, nama_konsumen, alamat_konsumen) VALUES ('$no_faktur','$data_penjualan[kode_gudang]', '$data_penjualan[kode_pelanggan]', '$data_penjualan[total]','$data_penjualan[tanggal]','$data_penjualan[jam]','$data_penjualan[user]','$data_penjualan[status_order]','$data_penjualan[keterangan]','$data_penjualan[nama_konsumen]','$data_penjualan[alamat_konsumen]')");
+$insert_penjualan22 = $db->query("INSERT INTO history_penjualan_order (no_faktur_order, kode_gudang, kode_pelanggan, total, tanggal, jam, user, status_order,keterangan, nama_konsumen, alamat_konsumen, toko) VALUES ('$no_faktur','$data_penjualan[kode_gudang]', '$data_penjualan[kode_pelanggan]', '$data_penjualan[total]','$data_penjualan[tanggal]','$data_penjualan[jam]','$data_penjualan[user]','$data_penjualan[status_order]','$data_penjualan[keterangan]','$data_penjualan[nama_konsumen]','$data_penjualan[alamat_konsumen]', '$data_penjualan[toko]')");
 
 
 // INSERT HISTORY DETAIL PENJUALAN
