@@ -29,7 +29,7 @@ $columns = array(
     16 => 'nama_pelanggan',
 	17 => 'id',
 	18 => 'nama_konsumen',
-	19 => 'alamat_konsumen'
+	19 => 'alamat_konsumen' 
 );
 
 
@@ -149,7 +149,7 @@ if ($row['status'] == 'Lunas') {
 				
 				<ul class='dropdown-menu'>
 				<li><a href='cetak_lap_penjualan_tunai.php?no_faktur=".$row['no_faktur']."&nama_toko=".$row['nama_toko']."' target='blank'> Cetak Penjualan </a></li> 
-				<li><a href='cetak_penjualan_surat_jalan.php?nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."' target='blank'> Cetak Surat Jalan </a></li>
+				<li><a href='cetak_penjualan_surat_jalan.php?nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."&kode_toko=".$row['kode_toko']."' target='blank'> Cetak Surat Jalan </a></li>
 				<li><a href='cetak_lap_penjualan_tunai_besar.php?no_faktur=".$row['no_faktur']."&nama_toko=".$row['nama_toko']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."' target='blank'> Cetak Penjualan Besar </a></li>
 				</ul>
 				</div>";
@@ -168,7 +168,7 @@ if ($row['status'] == 'Piutang') {
 				
 				<ul class='dropdown-menu'>
 				<li><a href='cetak_lap_penjualan_piutang.php?no_faktur=".$row['no_faktur']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."' target='blank'> Cetak Piutang </a></li> 
-				<li><a href='cetak_penjualan_surat_jalan.php?no_faktur=".$row['no_faktur']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."' target='blank'> Cetak Surat Jalan </a></li>
+				<li><a href='cetak_penjualan_surat_jalan.php?no_faktur=".$row['no_faktur']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."&kode_toko=".$row['kode_toko']."' target='blank'> Cetak Surat Jalan </a></li>
 				</ul>
 				</div>";
 
@@ -181,19 +181,29 @@ else{
 }
 
 			$nestedData[] = "<button class='btn btn-info detail' no_faktur='". $row['no_faktur'] ."' >Detail</button>";
+
+
+
+$query_resi = $db->query("SELECT * FROM resi WHERE id_penjualan = '$row[id]' ");
+$jumlah_resi = mysqli_num_rows($query_resi);
+$data_resi = mysqli_fetch_array($query_resi);
+
+
+if ($jumlah_resi > 0) {
+	# code...
+	$nestedData[] = "<button style='background-color:#aa66cc;width:80px'' class='btn btn-info lihat_resi' nama_ekspedisi='". $data_resi['nama_expedisi'] ."' nomor_resi='". $data_resi['nomor_resi'] ."' ><i class='fa fa-search' aria-hidden='true'></i> Lihat</button>";
+}
+else{
+	$nestedData[] = "<button style='background-color:#2BBBAD;width:80px'' class='btn btn-default input_resi' id_penjualan='". $row['id']."'' ><i class='fa fa-send' aria-hidden='true'></i> Input</button>";
+}
+
+			
+
+
 			$nestedData[] = $row["no_faktur"]; 
 			$nestedData[] = $row["nama_toko"];
 			
-
-if ($row['status'] == 'Simpan Sementara') {
-	$nestedData[] = "<a href='proses_pesanan_barang.php?no_faktur=".$row['no_faktur']."&kode_pelanggan=".$row['kode_pelanggan']."&nama_pelanggan=".$row['nama_pelanggan']."&nama_gudang=".$row['nama_gudang']."&kode_gudang=".$row['kode_gudang']."' class='btn btn-primary'>Bayar</a>";
-}
-
-else{
-
-	$nestedData[] = "";
-	
-}
+ 
 			
 			$nestedData[] = $row["code_card"] ." - ". $row["nama_pelanggan"];
 			$nestedData[] = rp($row["total"]);
@@ -208,6 +218,7 @@ else{
 			$nestedData[] = rp($row["tunai"]);
 			$nestedData[] = rp($row["sisa"]);
 			$nestedData[] = rp($row["kredit"]);
+			$nestedData[] = $row["nama_konsumen"];
 
 	$nestedData[] = $row["id"];
 	$data[] = $nestedData;

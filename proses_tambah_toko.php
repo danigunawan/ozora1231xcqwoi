@@ -6,14 +6,15 @@
     // mengirim data menggunakan metode POST
 
 
-    $perintah = $db->prepare("INSERT INTO toko (id,nama_toko,alamat_toko) VALUES (?,?,?)");
+    $perintah = $db->prepare("INSERT INTO toko (id,nama_toko,alamat_toko,kode_marketplace) VALUES (?,?,?,?)");
 
-    $perintah->bind_param("sss",
-        $id, $nama_toko, $alamat_toko);
+    $perintah->bind_param("ssss",
+        $id, $nama_toko, $alamat_toko, $kode_marketplace);
         
         $id = stringdoang($_POST['id']);
         $nama_toko = stringdoang($_POST['nama_toko']); 
         $alamat_toko = stringdoang($_POST['alamat_toko']);   
+        $kode_marketplace = stringdoang($_POST['kode_marketplace']);  
     
     $perintah->execute();
 

@@ -1132,7 +1132,7 @@ else
 
 
 <script>
-
+/*
 //untuk menampilkan sisa penjualan secara otomatis
   $(document).ready(function(){
 

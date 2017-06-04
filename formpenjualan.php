@@ -56,33 +56,11 @@ $session_id = session_id();
 
 <div class="row">
 
-<div class="col-sm-2">
-          <label class="gg" > Toko </label><br>
-          
-          <select name="kode_toko" id="kode_toko"  class="form-control chosen" required="" autofocus="" >
-          <?php 
-          
-      
-          $query_gudang = $db->query("SELECT id,nama_toko FROM toko");
-          
 
-          while($data_gudang = mysqli_fetch_array($query_gudang))
-          {
- 
-
-                echo "<option selected value='".$data_gudang['id'] ."'>".$data_gudang['nama_toko'] ."</option>"; 
-          
-          }
-          
-          
-          ?>
-          </select>
-</div>
-
-<div class="col-sm-4">
+<div class="col-sm-3">
     <label> Kode Marketplace </label><br>
   <select name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen" required="" autofocus="">
- 
+ <option value="">Pilih Marketplace</option>
           
   <?php 
     
@@ -114,7 +92,32 @@ nama_pelanggan FROM pelanggan");
     <input type="hidden" name="sisa_plafon"  id="sisa_plafon" class="form-control">
 </div>
       
+    
+<div class="col-sm-3">
+          <label class="gg" > Toko </label><br>
           
+          <select name="kode_toko" id="kode_toko"  class="form-control chosen" required="" autofocus="" >
+          <option value="">Pilih Toko</option>
+          <?php 
+          
+      
+          $query_gudang = $db->query("SELECT id,nama_toko FROM toko");
+          
+
+          while($data_gudang = mysqli_fetch_array($query_gudang))
+          {
+ 
+
+                echo "<option value='".$data_gudang['id'] ."'>".$data_gudang['nama_toko'] ."</option>"; 
+          
+          }
+          
+          
+          ?>
+          </select>
+</div>
+
+
           <select style="font-size:15px; height:35px; display:none;" name="kode_gudang" id="kode_gudang" class="form-control gg" required="" >
           <?php  
           $query_gudang = $db->query("SELECT default_sett,kode_gudang,nama_gudang FROM gudang");        
@@ -731,14 +734,20 @@ tr:nth-child(even){background-color: #f2f2f2}
      
 
             
-          <button type="submit" id="simpan_sementara" class="btn btn-primary" style="font-size:15px">  Simpan (F10)</button>
+          <!-- TOMBOL SEMENTARA 
+          <button type="submit" id="simpan_sementara" class="btn btn-primary" style="font-size:15px">  Simpan (F10)</button> // -->
           <a href='cetak_penjualan_tunai.php' id="cetak_tunai" style="display: none;" class="btn btn-primary" target="blank"> Cetak Tunai  </a>
 
+       <!--   TOMBOL Bayar / Cetak 
           <button type="submit" id="cetak_langsung" target="blank" class="btn btn-success" style="font-size:15px"> Bayar / Cetak (Ctrl + K) </button>
+          -->
 
           <a href='cetak_penjualan_tunai_besar.php' id="cetak_tunai_besar" style="display: none;" class="btn btn-warning" target="blank"> Cetak Tunai Besar </a>
 
-          <a href='cetak_penjualan_surat_jalan.php' id="cetak_surat_jalan" style="display: none;" class="btn btn-danger" target="blank"> Cetak Surat Jalan </a>
+       <!--   TOMBOL CETAK SURAT JALAN
+
+       <a href='cetak_penjualan_surat_jalan.php' id="cetak_surat_jalan" style="display: none;" class="btn btn-danger" target="blank"> Cetak Surat Jalan </a> 
+       -->
           
      
     
@@ -2346,11 +2355,11 @@ if (stok < 0 )
 
 
     }
-
+    /*
     else if( limit_stok > stok  ){
 
       alert ("Persediaan Barang Ini Sudah Mencapai Batas Limit Stok, Segera Lakukan Pembelian !");
-    }
+    }*/
   });
 })
 
@@ -3225,12 +3234,12 @@ $(document).ready(function(){
     }); 
 
     
-    shortcut.add("f10", function() {
+ //   shortcut.add("f10", function() {
         // Do something
 
-        $("#simpan_sementara").click();
+   //     $("#simpan_sementara").click();
 
-    }); 
+    }// ); 
 
     
     shortcut.add("ctrl+b", function() {

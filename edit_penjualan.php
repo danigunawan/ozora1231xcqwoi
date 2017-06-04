@@ -1,4 +1,4 @@
-Gudang<?php include 'session_login.php';
+<?php include 'session_login.php';
 
 
 // memasukan file session login,  header, navbar, db.php,
@@ -101,26 +101,59 @@ include 'sanitasi.php';
   <form enctype="multipart/form-data" role="form" action="formpenjualan.php" method="post ">
         
 
-<div class="col-sm-2">
+<div class="col-sm-3">
+    <label> Kode Marketplace </label><br>
+  <select name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen" required="" autofocus="">
+ <option value="">Pilih Marketplace</option>
+ 
+          
+  <?php 
+    
+    //untuk menampilkan semua data pada tabel pelanggan dalam DB
+    $query_pelanggan = $db->query("SELECT default_pelanggan,
+kode_pelanggan,
+level_harga,
+nama_pelanggan FROM pelanggan");
+
+    //untuk menyimpan data sementara yang ada pada $query
+    while($data_pelanggan = mysqli_fetch_array($query_pelanggan))
+    {
+            if ($data_pelanggan['default_pelanggan'] == '1') {
+
+    echo "<option selected value='".$data_pelanggan['kode_pelanggan'] ."' class='opt-pelanggan-".$data_pelanggan['kode_pelanggan']."' data_pelanggan-level='".$data_pelanggan['level_harga'] ."'>".$data_pelanggan['kode_pelanggan'] ." - ".$data_pelanggan['nama_pelanggan'] ."</option>";
+              
+            }
+
+            else{
+
+    echo "<option value='".$data_pelanggan['kode_pelanggan'] ."' class='opt-pelanggan-".$data_pelanggan['kode_pelanggan']."' data_pelanggan-level='".$data_pelanggan['level_harga'] ."'>".$data_pelanggan['kode_pelanggan'] ." - ".$data_pelanggan['nama_pelanggan'] ."</option>";
+
+            }
+    }
+    
+    
+    ?>
+    </select><br> 
+    <input type="hidden" name="sisa_plafon"  id="sisa_plafon" class="form-control">
+</div>
+      
+    
+<div class="col-sm-3">
           <label class="gg" > Toko </label><br>
           
           <select name="kode_toko" id="kode_toko"  class="form-control chosen" required="" autofocus="" >
-
+          <option value="">Pilih Toko</option>
           <?php 
           
       
-          $query_toko = $db->query("SELECT id,nama_toko FROM toko");
+          $query_gudang = $db->query("SELECT id,nama_toko FROM toko");
           
 
-          while($data_toko = mysqli_fetch_array($query_toko))
+          while($data_gudang = mysqli_fetch_array($query_gudang))
           {
  
-              if ($kode_toko == $data_toko['id']) {
-                echo "<option selected value='".$data_toko['id'] ."'>".$data_toko['nama_toko'] ."</option>"; 
-                # code...
-              }else  { 
-                echo "<option value='".$data_toko['id'] ."'>".$data_toko['nama_toko'] ."</option>"; 
-              }
+
+                echo "<option selected value='".$data_gudang['id'] ."'>".$data_gudang['nama_toko'] ."</option>"; 
           
           }
           
@@ -129,29 +162,9 @@ include 'sanitasi.php';
           </select>
 </div>
 
-<div class="form-group col-sm-2">
-  <label> Kode Marketplace </label>
-  <select type="text" name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen"  required="" autofocus="">
-  <option value="<?php echo $kode_pelanggan; ?>"><?php echo $kode_pelanggan; ?></option>
-          
-  <?php 
-    
-    //untuk menampilkan semua data pada tabel pelanggan dalam DB
-    $query = $db->query("SELECT kode_pelanggan,nama_pelanggan,level_harga FROM pelanggan");
 
-    //untuk menyimpan data sementara yang ada pada $query
-    while($data = mysqli_fetch_array($query))
-    {
-    
-    echo "<option value='".$data['kode_pelanggan'] ."' class='opt-pelanggan-".$data['kode_pelanggan']."' data-level='".$data['level_harga'] ."'>".$data['kode_pelanggan'] ." - ".$data['nama_pelanggan'] ."</option>";
-    }
-    
-    
-    ?>
-  </select>
-  </div>
   
-          <select name="kode_gudang" id="kode_gudang" class="form-control chosen" style=" display:none;" required="" >
+          <select name="kode_gudang" id="kode_gudang" class="form-control" style=" display:none;" required="" >
           <option value=<?php echo $kode_gudang; ?>><?php echo $nama_gudang; ?></option>
           <?php 
           
@@ -215,8 +228,8 @@ include 'sanitasi.php';
 
 
 <div class="form-group  col-sm-2">
-      <label> Tanggal </label><br>
-      <input type="text" name="tanggal" id="tanggal"  value="<?php echo $ambil_tanggal['tanggal']; ?>" class="form-control tanggal" >
+      <label> Tanggal </label> 
+      <input type="text" style="height:20px"  name="tanggal" id="tanggal"  value="<?php echo $ambil_tanggal['tanggal']; ?>" class="form-control tanggal" >
 </div>
 
 
@@ -224,15 +237,19 @@ include 'sanitasi.php';
 
 <div class="col-sm-3">
     <div class="form-group">
-        <input type="text" style="height:20px" value="<?php echo "$nama_konsumen"; ?>" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">
+        <input type="text" style="height:46px" value="<?php echo "$nama_konsumen"; ?>" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">
     </div>
 </div>
 
-<div class="col-sm-4">
+<div class="col-sm-5">
     <div class="form-group">
-        <input type="text" style="height:20px" value="<?php echo "$alamat_konsumen"; ?>" name="alamat_konsumen" id="alamat_konsumen" class="form-control" placeholder="Alamat Konsumen">
+        <input type="text" style="height:46px" value="<?php echo "$alamat_konsumen"; ?>" name="alamat_konsumen" id="alamat_konsumen" class="form-control" placeholder="Alamat Konsumen">
     </div>
 </div>
+ 
+  <div class="form-group">
+      <button type="button" style="height:46px" id="cari_produk_penjualan" class="btn btn-info" data-toggle="modal" data-target="#myModal"> <i class='fa  fa-search'> </i> Cari (F1)</button>
+  </div> 
 
 </div>
 
@@ -400,9 +417,6 @@ include 'sanitasi.php';
 <form class="form" action="proses_tambah_edit_penjualan.php" role="form" id="formtambahproduk">
 <br>
 
-<div class="form-group">
-    <button type="button" id="cari_produk_penjualan" class="btn btn-info" data-toggle="modal" data-target="#myModal"> <i class='fa  fa-search'> </i> Cari (F1)</button>
-</div>
 
 
 <div class="row">
@@ -1101,7 +1115,7 @@ console.log(ber_stok);
         else {
 
           var total_potongan_nominal =  Math.round(((total * potongan_persen) / 100));
-          var total_kurang_potongan = total - total_potongan_nominal;
+          var total_kurang_potongan = parseInt(total) - parseInt(total_potongan_nominal);
           var t_tax = ((parseInt(total_kurang_potongan,10) * parseInt(tax_faktur,10)) / 100);
 
           var total_akhir = parseInt(total_kurang_potongan, 10) + parseInt(t_tax,10);
