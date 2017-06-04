@@ -42,7 +42,7 @@ $total_bayar = $data_sum_dari_penjualan['tunai_penjualan'] +  $data_sum_dari_det
  <div class="row"><!--row1-->
         <div class="col-sm-2">
         <br><br>
-                <img src='save_picture/<?php echo $data_perusahaan['foto']; ?>' class='img-rounded' alt='Cinque Terre' width='160' height='140`'> 
+        <img src='save_picture/<?php echo $data_perusahaan['foto']; ?>' class='img-rounded' alt='Cinque Terre' width='160' height='140`'> 
         </div><!--penutup colsm2-->
 
         <div class="col-sm-6">
@@ -78,7 +78,8 @@ $total_bayar = $data_sum_dari_penjualan['tunai_penjualan'] +  $data_sum_dari_det
  <table id="tableuser" class="table table-bordered table-sm">
             <thead>
       <th style="background-color: #4CAF50; color: white;"> Nomor Faktur </th>
-      <th style="background-color: #4CAF50; color: white;"> Nama Costumer</th>
+      <th style="background-color: #4CAF50; color: white;"> Marketplace</th>
+      <th style="background-color: #4CAF50; color: white;"> Konsumen</th>
       <th style="background-color: #4CAF50; color: white;"> Sales </th>
       <th style="background-color: #4CAF50; color: white;"> Tgl. Transaksi </th>
       <th style="background-color: #4CAF50; color: white;"> Tgl. Jatuh Tempo </th>
@@ -92,27 +93,28 @@ $total_bayar = $data_sum_dari_penjualan['tunai_penjualan'] +  $data_sum_dari_det
             <tbody>
             <?php
 
-          $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 ORDER BY dp.tanggal DESC ");
+          $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit,dp.nama_konsumen FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 ORDER BY dp.tanggal DESC ");
                   while ($data_penjualan = mysqli_fetch_array($query_penjualan))
 
                   {
 
-$query_detail_pembayaran_piutang = $db->query("SELECT SUM(jumlah_bayar) + SUM(potongan) AS total_bayar FROM detail_pembayaran_piutang WHERE no_faktur_penjualan = '$data_penjualan[no_faktur]' ");
-$data_pembayaran_piutang = mysqli_fetch_array($query_detail_pembayaran_piutang);
-$jumlah_data_detail_pembayaran_piutang = mysqli_num_rows($query_detail_pembayaran_piutang);
+                  $query_detail_pembayaran_piutang = $db->query("SELECT SUM(jumlah_bayar) + SUM(potongan) AS total_bayar FROM detail_pembayaran_piutang WHERE no_faktur_penjualan = '$data_penjualan[no_faktur]' ");
+                  $data_pembayaran_piutang = mysqli_fetch_array($query_detail_pembayaran_piutang);
+                  $jumlah_data_detail_pembayaran_piutang = mysqli_num_rows($query_detail_pembayaran_piutang);
 
-$sum_dp = $db->query("SELECT SUM(tunai) AS tunai_penjualan FROM penjualan WHERE no_faktur = '$data_penjualan[no_faktur]' ");
-$data_sum = mysqli_fetch_array($sum_dp);
-$tunai_penjualan = $data_sum['tunai_penjualan'];
-
-
-$tot_bayar = $kel_bayar['total_bayar'] + $tunai_penjualan;
+                  $sum_dp = $db->query("SELECT SUM(tunai) AS tunai_penjualan FROM penjualan WHERE no_faktur = '$data_penjualan[no_faktur]' ");
+                  $data_sum = mysqli_fetch_array($sum_dp);
+                  $tunai_penjualan = $data_sum['tunai_penjualan'];
+                  
+                  
+                  $tot_bayar = $data_pembayaran_piutang['total_bayar'] + $tunai_penjualan;
 
 
 
                   echo "<tr>
                   <td>". $data_penjualan['no_faktur'] ."</td>
                   <td>". $data_penjualan['nama_pelanggan'] ."</td>
+                  <td>". $data_penjualan['nama_konsumen'] ."</td>
                   <td>". $data_penjualan['sales'] ."</td>
                   <td>". $data_penjualan['tanggal'] ."</td>
                   <td>". $data_penjualan['tanggal_jt'] ."</td>
@@ -134,6 +136,7 @@ $tot_bayar = $kel_bayar['total_bayar'] + $tunai_penjualan;
 
 
     echo "<td><p style='color:red'> TOTAL </p></td>
+      <td><p style='color:red'> - </p></td>
       <td><p style='color:red'> - </p></td>
       <td><p style='color:red'> - </p></td>
       <td><p style='color:red'> - </p></td>

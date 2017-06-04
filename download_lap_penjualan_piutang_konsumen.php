@@ -125,7 +125,8 @@ else
  <table id="tableuser" class="table table-bordered table-sm">
             <thead>
       <th style="background-color: #4CAF50; color: white;"> Nomor Faktur </th>
-      <th style="background-color: #4CAF50; color: white;"> Nama Konsumen</th>
+      <th style="background-color: #4CAF50; color: white;"> Marketplace</th>
+      <th style="background-color: #4CAF50; color: white;"> Konsumen</th>
       <th style="background-color: #4CAF50; color: white;"> Sales </th>
       <th style="background-color: #4CAF50; color: white;"> Tgl. Transaksi </th>
       <th style="background-color: #4CAF50; color: white;"> Tgl. Jatuh Tempo </th>
@@ -142,21 +143,21 @@ else
 // LOGIKA UNTUK FILTER BERDASARKAN KONSUMEN DAN SALES (QUERY TAMPIL AWAL)
 if ($konsumen == 'semua' AND $sales == 'semua')
 {
-          $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 ORDER BY dp.tanggal DESC ");
+          $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit, dp.nama_konsumen FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 ORDER BY dp.tanggal DESC ");
  }
 
 else if ($konsumen != 'semua' AND $sales == 'semua')
  {
-          $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 AND dp.kode_pelanggan = '$konsumen' ORDER BY dp.tanggal DESC ");
+          $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit, dp.nama_konsumen FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 AND dp.kode_pelanggan = '$konsumen' ORDER BY dp.tanggal DESC ");
 
  }  
 else if ($konsumen == 'semua' AND $sales != 'semua')
 {
-         $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 AND dp.sales = '$sales' ORDER BY dp.tanggal DESC ");
+         $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit, dp.nama_konsumen FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 AND dp.sales = '$sales' ORDER BY dp.tanggal DESC ");
 }
 else
 {
-        $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 AND dp.kode_pelanggan = '$konsumen' AND dp.sales = '$sales' ORDER BY dp.tanggal DESC ");
+        $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit, dp.nama_konsumen FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 AND dp.kode_pelanggan = '$konsumen' AND dp.sales = '$sales' ORDER BY dp.tanggal DESC ");
 
 }
 // LOGIKA UNTUK FILTER BERDASARKAN KONSUMEN DAN SALES (QUERY TAMPIL AWAL)
@@ -173,7 +174,7 @@ $jumlah_data_detail_pembayaran_detail = mysqli_num_rows($query_detail_pembayaran
 
 $sum_dp = $db->query("SELECT SUM(tunai) AS tunai_penjualan FROM penjualan WHERE no_faktur = '$data_penjualan[no_faktur]' ");
 $data_sum = mysqli_fetch_array($sum_dp);
-$total_tunai = $sum_dp['tunai_penjualan']; 
+$total_tunai = $data_sum['tunai_penjualan']; 
 
 
 $tot_bayar = $data_detail_pembayaran_piutang['total_bayar'] + $total_tunai;
@@ -183,6 +184,7 @@ $tot_bayar = $data_detail_pembayaran_piutang['total_bayar'] + $total_tunai;
                   echo "<tr>
                   <td>". $data_penjualan['no_faktur'] ."</td>
                   <td>". $data_penjualan['nama_pelanggan'] ."</td>
+                  <td>". $data_penjualan['nama_konsumen'] ."</td>
                   <td>". $data_penjualan['sales'] ."</td>
                   <td>". $data_penjualan['tanggal'] ."</td>
                   <td>". $data_penjualan['tanggal_jt'] ."</td>
@@ -205,6 +207,7 @@ $tot_bayar = $data_detail_pembayaran_piutang['total_bayar'] + $total_tunai;
 
 
     echo "<td><p style='color:red'> TOTAL </p></td>
+      <td><p style='color:red'> - </p></td>
       <td><p style='color:red'> - </p></td>
       <td><p style='color:red'> - </p></td>
       <td><p style='color:red'> - </p></td>

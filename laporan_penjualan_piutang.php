@@ -138,7 +138,8 @@ include 'db.php';
 <table id="tableuser" class="table table-bordered table-sm">
 		<thead>
 			<th style="background-color: #4CAF50; color: white;"> Nomor Faktur </th>
-			<th style="background-color: #4CAF50; color: white;"> Nama Konsumen</th>
+      <th style="background-color: #4CAF50; color: white;"> Marketplace</th>
+      <th style="background-color: #4CAF50; color: white;"> Konsumen</th>
 			<th style="background-color: #4CAF50; color: white;"> Sales </th>
       <th style="background-color: #4CAF50; color: white;"> Tgl. Transaksi</th>
       <th style="background-color: #4CAF50; color: white;"> Tgl. Jatuh Tempo</th>

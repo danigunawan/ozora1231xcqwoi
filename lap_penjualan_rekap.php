@@ -72,10 +72,11 @@ tr:nth-child(even){background-color: #f2f2f2}
 <table id="table_lap_penjualan_rekap" class="table table-bordered table-sm">
 		<thead>
 			<th style="background-color: #4CAF50; color: white;"> Nomor Faktur </th>
+			<th style="background-color: #4CAF50; color: white;"> Kategori </th>
+			<th style="background-color: #4CAF50; color: white;"> Marketplace</th>
+			<th style="background-color: #4CAF50; color: white;"> Konsumen</th>
 			<th style="background-color: #4CAF50; color: white;"> Tanggal </th>	
 			<th style="background-color: #4CAF50; color: white;"> Jam </th>
-			<th style="background-color: #4CAF50; color: white;"> Kategori </th>
-			<th style="background-color: #4CAF50; color: white;"> Kode Marketplace</th>
 			<th style="background-color: #4CAF50; color: white;"> User </th>
 			<th style="background-color: #4CAF50; color: white;"> Status </th>
 			<th style="background-color: #4CAF50; color: white;"> Total Kotor</th>

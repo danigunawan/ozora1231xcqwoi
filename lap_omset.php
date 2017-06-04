@@ -86,7 +86,8 @@ tr:nth-child(even){background-color: #f2f2f2}
                           <thead> <!-- untuk memberikan nama pada kolom tabel -->                              
 								<th style="background-color: #4CAF50; color: white;"> Tanggal</th>
 								<th style="background-color: #4CAF50; color: white;"> No. Faktur</th>
-								<th style="background-color: #4CAF50; color: white;"> Nama Konsumen</th>
+								<th style="background-color: #4CAF50; color: white;"> Marketplace</th>
+								<th style="background-color: #4CAF50; color: white;"> Konsumen</th>
 								<th style="background-color: #4CAF50; color: white;"> Sales</th>
 								<th style="background-color: #4CAF50; color: white;"> <center>Total Omset</center> </th>
 								<th style="background-color: #4CAF50; color: white;"> <center>Terbayar</center> </th>
