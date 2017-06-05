@@ -51,7 +51,7 @@
 
 
 if ($prosentase != 0){
-       $query90 = $db->query("SELECT * FROM tbs_penjualan_order WHERE no_faktur_order = '$no_faktur' AND kode_barang = '$kode_barang'");
+       $query90 = $db->query("SELECT no_faktur_order, kode_barang FROM tbs_penjualan_order WHERE no_faktur_order = '$no_faktur' AND kode_barang = '$kode_barang'");
       $cek01 = mysqli_num_rows($query90);
 
       $cek90 = mysqli_fetch_array($query90);
@@ -88,7 +88,7 @@ if ($prosentase != 0){
 
     elseif ($nominal != 0) {
 
-      $query900 = $db->query("SELECT * FROM tbs_penjualan_order WHERE no_faktur_order = '$no_faktur' AND kode_barang = '$kode_barang'");
+      $query900 = $db->query("SELECT no_faktur_order, kode_barang FROM tbs_penjualan_order WHERE no_faktur_order = '$no_faktur' AND kode_barang = '$kode_barang'");
       $cek011 = mysqli_num_rows($query900);
 
       $cek900 = mysqli_fetch_array($query900);
@@ -116,7 +116,7 @@ if ($prosentase != 0){
 
 
   
-$cek = $db->query("SELECT * FROM tbs_penjualan_order WHERE kode_barang = '$kode_barang' AND no_faktur_order = '$no_faktur'");
+$cek = $db->query("SELECT no_faktur_order, kode_barang FROM tbs_penjualan_order WHERE kode_barang = '$kode_barang' AND no_faktur_order = '$no_faktur'");
 
 $jumlah = mysqli_num_rows($cek);
     

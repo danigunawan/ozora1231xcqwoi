@@ -4,7 +4,7 @@ include 'db.php';
 
 $session_id = $_POST['session_id'];
 
-$query = $db->query("SELECT * FROM tbs_penjualan_order WHERE session_id = '$session_id'");
+$query = $db->query("SELECT kode_barang FROM tbs_penjualan_order WHERE session_id = '$session_id'");
 $jumlah = mysqli_num_rows($query);
 
 

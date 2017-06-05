@@ -8,7 +8,7 @@ include 'db.php';
 include 'sanitasi.php';
 
 
-$pilih_akses_tombol = $db->query("SELECT * FROM otoritas_form_order_penjualan WHERE id_otoritas = '$_SESSION[otoritas_id]' ");
+$pilih_akses_tombol = $db->query("SELECT tombol_submit, tombol_order FROM otoritas_form_order_penjualan WHERE id_otoritas = '$_SESSION[otoritas_id]' ");
 $otoritas_tombol = mysqli_fetch_array($pilih_akses_tombol);
 
 // menampilkan seluruh data yang ada pada tabel penjualan yang terdapt pada DB
@@ -89,7 +89,7 @@ $session_id = session_id();
   <?php
 
     //untuk menampilkan semua data pada tabel pelanggan dalam DB
-    $query = $db->query("SELECT * FROM pelanggan");
+    $query = $db->query("SELECT kode_pelanggan, level_harga, nama_pelanggan FROM pelanggan");
 
     //untuk menyimpan data sementara yang ada pada $query
     while($data = mysqli_fetch_array($query))
@@ -131,7 +131,7 @@ $session_id = session_id();
           <?php
 
           // menampilkan seluruh data yang ada pada tabel suplier
-          $query = $db->query("SELECT * FROM gudang");
+          $query = $db->query("SELECT kode_gudang, nama_gudang FROM gudang");
 
           // menyimpan data sementara yang ada pada $query
           while($data = mysqli_fetch_array($query))

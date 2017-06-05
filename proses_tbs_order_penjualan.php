@@ -5,7 +5,7 @@
     $session_id = session_id();
     //mengirim data sesuai dengan variabel denagn metode POST 
 
-$pilih_akses_tombol = $db->query("SELECT * FROM otoritas_form_order_penjualan WHERE id_otoritas = '$_SESSION[otoritas_id]' ");
+$pilih_akses_tombol = $db->query("SELECT edit_produk, hapus_produk FROM otoritas_form_order_penjualan WHERE id_otoritas = '$_SESSION[otoritas_id]' ");
 $otoritas_tombol = mysqli_fetch_array($pilih_akses_tombol);
 
 
@@ -55,7 +55,7 @@ $otoritas_tombol = mysqli_fetch_array($pilih_akses_tombol);
 
 
 if ($prosentase != 0){
-       $query90 = $db->query("SELECT * FROM tbs_penjualan_order WHERE session_id = '$session_id' AND kode_barang = '$kode_barang'");
+       $query90 = $db->query("SELECT kode_barang FROM tbs_penjualan_order WHERE session_id = '$session_id' AND kode_barang = '$kode_barang'");
       $cek01 = mysqli_num_rows($query90);
 
       $cek90 = mysqli_fetch_array($query90);
@@ -92,7 +92,7 @@ if ($prosentase != 0){
 
     elseif ($nominal != 0) {
 
-      $query900 = $db->query("SELECT * FROM tbs_penjualan_order WHERE session_id = '$session_id' AND kode_barang = '$kode_barang'");
+      $query900 = $db->query("SELECT kode_barang FROM tbs_penjualan_order WHERE session_id = '$session_id' AND kode_barang = '$kode_barang'");
       $cek011 = mysqli_num_rows($query900);
 
       $cek900 = mysqli_fetch_array($query900);
@@ -120,7 +120,7 @@ if ($prosentase != 0){
 
 
   
-$cek = $db->query("SELECT * FROM tbs_penjualan_order WHERE kode_barang = '$kode_barang' AND session_id = '$session_id'");
+$cek = $db->query("SELECT kode_barang FROM tbs_penjualan_order WHERE kode_barang = '$kode_barang' AND session_id = '$session_id'");
 
 $jumlah = mysqli_num_rows($cek);
     

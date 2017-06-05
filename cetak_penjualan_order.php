@@ -9,35 +9,35 @@ include 'db.php';
 
 $no_faktur = $_GET['no_faktur'];
 
-    $query0 = $db->query("SELECT * FROM penjualan_order WHERE no_faktur_order = '$no_faktur' ");
-    $data0 = mysqli_fetch_array($query0);
+    $query_order = $db->query("SELECT no_faktur_order, status_order, total, tanggal FROM penjualan_order WHERE no_faktur_order = '$no_faktur' ");
+    $data_order = mysqli_fetch_array($query_order);
 
-    $query1 = $db->query("SELECT * FROM perusahaan ");
-    $data1 = mysqli_fetch_array($query1);
+    $query_perusahaan = $db->query("SELECT nama_perusahaan, alamat_perusahaan, no_telp FROM perusahaan ");
+    $data_perusahaan = mysqli_fetch_array($query_perusahaan);
 
-    $query2 = $db->query("SELECT * FROM detail_penjualan_order WHERE no_faktur_order = '$no_faktur' ");
+    $query_detail_order = $db->query("SELECT * FROM detail_penjualan_order WHERE no_faktur_order = '$no_faktur' ");
 
-    $query3 = $db->query("SELECT SUM(jumlah_barang) as total_item FROM detail_penjualan_order WHERE no_faktur_order = '$no_faktur'");
-    $data3 = mysqli_fetch_array($query3);
-    $total_item = $data3['total_item'];
+    $query_sum = $db->query("SELECT SUM(jumlah_barang) as total_item FROM detail_penjualan_order WHERE no_faktur_order = '$no_faktur'");
+    $data_sum = mysqli_fetch_array($query_sum);
+    $total_item = $data_sum['total_item'];
     
  ?>
 
 
 
-  <?php echo $data1['nama_perusahaan']; ?><br>
-  <?php echo $data1['alamat_perusahaan']; ?><br><br>
+  <?php echo $data_perusahaan['nama_perusahaan']; ?><br>
+  <?php echo $data_perusahaan['alamat_perusahaan']; ?><br><br>
   ===================<br>
-  No Faktur : <?php echo $data0['no_faktur_order']; ?> || Kasir : <?php echo $_SESSION['nama']; ?><br>
-  Status : <b><?php echo $data0['status_order']; ?> </b><br>
+  No Faktur : <?php echo $data_order['no_faktur_order']; ?> || Kasir : <?php echo $_SESSION['nama']; ?><br>
+  Status : <b><?php echo $data_order['status_order']; ?> </b><br>
   ===================<br>
  <table>
 
   <tbody>
            <?php 
-           while ($data2 = mysqli_fetch_array($query2)){
+           while ($data_detail_order = mysqli_fetch_array($query_detail_order)){
            
-           echo '<tr><td width:"50%"> '. $data2['nama_barang'] .' </td> <td style="padding:3px"> '. $data2['jumlah_barang'] .'</td>  <td style="padding:3px"> '. rp($data2['harga']) .'</td>  <td style="padding:3px"> '. rp($data2['subtotal']) . ' </td></tr>';
+           echo '<tr><td width:"50%"> '. $data_detail_order['nama_barang'] .' </td> <td style="padding:3px"> '. $data_detail_order['jumlah_barang'] .'</td>  <td style="padding:3px"> '. rp($data_detail_order['harga']) .'</td>  <td style="padding:3px"> '. rp($data_detail_order['subtotal']) . ' </td></tr>';
            
            }
            
@@ -52,17 +52,17 @@ mysqli_close($db);
  <table>
   <tbody>
       <tr><td  width="50%">Total Item</td> <td> :</td> <td> <?php echo $total_item; ?> </td></tr>
-      <tr><td width="50%">Total Penjualan</td> <td> :</td> <td><?php echo rp($data0['total']); ?> </tr>         
+      <tr><td width="50%">Total Penjualan</td> <td> :</td> <td><?php echo rp($data_order['total']); ?> </tr>         
 
   </tbody>
 </table>
     ===================<br>
     ===================<br>
-    Tanggal : <?php echo tanggal($data0['tanggal']);?><br>
+    Tanggal : <?php echo tanggal($data_order['tanggal']);?><br>
     ===================<br><br>
     Terima Kasih<br>
     Selamat Datang Kembali<br>
-    Telp. <?php echo $data1['no_telp']; ?><br>
+    Telp. <?php echo $data_perusahaan['no_telp']; ?><br>
     (* Sudah Termasuk PPN 10%)
 
 

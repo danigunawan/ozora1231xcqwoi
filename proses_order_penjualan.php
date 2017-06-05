@@ -76,7 +76,7 @@ echo $no_faktur = $nomor."/OR/".$data_bulan_terakhir."/".$tahun_terakhir;
     $ambil_kode_pelanggan = mysqli_fetch_array($select_kode_pelanggan);
 
               
-    $query0 = $db->query("SELECT * FROM tbs_fee_produk WHERE session_id = '$session_id' ");
+    $query0 = $db->query("SELECT no_faktur_order FROM tbs_fee_produk WHERE session_id = '$session_id' ");
    while  ($cek0 = mysqli_fetch_array($query0)){
 
           $query10 = $db->query("UPDATE tbs_fee_produk SET no_faktur_order = '$no_faktur' , session_id = '' WHERE session_id = '$session_id'");
