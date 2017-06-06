@@ -2887,6 +2887,67 @@ else{
 </div> <!-- / of otoritas varian warna -->
 
 
+<div class="form-group col-sm-2"> <!-- start otoritas Varian Ukuran -->
+<label>Varian Ukuran</label><br>
+
+<?php 
+
+if ($data_otoritas['ukuran_lihat'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox382" name="ukuran_lihat" checked="">
+    <label for="checkbox382">Lihat</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox382" name="ukuran_lihat">
+    <label for="checkbox382">Lihat</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['ukuran_tambah'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox383" name="ukuran_tambah" checked=""> 
+    <label for="checkbox383">Tambah</label><br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox383" name="ukuran_tambah"> 
+    <label for="checkbox383">Tambah</label><br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['ukuran_edit'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox384" name="ukuran_edit" checked="">
+    <label for="checkbox384">Edit</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox384" name="ukuran_edit">
+    <label for="checkbox384">Edit</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['ukuran_hapus'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox385" name="ukuran_hapus" checked="">
+    <label for="checkbox385">Hapus</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox385" name="ukuran_hapus">
+    <label for="checkbox385">Hapus</label> <br>';  
+}
+
+ ?>
+
+</div> <!-- / of otoritas varian warna -->
+
 
 
 <div class="col-sm-12">
