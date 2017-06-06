@@ -10,7 +10,6 @@ include 'sanitasi.php';
 
 $dari_tanggal = stringdoang($_GET['dari_tanggal']);
 $sampai_tanggal = stringdoang($_GET['sampai_tanggal']);
-$kategori = stringdoang($_GET['kategori']);
 
 $total_akhir_kotor = 0;
 $total_potongan = 0;
@@ -28,8 +27,8 @@ $total_kredit = 0;
 <table id="tableuser" class="table table-bordered">
             <thead>
                 <th style="background-color: #4CAF50; color: white;"> Nomor Faktur </th>
-                <th style="background-color: #4CAF50; color: white;"> Kategori </th>
                 <th style="background-color: #4CAF50; color: white;"> Marketplace</th>
+                <th style="background-color: #4CAF50; color: white;"> Toko </th>
                 <th style="background-color: #4CAF50; color: white;"> Konsumen </th> 
                 <th style="background-color: #4CAF50; color: white;"> Tanggal </th> 
                 <th style="background-color: #4CAF50; color: white;"> Jam </th>
@@ -48,13 +47,7 @@ $total_kredit = 0;
     <tbody>
     <?php
     
-      if ($kategori == "Semua Kategori") {
-  # JIKA SEMUA KATEGORI
-        $perintah_tampil = $db->query(" SELECT b.kategori,pel.nama_pelanggan,pel.kode_pelanggan AS code_card,p.tunai,p.id,p.tanggal,p.no_faktur,p.kode_pelanggan,p.total,p.jam,p.user,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan LEFT JOIN detail_penjualan dp ON p.no_faktur = dp.no_faktur LEFT JOIN barang b ON dp.kode_barang = b.kode_barang  WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' GROUP BY p.no_faktur");
-      }
-      else{
-        $perintah_tampil = $db->query(" SELECT b.kategori,pel.nama_pelanggan,pel.kode_pelanggan AS code_card,p.tunai,p.id,p.tanggal,p.no_faktur,p.kode_pelanggan,p.total,p.jam,p.user,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan LEFT JOIN detail_penjualan dp ON p.no_faktur = dp.no_faktur LEFT JOIN barang b ON dp.kode_barang = b.kode_barang  WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND b.kategori = '$kategori' GROUP BY p.no_faktur  ");
-      }
+      $perintah_tampil = $db->query(" SELECT b.kategori,pel.nama_pelanggan,pel.kode_pelanggan AS code_card,p.tunai,p.id,p.tanggal,p.no_faktur,p.kode_pelanggan,p.total,p.jam,p.user,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen, t.nama_toko FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN detail_penjualan dp ON p.no_faktur = dp.no_faktur INNER JOIN barang b ON dp.kode_barang = b.kode_barang INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' GROUP BY p.no_faktur");
 
       //menyimpan data sementara yang ada pada $perintah
       while ($data1 = mysqli_fetch_array($perintah_tampil))
@@ -64,8 +57,8 @@ $total_kredit = 0;
           
                   echo "<tr>
                   <td>". $data1['no_faktur'] ."</td>
-                  <td>". $data1['kategori'] ."</td>
                   <td>". $data1['code_card'] ." - ". $data1['nama_pelanggan'] ."</td>
+                  <td>". $data1['nama_toko'] ."</td>
                   <td>". $data1['nama_konsumen'] ."</td>
                   <td>". $data1['tanggal'] ."</td>
                   <td>". $data1['jam'] ."</td>
