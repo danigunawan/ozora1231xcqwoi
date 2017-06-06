@@ -91,9 +91,27 @@ $status = $_GET['status'];
           <label class="gg" > <h4><i>Ekspedisi</i></h4> </label>
           <input type="text" name="lihat_ekspedisi" style="font-size:30px" id="lihat_ekspedisi"  class="form-control" readonly="" >
       </div>
+
+        <select name="ganti_ekspedisi" id="ganti_ekspedisi"  style="display:none;" class="form-control chosen" >
+          <?php 
+          
+      
+          $query_ekspedisi = $db->query("SELECT nama_ekspedisi FROM ekspedisi ");
+          
+
+          while($data_expedisi = mysqli_fetch_array($query_ekspedisi))
+          {
+           echo "<option selected value='".$data_expedisi['nama_ekspedisi'] ."'>".$data_expedisi['nama_ekspedisi'] ."</option>"; 
+          }
+          ?>
+          </select>
+
+      <input type="hidden" name="id_resi" id="id_resi" >
   </form>
-  
-      </div>
+        <i><p style="color:red;"> <b>**Note : klik dua kali untuk mengubah data </b></i>
+
+      </div>      
+
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
       </div>
@@ -104,9 +122,84 @@ $status = $_GET['status'];
 
 
 
+<script type="text/javascript"> 
+             $("#lihat_nomor_resi").dblclick(function(){
+
+
+                  $("#lihat_nomor_resi").attr("readonly",false);
+
+                });
+
+                $("#lihat_nomor_resi").blur(function(){
+
+                  var id = $("#id_resi").val();
+
+                  var input_nomor_resi_baru = $("#lihat_nomor_resi").val();
+
+
+                  $.post("update_resi.php",{id:id,input_nomor_resi_baru:input_nomor_resi_baru,jenis_edit:"nomor_resi"},function(data){
+
+                  $("#lihat_nomor_resi").attr("readonly",true);
+                  
+                   var table_penjualan = $('#table_penjualan').DataTable();
+                    table_penjualan.draw();
+
+
+             });
+     });
+</script>
+
+<script type="text/javascript">
+    $("#lihat_ekspedisi").dblclick(function(){
+
+
+                  $("#lihat_ekspedisi").attr("type","hidden");
+                  $("#ganti_ekspedisi").show();
+                });
+
+                $("#ganti_ekspedisi").change(function(){
+
+                  var id = $("#id_resi").val();
+
+                  var input_nama_expedisi = $(this).val();
+
+
+                  $.post("update_resi.php",{id:id,input_nama_expedisi:input_nama_expedisi,jenis_edit:"nama_expedisi"},function(data){
+
+                  $("#lihat_ekspedisi").attr("type","text");
+                  $("#lihat_ekspedisi").val(input_nama_expedisi);
+                  $("#ganti_ekspedisi").hide();
+                   
+                   var table_penjualan = $('#table_penjualan').DataTable();
+                   table_penjualan.draw();
+
+
+             });
+     });
+</script>
 
 
 
+<script type="text/javascript">
+// tampil modal lihat resi
+  $(document).ready(function(){
+    $(document).on('click','.lihat_resi',function(e){
+
+      var nama_ekspedisi = $(this).attr('nama_ekspedisi');
+      var nomor_resi = $(this).attr('nomor_resi');
+      var id_resi = $(this).attr('id_penjualan');
+      
+      $("#lihat_nomor_resi").val(nomor_resi);
+      $("#lihat_ekspedisi").val(nama_ekspedisi);
+      $("#id_resi").val(id_resi);
+      $("#modal_lihat_resi").modal('show');
+      $("#lihat_ekspedisi").show();
+      $("#lihat_ekspedisi").attr("type","text");
+      $("#ganti_ekspedisi").hide();
+      $("#lihat_nomor_resi").attr("readonly",true);
+  });
+  });
+</script>
 
 
 <!-- Modal Hapus data -->
@@ -376,6 +469,8 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
 </div><!--end of container-->
 		
 
+
+
   <script type="text/javascript">
   // ajax table penjualan
   $(document).ready(function(){
@@ -482,22 +577,6 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
 
 
 
-<script type="text/javascript">
-// tampil modal lihat resi
-  $(document).ready(function(){
-    $(document).on('click','.lihat_resi',function(e){
-
-      var nama_ekspedisi = $(this).attr('nama_ekspedisi');
-      var nomor_resi = $(this).attr('nomor_resi');
-
-
-      $("#lihat_nomor_resi").val(nomor_resi);
-      $("#lihat_ekspedisi").val(nama_ekspedisi);
-      $("#modal_lihat_resi").modal('show');
-    
-  });
-  });
-</script>
 
 
 
