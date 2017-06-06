@@ -99,44 +99,29 @@ include 'sanitasi.php';
 
 <!-- membuat form menjadi beberpa bagian -->
   <form enctype="multipart/form-data" role="form" action="formpenjualan.php" method="post ">
-        
-
-<div class="col-sm-3">
-    <label> Kode Marketplace </label><br>
-  <select name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen" required="" autofocus="">
- <option value="">Pilih Marketplace</option>
- 
+         
+<div class="form-group col-sm-3">
+  <label> Kode Marketpalce </label>
+  <select type="text" name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen"  required="" autofocus="">
+  <option value="<?php echo $kode_pelanggan; ?>"><?php echo $kode_pelanggan; ?></option>
           
   <?php 
     
     //untuk menampilkan semua data pada tabel pelanggan dalam DB
-    $query_pelanggan = $db->query("SELECT default_pelanggan,
-kode_pelanggan,
-level_harga,
-nama_pelanggan FROM pelanggan");
+    $query = $db->query("SELECT kode_pelanggan,nama_pelanggan,level_harga FROM pelanggan");
 
     //untuk menyimpan data sementara yang ada pada $query
-    while($data_pelanggan = mysqli_fetch_array($query_pelanggan))
+    while($data = mysqli_fetch_array($query))
     {
-            if ($data_pelanggan['default_pelanggan'] == '1') {
-
-    echo "<option selected value='".$data_pelanggan['kode_pelanggan'] ."' class='opt-pelanggan-".$data_pelanggan['kode_pelanggan']."' data_pelanggan-level='".$data_pelanggan['level_harga'] ."'>".$data_pelanggan['kode_pelanggan'] ." - ".$data_pelanggan['nama_pelanggan'] ."</option>";
-              
-            }
-
-            else{
-
-    echo "<option value='".$data_pelanggan['kode_pelanggan'] ."' class='opt-pelanggan-".$data_pelanggan['kode_pelanggan']."' data_pelanggan-level='".$data_pelanggan['level_harga'] ."'>".$data_pelanggan['kode_pelanggan'] ." - ".$data_pelanggan['nama_pelanggan'] ."</option>";
-
-            }
+    
+    echo "<option value='".$data['kode_pelanggan'] ."' class='opt-pelanggan-".$data['kode_pelanggan']."' data-level='".$data['level_harga'] ."'>".$data['kode_pelanggan'] ." - ".$data['nama_pelanggan'] ."</option>";
     }
     
     
     ?>
-    </select><br> 
-    <input type="hidden" name="sisa_plafon"  id="sisa_plafon" class="form-control">
-</div>
-      
+  </select>
+  </div>
+
     
 <div class="col-sm-3">
           <label class="gg" > Toko </label><br>
@@ -162,9 +147,7 @@ nama_pelanggan FROM pelanggan");
           </select>
 </div>
 
-
-  
-          <select name="kode_gudang" id="kode_gudang" class="form-control" style=" display:none;" required="" >
+          <select style="display: none;" name="kode_gudang" id="kode_gudang" class="form-control" required="" >
           <option value=<?php echo $kode_gudang; ?>><?php echo $nama_gudang; ?></option>
           <?php 
           
@@ -179,9 +162,8 @@ nama_pelanggan FROM pelanggan");
           }
           
           
-           ?>
-          </select>
-
+          ?>
+          </select> 
 
 <div class="form-group col-sm-2">
   <label> Level Harga </label><br>
@@ -192,6 +174,7 @@ nama_pelanggan FROM pelanggan");
 
     </select>
   </div>
+
 
 
 
@@ -1034,8 +1017,6 @@ $(document).ready(function(){
 </script>
 
 
-
-
 <script>
    //untuk menampilkan data yang diambil pada form tbs penjualan berdasarkan id=formtambahproduk
   $(document).on('click', '#submit_produk', function (e) {
@@ -1065,7 +1046,6 @@ $(document).ready(function(){
 
    var subtotal = parseInt(jumlah_barang, 10) *  parseInt(harga, 10) - parseInt(potongan, 10);
 
-console.log(ber_stok);
    //end data produk
    // data per faktur 
     var potongan_persen = $("#potongan_persen").val();
@@ -1085,54 +1065,10 @@ console.log(ber_stok);
     var subtotal_penjualan = parseInt(total,10) + parseInt(subtotal,10);
     total =  subtotal_penjualan;
 
-    $("#total2").val(tandaPemisahTitik(subtotal_penjualan));
+    
 
 
-  // perhitungan diskon bertingkat 
-   if (status_bertingkat > 0) {
-            var diskon_bertingkat = potongan_persen.split("+");
-            var potongan_nominal = 0;
-            var index;
-            var total_kurang_potongan = total;
-            var total_potongan_nominal = 0;
-            for (index = 0; index < diskon_bertingkat.length; ++index) {
-               
-                var diskon_persen = diskon_bertingkat[index];
-
-                if (diskon_persen != '' || diskon_persen != 0) {
-                 total_potongan_nominal = Math.round(total_potongan_nominal) + Math.round(((total_kurang_potongan * diskon_persen) / 100));
-                 potongan_nominal =  Math.round((total_kurang_potongan * diskon_persen) / 100);
-                var total_kurang_potongan = total_kurang_potongan - parseInt(potongan_nominal,10);
-                }
-              
-            }
-
-            var t_tax = ((parseInt(total_kurang_potongan,10) * parseInt(tax_faktur,10)) / 100);
-            var total_akhir = parseInt(total_kurang_potongan, 10) + parseInt(t_tax,10);
-
-            $("#total1").val(tandaPemisahTitik(parseInt(total_akhir)));
-        } 
-        else {
-
-          var total_potongan_nominal =  Math.round(((total * potongan_persen) / 100));
-          var total_kurang_potongan = parseInt(total) - parseInt(total_potongan_nominal);
-          var t_tax = ((parseInt(total_kurang_potongan,10) * parseInt(tax_faktur,10)) / 100);
-
-          var total_akhir = parseInt(total_kurang_potongan, 10) + parseInt(t_tax,10);
-              if (potongan_persen > 100) {
-                alert ("Potongan %, Tidak Boleh Lebih Dari 100%");
-                $("#potongan_persen").val('100');
-              }
-              else {
-  
-                }
-
-              $("#total1").val(tandaPemisahTitik(parseInt(total_akhir)));
-
-            
-             } // end diskon bertingkat
-     
-
+ 
   if (jumlah_barang == ''){
   alert("Jumlah Barang Harus Diisi");
   }
@@ -1140,8 +1076,13 @@ console.log(ber_stok);
   alert("Kode Marketplace Harus Dipilih");
   }
 
+  else if (stok < 0 ){
+  alert("Jumlah Barang Melebihi Stok");
+  }
 
-  else if (ber_stok == 'Jasa'){
+else{
+
+ if (ber_stok == 'Jasa'){
 
     $(".tr-kode-"+kode_barang+"").remove();
     $("#potongan_penjualan").val(tandaPemisahTitik(parseInt(total_potongan_nominal)));
@@ -1184,8 +1125,7 @@ console.log(ber_stok);
             },
            "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 
-            $(nRow).attr('class','tr-id-'+aData[9]+'');         
-
+            $(nRow).attr('class','tr-id-'+aData[9]+'');
             }   
 
       });
@@ -1196,9 +1136,7 @@ console.log(ber_stok);
 
   }
 
-    else if (stok < 0 ){
-  alert("Jumlah Barang Melebihi Stok");
-  }
+
   
   else{
 
@@ -1254,6 +1192,53 @@ console.log(ber_stok);
 }
     
 
+ // perhitungan diskon bertingkat 
+   if (status_bertingkat > 0) {
+            var diskon_bertingkat = potongan_persen.split("+");
+            var potongan_nominal = 0;
+            var index;
+            var total_kurang_potongan = total;
+            var total_potongan_nominal = 0;
+            for (index = 0; index < diskon_bertingkat.length; ++index) {
+               
+                var diskon_persen = diskon_bertingkat[index];
+
+                if (diskon_persen != '' || diskon_persen != 0) {
+                 total_potongan_nominal = Math.round(total_potongan_nominal) + Math.round(((total_kurang_potongan * diskon_persen) / 100));
+                 potongan_nominal =  Math.round((total_kurang_potongan * diskon_persen) / 100);
+                var total_kurang_potongan = total_kurang_potongan - parseInt(potongan_nominal,10);
+                }
+              
+            }
+
+            var t_tax = ((parseInt(total_kurang_potongan,10) * parseInt(tax_faktur,10)) / 100);
+            var total_akhir = parseInt(total_kurang_potongan, 10) + parseInt(t_tax,10);
+
+            $("#total1").val(tandaPemisahTitik(parseInt(total_akhir)));
+        } 
+        else {
+
+          var total_potongan_nominal =  Math.round(((total * potongan_persen) / 100));
+          var total_kurang_potongan = parseInt(total) - parseInt(total_potongan_nominal);
+          var t_tax = ((parseInt(total_kurang_potongan,10) * parseInt(tax_faktur,10)) / 100);
+
+          var total_akhir = parseInt(total_kurang_potongan, 10) + parseInt(t_tax,10);
+              if (potongan_persen > 100) {
+                alert ("Potongan %, Tidak Boleh Lebih Dari 100%");
+                $("#potongan_persen").val('100');
+              }
+              else {
+  
+                }
+
+              $("#total1").val(tandaPemisahTitik(parseInt(total_akhir)));
+
+            
+             } // end diskon bertingkat
+
+                           $("#total2").val(tandaPemisahTitik(subtotal_penjualan));
+
+}
       
   });
 
@@ -1262,6 +1247,8 @@ console.log(ber_stok);
 
 });
 </script>
+
+ 
 
 
 <script>
@@ -1310,6 +1297,8 @@ console.log(ber_stok);
  {
 
   alert("Jumlah Pembayaran Tidak Mencukupi");
+  
+     $("#total1").val(total);
 
  }
 
@@ -1319,11 +1308,15 @@ console.log(ber_stok);
 
 alert(" Nama Konsumen Harus Diisi ");
 
+     $("#total1").val(total);
+
  }
    else if (alamat_konsumen == "")
  {
 
 alert(" Alamat Konsumen Harus Diisi ");
+
+     $("#total1").val(total);
 
  }
  else if (kode_pelanggan == "") 
@@ -1331,11 +1324,14 @@ alert(" Alamat Konsumen Harus Diisi ");
 
 alert("Kode Marketplace Harus Di Isi");
 
+     $("#total1").val(total);
+
  }
 else if (pembayaran == "") 
  {
 
 alert("Pembayaran Harus Di Isi");
+     $("#total1").val(total);
 
  }
 
