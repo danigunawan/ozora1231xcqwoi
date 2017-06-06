@@ -191,7 +191,7 @@ $data_resi = mysqli_fetch_array($query_resi);
 
 if ($jumlah_resi > 0) {
 	# code...
-	$nestedData[] = "<button style='background-color:#aa66cc;width:80px'' class='btn btn-info lihat_resi' nama_ekspedisi='". $data_resi['nama_expedisi'] ."' nomor_resi='". $data_resi['nomor_resi'] ."' ><i class='fa fa-search' aria-hidden='true'></i> Lihat</button>";
+	$nestedData[] = "<button style='background-color:#aa66cc;width:80px'' class='btn btn-info lihat_resi' id_penjualan='". $data_resi['id']."' nama_ekspedisi='". $data_resi['nama_expedisi'] ."' nomor_resi='". $data_resi['nomor_resi'] ."' ><i class='fa fa-search' aria-hidden='true'></i> Lihat</button>";
 }
 else{
 	$nestedData[] = "<button style='background-color:#2BBBAD;width:80px'' class='btn btn-default input_resi' id_penjualan='". $row['id']."'' ><i class='fa fa-send' aria-hidden='true'></i> Input</button>";
