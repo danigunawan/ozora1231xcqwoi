@@ -60,30 +60,21 @@ $session_id = session_id();
 <div class="col-sm-3">
     <label> Kode Marketplace </label><br>
   <select name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen" required="" autofocus="">
- <option value="">Pilih Marketplace</option>
-          
+         
   <?php 
     
     //untuk menampilkan semua data pada tabel pelanggan dalam DB
-    $query_pelanggan = $db->query("SELECT default_pelanggan,
-kode_pelanggan,
-level_harga,
-nama_pelanggan FROM pelanggan");
+    $query_pelanggan = $db->query("SELECT default_pelanggan, kode_pelanggan, level_harga, nama_pelanggan FROM pelanggan");
 
     //untuk menyimpan data sementara yang ada pada $query
     while($data_pelanggan = mysqli_fetch_array($query_pelanggan))
     {
-            if ($data_pelanggan['default_pelanggan'] == '1') {
-
-    echo "<option selected value='".$data_pelanggan['kode_pelanggan'] ."' class='opt-pelanggan-".$data_pelanggan['kode_pelanggan']."' data_pelanggan-level='".$data_pelanggan['level_harga'] ."'>".$data_pelanggan['kode_pelanggan'] ." - ".$data_pelanggan['nama_pelanggan'] ."</option>";
-              
-            }
-
-            else{
-
-    echo "<option value='".$data_pelanggan['kode_pelanggan'] ."' class='opt-pelanggan-".$data_pelanggan['kode_pelanggan']."' data_pelanggan-level='".$data_pelanggan['level_harga'] ."'>".$data_pelanggan['kode_pelanggan'] ." - ".$data_pelanggan['nama_pelanggan'] ."</option>";
-
-            }
+      if ($data_pelanggan['default_pelanggan'] == '1') {
+        echo "<option selected value='".$data_pelanggan['kode_pelanggan'] ."' class='opt-pelanggan-".$data_pelanggan['kode_pelanggan']."' data_pelanggan-level='".$data_pelanggan['level_harga'] ."'>".$data_pelanggan['kode_pelanggan'] ." - ".$data_pelanggan['nama_pelanggan'] ."</option>";
+      }
+      else{
+        echo "<option value='".$data_pelanggan['kode_pelanggan'] ."' class='opt-pelanggan-".$data_pelanggan['kode_pelanggan']."' data_pelanggan-level='".$data_pelanggan['level_harga'] ."'>".$data_pelanggan['kode_pelanggan'] ." - ".$data_pelanggan['nama_pelanggan'] ."</option>";
+      }
     }
     
     
@@ -93,29 +84,17 @@ nama_pelanggan FROM pelanggan");
 </div>
       
     
-<div class="col-sm-3">
-          <label class="gg" > Toko </label><br>
-          
-          <select name="kode_toko" id="kode_toko"  class="form-control chosen" required="" autofocus="" >
-          <option value="">Pilih Toko</option>
-          <?php 
-          
-      
-          $query_gudang = $db->query("SELECT id,nama_toko FROM toko");
-          
-
-          while($data_gudang = mysqli_fetch_array($query_gudang))
-          {
- 
-
-                echo "<option value='".$data_gudang['id'] ."'>".$data_gudang['nama_toko'] ."</option>"; 
-          
-          }
-          
-          
-          ?>
-          </select>
-</div>
+  <div class="col-sm-3">
+    <label class="gg" > Toko </label><br>
+      <select name="kode_toko" id="kode_toko"  class="form-control chosen" required="" autofocus="" >
+        <?php 
+          $query_toko = $db->query("SELECT id,nama_toko FROM toko");
+            while($data_toko = mysqli_fetch_array($query_toko)){
+              echo "<option value='".$data_toko['id'] ."'>".$data_toko['nama_toko'] ."</option>"; 
+            }
+        ?>
+      </select>
+  </div>
 
 
           <select style="font-size:15px; height:35px; display:none;" name="kode_gudang" id="kode_gudang" class="form-control gg" required="" >
@@ -145,7 +124,7 @@ nama_pelanggan FROM pelanggan");
 
 <div class="col-sm-2">
     <label> Level Harga </label><br>
-  <select style="font-size:15px; height:35px" type="text" name="level_harga" id="level_harga" class="form-control" required="" >
+  <select style="font-size:15px; height:35px" type="text" name="level_harga" id="level_harga" class="form-control chosen" required="" >
   <option>Level 1</option>
   <option>Level 2</option>
   <option>Level 3</option>
@@ -155,19 +134,19 @@ nama_pelanggan FROM pelanggan");
 
 
 <div class="col-sm-2">
-<label class="gg" >Sales</label>
-<select style="font-size:15px; height:35px" name="sales" id="sales" class="form-control gg" required="">
+<label class="gg" >Admin</label>
+<select style="font-size:15px; height:35px" name="sales" id="sales" class="form-control chosen" required="">
 
   <?php 
     
     //untuk menampilkan semua data pada tabel pelanggan dalam DB
-    $query01 = $db->query("SELECT nama,default_sales FROM user WHERE status_sales = 'Iya'");
+    $query01 = $db->query("SELECT nama,default_sales FROM user ");
 
     //untuk menyimpan data sementara yang ada pada $query
     while($data01 = mysqli_fetch_array($query01))
     {
     
-    if ($data01['default_sales'] == '1') {
+    if ($_SESSION['nama'] == $data01['nama']) {
 
     echo "<option selected value='".$data01['nama'] ."'>".$data01['nama'] ."</option>";
       
@@ -185,9 +164,9 @@ nama_pelanggan FROM pelanggan");
 </select>
 </div>
 
-<div class="col-sm-2">
+<div class="col-sm-1">
           <label class="gg">PPN</label>
-          <select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control gg">
+          <select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control chosen">
              <option value="Non">Non</option>    
             <option value="Include">Include</option>  
             <option value="Exclude">Exclude</option>
@@ -195,17 +174,6 @@ nama_pelanggan FROM pelanggan");
           </select>
 </div>
 
-<div class="col-sm-3">
-    <div class="form-group">
-        <input type="text" style="height:20px" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">
-    </div>
-</div>
-
-<div class="col-sm-4">
-    <div class="form-group">
-        <input type="text" style="height:20px" name="alamat_konsumen" id="alamat_konsumen" class="form-control" placeholder="Alamat Konsumen">
-    </div>
-</div>
 
 </div>  <!-- END ROW dari kode pelanggan - ppn -->
 
@@ -666,22 +634,29 @@ tr:nth-child(even){background-color: #f2f2f2}
       </div>
            
            
-          <div class="row">
-            <div class="col-sm-6">
-              
+      <div class="row">
+
+        <div class="col-sm-6">              
            <label> Kembalian </label><br>
            <b><input type="text" name="sisa_pembayaran"  id="sisa_pembayaran_penjualan"  style="height:10px;font-size:15px" class="form-control"  readonly="" required=""></b>
-            </div>
+        </div>
 
-            <div class="col-sm-6">
-              
+        <div class="col-sm-6">              
           <label> Kredit </label><br>
           <b><input type="text" name="kredit" id="kredit" class="form-control"  style="height:10px;font-size:15px"  readonly="" required="" ></b>
-            </div>
-          </div> 
-          
+        </div>
 
+        <div class="col-sm-6">
+          <label class="gg">Nama Konsumen</label>
+          <input type="text" style="height:20px" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">              
+        </div>
 
+        <div class="col-sm-6">
+          <label class="gg">Alamat Konsumen</label>
+          <input type="text" style="height:20px" name="alamat_konsumen" id="alamat_konsumen" class="form-control" placeholder="Alamat Konsumen">
+        </div>
+
+      </div> 
            
            <label> Keterangan </label><br>
            <textarea style="height:40px;font-size:15px" type="text" name="keterangan" id="keterangan" class="form-control"> 
@@ -1075,11 +1050,11 @@ $(document).ready(function(){
 
 
 
-      <script type="text/javascript">
-      
-      $(".chosen").chosen({no_results_text: "Maaf, Data Tidak Ada!"});  
-      
-      </script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".chosen").chosen({no_results_text: "Maaf, Data Tidak Ada!",search_contains:true});
+});
+</script>
 
 
 
@@ -1541,12 +1516,14 @@ alert(" Kode Toko Harus Diisi ");
  {
 
 alert(" Nama Konsumen Harus Diisi ");
+$("#nama_konsumen").focus();
 
  }
    else if (alamat_konsumen == "")
  {
 
 alert(" Alamat Konsumen Harus Diisi ");
+$("#alamat_konsumen").focus();
 
  }
  else if ( sisa < 0) 
@@ -1759,12 +1736,14 @@ alert(" Kode Gudang Harus Diisi ");
  {
 
 alert(" Nama Konsumen Harus Diisi ");
+$("#nama_konsumen").focus();
 
  }
    else if (alamat_konsumen == "")
  {
 
 alert(" Alamat Konsumen Harus Diisi ");
+$("#alamat_konsumen").focus();
 
  }
  
@@ -1959,12 +1938,14 @@ alert("Silakan Bayar Piutang");
        {
 
       alert(" Nama Konsumen Harus Diisi ");
+      $("#nama_konsumen").focus();
 
        }
          else if (alamat_konsumen == "")
        {
 
       alert(" Alamat Konsumen Harus Diisi ");
+      $("#alamat_konsumen").focus();
 
        }
        else if (kode_pelanggan == "") 

@@ -18,28 +18,6 @@ $session_id = session_id();
 
  ?>
 
-<!-- Modal Untuk Confirm PESAN alert-->
-<div id="modal_promo_alert" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg">
-    <!-- Modal content-->
-    <div class="modal-content">
-    <div class="modal-header">
-
-
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-    </div>
-    <div class="modal-body">
-      <span id="tampil_alert">
-      </span>
-    </div>
-    <div class="modal-footer">
-
-        <button type="button" class="btn btn-danger" id="closed_alert_promo" data-dismiss="modal">Closed (Ctrl + G)</button>
-    </div>
-    </div>
-  </div>
-</div>
-<!--modal end pesan alert-->
 
 
 <!-- js untuk tombol shortcut -->
@@ -157,30 +135,25 @@ $session_id = session_id();
 </div>
 
 <div class="col-sm-2">
-<label class="gg" >Sales</label>
+<label class="gg" >Admin</label>
 <select style="font-size:15px; height:35px" name="sales" id="sales" class="form-control chosen" required="">
 
-  <?php
-
-    //untuk menampilkan semua data pada tabel pelanggan dalam DB
-    $query01 = $db->query("SELECT id,nama FROM user WHERE status_sales = 'Iya'");
-
-    //untuk menyimpan data sementara yang ada pada $query
-    while($data01 = mysqli_fetch_array($query01))
-    {
-
-
-    echo "<option value='".$data01['id'] ."'>".$data01['nama'] ."</option>";
-
-    }
-
-
-    ?>
+  <?php     
+    $query01 = $db->query("SELECT nama,default_sales FROM user ");
+      while($data01 = mysqli_fetch_array($query01)){
+        if ($_SESSION['nama'] == $data01['nama']) {
+          echo "<option selected value='".$data01['nama'] ."'>".$data01['nama'] ."</option>";
+        }
+        else{
+          echo "<option value='".$data01['nama'] ."'>".$data01['nama'] ."</option>";
+        }
+      }
+  ?>
 
 </select>
 </div>
 
-<div class="col-sm-1">
+<div class="col-sm-2">
     <label> Level Harga </label><br>
     <select style="font-size:15px; height:35px" type="text" name="level_harga" id="level_harga" class="form-control chosen" required="" >
       <option value="Level 1">Level 1</option>
@@ -190,7 +163,7 @@ $session_id = session_id();
     </div>
 
 
-<div class="col-sm-1">
+<div class="col-sm-2">
           <label class="gg">PPN</label>
           <select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control chosen">
             <option value="Include">Include</option>
@@ -647,25 +620,8 @@ else if (level_harga == "Level 3") {
   $("#harga_baru").val(harga_level_3);
 }
 
-console.log(level_harga)
-
-
+  console.log(level_harga);
   document.getElementById("jumlahbarang").value = $(this).attr('jumlah-barang');
-
-
-$.post("lihat_promo_alert.php",{id:$(this).attr('id-barang')},function(data){
-
-    if (data == '')
-    {
-
-    }
-    else{
-      $("#modal_promo_alert").modal('show');
-      $("#tampil_alert").html(data);
-    }
-
-});
-
 
   $('#myModal').modal('hide');
   $("#jumlah_barang").focus();
@@ -874,23 +830,6 @@ $.post("barcode_order.php",{kode_barang:kode_barang,sales:sales,level_harga:leve
 
      });
 
-
-$.getJSON('lihat_nama_barang_order.php',{kode_barang:kode_barang}, function(json){
-
-$.post("lihat_promo_alert.php",{id:json},function(info){
-
-    if (info == '')
-    {
-
-    }
-    else{
-      $("#modal_promo_alert").modal('show');
-      $("#tampil_alert").html(info);
-    }
-
-});
-
-});
 
 
 }//end else cek barang
@@ -1177,7 +1116,6 @@ else{
      var no_faktur = info;
      $("#cetak_tunai").attr('href', 'cetak_penjualan_order.php?no_faktur='+no_faktur+'');
      $("#alert_berhasil").show();
-     $("#cetak_tunai").show();
      $("#total2").val('');
      $('#tbody').html('');
      $("#nama_konsumen").val('');
@@ -1527,18 +1465,6 @@ $.post("lihat_promo_alert.php",{id:json.id},function(data){
     var id_barang = $('#opt-produk-'+kode_barang).attr("id-barang");
     var level_harga = $("#level_harga").val();
 
-$.post("lihat_promo_alert.php",{id:id_barang},function(data){
-
-    if (data == '')
-    {
-
-    }
-    else{
-      $("#modal_promo_alert").modal('show');
-      $("#tampil_alert").html(data);
-    }
-
-});
 
    if (level_harga == "Level 1") {
 

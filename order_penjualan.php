@@ -5,9 +5,10 @@ include 'navbar.php';
 include 'sanitasi.php';
 include 'db.php';
 
+$pilih_akses_penjualan = $db->query("SELECT penjualan_edit, penjualan_hapus FROM otoritas_penjualan WHERE id_otoritas = '$_SESSION[otoritas_id]'");
+$data_akses = mysqli_fetch_array($pilih_akses_penjualan);
 
-
- ?>
+?>
 
 
 
@@ -154,34 +155,15 @@ tr:nth-child(even){background-color: #f2f2f2}
 		
 			
 <?php 
-include 'db.php';
 
-$pilih_akses_penjualan_edit = $db->query("SELECT penjualan_edit FROM otoritas_penjualan WHERE id_otoritas = '$_SESSION[otoritas_id]' AND penjualan_edit = '1'");
-$penjualan_edit = mysqli_num_rows($pilih_akses_penjualan_edit);
-
-
-    if ($penjualan_edit > 0){
+    if ($data_akses['penjualan_edit'] > 0){
 				echo "<th style='background-color: #4CAF50; color:white'> Edit </th>";
-			}
-				
-?>
+		}
 
-
-
-<?php 
-include 'db.php';
-
-$pilih_akses_penjualan_hapus = $db->query("SELECT penjualan_hapus FROM otoritas_penjualan WHERE id_otoritas = '$_SESSION[otoritas_id]' AND penjualan_hapus = '1'");
-$penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
-
-
-    if ($penjualan_hapus > 0){
-
+    if ($data_akses['penjualan_hapus'] > 0){
 			echo "<th style='background-color: #4CAF50; color:white'> Hapus </th>";
-
 		}
 ?>
-			<th style='background-color: #4CAF50; color:white'> Cetak Order </th>
 			<th style='background-color: #4CAF50; color:white'> Detail </th>
 			<th style='background-color: #4CAF50; color:white'> Nomor Faktur </th>
       <th style='background-color: #4CAF50; color:white'> Toko </th>

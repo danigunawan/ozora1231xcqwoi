@@ -5,7 +5,8 @@ include 'db.php';
 include 'sanitasi.php';
 
     
-
+$pilih_akses_penjualan = $db->query("SELECT penjualan_edit, penjualan_hapus FROM otoritas_penjualan WHERE id_otoritas = '$_SESSION[otoritas_id]'");
+$data_akses = mysqli_fetch_array($pilih_akses_penjualan);
 
 
 // storing  request (ie, get/post) global array to a variable  
@@ -65,36 +66,18 @@ $data = array();
 while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	$nestedData=array(); 
 
-     $pilih_akses_penjualan_edit = $db->query("SELECT penjualan_edit FROM otoritas_penjualan WHERE id_otoritas = '$_SESSION[otoritas_id]' AND penjualan_edit = '1'");
-$penjualan_edit = mysqli_num_rows($pilih_akses_penjualan_edit);
 
 
-    if ($penjualan_edit > 0){
+    if ($data_akses['penjualan_edit'] > 0){
+      $nestedData[] = "<a href='proses_edit_penjualan_order.php?no_faktur=". $row['no_faktur_order']."&kode_pelanggan=". $row['kode_pelanggan']."&nama_pelanggan=". $row['nama_pelanggan']."&nama_toko=".$row['nama_toko']."&id_toko=".$row['toko']."' class='btn btn-success btn-sm'>Edit</a>";
+    }
 
-      
-
-      $nestedData[] = "<a href='proses_edit_penjualan_order.php?no_faktur=". $row['no_faktur_order']."&kode_pelanggan=". $row['kode_pelanggan']."&nama_pelanggan=". $row['nama_pelanggan']."&nama_toko=".$row['nama_toko']."&id_toko=".$row['toko']."' class='btn btn-success'>Edit</a>"; 
-
-
+    if ($data_akses['penjualan_hapus'] > 0){
+      $nestedData[] = "<button class='btn btn-danger btn-hapus btn-sm' data-id='".$row['id']."' data-pelanggan='".$row['nama_pelanggan']."' data-faktur='".$row['no_faktur_order']."' >Hapus</button>";
     }
 
 
-$pilih_akses_penjualan_hapus = $db->query("SELECT penjualan_hapus FROM otoritas_penjualan WHERE id_otoritas = '$_SESSION[otoritas_id]' AND penjualan_hapus = '1'");
-$penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
-
-
-  if ($penjualan_hapus > 0){
-
-      $nestedData[] = "<button class='btn btn-danger btn-hapus' data-id='".$row['id']."' data-pelanggan='".$row['nama_pelanggan']."' data-faktur='".$row['no_faktur_order']."' >Hapus</button>";
-}
-
-
-
-
-$nestedData[] = "<a href='cetak_penjualan_order.php?no_faktur=".$row['no_faktur_order']."' class='btn btn-primary ' target='blank'> Cetak  </a>";
-
-
-    $nestedData[] = "<button class='btn btn-info detail' no_faktur='". $row['no_faktur_order'] ."' >Detail</button>";
+    $nestedData[] = "<button class='btn btn-info btn-sm detail' no_faktur='". $row['no_faktur_order'] ."' >Detail</button>";
     $nestedData[] = $row['no_faktur_order'];
     $nestedData[] = $row['nama_toko'];
     $nestedData[] = $row['kode_pelanggan'] ." - ".$row['nama_pelanggan'];
@@ -103,7 +86,14 @@ $nestedData[] = "<a href='cetak_penjualan_order.php?no_faktur=".$row['no_faktur_
     $nestedData[] = $row['jam'];
     $nestedData[] = $row['user'];
     $nestedData[] = rp($row['total']);
-    $nestedData[] = $row['status_order'];
+    
+    if ($row['status_order'] == 'Diorder') {
+      $nestedData[] = "<p style='color:blue;'>".$row['status_order']."</p>";
+    }
+    else{
+      $nestedData[] = "<p style='color:red;'>".$row['status_order']."</p>";
+    }
+    
     $nestedData[] = $row['keterangan'];
     $nestedData[] = $row['id'];
 
