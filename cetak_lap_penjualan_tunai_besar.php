@@ -54,9 +54,9 @@ include 'db.php';
 
         <div class="col-sm-8">
           <center>
-            <h4> <b> <?php echo $data_perusahaan['nama_perusahaan']; ?> </b> </h4> 
-            <p> <?php echo $data_perusahaan['alamat_perusahaan']; ?><br>
-                  No.Telp:<?php echo $data_perusahaan['no_telp']; ?> </p>
+            <h4> <b> Nama Toko</h4> 
+            <p> alamat toko<br>
+                  No.Telp: no toko </p>
           </center>                 
         </div><!--penutup colsm5-->        
     </div><!--penutup row1-->

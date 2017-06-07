@@ -40,14 +40,14 @@ $waktu = $tanggal." ".$jam_sekarang;
             $user = $_SESSION['user_name'];
             $tanggal = stringdoang($_POST['tanggal']);
             $kode_gudang = stringdoang($_POST['kode_gudang']);
-            $kode_toko = stringdoang($_POST['kode_toko']);
-            $nama_konsumen = stringdoang($_POST['nama_konsumen']);
-            $alamat_konsumen = stringdoang($_POST['alamat_konsumen']);
             
             $tanggal_jt = angkadoang($_POST['tanggal_jt']);
             $sisa_kredit = angkadoang($_POST['jumlah_kredit_baru']);
             $tanggal = stringdoang($_POST['tanggal']);           
-            $user = $_SESSION['user_name'];
+            $kode_toko = stringdoang($_POST['kode_toko']);     
+            $nama_konsumen = stringdoang($_POST['nama_konsumen']);     
+            $alamat_konsumen = stringdoang($_POST['alamat_konsumen']);     
+            $kode_ekspedisi = stringdoang($_POST['kode_ekspedisi']);
  // siapkan "data" query
            
 
@@ -128,12 +128,12 @@ $waktu = $tanggal." ".$jam_sekarang;
                 echo "1";
             
             // buat prepared statements
-            $stmt2 = $db->prepare("UPDATE penjualan SET no_faktur = ?, kode_gudang = ?,kode_toko = ?,nama_konsumen = ?,alamat_konsumen = ?, kode_pelanggan = ?, total = ?, tanggal = ?, jam = ?, user = ?, sales = ?, status = 'Lunas', potongan = ?, potongan_persen = ? , tax = ?, sisa = ?, kredit='0', cara_bayar = ?, tunai = ?, status_jual_awal = 'Tunai', ppn = ? WHERE no_faktur = ?");
+            $stmt2 = $db->prepare("UPDATE penjualan SET no_faktur = ?, kode_gudang = ?, kode_pelanggan = ?, kode_toko = ?, nama_konsumen = ?, alamat_konsumen = ?, kode_ekspedisi = ?, total = ?, tanggal = ?, jam = ?, user = ?, sales = ?, status = 'Lunas', potongan = ?, potongan_persen = ? , tax = ?, sisa = ?, kredit='0', cara_bayar = ?, tunai = ?, status_jual_awal = 'Tunai', ppn = ? WHERE no_faktur = ?");
             
             
             // hubungkan "data" dengan prepared statements
-            $stmt2->bind_param("ssssssissssisiisiss", 
-            $nomor_faktur, $kode_gudang,$kode_toko,$nama_konsumen,$alamat_konsumen,  $kode_pelanggan, $total, $tanggal, $jam_sekarang , $user, $sales, $potongan,$potongan_persen, $tax, $sisa, $cara_bayar, $pembayaran, $ppn_input, $nomor_faktur);
+            $stmt2->bind_param("sssssssissssisiisiss", 
+            $nomor_faktur, $kode_gudang, $kode_pelanggan,$kode_toko, $nama_konsumen, $alamat_konsumen, $kode_ekspedisi, $total, $tanggal, $jam_sekarang , $user, $sales, $potongan,$potongan_persen, $tax, $sisa, $cara_bayar, $pembayaran, $ppn_input, $nomor_faktur);
 
             
 
@@ -218,18 +218,17 @@ if ($potongan != "" || $potongan != 0 ) {
 
             {
             echo "2";
-            $stmt2 = $db->prepare("UPDATE penjualan SET no_faktur = ?,  kode_gudang = ?, kode_pelanggan = ?, total = ?, tanggal = ?, jam = ?, tanggal_jt = ?, user = ?, sales = ?, status = 'Piutang', potongan = ?,potongan_persen = ? , tax = ?, sisa = '0', kredit = ?, cara_bayar = ?, tunai = ?, status_jual_awal = 'Kredit', ppn = ? WHERE no_faktur = ?");
+            $stmt2 = $db->prepare("UPDATE penjualan SET no_faktur = ?,  kode_gudang = ?, kode_pelanggan = ?, kode_toko = ?, nama_konsumen = ?, alamat_konsumen = ?, kode_ekspedisi = ?, total = ?, tanggal = ?, jam = ?, tanggal_jt = ?, user = ?, sales = ?, status = 'Piutang', potongan = ?,potongan_persen = ? , tax = ?, sisa = '0', kredit = ?, cara_bayar = ?, tunai = ?, status_jual_awal = 'Kredit', ppn = ? WHERE no_faktur = ?");
             
             
             // hubungkan "data" dengan prepared statements
-            $stmt2->bind_param("sssisssssisiisiss", 
-            $nomor_faktur, $kode_gudang, $kode_pelanggan, $total , $tanggal, $jam_sekarang, $tanggal_jt, $user, $sales, $potongan, $potongan_persen , $tax, $sisa_kredit, $cara_bayar, $pembayaran, $ppn_input, $nomor_faktur);
+            $stmt2->bind_param("sssssssisssssisiisiss", 
+            $nomor_faktur, $kode_gudang, $kode_pelanggan,$kode_toko, $nama_konsumen, $alamat_konsumen, $kode_ekspedisi, $total , $tanggal, $jam_sekarang, $tanggal_jt, $user, $sales, $potongan, $potongan_persen , $tax, $sisa_kredit, $cara_bayar, $pembayaran, $ppn_input, $nomor_faktur);
             
 
             
             // jalankan query
             $stmt2->execute(); 
-            
 
 
 //PERSEDIAAN    
