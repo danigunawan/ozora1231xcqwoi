@@ -48,6 +48,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 		<thead>
 			<th style="background-color: #4CAF50; color: white;"> Nomor Faktur </th>
 			<th style="background-color: #4CAF50; color: white;"> Marketplace</th>
+			<th style="background-color: #4CAF50; color: white;"> Toko</th>
 			<th style="background-color: #4CAF50; color: white;"> Konsumen</th>
 			<th style="background-color: #4CAF50; color: white;"> Total Kotor </th>
 			<th style="background-color: #4CAF50; color: white;"> Total Bersih </th>
