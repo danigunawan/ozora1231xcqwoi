@@ -46,23 +46,23 @@ $columns = array(
 
 if ($kode_pelanggan == 'semua' AND $sales == 'semua') {
 	// getting total number records without any search
-	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen ";
-	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' ";
+	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen, t.nama_toko ";
+	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' ";
 }
 else if ($kode_pelanggan == 'semua' AND $sales != 'semua') {
 	// getting total number records without any search
-	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen ";
-	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.sales = '$sales' ";	
+	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen, t.nama_toko ";
+	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.sales = '$sales' ";	
 }
 else if ($kode_pelanggan != 'semua' AND $sales == 'semua') {
 	// getting total number records without any search
-	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen ";
-	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kode_pelanggan = '$kode_pelanggan' ";	
+	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen, t.nama_toko ";
+	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kode_pelanggan = '$kode_pelanggan' ";	
 }
 else{
 	// getting total number records without any search
-	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen ";
-	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kode_pelanggan = '$kode_pelanggan' AND p.sales = '$sales' ";
+	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen, t.nama_toko ";
+	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kode_pelanggan = '$kode_pelanggan' AND p.sales = '$sales' ";
 }
 
 $query=mysqli_query($conn, $sql) or die("show_data_omset_penjualan1.php: get employees");
@@ -71,23 +71,23 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 
 if ($kode_pelanggan == 'semua' AND $sales == 'semua') {
 	// getting total number records without any search
-	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen ";
-	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' ";
+	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen, t.nama_toko ";
+	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' ";
 }
 else if ($kode_pelanggan == 'semua' AND $sales != 'semua') {
 	// getting total number records without any search
-	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen ";
-	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.sales = '$sales' ";	
+	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen, t.nama_toko ";
+	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.sales = '$sales' ";	
 }
 else if ($kode_pelanggan != 'semua' AND $sales == 'semua') {
 	// getting total number records without any search
-	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen ";
-	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kode_pelanggan = '$kode_pelanggan' ";	
+	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen, t.nama_toko ";
+	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kode_pelanggan = '$kode_pelanggan' ";	
 }
 else{
 	// getting total number records without any search
-	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen ";
-	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kode_pelanggan = '$kode_pelanggan' AND p.sales = '$sales' ";
+	$sql = "SELECT p.id, p.no_faktur, p.tanggal, p.jam, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen, t.nama_toko ";
+	$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kode_pelanggan = '$kode_pelanggan' AND p.sales = '$sales' ";
 }
 
 
@@ -114,6 +114,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 		$nestedData[] = $row['tanggal'];
 		$nestedData[] = $row['no_faktur'];
 		$nestedData[] = $row['nama_pelanggan'];
+		$nestedData[] = $row['nama_toko'];
 		$nestedData[] = $row['nama_konsumen'];
 		$nestedData[] = $row['sales'];
 		$nestedData[] = "<p align='right'>". rp($data_sum['total_penjualan']) ."</p>";
@@ -124,6 +125,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	$nestedData=array(); 
 
 		$nestedData[] = "<p style='color:red'>TOTAL </p>";
+		$nestedData[] = "<p style='color:red'></p>";
 		$nestedData[] = "<p style='color:red'></p>";
 		$nestedData[] = "<p style='color:red'></p>";
 		$nestedData[] = "<p style='color:red'></p>";

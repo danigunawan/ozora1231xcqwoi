@@ -9,7 +9,7 @@ include 'db.php';
 include 'sanitasi.php';
 
 //menampilkan seluruh data yang ada pada tabel Pembelian
-$perintah = $db->query("SELECT pel.nama_pelanggan, p.nama_konsumen,p.total, p.no_faktur ,p.kode_pelanggan ,p.tanggal ,p.jam ,p.user ,p.status ,p.potongan ,p.tax ,p.sisa,p.tunai FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan ORDER BY p.no_faktur DESC");
+$perintah = $db->query("SELECT pel.nama_pelanggan, p.nama_konsumen,p.total, p.no_faktur ,p.kode_pelanggan ,p.tanggal ,p.jam ,p.user ,p.status ,p.potongan ,p.tax ,p.sisa,p.tunai, t.nama_toko FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id ORDER BY p.no_faktur DESC");
 
 
 $query_sum = $db->query("SELECT SUM(total) AS total_bersih, SUM(potongan) AS total_potongan, SUM(tax) AS total_tax, SUM(tunai) AS total_tunai, SUM(sisa) AS total_sisa FROM penjualan");
@@ -34,6 +34,7 @@ $sub_total_kotor = $ambil_kotor['total_kotor'];
     <thead>
       <th style="background-color: #4CAF50; color: white;"> Nomor Faktur </th>
       <th style="background-color: #4CAF50; color: white;"> Marketplace</th>
+                <th style="background-color: #4CAF50; color: white;"> Toko </th>
       <th style="background-color: #4CAF50; color: white;"> Konsumen</th>
       <th style="background-color: #4CAF50; color: white;"> Total Kotor </th>
       <th style="background-color: #4CAF50; color: white;"> Total Bersih </th>
@@ -66,6 +67,7 @@ $sub_total_kotor = $ambil_kotor['total_kotor'];
       echo "<tr>
           <td>". $data1['no_faktur'] ."</td>
           <td>". $data1['kode_pelanggan'] ." ". $data1['nama_pelanggan'] ."</td>
+          <td>". $data1['nama_toko'] ."</td>
           <td>". $data1['nama_konsumen'] ."</td>
           <td>". $total_kotor ."</td>
           <td>". $data1['total'] ."</td>
@@ -84,6 +86,7 @@ $sub_total_kotor = $ambil_kotor['total_kotor'];
 
       echo "
       <td style='color: red'>TOTAL</td>
+      <td></td>
       <td></td>
       <td></td>
       <td style='color:red'>".rp($sub_total_kotor)."</td>
