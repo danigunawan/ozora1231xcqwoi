@@ -128,7 +128,7 @@ echo $no_faktur = $nomor."/OR/".$data_bulan_terakhir."/".$tahun_terakhir;
 
 
               
-              $stmt = $db->prepare("INSERT INTO penjualan_order (no_faktur_order, kode_gudang, kode_pelanggan, total, tanggal, jam, user, status_order,keterangan, nama_konsumen, alamat_konsumen, toko, sales) VALUES (?,?,?,?,?,?,?,'Sedang Order',?,?,?,?,?)");
+              $stmt = $db->prepare("INSERT INTO penjualan_order (no_faktur_order, kode_gudang, kode_pelanggan, total, tanggal, jam, user, status_order,keterangan, nama_konsumen, alamat_konsumen, toko, sales) VALUES (?,?,?,?,?,?,?,'Diorder',?,?,?,?,?)");
               
     // hubungkan "data" dengan prepared statements
               $stmt->bind_param("sssissssssii",

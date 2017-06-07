@@ -1060,7 +1060,7 @@ else if (level_harga == "Level 3") {
                $("#table-baru").html(info);
                $("#cetak_tunai").attr('href', 'cetak_penjualan_order.php?no_faktur='+no_faktur+'');
                $("#alert_berhasil").show();
-               $("#cetak_tunai").show();
+               
 
                var tabel_tbs_editorder = $('#tabel_tbs_editorder').DataTable();
                    tabel_tbs_editorder.draw();

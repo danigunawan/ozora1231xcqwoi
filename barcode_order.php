@@ -94,15 +94,15 @@ while ($data = $query->fetch_array()) {
     $satuan = stringdoang($result['satuan']);
 }
 
-if ($level_harga == 'harga_1')
+if ($level_harga == 'Level 1')
 {
   $harga = $harga_jual1;
 }
-else if ($level_harga == 'harga_2')
+else if ($level_harga == 'Level 2')
 {
   $harga = $harga_jual2;
 }
-else if ($level_harga == 'harga_3')
+else if ($level_harga == 'Level 3')
 {
   $harga = $harga_jual3;
 }
