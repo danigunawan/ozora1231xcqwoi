@@ -76,18 +76,20 @@
 
 
 
-   $perintah = $db->prepare("INSERT INTO tbs_retur_penjualan (session_id,no_faktur_penjualan,nama_barang,kode_barang,jumlah_beli,jumlah_retur,harga,subtotal,potongan,tax,satuan,satuan_jual) VALUES (?,?,?,?,'$jumlah_jual',?,'$harga',?,?,?,?,?)");
+   $perintah = $db->prepare("INSERT INTO tbs_retur_penjualan (session_id,no_faktur_penjualan,nama_barang,kode_barang,jumlah_beli,jumlah_retur,harga,subtotal,potongan,tax,satuan,satuan_jual,nama_konsumen,nama_toko) VALUES (?,?,?,?,'$jumlah_jual',?,'$harga',?,?,?,?,?,?,?)");
 
-   $perintah->bind_param("ssssiiiiss",
-    $session_id, $no_faktur_penjualan, $nama_barang, $kode_barang, $jumlah_retur, $subtotal,$potongan_tampil,$tax_persen,$satuan_produk,$satuan_jual);
+   $perintah->bind_param("ssssiiiissss",
+    $session_id, $no_faktur_penjualan, $nama_barang, $kode_barang, $jumlah_retur, $subtotal,$potongan_tampil,$tax_persen,$satuan_produk,$satuan_jual,$nama_konsumen,$nama_toko);
 
-    $no_faktur_penjualan = stringdoang($_POST['no_faktur_penjualan']);
-    $nama_barang = stringdoang($_POST['nama_barang']);
-    $kode_barang = stringdoang($_POST['kode_barang']);
-    $jumlah_retur = angkadoang($_POST['jumlah_retur']);
-    $harga = angkadoang($_POST['harga']);
+     $no_faktur_penjualan = stringdoang($_POST['no_faktur_penjualan']);
+     $nama_barang = stringdoang($_POST['nama_barang']);
+     $kode_barang = stringdoang($_POST['kode_barang']);
+     $jumlah_retur = angkadoang($_POST['jumlah_retur']);
+     $harga = angkadoang($_POST['harga']);
      $satuan_produk = stringdoang($_POST['satuan_produk']);
      $satuan_jual = stringdoang($_POST['satuan_jual']);
+     $nama_konsumen = stringdoang($_POST['konsumen']);
+     $nama_toko = stringdoang($_POST['nama_toko']);
 
    $perintah->execute();
 
@@ -108,13 +110,14 @@ else {
 <?php
 
     //untuk menampilkan semua data yang ada pada tabel tbs penjualan dalam DB
-    $perintah = $db->query("SELECT tp.id, tp.no_faktur_penjualan, tp.nama_barang, tp.kode_barang, tp.jumlah_beli, tp.jumlah_retur, tp.satuan, tp.harga, tp.harga, tp.potongan, tp.tax, tp.subtotal, s.nama AS satuan_retur,ss.nama AS satuan_jual FROM tbs_retur_penjualan tp INNER JOIN satuan s ON tp.satuan = s.id INNER JOIN satuan ss ON tp.satuan_jual = ss.id  WHERE tp.session_id = '$session_id' AND tp.kode_barang = '$kode_barang'  ORDER BY id DESC LIMIT 1");
+    $perintah = $db->query("SELECT tp.id, tp.no_faktur_penjualan, tp.nama_barang, tp.kode_barang, tp.jumlah_beli, tp.jumlah_retur, tp.satuan, tp.harga, tp.harga, tp.potongan, tp.tax, tp.subtotal, s.nama AS satuan_retur,ss.nama AS satuan_jual, tp.nama_konsumen FROM tbs_retur_penjualan tp INNER JOIN satuan s ON tp.satuan = s.id INNER JOIN satuan ss ON tp.satuan_jual = ss.id  WHERE tp.session_id = '$session_id' AND tp.kode_barang = '$kode_barang'  ORDER BY id DESC LIMIT 1");
    
     $data1 = mysqli_fetch_array($perintah);
 
         // menampilkan data
       echo "<tr class='tr-id-".$data1['id']."'>
       <td>". $data1['no_faktur_penjualan'] ."</td>
+      <td>". $data1['nama_konsumen'] ."</td>
       <td>". $data1['nama_barang'] ."</td>
       <td>". $data1['kode_barang'] ."</td>
       <td>". rp($data1['jumlah_beli']) ."</td>

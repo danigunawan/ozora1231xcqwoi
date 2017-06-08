@@ -6,7 +6,7 @@ include 'db.php';
 
  $no_faktur_retur = $_POST['no_faktur_retur'];
 
- $query = $db->query ("SELECT dp.no_faktur_penjualan, dp.no_faktur_retur, dp.id, dp.nama_barang, dp.kode_barang, 
+ $query = $db->query ("SELECT dp.nama_konsumen, dp.no_faktur_penjualan, dp.no_faktur_retur, dp.id, dp.nama_barang, dp.kode_barang, 
  	dp.jumlah_beli, dp.jumlah_retur, dp.harga, dp.potongan, dp.tax, dp.subtotal, sk.id_satuan, s.nama, 
  	dp.jumlah_retur / sk.konversi AS jumlah_produk
  	FROM detail_retur_penjualan dp LEFT JOIN satuan_konversi sk ON dp.satuan = sk.id_satuan LEFT JOIN satuan s ON dp.satuan = s.id 
@@ -24,6 +24,7 @@ include 'db.php';
 		<thead>
 			<th> Nomor Faktur Retur </th>
 			<th> Nomor Faktur Penjualan </th>
+			<th> Konsumen </th>
 			<th> Nama Barang </th>
 			<th> Kode Barang </th>
 			<th> Jumlah Jual </th>
@@ -55,6 +56,7 @@ include 'db.php';
 			echo "<tr>
 			<td>". $data1['no_faktur_retur'] ."</td>
 			<td>". $data1['no_faktur_penjualan'] ."</td>
+			<td>". $data1['nama_konsumen'] ."</td>
 			<td>". $data1['nama_barang'] ."</td>
 			<td>". $data1['kode_barang'] ."</td>
 			<td>". rp($data1['jumlah_beli']) ." ". $dd['satuan_jual'] ."</td>";
