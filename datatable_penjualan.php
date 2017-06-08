@@ -149,7 +149,7 @@ if ($row['status'] == 'Lunas') {
 				
 				<ul class='dropdown-menu'>
 				<li><a href='cetak_penjualan_surat_jalan.php?no_faktur=".$row['no_faktur']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."&kode_toko=".$row['kode_toko']."&nama_toko=".$row['nama_toko']."&kode_ekspedisi=".$row['kode_ekspedisi']."' target='blank'> Cetak Label </a></li>
-				<li><a href='cetak_lap_penjualan_tunai_besar.php?no_faktur=".$row['no_faktur']."&nama_toko=".$row['nama_toko']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."&kode_ekspedisi=".$row['kode_ekspedisi']."' target='blank'> Cetak Invoice </a></li>
+				<li><a href='cetak_lap_penjualan_tunai_besar.php?no_faktur=".$row['no_faktur']."&nama_toko=".$row['nama_toko']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."&kode_toko=".$row['kode_toko']."' target='blank'> Cetak Invoice </a></li>
 				</ul>
 				</div>";
 }

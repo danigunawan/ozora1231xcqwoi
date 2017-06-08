@@ -216,17 +216,6 @@ include 'sanitasi.php';
 
       <input type="hidden" name="nomor_faktur_penjualan" id="nomor_faktur_penjualan"  value="<?php echo $nomor_faktur; ?>" class="form-control tanggal" >
 
-<div class="col-sm-3">
-    <div class="form-group">
-        <input type="text" style="height:46px" value="<?php echo "$nama_konsumen"; ?>" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">
-    </div>
-</div>
-
-<div class="col-sm-3">
-    <div class="form-group">
-        <input type="text" style="height:46px" value="<?php echo "$alamat_konsumen"; ?>" name="alamat_konsumen" id="alamat_konsumen" class="form-control" placeholder="Alamat Konsumen">
-    </div>
-</div>
  
 <div class="col-sm-3">
           <label class="gg" > Ekspedisi </label><br>
@@ -635,6 +624,19 @@ include 'sanitasi.php';
           <label> Kredit </label><br>
           <b><input type="text" name="kredit" id="kredit" class="form-control" style="height:15px;font-size:15px"  readonly="" required="" ></b>
           </div>
+
+          <div class="col-sm-6">
+              <div class="form-group">
+                  <input type="text" style="height:46px" value="<?php echo "$nama_konsumen"; ?>" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">
+              </div>
+          </div>
+
+          <div class="col-sm-6">
+              <div class="form-group">
+                  <input type="text" style="height:46px" value="<?php echo "$alamat_konsumen"; ?>" name="alamat_konsumen" id="alamat_konsumen" class="form-control" placeholder="Alamat Konsumen">
+              </div>
+          </div>
+
 </div>
           
           
