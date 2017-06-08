@@ -7,15 +7,17 @@
     $harga = angkadoang($_POST['harga']);
     $no_faktur_penjualan = stringdoang($_POST['no_faktur_penjualan']);
               
-              $jumlah_retur = angkadoang($_POST['jumlah_retur']);              
-              $potongan = angkadoang($_POST['potongan1']);
-              $pajak = angkadoang($_POST['tax1']);
-
+               $jumlah_retur = angkadoang($_POST['jumlah_retur']);              
+               $potongan = angkadoang($_POST['potongan1']);
+               $pajak = angkadoang($_POST['tax1']);
+               
                $no_faktur_retur = stringdoang($_POST['no_faktur_retur']);
                $nama_barang = stringdoang($_POST['nama_barang']);
                $harga = angkadoang($_POST['harga']);
                $satuan_jual = stringdoang($_POST['satuan_jual']);
                $satuan_produk = stringdoang($_POST['satuan_produk']);
+               $konsumen = stringdoang($_POST['konsumen']);
+               $nama_toko = stringdoang($_POST['nama_toko']);
               
               $a = $harga * $jumlah_retur;
               
@@ -62,10 +64,10 @@ else{
   $jumlah_jual = $data['jumlah_barang'];
 }
 
-   $perintah = $db->prepare("INSERT INTO tbs_retur_penjualan (no_faktur_retur,no_faktur_penjualan,nama_barang,kode_barang,jumlah_beli,jumlah_retur,harga,subtotal,potongan,tax,satuan,satuan_jual) VALUES (?,?,?,?,'$jumlah_jual',?,?,?,?,?,?,?)");
+   $perintah = $db->prepare("INSERT INTO tbs_retur_penjualan (no_faktur_retur,no_faktur_penjualan,nama_barang,kode_barang,jumlah_beli,jumlah_retur,harga,subtotal,potongan,tax,satuan,satuan_jual,nama_konsumen,nama_toko) VALUES (?,?,?,?,'$jumlah_jual',?,?,?,?,?,?,?,?,?)");
 
-   $perintah->bind_param("ssssiiiiiss",
-    $no_faktur_retur, $no_faktur_penjualan, $nama_barang, $kode_barang, $jumlah_retur,$harga, $subtotal, $potongan_tampil, $tax_persen,$satuan_produk,$satuan_jual);
+   $perintah->bind_param("ssssiiiiissss",
+    $no_faktur_retur, $no_faktur_penjualan, $nama_barang, $kode_barang, $jumlah_retur,$harga, $subtotal, $potongan_tampil, $tax_persen,$satuan_produk,$satuan_jual,$konsumen,$nama_toko);
 
     $perintah->execute();
 
@@ -81,7 +83,7 @@ else {
    
 
     //untuk menampilkan semua data yang ada pada tabel tbs penjualan dalam DB
-    $perintah = $db->query("SELECT tp.id, tp.no_faktur_penjualan, tp.no_faktur_retur, tp.nama_barang, tp.kode_barang, tp.jumlah_beli, tp.jumlah_retur, tp.satuan, tp.harga, tp.harga, tp.potongan, tp.tax, tp.subtotal, s.nama AS satuan_retur,ss.nama AS satuan_jual FROM tbs_retur_penjualan tp INNER JOIN satuan s ON tp.satuan = s.id INNER JOIN satuan ss ON tp.satuan_jual = ss.id  WHERE tp.no_faktur_retur = '$no_faktur_retur' ORDER BY id DESC LIMIT 1");
+    $perintah = $db->query("SELECT tp.id, tp.nama_konsumen, tp.no_faktur_penjualan, tp.no_faktur_retur, tp.nama_barang, tp.kode_barang, tp.jumlah_beli, tp.jumlah_retur, tp.satuan, tp.harga, tp.harga, tp.potongan, tp.tax, tp.subtotal, s.nama AS satuan_retur,ss.nama AS satuan_jual FROM tbs_retur_penjualan tp INNER JOIN satuan s ON tp.satuan = s.id INNER JOIN satuan ss ON tp.satuan_jual = ss.id  WHERE tp.no_faktur_retur = '$no_faktur_retur' ORDER BY id DESC LIMIT 1");
 
     //menyimpan data sementara yang ada pada $perintah
       $data1 = mysqli_fetch_array($perintah);
@@ -89,6 +91,7 @@ else {
       echo "<tr class='tr-id-".$data1['id']."'>
       <td>". $data1['no_faktur_retur'] ."</td>
       <td>". $data1['no_faktur_penjualan'] ."</td>
+      <td>". $data1['nama_konsumen'] ."</td>
       <td>". $data1['nama_barang'] ."</td>
       <td>". $data1['kode_barang'] ."</td>
       <td>". rp($data1['jumlah_beli']) ."</td>
