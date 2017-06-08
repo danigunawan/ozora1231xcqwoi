@@ -15,7 +15,7 @@ $columns = array(
     
     0=>'Nama toko', 
     1=>'Alamat toko', 
-    2=>'Kode Marketplace', 
+    2=>'Nomor Telephone', 
     3=>'Hapus',
     4=>'Edit',
     5=>'id' 
@@ -23,8 +23,8 @@ $columns = array(
 );
 
 // getting total number records without any search
-$sql =" SELECT t.id, t.nama_toko, t.alamat_toko, t.kode_marketplace, p.kode_pelanggan, p.nama_pelanggan ";
-$sql.=" FROM toko t INNER JOIN pelanggan p ON t.kode_marketplace = p.kode_pelanggan";
+$sql =" SELECT id, nama_toko, alamat_toko, no_toko";
+$sql.=" FROM toko";
 $sql.="";
 
 $query = mysqli_query($conn, $sql) or die("eror 1");
@@ -32,20 +32,20 @@ $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
-$sql =" SELECT t.id,t.nama_toko,t.alamat_toko,t.kode_marketplace,p.kode_pelanggan,p.nama_pelanggan  ";
-$sql.="  FROM toko t INNER JOIN pelanggan p ON t.kode_marketplace = p.kode_pelanggan ";
+$sql =" SELECT id,nama_toko,alamat_toko,no_toko";
+$sql.="  FROM toko ";
 $sql.=" WHERE 1=1 ";
 
-    $sql.=" AND (t.nama_toko LIKE '".$requestData['search']['value']."%'";  
-    $sql.=" OR t.alamat_toko LIKE '".$requestData['search']['value']."%'"; 
-    $sql.=" OR t.kode_marketplace LIKE '".$requestData['search']['value']."%' )";   
+    $sql.=" AND (nama_toko LIKE '".$requestData['search']['value']."%'";  
+    $sql.=" OR alamat_toko LIKE '".$requestData['search']['value']."%'"; 
+    $sql.=" OR no_toko LIKE '".$requestData['search']['value']."%' )";   
 }
 
 
 $query=mysqli_query($conn, $sql) or die("eror 2");
-$totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result. 
+$totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search resul 
         
-$sql.=" ORDER BY t.id ".$requestData['order'][0]['dir']."  LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
+$sql.=" ORDER BY id ".$requestData['order'][0]['dir']."  LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
 
 /* $requestData['order'][0]['column'] contains colmun index, $requestData['order'][0]['dir'] contains order such as asc/desc  */    
 $query=mysqli_query($conn, $sql) or die("eror 3");
@@ -61,7 +61,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 
           $nestedData[] = $row['nama_toko'];
           $nestedData[] = $row['alamat_toko'];
-          $nestedData[] = $row['kode_marketplace'].' - '.$row['nama_pelanggan'];
+          $nestedData[] = $row['no_toko'];
           if ($data_otoritas_master_data_toko['toko_edit'] == 1){
           $nestedData[] = "<button class='btn btn-danger btn-hapus btn-sm' data-id='". $row['id'] ."' data-toko='". $row['nama_toko'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button>";
           }
@@ -70,7 +70,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
           }
 
           if ($data_otoritas_master_data_toko['toko_hapus'] == 1){
-          $nestedData[] = "<button class='btn btn-success btn-edit btn-sm' data-toko='". $row['nama_toko'] ."' data-alamat='". $row['alamat_toko'] ."' data-marketplace='".  $row['kode_marketplace'].' - '.$row['nama_pelanggan'] ."' data-id='". $row['id'] ."' > <span class='glyphicon glyphicon-edit'> </span> Edit </button>";
+          $nestedData[] = "<button class='btn btn-success btn-edit btn-sm' data-toko='". $row['nama_toko'] ."' data-alamat='". $row['alamat_toko'] ."'  data-no='". $row['no_toko'] ."'  data-id='". $row['id'] ."' > <span class='glyphicon glyphicon-edit'> </span> Edit </button>";
       	  }
       	  else{
 			$nestedData[] = "<p></p>";

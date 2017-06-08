@@ -60,36 +60,9 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
 					</div>
 					
           <div class="form-group">
-          <label> Kode Marketplace </label><br> 
-          <select name="kode_marketplace" id="kode_marketplace" class="form-control chosen" required="" autofocus="">
-          <option value="">Pilih Marketplace</option>
-                  
-          <?php 
-            
-            //untuk menampilkan semua data pada tabel pelanggan dalam DB
-            $query_pelanggan = $db->query("SELECT default_pelanggan,kode_pelanggan,level_harga,nama_pelanggan FROM pelanggan");
-
-            //untuk menyimpan data sementara yang ada pada $query
-            while($data_pelanggan = mysqli_fetch_array($query_pelanggan))
-            {
-                    if ($data_pelanggan['default_pelanggan'] == '1') {
-
-            echo "<option selected value='".$data_pelanggan['kode_pelanggan'] ."' class='opt-pelanggan-".$data_pelanggan['kode_pelanggan']."' data_pelanggan-level='".$data_pelanggan['level_harga'] ."'>".$data_pelanggan['kode_pelanggan'] ." - ".$data_pelanggan['nama_pelanggan'] ."</option>";
-                      
-                    }
-
-                    else{
-
-            echo "<option value='".$data_pelanggan['kode_pelanggan'] ."' class='opt-pelanggan-".$data_pelanggan['kode_pelanggan']."' data_pelanggan-level='".$data_pelanggan['level_harga'] ."'>".$data_pelanggan['kode_pelanggan'] ." - ".$data_pelanggan['nama_pelanggan'] ."</option>";
-
-                    }
-            }
-            
-            
-            ?>
-            </select>
+          <label> Nomor Telephone Toko </label><br>
+          <input type="text" name="no_toko" id="no_toko" class="form-control" autocomplete="off" required="" > 
           </div>
-					
 					
 					<button type="submit" id="submit_tambah" class="btn btn-success">Submit</button>
 </form>
@@ -175,31 +148,13 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
      <input type="text" class="form-control" id="alamat_edit" autocomplete="off">
     
    </div> 
- 
-   <div class="form-group"> 
-          <label> Kode Marketplace </label><br> 
-          <input type="text" class="form-control" id="kode_marketplace_edit" readonly="">
-          <select id="edit_kode_marketplace" class="form-control chosen" required="" autofocus="">
-          <option  value="">Pilih Marketplace</option> 
-          <?php 
-            
-            //untuk menampilkan semua data pada tabel pelanggan dalam DB
-            $query_pelanggan = $db->query("SELECT default_pelanggan,kode_pelanggan,level_harga,nama_pelanggan FROM pelanggan");
-
-            //untuk menyimpan data sementara yang ada pada $query
-            while($data_pelanggan = mysqli_fetch_array($query_pelanggan))
-            {
-                    
-
-            echo "<option value='".$data_pelanggan['kode_pelanggan'] ."' class='opt-pelanggan-".$data_pelanggan['kode_pelanggan']."' data_pelanggan-level='".$data_pelanggan['level_harga'] ."'>".$data_pelanggan['kode_pelanggan'] ." - ".$data_pelanggan['nama_pelanggan'] ."</option>";
- 
-            }
-            
-            
-            ?>
-            </select>
-           <input type="hidden" class="form-control" id="id_edit">
+  
+          <div class="form-group">
+          <label> Nomor Telephone Toko </label><br>
+          <input type="text" name="no_toko_edit" id="no_toko_edit" class="form-control" autocomplete="off" required="" > 
           </div>
+           <input type="hidden" class="form-control" id="id_edit"> 
+          
    
    <button type="submit" id="submit_edit" class="btn btn-default">Submit</button>
   </form>
@@ -223,7 +178,7 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
     <thead>
       <th> Nama Toko </th> 
       <th> Alamat Toko </th> 
-      <th> Kode Marketplace </th> 
+      <th> Nomor Telphone Toko </th> 
       <th> Hapus </th>
       <th> Edit </th>   
     </thead>
@@ -269,7 +224,7 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
     $("#submit_tambah").click(function(){
     var nama_toko = $("#nama_toko").val();
     var alamat_toko = $("#alamat_toko").val();
-    var kode_marketplace = $("#kode_marketplace").val();
+    var no_toko = $("#no_toko").val();
 
 		if (nama_toko == ""){
 			alert("Nama Harus Diisi");
@@ -277,19 +232,19 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
 		else if (alamat_toko == ""){
 			alert("Alamat Harus Diisi");
 		}
-    else if (kode_marketplace == ""){
-      alert("Kode Marketplace Harus Diisi");
+    else if (no_toko == ""){
+      alert("Nomor Telphone Harus Diisi");
     }
   
 
     else{
 
-    $.post('proses_tambah_toko.php',{nama_toko:nama_toko,alamat_toko:alamat_toko,kode_marketplace:kode_marketplace},function(data){
+    $.post('proses_tambah_toko.php',{nama_toko:nama_toko,alamat_toko:alamat_toko,no_toko:no_toko},function(data){
 
     if (data != '') {
     $("#nama_toko").val('');
     $("#alamat_toko").val('');
-    $("#kode_marketplace").val('');
+    $("#no_toko").val('');
     $(".alert").show('fast');
     
     setTimeout(tutupalert, 2000);
@@ -345,12 +300,12 @@ $(document).on('click', '#btn_jadi_hapus', function (e) {
     $("#modal_edit").modal('show');
     var nama_toko = $(this).attr("data-toko"); 
   	var alamat_toko = $(this).attr("data-alamat");  
-    var kode_marketplace = $(this).attr("data-marketplace");  
+    var no_toko = $(this).attr("data-no");  
 
     var id  = $(this).attr("data-id");
     $("#nama_edit").val(nama_toko);
 	  $("#alamat_edit").val(alamat_toko);
-    $("#kode_marketplace_edit").val(kode_marketplace);
+    $("#no_toko_edit").val(no_toko);
     $("#id_edit").val(id); 
     
     });
@@ -358,7 +313,7 @@ $(document).on('click', '#btn_jadi_hapus', function (e) {
     $("#submit_edit").click(function(){
     var nama_toko = $("#nama_edit").val();
     var alamat_toko = $("#alamat_edit").val();
-    var kode_marketplace = $("#edit_kode_marketplace").val();
+    var no_toko = $("#no_toko_edit").val();
     var id = $("#id_edit").val();
 
 		if (nama_toko == ""){
@@ -367,11 +322,11 @@ $(document).on('click', '#btn_jadi_hapus', function (e) {
 		else if (alamat_toko == ""){
 			alert("Alamat Harus Diisi");
 		}
-    else if (kode_marketplace == ""){
-      alert("Kode Marketplace Harus Diisi");
+    else if (no_toko == ""){
+      alert("Nomor Telphone Harus Diisi");
     }
 		else { 
-					$.post("proses_edit_toko.php",{id:id,nama_toko:nama_toko,alamat_toko:alamat_toko,kode_marketplace:kode_marketplace},function(data){
+					$.post("proses_edit_toko.php",{id:id,nama_toko:nama_toko,alamat_toko:alamat_toko,no_toko:no_toko},function(data){
 
 			if (data != '') {
 			$(".alert").show('fast');

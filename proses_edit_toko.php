@@ -4,15 +4,15 @@ include 'db.php';
 
 
 
-$query = $db->prepare("UPDATE toko SET id = ?, nama_toko = ? ,alamat_toko = ? ,kode_marketplace = ? WHERE id = ?");
+$query = $db->prepare("UPDATE toko SET id = ?, nama_toko = ? ,alamat_toko = ? ,no_toko = ? WHERE id = ?");
 
 $query->bind_param("sssss",
-	$id, $nama_toko, $alamat_toko, $kode_marketplace, $id);
+	$id, $nama_toko, $alamat_toko, $no_toko, $id);
 	
 	$id = stringdoang($_POST['id']);
 	$nama_toko = stringdoang($_POST['nama_toko']);
     $alamat_toko = stringdoang($_POST['alamat_toko']);
-    $kode_marketplace = stringdoang($_POST['kode_marketplace']);
+    $no_toko = stringdoang($_POST['no_toko']);
 
 $query->execute();
 
