@@ -174,11 +174,29 @@ $session_id = session_id();
           </select>
 </div>
 
+ 
+<div class="col-sm-3">
+          <label class="gg" > Ekspedisi </label><br>
+          
+          <select name="kode_ekspedisi" id="kode_ekspedisi"  class="form-control chosen" required="" autofocus="" >
+          <option value="">Pilih Ekspedisi</option>
+          <?php 
+          
+      
+          $query_gudang = $db->query("SELECT id,nama_ekspedisi FROM ekspedisi");
+          
 
-<div class="col-sm-4">
-    <div class="form-group">
-        <input type="text" style="height:20px" name="alamat_konsumen" id="alamat_konsumen" class="form-control" placeholder="Alamat Konsumen">
-    </div>
+          while($data_gudang = mysqli_fetch_array($query_gudang))
+          {
+ 
+
+                echo "<option value='".$data_gudang['id'] ."'>".$data_gudang['nama_ekspedisi'] ."</option>"; 
+          
+          }
+          
+          
+          ?>
+          </select>
 </div>
 
 </div>  <!-- END ROW dari kode pelanggan - ppn -->
