@@ -135,7 +135,7 @@ $session_id = session_id();
 
 <div class="col-sm-2">
 <label class="gg" >Admin</label>
-<select style="font-size:15px; height:35px" name="sales" id="sales" class="form-control chosen" required="">
+<select style="font-size:15px; height:35px" name="sales" id="sales" class="form-control gg" required="">
 
   <?php 
     
@@ -174,6 +174,12 @@ $session_id = session_id();
           </select>
 </div>
 
+
+<div class="col-sm-4">
+    <div class="form-group">
+        <input type="text" style="height:20px" name="alamat_konsumen" id="alamat_konsumen" class="form-control" placeholder="Alamat Konsumen">
+    </div>
+</div>
 
 </div>  <!-- END ROW dari kode pelanggan - ppn -->
 
@@ -1459,6 +1465,7 @@ $("#kode_barang").focus();
         var kode_toko = $("#kode_toko").val();
         var nama_konsumen = $("#nama_konsumen").val();
         var alamat_konsumen = $("#alamat_konsumen").val();
+        var kode_ekspedisi = $("#kode_ekspedisi").val();
         var sales = $("#sales").val();
         var keterangan = $("#keterangan").val();   
         var ber_stok = $("#ber_stok").val();   
@@ -1526,6 +1533,12 @@ alert(" Alamat Konsumen Harus Diisi ");
 $("#alamat_konsumen").focus();
 
  }
+   else if (kode_ekspedisi == "")
+ {
+
+alert(" Ekspedisi Harus Diisi ");
+
+ }
  else if ( sisa < 0) 
  {
 
@@ -1558,7 +1571,7 @@ alert("Silakan Bayar Piutang");
     $.getJSON("cek_status_stok_penjualan.php?session_id="+session_id, function(result){
       if (result.status == 0) {
 
-         $.post("proses_bayar_jual.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,kode_gudang:kode_gudang,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
+         $.post("proses_bayar_jual.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,kode_gudang:kode_gudang,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
 
 
              var no_faktur = info;
@@ -1574,6 +1587,7 @@ alert("Silakan Bayar Piutang");
              $("#kredit").val('');
              $("#nama_konsumen").val('');
              $("#alamat_konsumen").val('');
+             $("#ekspedisi").val('');
             
               //pembaruan datatable
      $('#tabel_tbs_penjualan').DataTable().destroy();
@@ -1686,6 +1700,7 @@ alert("Silakan Bayar Piutang");
         var kode_gudang = $("#kode_gudang").val();
         var nama_konsumen = $("#nama_konsumen").val();
         var alamat_konsumen = $("#alamat_konsumen").val();
+        var kode_ekspedisi = $("#kode_ekspedisi").val();
         var kode_toko = $("#kode_toko").val();
         var sales = $("#sales").val();
         var keterangan = $("#keterangan").val();   
@@ -1739,6 +1754,13 @@ alert(" Nama Konsumen Harus Diisi ");
 $("#nama_konsumen").focus();
 
  }
+   else if (kode_ekspedisi == "")
+ {
+
+alert(" Ekspedisi Harus Diisi ");
+
+ }
+ 
    else if (alamat_konsumen == "")
  {
 
@@ -1786,7 +1808,7 @@ alert("Silakan Bayar Piutang");
 
         if (result.status == 0) {
               
-              $.post("proses_bayar_tunai_cetak_langsung.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,kode_gudang:kode_gudang,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
+              $.post("proses_bayar_tunai_cetak_langsung.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,kode_gudang:kode_gudang,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
               
                  var no_fak = info;
                  $("#cetak_surat_jalan").attr('href', 'cetak_penjualan_surat_jalan.php?no_faktur='+no_fak+'');
@@ -1916,6 +1938,7 @@ alert("Silakan Bayar Piutang");
         var kode_gudang = $("#kode_gudang").val();
         var nama_konsumen = $("#nama_konsumen").val();
         var alamat_konsumen = $("#alamat_konsumen").val();
+        var kode_ekspedisi = $("#kode_ekspedisi").val();
         var kode_toko = $("#kode_toko").val();
         var sales = $("#sales").val();
         var keterangan = $("#keterangan").val();   
@@ -1946,6 +1969,12 @@ alert("Silakan Bayar Piutang");
 
       alert(" Alamat Konsumen Harus Diisi ");
       $("#alamat_konsumen").focus();
+
+       }
+         else if (kode_ekspedisi == "")
+       {
+
+      alert(" Ekspedisi Harus Diisi ");
 
        }
        else if (kode_pelanggan == "") 
@@ -2014,7 +2043,7 @@ alert("Silakan Bayar Piutang");
             {
               //END BREAK Cek Flafon sesuai dengan kode pelanggan / ID Pelanggannya
           
-               $.post("proses_bayar_jual.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,sales:sales,kode_gudang:kode_gudang,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
+               $.post("proses_bayar_jual.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,sales:sales,kode_gudang:kode_gudang,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
 
                      var no_faktur = info;
                      $("#cetak_piutang").attr('href', 'cetak_penjualan_piutang.php?no_faktur='+no_faktur+'');
@@ -2032,6 +2061,7 @@ alert("Silakan Bayar Piutang");
                      $("#tax").val('');
                      $("#nama_konsumen").val('');
                      $("#alamat_konsumen").val('');
+                     $("#kode_ekspedisi").val('');
                      
                      
                      $("#total1").val('');
@@ -2783,13 +2813,12 @@ function myFunction(event) {
         var kode_gudang = $("#kode_gudang").val();
         var nama_konsumen = $("#nama_konsumen").val();
         var alamat_konsumen = $("#alamat_konsumen").val();
+        var kode_ekspedisi = $("#kode_ekspedisi").val();
         var kode_toko = $("#kode_toko").val();
         var sales = $("#sales").val();
         var keterangan = $("#keterangan").val();   
         var ber_stok = $("#ber_stok").val();
-        var ppn_input = $("#ppn_input").val();
-        var nama_konsumen = $("#nama_konsumen").val();
-        var alamat_konsumen = $("#alamat_konsumen").val();
+        var ppn_input = $("#ppn_input").val(); 
        
        var sisa =  pembayaran - total; 
 
@@ -2822,6 +2851,12 @@ function myFunction(event) {
          alert("Alamat Konsumen Harus Di Isi");
          
          }
+         else if ( kode_ekspedisi == "") 
+         {
+         
+         alert("Ekspedisi Harus Di Isi");
+         
+         }
          
        else
        {
@@ -2835,6 +2870,7 @@ function myFunction(event) {
         $("#total1").val('');
         $("#nama_konsumen").val('');
         $("#alamat_konsumen").val('');
+        $("#kode_ekspedisi").val('');
 
  $.post("cek_subtotal_penjualan.php",{total:total,session_id:session_id,potongan:potongan,tax:tax,},function(data) {
 
@@ -2845,7 +2881,7 @@ function myFunction(event) {
 
         if (result.status == 0) {
 
-            $.post("proses_simpan_barang.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,sales:sales,kode_gudang:kode_gudang,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_toko:kode_toko,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
+            $.post("proses_simpan_barang.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,sales:sales,kode_gudang:kode_gudang,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
 
             
                 $("#table-baru").html(info);
