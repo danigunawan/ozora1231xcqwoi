@@ -140,7 +140,7 @@ $session_id = session_id();
   <?php 
     
     //untuk menampilkan semua data pada tabel pelanggan dalam DB
-    $query01 = $db->query("SELECT nama,default_sales FROM user ");
+    $query01 = $db->query("SELECT nama,default_sales FROM user WHERE status_sales = 'iya' ");
 
     //untuk menyimpan data sementara yang ada pada $query
     while($data01 = mysqli_fetch_array($query01))
