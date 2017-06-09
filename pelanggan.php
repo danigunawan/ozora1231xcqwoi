@@ -76,7 +76,7 @@ $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
 					<label> Flafon </label><br>
 					<input type="text" name="flafon" id="flafon" class="form-control" autocomplete="off" placeholder="Flafon (Jumlah Maximal Piutang)" required="" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);" >
 
-						<label> Flafon Usia </label><br>
+						<label> Flafon Usia Piutang</label><br>
 					<input type="text" name="flafon_usia" id="flafon_usia" class="form-control" autocomplete="off" placeholder="Flafon Usia Piutang" required=""   >
 
 					<label> Level Harga </label><br>
@@ -294,7 +294,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 			<th style='background-color: #4CAF50; color: white'> Kode Marketplace </th>
 			<th style='background-color: #4CAF50; color: white'> Nama Marketplace </th>
 			<th style='background-color: #4CAF50; color: white'> Flafon </th>
-			<th style='background-color: #4CAF50; color: white'> Flafon Usia </th>
+			<th style='background-color: #4CAF50; color: white'> Flafon Usia Piutang</th>
 			<th style='background-color: #4CAF50; color: white'> Level Harga </th>
 			<th style='background-color: #4CAF50; color: white'> Tgl. Lahir </th>
 			<th style='background-color: #4CAF50; color: white'> Nomor Telp </th>
