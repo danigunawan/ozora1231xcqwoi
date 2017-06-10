@@ -239,15 +239,14 @@ $ambil_kategori = $db->query("SELECT * FROM kategori");
                             <div class="form-group">
                             <label> Status </label>
                             <br>
-                            <select type="text" name="status" class="form-control" required="">
-                            <option value=""> -- SILAHKAN PILIH -- </option>
+                            <select type="text" name="status" class="form-control" required=""> 
                             <option> Aktif </option>
                             <option> Tidak Aktif</option>
                             </select>
                             </div>
 
                             <div class="form-group">
-                            <label> Tipe </label>
+                            <label> Golongan </label>
                             <br>
                             <select type="text" name="tipe" class="form-control" required="">
                             <option value=""> -- SILAHKAN PILIH -- </option>

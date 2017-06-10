@@ -116,6 +116,10 @@ if ($lihat['item_lihat'] > 0){
                                 echo '<li><a href="barang.php?kategori=semua&tipe=barang_jasa" class="waves-effect" >Produk</a></li>';
 }
 
+if ($lihat['warna_lihat'] > 0){
+                                echo '<li><a href="varian_warna.php" class="waves-effect">Varian</a></li>';
+}
+
 if ($lihat['satuan_lihat'] > 0){
                                 echo '<li><a href="satuan.php" class="waves-effect">Satuan</a></li>';
 }
@@ -146,10 +150,6 @@ if ($lihat['grup_akun_lihat'] > 0){
 
 if ($lihat['set_akun_lihat'] > 0){
                                 echo '<li><a href="setting_akun_data_item.php" class="waves-effect">Setting Akun</a></li>';
-}
-
-if ($lihat['warna_lihat'] > 0){
-                                echo '<li><a href="varian_warna.php" class="waves-effect">Varian Warna</a></li>';
 }
 ?>
 
@@ -237,8 +237,8 @@ if ($lihat['pembayaran_hutang_lihat'] > 0){
                             echo '<li><a href="stok_opname.php" class="waves-effect">Stok Opname</a></li>';
 }
 
-echo '<li><a href="kartu_stok.php" class="waves-effect" style="font-size: 16px">Lap. Data Stok</a></li>';
-echo '<li><a href="kartu_stok_periode.php" class="waves-effect" style="font-size: 16px">Lap. Data Stok Periode</a></li>';
+echo '<li><a href="kartu_stok.php" class="waves-effect" style="font-size: 16px">Lap. Kartu Stok</a></li>';
+echo '<li><a href="kartu_stok_periode.php" class="waves-effect" style="font-size: 16px">Lap. Kartu Stok Periode</a></li>';
 
  if ($lihat['laporan_mutasi_stok_lihat'] > 0){
                             echo '<li><a href="lap_mutasi_stok.php" class="waves-effect">Lap. Mutasi Stok</a></li>';

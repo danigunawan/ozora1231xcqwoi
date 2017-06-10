@@ -6,12 +6,11 @@
     // mengirim data menggunakan metode POST
 
 
-    $perintah = $db->prepare("INSERT INTO toko (id,nama_toko,alamat_toko,no_toko) VALUES (?,?,?,?)");
+    $perintah = $db->prepare("INSERT INTO toko (nama_toko,alamat_toko,no_toko) VALUES (?,?,?)");
 
-    $perintah->bind_param("ssss",
-        $id, $nama_toko, $alamat_toko, $no_toko);
-        
-        $id = stringdoang($_POST['id']);
+    $perintah->bind_param("sss",
+        $nama_toko, $alamat_toko, $no_toko);
+         
         $nama_toko = stringdoang($_POST['nama_toko']); 
         $alamat_toko = stringdoang($_POST['alamat_toko']);   
         $no_toko = stringdoang($_POST['no_toko']);  

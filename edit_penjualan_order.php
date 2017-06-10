@@ -151,7 +151,7 @@
     </div>
 
     <div class="col-sm-2">
-        <label class="gg" >Sales</label>
+        <label class="gg" >Admin</label>
         <select style="font-size:15px; height:35px" name="sales" id="sales" class="form-control chosen" required="">
             <?php 
               $query01 = $db->query("SELECT id,nama FROM user WHERE status_sales = 'Iya'");

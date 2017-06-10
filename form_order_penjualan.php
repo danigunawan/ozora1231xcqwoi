@@ -139,7 +139,7 @@ $session_id = session_id();
 <select style="font-size:15px; height:35px" name="sales" id="sales" class="form-control chosen" required="">
 
   <?php     
-    $query01 = $db->query("SELECT nama,default_sales FROM user ");
+    $query01 = $db->query("SELECT nama,default_sales FROM user WHERE status_sales = 'iya' ");
       while($data01 = mysqli_fetch_array($query01)){
         if ($_SESSION['nama'] == $data01['nama']) {
           echo "<option selected value='".$data01['nama'] ."'>".$data01['nama'] ."</option>";
@@ -459,7 +459,7 @@ $session_id = session_id();
 
 
           <div class="alert alert-success" id="alert_berhasil" style="display:none">
-          <strong>Success!</strong> Pembayaran Berhasil
+          <strong>Success!</strong> Order Selesai
           </div>
 
 
