@@ -10,7 +10,7 @@
 $tahun_sekarang = date('Y');
 $bulan_sekarang = date('m');
 $tanggal_sekarang = date('Y-m-d');
-$jam_sekarang = date('H:i:sa');
+$jam_sekarang = date('H:i:s');
 $tahun_terakhir = substr($tahun_sekarang, 2);
 
 
@@ -109,62 +109,61 @@ echo $no_faktur = $nomor."/JL/".$data_bulan_terakhir."/".$tahun_terakhir;
     }
 
 
+$query_tbs = $db->query("SELECT no_faktur_order,SUM(jumlah_barang) AS jumlah_barang ,SUM(subtotal) AS subtotal,satuan,kode_barang,harga,nama_barang,potongan,tax,waktu FROM tbs_penjualan WHERE session_id = '$session_id' GROUP BY kode_barang ");
+  while ($data = mysqli_fetch_array($query_tbs)){
 
+    $pilih_konversi = $db->query("SELECT  sk.konversi * $data[jumlah_barang] AS jumlah_konversi, $data[subtotal] / ($data[jumlah_barang] * sk.konversi) AS harga_konversi, sk.id_satuan, b.satuan FROM satuan_konversi sk INNER JOIN barang b ON sk.id_produk = b.id  WHERE sk.id_satuan = '$data[satuan]' AND sk.kode_produk = '$data[kode_barang]'");
+    $data_konversi = mysqli_fetch_array($pilih_konversi);
+    $data_rows = mysqli_num_rows($pilih_konversi);
 
-    $query = $db->query("SELECT * FROM tbs_penjualan WHERE session_id = '$session_id' ORDER BY kode_barang ");
-    while ($data = mysqli_fetch_array($query))
-      {
+    if ($data_rows > 0) {
 
-      $pilih_konversi = $db->query("SELECT  sk.konversi * $data[jumlah_barang] AS jumlah_konversi, $data[subtotal] / ($data[jumlah_barang] * sk.konversi) AS harga_konversi, sk.id_satuan, b.satuan FROM satuan_konversi sk INNER JOIN barang b ON sk.id_produk = b.id  WHERE sk.id_satuan = '$data[satuan]' AND sk.kode_produk = '$data[kode_barang]'");
-      $data_konversi = mysqli_fetch_array($pilih_konversi);
-      $data_rows = mysqli_num_rows($pilih_konversi);
-
-      if ($data_rows > 0) {
-
-            if ($data_konversi['harga_konversi'] != 0 || $data_konversi['harga_konversi'] != "") {
-              $harga = $data_konversi['harga_konversi'];
-              $jumlah_barang = $data_konversi['jumlah_konversi'];
-              $satuan = $data_konversi['satuan'];
-            }
-            else{
-              $harga = $data['harga'];
-              $jumlah_barang = $data['jumlah_barang'];
-              $satuan = $data['satuan'];
-            }
+        if ($data_konversi['harga_konversi'] != 0 || $data_konversi['harga_konversi'] != "") {
+          $harga = $data_konversi['harga_konversi'];
+          $jumlah_barang = $data_konversi['jumlah_konversi'];
+          $satuan = $data_konversi['satuan'];
+        }
+        else{
+          $harga = $data['harga'];
+          $jumlah_barang = $data['jumlah_barang'];
+          $satuan = $data['satuan'];
+        }
+    }
+    else{
         
-      }
-      
-      else{
         $harga = $data['harga'];
         $jumlah_barang = $data['jumlah_barang'];
         $satuan = $data['satuan'];
-      }
+    }
 
-      
-        
-    
-        $query2 = "INSERT INTO detail_penjualan (no_faktur, tanggal, jam, kode_barang, nama_barang, jumlah_barang, asal_satuan,satuan, harga, subtotal, potongan, tax, sisa) VALUES ('$no_faktur', '$tanggal_sekarang', '$jam_sekarang', '$data[kode_barang]','$data[nama_barang]','$jumlah_barang','$satuan','$data[satuan]','$harga','$data[subtotal]','$data[potongan]','$data[tax]', '$jumlah_barang')";
 
-        if ($db->query($query2) === TRUE) {
-        } 
+      $query_insert_detail = "INSERT INTO detail_penjualan (no_faktur, tanggal, jam, kode_barang, nama_barang, jumlah_barang, asal_satuan,satuan, harga, subtotal, potongan, tax, sisa) VALUES ('$no_faktur', '$tanggal_sekarang', '$jam_sekarang', '$data[kode_barang]','$data[nama_barang]','$jumlah_barang','$satuan','$data[satuan]','$harga','$data[subtotal]','$data[potongan]','$data[tax]', '$jumlah_barang')";
 
+        if ($db->query($query_insert_detail) === TRUE) {
+        }
         else {
-        echo "Error: " . $query2 . "<br>" . $db->error;
+        echo "Error: " . $query_insert_detail . "<br>" . $db->error;
+        }
+
+      $update_order = "UPDATE penjualan_order SET status_order = 'Dijual' WHERE no_faktur_order = '$data[no_faktur_order]'";
+
+        if ($db->query($update_order) === TRUE) {
+        }
+        else {
+        echo "Error: " . $update_order . "<br>" . $db->error;
         }
         
-      }
+  }
 
 
 
     $sisa = angkadoang($_POST['sisa']);
     $sisa_kredit = angkadoang($_POST['kredit']);
+    
+    $select_setting_akun = $db->query("SELECT potongan_jual, persediaan, hpp_penjualan, pembayaran_kredit, total_penjualan, pajak_jual FROM setting_akun");
+    $ambil_setting = mysqli_fetch_array($select_setting_akun);
 
-$select_setting_akun = $db->query("SELECT * FROM setting_akun");
-$ambil_setting = mysqli_fetch_array($select_setting_akun);
-
-              if ($sisa_kredit == 0 ) 
-
-            {
+          if ($sisa_kredit == 0 ) {
               
               $stmt = $db->prepare("INSERT INTO penjualan (no_faktur, kode_gudang ,kode_toko , nama_konsumen, alamat_konsumen, kode_ekspedisi, kode_pelanggan, total, tanggal, jam, user, sales, status, potongan, tax, sisa, cara_bayar, tunai, status_jual_awal, keterangan, ppn,potongan_persen) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,'Lunas',?,?,?,?,?,'Tunai',?,?,?)");
               

@@ -12,47 +12,42 @@ $jam_sekarang = date('H:i:sa');
 $tahun_terakhir = substr($tahun_sekarang, 2);
 $tanggal = stringdoang($_POST['tanggal']);
 $waktu = $tanggal." ".$jam_sekarang;
+$kode_pelanggan = stringdoang($_POST['kode_pelanggan']);
+$total = angkadoang($_POST['total']);
+$total2 = angkadoang($_POST['total2']);
+$potongan = angkadoang($_POST['potongan']);
+$potongan_persen = stringdoang($_POST['potongan_persen']);
+$tax = angkadoang($_POST['tax']);
+$ppn_input = stringdoang($_POST['ppn_input']);
+$sisa_pembayaran = angkadoang($_POST['sisa_pembayaran']);
 
+$x = angkadoang($_POST['x']);
 
- // siapkan "data" query
-            $kode_pelanggan = stringdoang($_POST['kode_pelanggan']);
-            $total = angkadoang($_POST['total']);
-            $total2 = angkadoang($_POST['total2']);
-            $potongan = angkadoang($_POST['potongan']);
-            $potongan_persen = stringdoang($_POST['potongan_persen']);
-            $tax = angkadoang($_POST['tax']);
-            $ppn_input = stringdoang($_POST['ppn_input']);
-            $sisa_pembayaran = angkadoang($_POST['sisa_pembayaran']);
-            
-            $x = angkadoang($_POST['x']);
-            
-            if ($x <= $total) {
-            $sisa = 0;
-            } 
-            
-            else {
-            $sisa = $x - $total;
-            }
-            
-            $cara_bayar = stringdoang($_POST['cara_bayar']);
-            $pembayaran = angkadoang($_POST['pembayaran']);
-            $sales = stringdoang($_POST['sales']);
-            $user = $_SESSION['user_name'];
-            $tanggal = stringdoang($_POST['tanggal']);
-            $kode_gudang = stringdoang($_POST['kode_gudang']);
-            
-            $tanggal_jt = angkadoang($_POST['tanggal_jt']);
-            $sisa_kredit = angkadoang($_POST['jumlah_kredit_baru']);
-            $tanggal = stringdoang($_POST['tanggal']);           
-            $kode_toko = stringdoang($_POST['kode_toko']);     
-            $nama_konsumen = stringdoang($_POST['nama_konsumen']);     
-            $alamat_konsumen = stringdoang($_POST['alamat_konsumen']);     
-            $kode_ekspedisi = stringdoang($_POST['kode_ekspedisi']);
- // siapkan "data" query
+  if ($x <= $total) {
+    $sisa = 0;
+  } 
+  else {
+    $sisa = $x - $total;
+  }
+
+$cara_bayar = stringdoang($_POST['cara_bayar']);
+$pembayaran = angkadoang($_POST['pembayaran']);
+$sales = stringdoang($_POST['sales']);
+$user = $_SESSION['user_name'];
+$tanggal = stringdoang($_POST['tanggal']);
+$kode_gudang = stringdoang($_POST['kode_gudang']);
+
+$tanggal_jt = angkadoang($_POST['tanggal_jt']);
+$sisa_kredit = angkadoang($_POST['jumlah_kredit_baru']);
+$tanggal = stringdoang($_POST['tanggal']);           
+$kode_toko = stringdoang($_POST['kode_toko']);     
+$nama_konsumen = stringdoang($_POST['nama_konsumen']);     
+$alamat_konsumen = stringdoang($_POST['alamat_konsumen']);     
+$kode_ekspedisi = stringdoang($_POST['kode_ekspedisi']);
            
 
-        $select_kode_pelanggan = $db->query("SELECT id,nama_pelanggan FROM pelanggan WHERE id = '$kode_pelanggan'");
-        $ambil_kode_pelanggan = mysqli_fetch_array($select_kode_pelanggan);
+$select_kode_pelanggan = $db->query("SELECT id,nama_pelanggan FROM pelanggan WHERE id = '$kode_pelanggan'");
+$ambil_kode_pelanggan = mysqli_fetch_array($select_kode_pelanggan);
             
             $sisa = angkadoang($_POST['sisa']);
             $sisa_kredit = angkadoang($_POST['jumlah_kredit_baru']);
@@ -60,8 +55,8 @@ $waktu = $tanggal." ".$jam_sekarang;
 
             $delete_detail_penjualan = $db->query("DELETE FROM detail_penjualan WHERE no_faktur = '$nomor_faktur' ");
 
-            $query12 = $db->query("SELECT * FROM tbs_penjualan WHERE no_faktur = '$nomor_faktur' ");
-            while ($data = mysqli_fetch_array($query12))
+            $query_tbs = $db->query("SELECT no_faktur_order,SUM(jumlah_barang) AS jumlah_barang ,SUM(subtotal) AS subtotal,satuan,kode_barang,harga,nama_barang,potongan,tax,waktu FROM tbs_penjualan WHERE no_faktur = '$nomor_faktur' GROUP BY kode_barang ");
+            while ($data = mysqli_fetch_array($query_tbs))
             
             {
 
@@ -72,33 +67,39 @@ $waktu = $tanggal." ".$jam_sekarang;
 
              if ($data_rows > 0) {
                 if ($data_konversi['harga_konversi'] != 0 || $data_konversi['harga_konversi'] != "") {
-                $harga = $data_konversi['harga_konversi'];
-                $jumlah_barang = $data_konversi['jumlah_konversi'];
-                $satuan = $data_konversi['satuan'];
+                  $harga = $data_konversi['harga_konversi'];
+                  $jumlah_barang = $data_konversi['jumlah_konversi'];
+                  $satuan = $data_konversi['satuan'];
                 }
                 else{
-                $harga = $data['harga'];
-                $jumlah_barang = $data['jumlah_barang'];
-                $satuan = $data['satuan'];
+                  $harga = $data['harga'];
+                  $jumlah_barang = $data['jumlah_barang'];
+                  $satuan = $data['satuan'];
                 }
 
             }
             else{
-            $harga = $data['harga'];
-            $jumlah_barang = $data['jumlah_barang'];
-            $satuan = $data['satuan'];
+                  $harga = $data['harga'];
+                  $jumlah_barang = $data['jumlah_barang'];
+                  $satuan = $data['satuan'];
             }
 
-               $query2 = "INSERT INTO detail_penjualan (no_faktur, tanggal, jam, kode_barang, nama_barang, jumlah_barang, asal_satuan,satuan, harga, subtotal, potongan, tax, sisa)
-               VALUES ('$data[no_faktur]', '$tanggal','$jam_sekarang', '$data[kode_barang]', '$data[nama_barang]', '$jumlah_barang', '$satuan','$data[satuan]', '$harga', '$data[subtotal]', '$data[potongan]', '$data[tax]', '$jumlah_barang')";
 
-                       if ($db->query($query2) === TRUE) {
-                       } 
-                       
-                       else {
-                       echo "Error: " . $query2 . "<br>" . $db->error;
-                       }
-                       
+            $query_insert_detail = "INSERT INTO detail_penjualan (no_faktur, tanggal, jam, kode_barang, nama_barang, jumlah_barang, asal_satuan,satuan, harga, subtotal, potongan, tax, sisa) VALUES ('$nomor_faktur', '$tanggal_sekarang', '$jam_sekarang', '$data[kode_barang]','$data[nama_barang]','$jumlah_barang','$satuan','$data[satuan]','$harga','$data[subtotal]','$data[potongan]','$data[tax]', '$jumlah_barang')";
+
+              if ($db->query($query_insert_detail) === TRUE) {
+              }
+              else {
+              echo "Error: " . $query_insert_detail . "<br>" . $db->error;
+              }
+
+            $update_order = "UPDATE penjualan_order SET status_order = 'Dijual' WHERE no_faktur_order = '$data[no_faktur_order]'";
+
+              if ($db->query($update_order) === TRUE) {
+              }
+              else {
+              echo "Error: " . $update_order . "<br>" . $db->error;
+              }                       
              
 
             }//end while 
@@ -301,6 +302,7 @@ if ($potongan != "" || $potongan != 0 ) {
 
 
   $perintah2 = $db->query("DELETE FROM tbs_penjualan WHERE no_faktur = '$nomor_faktur'");
+  $query30 = $db->query("DELETE  FROM tbs_fee_produk WHERE no_faktur = '$nomor_faktur'");
 
      echo "Success";
 

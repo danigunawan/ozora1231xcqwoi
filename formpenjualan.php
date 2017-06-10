@@ -39,7 +39,7 @@ $session_id = session_id();
 
 <!--untuk membuat agar tampilan form terlihat rapih dalam satu tempat -->
 <div style="padding-left: 5%; padding-right: 2%">
-  <h3> FORM PENJUALAN </h3>
+  <h3> FORM PENJUALAN </h3><hr>
 <div class="row">
 
 <div class="col-sm-8">
@@ -58,7 +58,7 @@ $session_id = session_id();
 
 
 <div class="col-sm-3">
-    <label> Kode Marketplace </label><br>
+    <label>  Marketplace </label><br>
   <select name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen" required="" autofocus="">
          
   <?php 
@@ -84,7 +84,7 @@ $session_id = session_id();
 </div>
       
     
-  <div class="col-sm-3">
+  <div class="col-sm-2">
     <label class="gg" > Toko </label><br>
       <select name="kode_toko" id="kode_toko"  class="form-control chosen" required="" autofocus="" >
         <?php 
@@ -95,6 +95,18 @@ $session_id = session_id();
         ?>
       </select>
   </div>
+
+    <div class="col-sm-2">
+      <label class="gg" > Ekspedisi </label><br>
+        <select name="kode_ekspedisi" id="kode_ekspedisi"  class="form-control chosen" required="" autofocus="" >
+          <?php 
+            $query_ekspedisi = $db->query("SELECT id,nama_ekspedisi FROM ekspedisi");
+              while($data_ekspedisi = mysqli_fetch_array($query_ekspedisi)){
+                echo "<option value='".$data_ekspedisi['id'] ."'>".$data_ekspedisi['nama_ekspedisi'] ."</option>"; 
+              }
+          ?>
+        </select>
+    </div>
 
 
           <select style="font-size:15px; height:35px; display:none;" name="kode_gudang" id="kode_gudang" class="form-control gg" required="" >
@@ -135,7 +147,7 @@ $session_id = session_id();
 
 <div class="col-sm-2">
 <label class="gg" >Admin</label>
-<select style="font-size:15px; height:35px" name="sales" id="sales" class="form-control gg" required="">
+<select style="font-size:15px; height:35px" name="sales" id="sales" class="form-control chosen" required="">
 
   <?php 
     
@@ -174,21 +186,27 @@ $session_id = session_id();
           </select>
 </div>
 
+        <div class="col-sm-2">
+          <br><label class="gg">Nama Konsumen</label>
+          <input type="text" style="height:20px" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">              
+        </div>
 
-<div class="col-sm-4">
-    <div class="form-group">
-        <input type="text" style="height:20px" name="alamat_konsumen" id="alamat_konsumen" class="form-control" placeholder="Alamat Konsumen">
+    <div class="col-sm-3">
+        <div class="form-group">
+      <br><label class="gg">Alamat Konsumen</label>
+      <textarea type="text" name="alamat_konsumen" id="alamat_konsumen" class="form-control" style="height:45px"></textarea>
+        </div>
     </div>
-</div>
-
 </div>  <!-- END ROW dari kode pelanggan - ppn -->
 
 
-  </form><!--tag penutup form-->
+</form><!--tag penutup form-->
   
   
-
+<br>
 <button type="button" id="cari_produk_penjualan" class="btn btn-info " data-toggle="modal" data-target="#myModal"><i class='fa  fa-search'> Cari (F1)</i>  </button> 
+<button type="button" id="daftar_order" class="btn btn-purple" data-toggle="modal" data-target="#modal_order"><i class='fa  fa-search'></i> Cari Order (F6) </button>
+<br><br>
 
 
 <!--tampilan modal-->
@@ -234,6 +252,39 @@ $session_id = session_id();
   </div>
 </div><!-- end of modal data barang  -->
 
+
+<!--MULAI MODAL ORDER -->
+<div id="modal_order" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- isi modal-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Data Order Penjualan</h4>
+      </div>
+      <div class="modal-body">
+      <div class="table-resposive">
+        <table id="table_order" align="center" class="table table-bordered table-sm">
+            <thead>
+              <th> Faktur Order  </th>
+              <th> Marketplace</th>
+              <th> Toko </th>
+              <th> Konsumen </th>
+              <th> Tanggal </th>
+              <th> Jam </th>
+              <th> Total </th>
+              <th> Keterangan </th>
+              <th> Petugas</th>             
+            </thead>
+        </table>
+    </div>
+  </div> <!-- tag penutup modal-body-->
+      <div class="modal-footer">
+        <button type="button" order="" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div><!-- END MODAL ORDER -->
 
 
 <!-- Modal Hapus data -->
@@ -360,17 +411,18 @@ $session_id = session_id();
 
 <!-- membuat form prosestbspenjual -->
 
-<form id="form_barcode" class="form-inline">
-  <br>
-    <div class="form-group">
+<form class="form" id="form_barcode">
+
+<div class="row">
+    <div class="col-sm-3">
         <input type="text" style="height:15px" name="kode_barcode" id="kode_barcode" class="form-control" placeholder="Kode Barcode">
     </div>
         
     <button type="submit" id="submit_barcode" class="btn btn-primary" style="font-size:15px" ><i class="fa fa-barcode"></i> Submit Barcode</button>
         
-    
+</div>
         
-  </form>
+</form>
 
           <div class="alert alert-danger" id="alert_stok" style="display:none">
           <strong>Perhatian!</strong> Persediaan Barang Tidak Cukup!
@@ -382,9 +434,21 @@ $session_id = session_id();
 <div class="row">
 
   <div class="col-sm-3">
+   <select style="font-size:15px; height:20px" type="text" name="kode_barang" id="kode_barang" class="form-control chosen" data-placeholder="SILAKAN PILIH...">
+    <option value="">SILAKAN PILIH...</option>
+       <?php
 
-    <input type="text" style="height:15px" class="form-control" name="kode_barang" autocomplete="off" id="kode_barang" placeholder="Kode Barang" >
+        include 'cache.class.php';
+          $c = new Cache();
+          $c->setCache('produk');
+          $data_c = $c->retrieveAll();
 
+          foreach ($data_c as $key) {
+            echo '<option id="opt-produk-'.$key['kode_barang'].'" value="'.$key['kode_barang'].'" data-kode="'.$key['kode_barang'].'" nama-barang="'.$key['nama_barang'].'" harga="'.$key['harga_jual'].'" harga_jual_2="'.$key['harga_jual2'].'" harga_jual_3="'.$key['harga_jual3'].'" satuan="'.$key['satuan'].'" kategori="'.$key['kategori'].'" status="'.$key['status'].'" suplier="'.$key['suplier'].'" limit_stok="'.$key['limit_stok'].'" ber-stok="'.$key['berkaitan_dgn_stok'].'" id-barang="'.$key['id'].'" > '. $key['kode_barang'].' ( '.$key['nama_barang'].' ) </option>';
+          }
+
+        ?>
+    </select>
   </div>
 
 
@@ -498,7 +562,52 @@ tr:nth-child(even){background-color: #f2f2f2}
 }
 ?>
 
-  
+<button class="btn btn-warning" id="btnOrder" type="button" data-toggle="collapse" data-target="#OrderPenjualan" aria-expanded="false" aria-controls="collapseExample"><i class='fa fa-list-ol'> </i>
+Order Penjualan</button>
+
+<div class="collapse" id="OrderPenjualan">
+    <div class="row">
+      <div class="col-sm-3">
+        <span id="select_order">
+
+          <select style="font-size:15px; height:35px" name="hapus_order" id="hapus_order" class="form-control" required="" >
+            <?php 
+              $query = $db->query("SELECT no_faktur_order FROM tbs_penjualan WHERE session_id = '$session_id' AND no_faktur_order IS NOT NULL GROUP BY no_faktur_order");
+
+              while($data = mysqli_fetch_array($query)){
+               echo "<option value='".$data['no_faktur_order'] ."'>".$data['no_faktur_order'] ."</option>";
+              }
+            ?>
+          </select>
+          
+          <input type="hidden" class="form-control" name="total_perorder" id="total_perorder">
+        </span>
+      </div>
+
+<div class="col-sm-4">
+  <button type="submit" id="btn-hps-order" class="btn btn-danger" style="font-size:15px"> <i class="fa fa-trash"></i> Hapus </button>
+</div>
+
+</div>
+  <div class="card card-block">
+
+    <div class="table-responsive"> <!--tag untuk membuat garis pada tabel-->
+            <table id="table_tbs_order" class="table table-bordered table-sm" align="center">
+                <thead>
+                      <th> Faktur Order  </th>
+                      <th> Kode  </th>
+                      <th> Nama </th>
+                      <th> Jumlah </th>
+                      <th> Satuan </th>
+                      <th> Harga </th>
+                      <th> Potongan </th>
+                      <th> Pajak </th>
+                      <th> Subtotal </th>
+                </thead>
+            </table>
+      </div>  
+</div>
+</div>
 
 
 
@@ -652,16 +761,6 @@ tr:nth-child(even){background-color: #f2f2f2}
           <b><input type="text" name="kredit" id="kredit" class="form-control"  style="height:10px;font-size:15px"  readonly="" required="" ></b>
         </div>
 
-        <div class="col-sm-6">
-          <label class="gg">Nama Konsumen</label>
-          <input type="text" style="height:20px" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">              
-        </div>
-
-        <div class="col-sm-6">
-          <label class="gg">Alamat Konsumen</label>
-          <input type="text" style="height:20px" name="alamat_konsumen" id="alamat_konsumen" class="form-control" placeholder="Alamat Konsumen">
-        </div>
-
       </div> 
            
            <label> Keterangan </label><br>
@@ -800,7 +899,7 @@ $(document).ready(function(){
           "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 
               $(nRow).attr('class', "pilih");
-              $(nRow).attr('data-kode', aData[0]+" ("+aData[1]+")");
+              $(nRow).attr('data-kode', aData[0]);
               $(nRow).attr('nama-barang', aData[1]);
               $(nRow).attr('harga', aData[2]);
               $(nRow).attr('harga_level_2', aData[3]);
@@ -823,6 +922,223 @@ $(document).ready(function(){
  
  </script>
 
+
+
+<!--DATA TABLE MENGGUNAKAN AJAX-->
+<script type="text/javascript" language="javascript" >
+  $(document).ready(function() {
+    $(document).on('click', '#daftar_order', function (e) {
+
+      $('#table_order').DataTable().destroy();
+
+          var dataTable = $('#table_order').DataTable( {
+          "processing": true,
+          "serverSide": true,
+          "ajax":{
+            url :"datatable_daftar_order.php", // json datasource
+           
+            type: "post",  // method  , by default get
+            error: function(){  // error handling
+              $(".employee-grid-error").html("");
+              $("#table_order").append('<tbody class="employee-grid-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
+              $("#employee-grid_processing").css("display","none");
+            }
+        },
+            
+            "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+
+              $(nRow).attr('class', "pilih_order");
+              $(nRow).attr('data-order', aData[0]);
+              $(nRow).attr('data-total', aData[6]);
+
+          },
+        });
+
+        $("#form").submit(function(){
+        return false;
+        });  
+
+    });
+  });
+</script>
+<!--/DATA TABLE MENGGUNAKAN AJAX-->
+
+<script type="text/javascript">
+  $(document).on('click', '.pilih_order', function (e) {
+
+    $.post("ambil_order_penjualan.php",{no_faktur_order:$(this).attr('data-order')},function(data){
+
+      $("#modal_order").modal('hide');
+
+      $.get("ambil_select_order.php",function(data){
+        $("#select_order").html(data);
+      });
+
+    });//END ambil_order_penjualan.php
+
+    var total_perorder = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($(this).attr('data-total')))));
+    if (total_perorder == '' ){
+       total_perorder = 0;
+    };
+
+    var subtotal = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#total2").val()))));
+    if (subtotal == ''){
+      subtotal = 0;
+    };
+
+    var total_akhir1 = parseInt(subtotal) + parseInt(total_perorder);
+
+    var pot_fakt_per = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#potongan_persen").val()))));
+    if (pot_fakt_per == "" || pot_fakt_per == 0 ){
+        pot_fakt_per = 0;
+    };
+
+    var pot_fakt_rp = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#potongan_penjualan").val()))));
+    if (pot_fakt_rp == ""  || pot_fakt_rp == 0 ){
+        pot_fakt_rp = 0;
+    }
+
+    var tax_faktur = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#tax").val()))));
+
+    if (pot_fakt_per == 0){
+      
+        var potongaaan = pot_fakt_rp;
+        var pot_fakt_per = parseInt(potongaaan) / parseInt(total_akhir1) * 100;
+
+        if (pot_fakt_rp == 0 ){   
+        var total_akhier = parseInt(total_akhir1);
+        }
+        else{
+        var total_akhier = parseInt(total_akhir1) - parseInt(pot_fakt_rp);
+        }
+        
+        //Hitung pajak
+        if (tax_faktur != 0 ) {
+        var hasil_tax = parseInt(total_akhier) * parseInt(tax_faktur) / 100;
+        
+        }
+        else
+        {
+        var hasil_tax = 0;
+        }
+        //end hitung pajak
+        
+        var total_akhir = parseInt(total_akhier) + parseInt(Math.round(hasil_tax));
+
+
+    }//END pot_fakt_per == 0
+
+    else if(pot_fakt_rp == 0){
+
+      var potongaaan = pot_fakt_per;
+        var pos = potongaaan.search("%");
+        var potongan_persen = potongaaan;
+        var   potongan_persen = potongan_persen.replace("%","");
+        var potongaaan = parseInt(total_akhir1) * parseInt(potongan_persen.replace(',','.')) / 100;
+        
+        if (pot_fakt_rp == 0 ){  
+        var total_akhier = parseInt(total_akhir1);
+        }
+        else{
+        var total_akhier = parseInt(total_akhir1) /*+ parseInt(biaya_adm.replace(',','.'))*/ - parseInt(potongaaan); 
+        }
+        
+        //Hitung pajak
+        if (tax_faktur != 0) {
+        var hasil_tax = parseInt(total_akhier) * parseInt(tax_faktur) / 100;        
+        }
+        else{
+        var hasil_tax = 0;
+        }
+        //end hitung pajak
+        
+        var total_akhir = parseInt(total_akhier) + parseInt(Math.round(hasil_tax));
+
+    }//END pot_fakt_rp == 0
+
+    else if(pot_fakt_rp != 0 && pot_fakt_per != 0){
+
+        var potongaaan = pot_fakt_per;
+        var pos = potongaaan.search("%");
+        var potongan_persen = potongaaan;
+        var   potongan_persen = potongan_persen.replace("%","");
+        var potongaaan = parseInt(total_akhir1) * parseInt(potongan_persen.replace(',','.')) / 100;
+        
+        if ( pot_fakt_rp == 0 ){      
+        var total_akhier = parseInt(total_akhir1);
+        }
+        else{
+        var total_akhier = parseInt(total_akhir1) /*+ parseInt(biaya_adm.replace(',','.'))*/ - parseInt(potongaaan); 
+        }
+        
+        //Hitung pajak
+        if (tax_faktur != 0){
+        var hasil_tax = parseInt(total_akhier) * parseInt(tax_faktur) / 100;
+        }
+        else{
+        var hasil_tax = 0;
+        }
+        //end hitung pajak
+        var total_akhir = parseInt(total_akhier) + parseInt(Math.round(hasil_tax));
+
+
+    }//pot_fakt_rp != 0 && pot_fakt_per != 0
+  
+
+      $("#tax_rp").val(hasil_tax);
+      $("#total1").val(tandaPemisahTitik(total_akhir));
+      $("#total2").val(tandaPemisahTitik(total_akhir1));
+
+      if (pot_fakt_rp == 0){
+          $("#potongan_penjualan").val();
+        }
+      else{    
+          $("#potongan_penjualan").val(potongaaan);
+        }
+
+});
+</script>
+<!--end javascript order all-->
+
+<script type="text/javascript">
+  $(document).on("click", "#btnOrder", function(){
+      $('#table_tbs_order').DataTable().destroy();
+          var dataTable = $('#table_tbs_order').DataTable( {
+          "processing": true,
+          "serverSide": true,
+          "ajax":{
+            url :"datatable_tbs_order.php", // json datasource
+           
+            type: "post",  // method  , by default get
+            error: function(){  // error handling
+              $(".employee-grid-error").html("");
+              $("#table_tbs_order").append('<tbody class="employee-grid-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
+              $("#employee-grid_processing").css("display","none");
+            }
+        },      
+    });
+
+
+  });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+   var hapus_order = $("#hapus_order").val();
+    $.post("cek_hapus_order.php",{hapus_order:hapus_order},function(data){
+      $("#total_perorder").val(data);
+    });
+
+    $(document).on("change","#hapus_order",function(){
+      var hapus_order = $("#hapus_order").val();
+        $.post("cek_hapus_order.php",{hapus_order:hapus_order},function(data){
+            $("#total_perorder").val(data);
+        });
+    });
+
+  });
+</script>
 
 
 <script type="text/javascript">
@@ -862,9 +1178,10 @@ $(document).ready(function(){
 
 // jika dipilih, nim akan masuk ke input dan modal di tutup
   $(document).on('click', '.pilih', function (e) {
-
-
   document.getElementById("kode_barang").value = $(this).attr('data-kode');
+  $("#kode_barang").trigger("chosen:updated");
+  $("#kode_barang").trigger("chosen:open");
+
   document.getElementById("nama_barang").value = $(this).attr('nama-barang');
   document.getElementById("limit_stok").value = $(this).attr('limit_stok');
   document.getElementById("satuan_produk").value = $(this).attr('satuan');
@@ -917,7 +1234,7 @@ $(document).ready(function(){
   
   var level_harga = $("#level_harga").val();
   var kode_barang = $("#kode_barang").val();
-  var kode_barang = kode_barang.substr(0, kode_barang.indexOf('('));
+  
   var satuan_konversi = $("#satuan_konversi").val();
   var jumlah_barang = $("#jumlah_barang").val();
   var id_produk = $("#id_produk").val();
@@ -948,7 +1265,7 @@ if (kode_barang != '')
       var satuan_konversi = $("#satuan_konversi").val();
       var kode_barang = $("#kode_barang").val();
       var ber_stok = $("#ber_stok").val();
-      var kode_barang = kode_barang.substr(0, kode_barang.indexOf('('));
+      
       var id_produk = $("#id_produk").val();
       var prev = $("#satuan_produk").val();
       
@@ -978,7 +1295,7 @@ if (kode_barang != '')
       var satuan_konversi = $("#satuan_konversi").val();
       var kode_barang = $("#kode_barang").val();
       var ber_stok = $("#ber_stok").val();
-      var kode_barang = kode_barang.substr(0, kode_barang.indexOf('('));
+      
       var id_produk = $("#id_produk").val();
       var prev = $("#satuan_produk").val();
 
@@ -1016,7 +1333,7 @@ $(document).ready(function(){
       var harga_produk = $("#harga_lama").val();
       var jumlah_barang = $("#jumlah_barang").val();
       var kode_barang = $("#kode_barang").val();
-      var kode_barang = kode_barang.substr(0, kode_barang.indexOf('('));
+      
 
       
 
@@ -1101,34 +1418,10 @@ $.post("barcode.php",{kode_barang:kode_barang,sales:sales,level_harga:level_harg
         $("#potongan1").val('');
         $("#tax1").val('');
       
-  //pembaruan datatable
-     $('#tabel_tbs_penjualan').DataTable().destroy();
+    var tabel_tbs_penjualan = $('#tabel_tbs_penjualan').DataTable();
+        tabel_tbs_penjualan.draw();
 
-            var dataTable = $('#tabel_tbs_penjualan').DataTable( {
-            "processing": true,
-            "serverSide": true,
-            "info":     false,
-            "language": { "emptyTable":     "My Custom Message On Empty Table" },
-            "ajax":{
-              url :"datatable_tbs_penjualan.php", // json datasource
-               type: "post",  // method  , by default get
-              error: function(){  // error handling
-                $(".tbody").html("");
-                $("#tabel_tbs_penjualan").append('<tbody class="tbody"><tr><th colspan="3"></th></tr></tbody>');
-                $("#tableuser_processing").css("display","none");
-                
-              }
-            },
-           "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-
-            $(nRow).attr('class','tr-id-'+aData[9]+'');         
-
-            }   
-
-      });
-//pembaruan datatable
-      $.get("cek_total_seluruh.php",
-        function(data){
+      $.get("cek_total_seluruh.php", function(data){
         $("#total2").val(data);
         $("#total1").val(data);
 
@@ -1163,7 +1456,7 @@ $.post("barcode.php",{kode_barang:kode_barang,sales:sales,level_harga:level_harg
     var n = kode_barang.indexOf("(");
     if (n > 0)
     {
-    var kode_barang = kode_barang.substr(0, kode_barang.indexOf('('));
+    
     }
     var nama_barang = $("#nama_barang").val();
     var jumlah_barang = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#jumlah_barang").val()))));
@@ -1286,41 +1579,20 @@ $.post("barcode.php",{kode_barang:kode_barang,sales:sales,level_harga:level_harg
 
 
 $("#kode_barang").focus();
-
-   $("#total1").val(tandaPemisahTitik(total_akhir));
+    
+    $("#total1").val(tandaPemisahTitik(total_akhir));
     $("#total2").val(tandaPemisahTitik(subtotal_penjualan));
-  $("#potongan_penjualan").val(tandaPemisahTitik(parseInt(total_potongan_nominal)));
- $.post("prosestbspenjualan.php",{no_faktur:no_faktur,kode_barang:kode_barang,nama_barang:nama_barang,jumlah_barang:jumlah_barang,harga:harga,harga_baru:harga_baru,potongan:potongan,tax:tax,satuan:satuan,sales:sales, level_harga:level_harga,ber_stok:ber_stok},function(data){
+    $("#potongan_penjualan").val(tandaPemisahTitik(parseInt(total_potongan_nominal)));
+    
+    $.post("prosestbspenjualan.php",{no_faktur:no_faktur,kode_barang:kode_barang,nama_barang:nama_barang,jumlah_barang:jumlah_barang,harga:harga,harga_baru:harga_baru,potongan:potongan,tax:tax,satuan:satuan,sales:sales, level_harga:level_harga,ber_stok:ber_stok},function(data){
      
-  //pembaruan datatable
-     $('#tabel_tbs_penjualan').DataTable().destroy();
-
-            var dataTable = $('#tabel_tbs_penjualan').DataTable( {
-            "processing": true,
-            "serverSide": true,
-            "info":     false,
-            "language": { "emptyTable":     "My Custom Message On Empty Table" },
-            "ajax":{
-              url :"datatable_tbs_penjualan.php", // json datasource
-               type: "post",  // method  , by default get
-              error: function(){  // error handling
-                $(".tbody").html("");
-                $("#tabel_tbs_penjualan").append('<tbody class="tbody"><tr><th colspan="3"></th></tr></tbody>');
-                $("#tableuser_processing").css("display","none");
-                
-              }
-            },
-           "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-
-            $(nRow).attr('class','tr-id-'+aData[9]+'');         
-
-            }   
-
-      });
-//pembaruan datatable
+    var tabel_tbs_penjualan = $('#tabel_tbs_penjualan').DataTable();
+        tabel_tbs_penjualan.draw();
 
      $("#ppn").attr("disabled", true);
      $("#kode_barang").val('');
+     $("#kode_barang").trigger('chosen:updated');
+     $("#kode_barang").trigger('chosen:open');
      $("#nama_barang").val('');
      $("#harga_produk").val('');
      $("#harga_baru").val('');
@@ -1352,43 +1624,19 @@ $("#kode_barang").focus();
      
 
       $("#ppn").attr("disabled", true);
-     $("#kode_barang").val('');
-     $("#nama_barang").val('');
-     $("#harga_produk").val('');
-     $("#harga_baru").val('');
-     $("#ber_stok").val('');
-     $("#jumlah_barang").val('');
-     $("#potongan1").val('');
-     $("#tax1").val('');
+      $("#kode_barang").val('');
+      $("#kode_barang").trigger('chosen:updated');
+      $("#kode_barang").trigger('chosen:open');
+      $("#nama_barang").val('');
+      $("#harga_produk").val('');
+      $("#harga_baru").val('');
+      $("#ber_stok").val('');
+      $("#jumlah_barang").val('');
+      $("#potongan1").val('');
+      $("#tax1").val('');
 
-
-  //pembaruan datatable
-     $('#tabel_tbs_penjualan').DataTable().destroy();
-
-            var dataTable = $('#tabel_tbs_penjualan').DataTable( {
-            "processing": true,
-            "serverSide": true,
-            "info":     false,
-            "language": { "emptyTable":     "My Custom Message On Empty Table" },
-            "ajax":{
-              url :"datatable_tbs_penjualan.php", // json datasource
-               type: "post",  // method  , by default get
-              error: function(){  // error handling
-                $(".tbody").html("");
-                $("#tabel_tbs_penjualan").append('<tbody class="tbody"><tr><th colspan="3"></th></tr></tbody>');
-                $("#tableuser_processing").css("display","none");
-                
-              }
-            },
-           "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-
-            $(nRow).attr('class','tr-id-'+aData[9]+'');         
-
-            }   
-
-      });
-//pembaruan datatable
-
+    var tabel_tbs_penjualan = $('#tabel_tbs_penjualan').DataTable();
+        tabel_tbs_penjualan.draw();
      
      });
 }
@@ -1471,6 +1719,7 @@ $("#kode_barang").focus();
         var ber_stok = $("#ber_stok").val();   
         var ppn_input = $("#ppn_input").val();
         var ppn = $("#ppn").val();
+        var kode_ekspedisi = $("#kode_ekspedisi").val();
         
         
         var sisa = pembayaran - total;
@@ -1589,33 +1838,11 @@ alert("Silakan Bayar Piutang");
              $("#alamat_konsumen").val('');
              $("#ekspedisi").val('');
             
-              //pembaruan datatable
-     $('#tabel_tbs_penjualan').DataTable().destroy();
+    var tabel_tbs_penjualan = $('#tabel_tbs_penjualan').DataTable();
+        tabel_tbs_penjualan.draw();
 
-            var dataTable = $('#tabel_tbs_penjualan').DataTable( {
-            "processing": true,
-            "serverSide": true,
-            "info":     false,
-            "language": { "emptyTable":     "My Custom Message On Empty Table" },
-            "ajax":{
-              url :"datatable_tbs_penjualan.php", // json datasource
-               type: "post",  // method  , by default get
-              error: function(){  // error handling
-                $(".tbody").html("");
-                $("#tabel_tbs_penjualan").append('<tbody class="tbody"><tr><th colspan="3"></th></tr></tbody>');
-                $("#tableuser_processing").css("display","none");
-                
-              }
-            },
-           "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-
-            $(nRow).attr('class','tr-id-'+aData[9]+'');         
-
-            }   
-
-      });
-//pembaruan datatable
-
+    var table_tbs_order = $('#table_tbs_order').DataTable();
+        table_tbs_order.draw();
                
            });
 
@@ -1819,32 +2046,8 @@ alert("Silakan Bayar Piutang");
                  $("#sisa_pembayaran_penjualan").val('');
                  $("#kredit").val('');
 
-    //pembaruan datatable
-     $('#tabel_tbs_penjualan').DataTable().destroy();
-
-            var dataTable = $('#tabel_tbs_penjualan').DataTable( {
-            "processing": true,
-            "serverSide": true,
-            "info":     false,
-            "language": { "emptyTable":     "My Custom Message On Empty Table" },
-            "ajax":{
-              url :"datatable_tbs_penjualan.php", // json datasource
-               type: "post",  // method  , by default get
-              error: function(){  // error handling
-                $(".tbody").html("");
-                $("#tabel_tbs_penjualan").append('<tbody class="tbody"><tr><th colspan="3"></th></tr></tbody>');
-                $("#tableuser_processing").css("display","none");
-                
-              }
-            },
-           "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-
-            $(nRow).attr('class','tr-id-'+aData[9]+'');         
-
-            }   
-
-      });
-//pembaruan datatable
+                var tabel_tbs_penjualan = $('#tabel_tbs_penjualan').DataTable();
+                    tabel_tbs_penjualan.draw();
                 
                 var win = window.open('cetak_penjualan_tunai.php?no_faktur='+no_fak+'');
                  if (win) { 
@@ -2076,33 +2279,11 @@ alert("Silakan Bayar Piutang");
                      $("#penjualan").hide();
                      $("#transaksi_baru").show();
 
+                    var tabel_tbs_penjualan = $('#tabel_tbs_penjualan').DataTable();
+                        tabel_tbs_penjualan.draw();
 
-     //pembaruan datatable
-     $('#tabel_tbs_penjualan').DataTable().destroy();
-
-            var dataTable = $('#tabel_tbs_penjualan').DataTable( {
-            "processing": true,
-            "serverSide": true,
-            "info":     false,
-            "language": { "emptyTable":     "My Custom Message On Empty Table" },
-            "ajax":{
-              url :"datatable_tbs_penjualan.php", // json datasource
-               type: "post",  // method  , by default get
-              error: function(){  // error handling
-                $(".tbody").html("");
-                $("#tabel_tbs_penjualan").append('<tbody class="tbody"><tr><th colspan="3"></th></tr></tbody>');
-                $("#tableuser_processing").css("display","none");
-                
-              }
-            },
-           "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-
-            $(nRow).attr('class','tr-id-'+aData[9]+'');         
-
-            }   
-
-      });
-//pembaruan datatable
+                    var table_tbs_order = $('#table_tbs_order').DataTable();
+                        table_tbs_order.draw();
                
                });
                  } // else dari cek flafon
@@ -2174,12 +2355,14 @@ alert("Silakan Bayar Piutang");
   $(document).on('click', '.pilih', function (e) {
     var session_id = $("#session_id").val();
     var kode_barang = $("#kode_barang").val();
-    var kode_barang = kode_barang.substr(0, kode_barang.indexOf('('));
+    
  $.post('cek_kode_barang_tbs_penjualan.php',{kode_barang:kode_barang,session_id:session_id}, function(data){
   
   if(data == 1){
     alert("Anda Tidak Bisa Menambahkan Barang Yang Sudah Ada, Silakan Edit atau Pilih Barang Yang Lain !");
     $("#kode_barang").val('');
+    $("#kode_barang").trigger('chosen:updated');
+    $("#kode_barang").trigger('chosen:open');
     $("#nama_barang").val('');
    }//penutup if
 
@@ -2535,12 +2718,135 @@ $(document).ready(function(){
 
 
 
+<script type="text/javascript" language="javascript" >
+  $(document).on('click', '#btn-hps-order', function (e) {
+    var no_faktur = $("#hapus_order").val();
+
+        $.post("hapus_order_tbs.php",{no_faktur:no_faktur},function(data){
+          
+          $("#order_data").html(data);
+          $.get("ambil_select_order.php",function(info){
+            $("#select_order").html(info);
+          });
+
+        }); 
+
+    var table_tbs_order = $('#table_tbs_order').DataTable();
+        table_tbs_order.draw();
+
+    var total_perorder = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#total_perorder").val()))));
+        if (total_perorder == ''){
+          total_perorder = 0;
+        }
+    var subtotal = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#total2").val()))));
+        if (subtotal == ''){
+          subtotal = 0;
+        }
+    var total_akhir1 = parseInt(subtotal) - parseInt(total_perorder);
+
+    var pot_fakt_per = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#potongan_persen").val()))));
+       if (pot_fakt_per == "" || pot_fakt_per == 0) {
+          pot_fakt_per = 0;
+        }
+
+    var pot_fakt_rp = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#potongan_penjualan").val()))));
+       if (pot_fakt_rp == "" || pot_fakt_rp == 0 ) {
+          pot_fakt_rp = 0;
+        }
+
+
+    var tax_faktur = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#tax").val()))));
+       if (pot_fakt_per == 0) {
+
+          var potongaaan = pot_fakt_rp;
+          var pot_fakt_per = parseInt(potongaaan) / parseInt(total_akhir1) * 100;
+
+          if (pot_fakt_rp == 0 ){
+             var total_akhier = parseInt(total_akhir1);
+          }
+          else{
+            var total_akhier = parseInt(total_akhir1) - parseInt(pot_fakt_rp);
+          }
+
+          if (tax_faktur != 0 ){
+            var hasil_tax = parseInt(total_akhier) * parseInt(tax_faktur) / 100;
+          }
+          else{
+            var hasil_tax = 0;
+          }
+
+          var total_akhir = parseInt(total_akhier) + parseInt(Math.round(hasil_tax));
+
+      }
+     else if(pot_fakt_rp == 0){
+
+          var potongaaan = pot_fakt_per;
+          var pos = potongaaan.search("%");
+          var potongan_persen = potongaaan;
+          var   potongan_persen = potongan_persen.replace("%","");
+          var potongaaan = parseInt(total_akhir1) * parseInt(potongan_persen) / 100;
+
+          if ( pot_fakt_rp == 0 ){   
+            var total_akhier = parseInt(total_akhir1);
+          }
+          else{
+             var total_akhier = parseInt(total_akhir1) - parseInt(potongaaan);
+          }
+
+          if (tax_faktur != 0) {
+            var hasil_tax = parseInt(total_akhier) * parseInt(tax_faktur) / 100;
+          }
+          else{
+            var hasil_tax = 0;
+          }
+
+          var total_akhir = parseInt(total_akhier);
+
+      }
+     else if(pot_fakt_rp != 0 && pot_fakt_per != 0){
+
+          var potongaaan = pot_fakt_per;
+          var pos = potongaaan.search("%");
+          var potongan_persen = potongaaan;
+          var   potongan_persen = potongan_persen.replace("%","");
+          var potongaaan = parseInt(total_akhir1) * parseInt(potongan_persen) / 100;
+
+          if ( pot_fakt_rp == 0 ){   
+            var total_akhier = parseInt(total_akhir1);
+          }
+          else{
+            var total_akhier = parseInt(total_akhir1) /*+ parseInt(biaya_adm)*/ - parseInt(potongaaan);
+          }
+
+         if (tax_faktur != 0){
+              var hasil_tax = parseInt(total_akhier) * parseInt(tax_faktur) / 100;
+            }
+         else{
+              var hasil_tax = 0;
+            }
+
+          var total_akhir = parseInt(total_akhier) + parseInt(Math.round(hasil_tax));
+
+      }
+
+      $("#total1").val(tandaPemisahTitik(total_akhir));
+      $("#tax_rp").val(hasil_tax);
+      $("#total2").val(tandaPemisahTitik(total_akhir1));
+
+      if (pot_fakt_rp == 0){
+        $("#potongan_penjualan").val();
+      }
+      else{  
+        $("#potongan_penjualan").val(potongaaan);
+      }
+});
+</script>
 
 
 
 
-    <script type="text/javascript">
-    $(document).ready(function(){
+<script type="text/javascript">
+$(document).ready(function(){
       
 //fungsi hapus data 
 $(document).on('click','.btn-hapus-tbs',function(e){
@@ -2642,19 +2948,8 @@ $(document).on('click','.btn-hapus-tbs',function(e){
 //end fungsi hapus data
 </script>
 
-<!-- AUTOCOMPLETE -->
 
-<script>
-$(function() {
-    $( "#kode_barang" ).autocomplete({
-        source: 'kode_barang_autocomplete.php'
-    });
-});
-</script>
-
-<!-- AUTOCOMPLETE -->
-
-
+<!--
 
 <script type="text/javascript">
   
@@ -2664,7 +2959,7 @@ $(function() {
           var kode_barang = $(this).val();
           var level_harga = $("#level_harga").val();
           var session_id = $("#session_id").val();
-          var kode_barang = kode_barang.substr(0, kode_barang.indexOf('('));
+          
           
           if (kode_barang != '')
           {
@@ -2680,7 +2975,9 @@ $(function() {
           if(data == 1){
           alert("Anda Tidak Bisa Menambahkan Barang Yang Sudah Ada, Silakan Edit atau Pilih Barang Yang Lain !");
 
-          $("#kode_barang").val('');
+          $("#kode_barang").val('');          
+          $("#kode_barang").trigger('chosen:updated');
+          $("#kode_barang").trigger('chosen:open');
           $("#nama_barang").val('');
           }//penutup if
           
@@ -2773,6 +3070,91 @@ function myFunction(event) {
 
     }
   }
+</script>
+
+-->
+
+<script type="text/javascript">
+// START script untuk pilih kode barang menggunakan chosen
+  $(document).on('change', '#kode_barang', function () {
+
+    var kode_barang = $(this).val();
+    var nama_barang = $('#opt-produk-'+kode_barang).attr("nama-barang");
+    var harga_jual = $('#opt-produk-'+kode_barang).attr("harga");
+    var harga_jual2 = $('#opt-produk-'+kode_barang).attr('harga_jual_2');
+    var harga_jual3 = $('#opt-produk-'+kode_barang).attr('harga_jual_3');
+    var jumlah_barang = $('#opt-produk-'+kode_barang).attr("jumlah-barang");
+    var satuan = $('#opt-produk-'+kode_barang).attr("satuan");
+    var kategori = $('#opt-produk-'+kode_barang).attr("kategori");
+    var status = $('#opt-produk-'+kode_barang).attr("status");
+    var suplier = $('#opt-produk-'+kode_barang).attr("suplier");
+    var limit_stok = $('#opt-produk-'+kode_barang).attr("limit_stok");
+    var ber_stok = $('#opt-produk-'+kode_barang).attr("ber-stok");
+    var id_barang = $('#opt-produk-'+kode_barang).attr("id-barang");
+    var level_harga = $("#level_harga").val();
+
+
+   if (level_harga == "Level 1") {
+
+        $('#harga_produk').val(harga_jual);
+        $('#harga_baru').val(harga_jual);
+        $('#harga_lama').val(harga_jual);
+        }
+    else if (level_harga == "Level 2") {
+
+        $('#harga_produk').val(harga_jual2);
+        $('#harga_baru').val(harga_jual2);
+        $('#harga_lama').val(harga_jual2);
+        }
+    else if (level_harga == "Level 3") {
+
+        $('#harga_produk').val(harga_jual3);
+        $('#harga_baru').val(harga_jual3);
+        $('#harga_lama').val(harga_jual3);
+        }
+
+    $("#kode_barang").val(kode_barang);
+    $("#nama_barang").val(nama_barang);
+    $("#jumlah_barang").val(jumlah_barang);
+    $("#satuan_produk").val(satuan);
+    $("#satuan_konversi").val(satuan);
+    $("#limit_stok").val(limit_stok);
+    $("#ber_stok").val(ber_stok);
+    $("#id_produk").val(id_barang);
+
+if (ber_stok == 'Barang') {
+
+    $.post('ambil_jumlah_produk.php',{kode_barang:kode_barang}, function(data){
+      if (data == "") {
+        data = 0;
+      }
+      $("#jumlahbarang").val(data);
+      $('#kolom_cek_harga').val('1');
+    });
+
+}
+
+
+ $.post('cek_kode_barang_tbs_penjualan.php',{kode_barang:kode_barang,session_id:session_id}, function(data){
+
+  if(data == 1){
+          alert("Anda Tidak Bisa Menambahkan Barang Yang Sudah Ada, Silakan Edit atau Pilih Barang Yang Lain !");
+
+          $("#kode_barang").chosen("destroy");
+          $("#kode_barang").val('');
+          $("#nama_barang").val('');
+          $("#kode_barang").trigger('chosen:open');
+          $(".chosen").chosen({no_results_text: "Maaf, Data Tidak Ada!",search_contains:true});
+   }//penutup if
+
+
+
+  });
+
+
+
+  });
+  // end script untuk pilih kode barang menggunakan chosen
 </script>
 
 <script type="text/javascript">
@@ -3209,6 +3591,13 @@ $(document).ready(function(){
         $("#cari_produk_penjualan").click();
 
     }); 
+    
+    shortcut.add("f6", function() {
+        // Do something
+
+        $("#daftar_order").click();
+
+    }); 
 
     
     shortcut.add("f3", function() {
@@ -3249,15 +3638,6 @@ $(document).ready(function(){
         $("#piutang").click();
 
     }); 
-
-    
- //   shortcut.add("f10", function() {
-        // Do something
-
-   //     $("#simpan_sementara").click();
-
-    }// ); 
-
     
     shortcut.add("ctrl+b", function() {
         // Do something

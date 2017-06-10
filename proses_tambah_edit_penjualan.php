@@ -37,28 +37,7 @@
 
     $tax_jadi = $subtotal - $hasil_tax2;
 
-    
 
-
-
-    // menampilkan data yang ada dari tabel tbs_pembelian berdasarkan kode barang
-    $cek = $db->query("SELECT kode_barang FROM tbs_penjualan WHERE kode_barang = '$kode_barang' AND no_faktur = '$nomor_faktur'");
-
-    // menyimpan data sementara berupa baris yang dijalankan dari $cek
-    $jumlah = mysqli_num_rows($cek);
-    
-    // jika $jumlah >0 maka akan menjalakan perintah $query1 jika tidak maka akan menjalankan perintah $perintah
-    
-    if ($jumlah > 0)
-    {
-        # code...
-        $query1 = $db->query("UPDATE tbs_penjualan SET jumlah_barang = jumlah_barang + '$jumlah_barang', subtotal = subtotal + '$subtotal' WHERE kode_barang = '$kode_barang' AND no_faktur = '$nomor_faktur'");
-
-    }
-
-    else
-
-    {
         $perintah = "INSERT INTO tbs_penjualan (no_faktur,kode_barang,nama_barang,jumlah_barang,satuan,harga,subtotal,potongan,tax)VALUES ('$nomor_faktur','$kode_barang','$nama_barang','$jumlah_barang','$satuan','$harga','$subtotal','$potongan','$tax_jadi')";
         
         if ($db->query($perintah) === TRUE)
@@ -68,8 +47,6 @@
         {
             echo "Error: " . $perintah . "<br>" . $db->error;
         }
-
-    }
 
  echo"</tr>";
 

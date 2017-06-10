@@ -30,7 +30,7 @@ $columns = array(
 // getting total number records without any search
 $sql =" SELECT tp.id,tp.kode_barang,tp.satuan,tp.nama_barang,tp.jumlah_barang,tp.harga,tp.subtotal,tp.potongan,tp.tax,s.nama,bb.berkaitan_dgn_stok ";
 $sql.=" FROM tbs_penjualan tp INNER JOIN satuan s ON tp.satuan = s.id INNER JOIN barang bb ON tp.kode_barang = bb.kode_barang ";
-$sql.=" WHERE tp.session_id = '$session_id' ";
+$sql.=" WHERE tp.session_id = '$session_id' AND ( tp.no_faktur IS NULL OR tp.no_faktur = '' ) AND tp.no_faktur_order IS NULL ";
 
 $query = mysqli_query($conn, $sql) or die("eror 1");
 $totalData = mysqli_num_rows($query);
@@ -39,7 +39,7 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 $sql =" SELECT tp.id,tp.kode_barang,tp.satuan,tp.nama_barang,tp.jumlah_barang,tp.harga,tp.subtotal,tp.potongan,tp.tax,s.nama,bb.berkaitan_dgn_stok ";
 $sql.=" FROM tbs_penjualan tp INNER JOIN satuan s ON tp.satuan = s.id INNER JOIN barang bb ON tp.kode_barang = bb.kode_barang ";
-$sql.=" WHERE tp.session_id = '$session_id' AND 1=1 ";
+$sql.=" WHERE tp.session_id = '$session_id' AND tp.no_faktur IS NULL AND tp.no_faktur_order IS NULL ";
 
     $sql.=" AND (tp.kode_barang LIKE '".$requestData['search']['value']."%'";  
     $sql.=" OR tp.nama_barang LIKE '".$requestData['search']['value']."%' ";
