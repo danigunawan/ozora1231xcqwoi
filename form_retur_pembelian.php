@@ -10,8 +10,11 @@ include 'sanitasi.php';
 //menampilkan seluruh data yang ada pada tabel pembelian
 $perintah = $db->query("SELECT * FROM retur_pembelian");
 
-$session_id = session_id();
+$query_default_ppn = $db->query("SELECT setting_ppn FROM perusahaan");
+$data_default_ppn = mysqli_fetch_array($query_default_ppn);
+$default_ppn = $data_default_ppn['setting_ppn'];
 
+$session_id = session_id();
 
  ?>
 
@@ -60,14 +63,28 @@ $session_id = session_id();
       </div>
 
 
-      <div class="col-sm-2">
-            <label>PPN</label>
-            <select name="ppn" id="ppn" class="form-control">
-            <option value="Include">Include</option>  
-            <option value="Exclude">Exclude</option>
-            <option value="Non">Non</option>          
-            </select>
-      </div>
+            <div class="col-sm-2">
+              <label class="gg">PPN</label>
+              <select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control chosen">
+                <?php if ($default_ppn == 'Include'): ?>    
+                  <option>Include</option>  
+                  <option>Exclude</option>  
+                  <option>Non</option>
+                <?php endif ?>
+
+                <?php if ($default_ppn == 'Exclude'): ?>
+                  <option>Exclude</option>  
+                  <option>Non</option>
+                  <option>Include</option>  
+                <?php endif ?>
+
+                <?php if ($default_ppn == 'Non'): ?>
+                  <option>Non</option>
+                  <option>Include</option>  
+                  <option>Exclude</option>  
+                <?php endif ?>
+              </select>
+            </div>
 
       <div class="col-sm-2">
            <label> Cara Bayar </label><br>
@@ -1510,5 +1527,51 @@ $(document).on('click','.btn-hapus-tbs',function(e){
 
                              </script>
 
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    var ppn = $("#ppn").val();
+      $("#ppn_input").val(ppn);
+
+      if (ppn == "Include"){
+          $("#tax").attr("disabled", true);
+          $("#tax1").attr("disabled", false);
+      }
+      else if (ppn == "Exclude") {
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", false);
+      }
+      else{
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", true);
+      }
+    });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $("#ppn").change(function(){
+      var ppn = $("#ppn").val();
+      $("#ppn_input").val(ppn);
+
+      if (ppn == "Include"){
+          $("#tax").attr("disabled", true);
+          $("#tax1").attr("disabled", false);
+      }
+      else if (ppn == "Exclude") {
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", false);
+      }
+      else{
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", true);
+      }
+    });
+
+  });
+</script>
+  
 <!-- memasukan file footer.php -->
 <?php include 'footer.php'; ?>

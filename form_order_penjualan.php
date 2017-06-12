@@ -10,8 +10,10 @@ include 'sanitasi.php';
 
 $pilih_akses_tombol = $db->query("SELECT tombol_submit, tombol_order FROM otoritas_form_order_penjualan WHERE id_otoritas = '$_SESSION[otoritas_id]' ");
 $otoritas_tombol = mysqli_fetch_array($pilih_akses_tombol);
-
-// menampilkan seluruh data yang ada pada tabel penjualan yang terdapt pada DB
+    
+    $query_default_ppn = $db->query("SELECT setting_ppn FROM perusahaan");
+    $data_default_ppn = mysqli_fetch_array($query_default_ppn);
+    $default_ppn = $data_default_ppn['setting_ppn'];
 
 
 $session_id = session_id();
@@ -163,14 +165,28 @@ $session_id = session_id();
     </div>
 
 
-<div class="col-sm-2">
-          <label class="gg">PPN</label>
-          <select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control chosen">
-            <option value="Include">Include</option>
-            <option value="Exclude">Exclude</option>
-            <option value="Non">Non</option>
-          </select>
-</div>
+            <div class="col-sm-2">
+              <label class="gg">PPN</label>
+              <select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control chosen">
+                <?php if ($default_ppn == 'Include'): ?>    
+                  <option>Include</option>  
+                  <option>Exclude</option>  
+                  <option>Non</option>
+                <?php endif ?>
+
+                <?php if ($default_ppn == 'Exclude'): ?>
+                  <option>Exclude</option>  
+                  <option>Non</option>
+                  <option>Include</option>  
+                <?php endif ?>
+
+                <?php if ($default_ppn == 'Non'): ?>
+                  <option>Non</option>
+                  <option>Include</option>  
+                  <option>Exclude</option>  
+                <?php endif ?>
+              </select>
+            </div>
 
 
 
@@ -1755,35 +1771,49 @@ $(document).ready(function(){
 
                              </script>
 
+
 <script type="text/javascript">
-    $(document).ready(function(){
-
-      $("#tax").attr("disabled", true);
-
-
-    $("#ppn").change(function(){
+  $(document).ready(function(){
 
     var ppn = $("#ppn").val();
-    $("#ppn_input").val(ppn);
+      $("#ppn_input").val(ppn);
 
-  if (ppn == "Include"){
+      if (ppn == "Include"){
+          $("#tax").attr("disabled", true);
+          $("#tax1").attr("disabled", false);
+      }
+      else if (ppn == "Exclude") {
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", false);
+      }
+      else{
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", true);
+      }
+    });
+</script>
 
-      $("#tax").attr("disabled", true);
-      $("#tax1").attr("disabled", false);
-  }
+<script type="text/javascript">
+  $(document).ready(function(){
 
-  else if (ppn == "Exclude") {
-    $("#tax1").attr("disabled", true);
-      $("#tax").attr("disabled", false);
-  }
-  else{
+    $("#ppn").change(function(){
+      var ppn = $("#ppn").val();
+      $("#ppn_input").val(ppn);
 
-    $("#tax1").attr("disabled", true);
-      $("#tax").attr("disabled", true);
-  }
+      if (ppn == "Include"){
+          $("#tax").attr("disabled", true);
+          $("#tax1").attr("disabled", false);
+      }
+      else if (ppn == "Exclude") {
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", false);
+      }
+      else{
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", true);
+      }
+    });
 
-
-  });
   });
 </script>
 

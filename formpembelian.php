@@ -10,6 +10,10 @@
 
     $session_id = session_id();
 
+    $query_default_ppn = $db->query("SELECT setting_ppn FROM perusahaan");
+    $data_default_ppn = mysqli_fetch_array($query_default_ppn);
+    $default_ppn = $data_default_ppn['setting_ppn'];
+
 ?>
 
 
@@ -74,12 +78,26 @@
                 </select> 
 
             <div class="col-sm-3">
-              <label>PPN</label>
-                <select name="ppn" id="ppn" class="form-control ">
-                  <option value="Include">Include</option>  
-                  <option value="Exclude">Exclude</option>
-                  <option value="Non">Non</option>          
-                </select>
+              <label class="gg">PPN</label>
+              <select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control chosen">
+                <?php if ($default_ppn == 'Include'): ?>    
+                  <option>Include</option>  
+                  <option>Exclude</option>  
+                  <option>Non</option>
+                <?php endif ?>
+
+                <?php if ($default_ppn == 'Exclude'): ?>
+                  <option>Exclude</option>  
+                  <option>Non</option>
+                  <option>Include</option>  
+                <?php endif ?>
+
+                <?php if ($default_ppn == 'Non'): ?>
+                  <option>Non</option>
+                  <option>Include</option>  
+                  <option>Exclude</option>  
+                <?php endif ?>
+              </select>
             </div>
 
         </div> <!-- END ROW KOLOM SUPLIER -->
@@ -1696,62 +1714,50 @@ $.post('cek_kode_barang_tbs_pembelian.php',{kode_barang:kode_barang,session_id:s
 </script>
 
 
-
 <script type="text/javascript">
-    $(document).ready(function(){
-
-
-      /*$("#tax").attr("disabled", true);*/
-
-    // cek ppn exclude 
-    var session_id = $("#session_id").val();
-    $.get("cek_ppn_ex.php",{session_id:session_id},function(data){
-      if (data == 1) {
-          $("#ppn").val('Exclude');
-     $("#ppn").attr("disabled", true);
-     $("#tax1").attr("disabled", false);
-      }
-      else if(data == 2){
-
-      $("#ppn").val('Include');
-     $("#ppn").attr("disabled", true);
-       $("#tax1").attr("disabled", false);
-      }
-      else
-      {
-
-     $("#ppn").val('Non');
-     $("#tax1").attr("disabled", true);
-
-      }
-
-    });
-
-
-    $("#ppn").change(function(){
+  $(document).ready(function(){
 
     var ppn = $("#ppn").val();
-    $("#ppn_input").val(ppn);
+      $("#ppn_input").val(ppn);
 
-  if (ppn == "Include"){
-
-      $("#tax1").attr("disabled", false);
-
-  }
-
-  else if (ppn == "Exclude") {
-    $("#tax1").attr("disabled", false);
-  }
-  else{
-
-    $("#tax1").attr("disabled", true);
-  }
-
-
-  });
-  });
+      if (ppn == "Include"){
+          $("#tax").attr("disabled", true);
+          $("#tax1").attr("disabled", false);
+      }
+      else if (ppn == "Exclude") {
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", false);
+      }
+      else{
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", true);
+      }
+    });
 </script>
 
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $("#ppn").change(function(){
+      var ppn = $("#ppn").val();
+      $("#ppn_input").val(ppn);
+
+      if (ppn == "Include"){
+          $("#tax").attr("disabled", true);
+          $("#tax1").attr("disabled", false);
+      }
+      else if (ppn == "Exclude") {
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", false);
+      }
+      else{
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", true);
+      }
+    });
+
+  });
+</script>
 
  <script type="text/javascript">              
                                  $(document).on('dblclick','.edit-jumlah',function(e){
