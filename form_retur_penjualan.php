@@ -613,67 +613,47 @@ $("#cari_produk_pembelian").click(function(){
   var jumlah_kas = $("#jumlah1").val();
   var sisauang =  jumlah_kas -  pembayaran_pembelian;
 
-      if (sisauang < 0) 
+  if (sisauang < 0) {
+    alert("Jumlah Kas Tidak Mencukupi Atau Kolom Cara Bayar Masih Kosong");
+  }
+  else if (total == ""){
+    alert("Jumlah Total Kosong! Anda Belum Melakukan Pemesan");
+  }
+  else if (sisa == ""){
+    alert("Jumlah Pembayaran Tidak Mencukupi");
+  }
+  else if (sisa < 0){
+    alert("Jumlah Pembayaran Tidak Mencukupi");
+         $("#pembayaran_pembelian").val('');
+         $("#sisa_pembayaran_pembelian").val('');
+  }
+  else if ( kode_pelanggan == "") {
+    alert("Kode Marketplace Harus Di Isi");
+  }
+  else if (jumlah_retur == "0"){
+    alert("jumlah Retur Harus Di Isi");
+  }
+  else{
 
-      {
-        alert("Jumlah Kas Tidak Mencukupi Atau Kolom Cara Bayar Masih Kosong");
-      }
+      $("#transaksi_baru").show();
+      $("#pembayaran").hide();
+      $("#batal").hide();
 
-  else if (total == "")
- {
+     $.post("proses_bayar_retur_jual.php",{session_id:session_id,sisa:sisa,kode_pelanggan:kode_pelanggan,total:total,cara_bayar:carabayar,potongan:potongan_pembelian,tax:tax,pembayaran:pembayaran_pembelian,total1:total1,ppn_input:ppn_input},function(info) {
 
-  alert("Jumlah Total Kosong! Anda Belum Melakukan Pemesan");
-
- }
-
- else if (sisa == "")
- {
-
-  alert("Jumlah Pembayaran Tidak Mencukupi");
-
- }
-
-
- else if ( kode_pelanggan == "") 
- {
-
-alert("Kode Marketplace Harus Di Isi");
-
- }
-
-
- else if (jumlah_retur == "0")
- {
-
-  alert("jumlah Retur Harus Di Isi");
-
- }
-
-
- else
-
- {
-
-  $("#transaksi_baru").show();
-  $("#pembayaran").hide();
-  $("#batal").hide();
-
- $.post("proses_bayar_retur_jual.php",{session_id:session_id,sisa:sisa,kode_pelanggan:kode_pelanggan,total:total,cara_bayar:carabayar,potongan:potongan_pembelian,tax:tax,pembayaran:pembayaran_pembelian,total1:total1,ppn_input:ppn_input},function(info) {
-
-     $("#demo").html(info);
-     $("#result").html(info);
-     $("#alert_berhasil").show();
-     $("#cetak_retur").show();    
-     $("#total_retur_pembelian").val('');
-     $("#pembayaran_pembelian").val('');
-     $("#sisa_pembayaran_pembelian").val('');
-     $("#potongan_pembelian").val('');
-     $("#tax").val('');
-     $("#total_retur_pembelian1"). val('');
-  
-    
-       
-   });
+         $("#demo").html(info);
+         $("#result").html(info);
+         $("#alert_berhasil").show();
+         $("#cetak_retur").show();    
+         $("#total_retur_pembelian").val('');
+         $("#pembayaran_pembelian").val('');
+         $("#sisa_pembayaran_pembelian").val('');
+         $("#potongan_pembelian").val('');
+         $("#tax").val('');
+         $("#total_retur_pembelian1"). val('');      
+        
+           
+       });
 
  }
 

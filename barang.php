@@ -711,11 +711,11 @@ var harga_jual1 = $("#harga_jual").val();
 var harga_jual2 = $("#harga_jual2").val();
 var harga_jual3 = $("#harga_jual3").val();
 
-if (harga_jual1 < harga_beli)
-{
-    alert("Harga Jual 1 lebih kecil dari harga beli");
-}
+var range_harga1 = parseInt(harga_jual1) - parseInt(harga_beli);
 
+if (range_harga1 < 0){
+    alert("Harga Level 1 Tidak Boleh Lebih Kecil Dari Harga Beli.");
+}
    
    });
 </script>

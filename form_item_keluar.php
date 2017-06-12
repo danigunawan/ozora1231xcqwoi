@@ -70,21 +70,21 @@ $session_id = session_id();
 
 
 <!-- membuat form -->
- <form class="form-inline" action="proses_tbs_item_keluar.php" role="form" id="formtambahproduk">
+ <form class="form-group" action="proses_tbs_item_keluar.php" role="form" id="formtambahproduk">
   
 
   <!-- agar tampilan berada pada satu group -->
   <!-- memasukan teks pada kolom kode barang -->
-  <div class="form-group"> 
+  <div class="col-sm-3"> 
     <input type="text" class="form-control" name="kode_barang" id="kode_barang" autocomplete="off" placeholder="Kode Produk">
   </div>
 
-<div class="form-group">
+<div class="col-sm-3">
   <input type="text" class="form-control" name="nama_barang" id="nama_barang" readonly="" placeholder="Nama Barang">
   </div>
 
 
-  <div class="form-group">
+  <div class="col-sm-3">
     <input type="text" class="form-control" name="jumlah_barang" id="jumlah_barang" autocomplete="off" placeholder="Jumlah Barang" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
   </div>
 
@@ -418,7 +418,7 @@ $(".modal_baru").html(data);
   $("#pembayaran_item_keluar").click(function(){
 
 
-var total = $("#total_item_masuk").val();
+var total = $("#total_item_keluar").val();
 var keterangan = $("#keterangan").val();
 var session_id = $("#session_id").val();
 

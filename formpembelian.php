@@ -290,9 +290,9 @@
             <th> Jumlah Barang </th>
             <th> Satuan </th>
             <th> Harga </th>
-            <th> Subtotal </th>
             <th> Potongan </th>
             <th> Tax </th>
+            <th> Subtotal </th>
             <th> Hapus </th>
                                     
           </thead> <!-- tag penutup tabel -->
@@ -2045,6 +2045,50 @@ $(document).ready(function(){
 
 </script>
 
+<!--Mulai Script Key Up Potongan Produk-->
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#potongan1").keyup(function(){
+
+    //jumlah barang
+    var jumlah_barang = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#jumlah_barang").val()))));
+    if (jumlahbarang == ''){
+      jumlahbarang = 0;
+    }
+
+    // harga barang
+    var harga = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#harga_produk").val()))));
+    if (harga == ''){
+      harga = 0;
+    }
+
+    //potongan barang
+    var potongan = $("#potongan1").val();
+
+    //Potongan Persen
+    var pos = potongan.search("%");
+    if (pos > 0){
+      var potongan_persen = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#potongan1").val()))));
+
+      potongan_persen = potongan_persen.replace("%","");
+      if(potongan_persen > 100){
+        alert("Potongan Tidak Boleh Lebih 100%");
+          $("#potongan1").val(0);
+          $("#potongan1").focus();
+      }
+    };
+
+    //Hitungan
+    var subtotal = parseInt(jumlah_barang,10) * parseInt(harga,10)
+    if(potongan > subtotal){
+      alert("Potongan Tidak Boleh Melebihi Total Harga Barang !!");
+      $("#potongan1").val(0);
+      $("#potongan1").focus();
+    }
+  });
+});
+</script>
+<!--Akhir Script Key Up Potongan Produk-->
 
 <!-- memasukan file footer.php -->
 <?php include 'footer.php'; ?>
