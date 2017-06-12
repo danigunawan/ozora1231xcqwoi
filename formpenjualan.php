@@ -57,7 +57,7 @@ $session_id = session_id();
 <div class="row">
 
 
-<div class="col-sm-3">
+<div class="col-sm-2">
     <label>  Marketplace </label><br>
   <select name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen" required="" autofocus="">
          
@@ -176,7 +176,7 @@ $session_id = session_id();
 </select>
 </div>
 
-<div class="col-sm-1">
+<div class="col-sm-2">
 <label class="gg">PPN</label>
 <select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control chosen">
   <?php if ($default_ppn == 'Include'): ?>    
@@ -1481,7 +1481,21 @@ $.post("barcode.php",{kode_barang:kode_barang,sales:sales,level_harga:level_harg
     var potongan = $("#potongan1").val();
     if (potongan == '') {
       potongan = 0;
+    }
+    else{
+      var pos = potongan.search("%");
+        if (pos > 0){
+          var potongan_persen = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#potongan1").val()))));
+              potongan_persen = potongan_persen.replace("%","");
+              
+              if(potongan_persen > 100){
+                alert("Potongan Tidak Boleh Lebih 100%");
+                $("#potongan1").val(0);
+                $("#potongan1").focus();
+              }
 
+              potongan = jumlah_barang * harga * potongan_persen / 100 ;
+        };
     }
     var tax = $("#tax1").val();
     var jumlahbarang = $("#jumlahbarang").val();
@@ -1511,7 +1525,7 @@ $.post("barcode.php",{kode_barang:kode_barang,sales:sales,level_harga:level_harg
     }
 
     var subtotal_penjualan = parseInt(total,10) + parseInt(subtotal,10);
-    total =  subtotal_penjualan;
+        total =  subtotal_penjualan;
     // perhitungan diskon bertingkat 
    if (status_bertingkat > 0) {
             var diskon_bertingkat = potongan_persen.split("+");

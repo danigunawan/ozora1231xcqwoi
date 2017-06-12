@@ -118,7 +118,7 @@
           </div>
           <div class="modal-body">
               <span class="modal_baru">
-                <div class="table-resposive">
+                <div class="table-responsive">
                   <center>
                     <table id="tabel_cari" class="table table-bordered table-sm">
                           <thead> <!-- untuk memberikan nama pada kolom tabel -->
