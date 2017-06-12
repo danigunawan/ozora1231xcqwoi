@@ -552,6 +552,11 @@ $session_id = session_id();
                 </div>
                 <h6 style="text-align: left ; color: red"><i> * Klik 2x pada kolom jumlah barang jika ingin mengedit.</i></h6>
                 <h6 style="text-align: left ;"><i><b> * Short Key (F2) untuk mencari Kode Produk atau Nama Produk.</b></i></h6>
+
+
+<button class="btn btn-warning" id="btnOrder" type="button" data-toggle="collapse" data-target="#OrderPenjualan" aria-expanded="false" aria-controls="collapseExample"><i class='fa fa-list-ol'> </i>
+Order Penjualan</button>
+
 <?php 
 $hud = $db->query("SELECT setting_tampil FROM setting_antrian");
 $my = mysqli_fetch_array($hud);
@@ -561,7 +566,6 @@ if ($my['setting_tampil'] == 'Tampil')
 ?>
 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class='fa fa-list-ol'> </i>
 Antrian  </button>
-</p>
 
 <style>
 
@@ -575,8 +579,6 @@ tr:nth-child(even){background-color: #f2f2f2}
 }
 ?>
 
-<button class="btn btn-warning" id="btnOrder" type="button" data-toggle="collapse" data-target="#OrderPenjualan" aria-expanded="false" aria-controls="collapseExample"><i class='fa fa-list-ol'> </i>
-Order Penjualan</button>
 
 <div class="collapse" id="OrderPenjualan">
     <div class="row">
