@@ -6,13 +6,12 @@
     // mengirim data menggunakan metode POST
 
 
-    $perintah = $db->prepare("INSERT INTO varian_ukuran (id,varian_ukuran) VALUES (?,?)");
+    $perintah = $db->prepare("INSERT INTO varian_ukuran (varian_ukuran) VALUES (?)");
 
-    $perintah->bind_param("ss",
-        $id, $nama);
+    $perintah->bind_param("s",
+       $nama);
         
-       
-        $nama = stringdoang($_POST['nama']); 
+    $nama = stringdoang($_POST['nama']); 
     
     $perintah->execute();
 
