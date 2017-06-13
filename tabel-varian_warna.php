@@ -63,10 +63,31 @@ mysqli_close($db);
 
 
 <script>
+
+
     $(document).ready(function(){
 
 
 
+// fungsi cek varian warna 
+               $("#varian_warna").blur(function(){
+               var varian_warna = $("#varian_warna").val();
+
+              $.post('cek_varian_warna.php',{varian_warna:$(this).val()}, function(data){
+                
+                if(data == 1){
+
+                    alert ("Varian Warna Sudah Ada");
+                    $("#varian_warna").val('');
+                    $("#varian_warna").focus();
+                }
+                else {
+                    
+                }
+              });
+                
+               }); 
+// end fungsi cek varian warna
 	
 //fungsi hapus data 
 		$(".btn-hapus").click(function(){
@@ -110,6 +131,5 @@ mysqli_close($db);
 		$(".alert").hide("fast")
 		}
 		
-
 
 </script>

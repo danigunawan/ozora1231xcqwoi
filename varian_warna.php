@@ -439,6 +439,28 @@ mysqli_close($db);
 // end fungsi tambah data
 
 
+// fungsi cek varian ukuran
+               $(document).ready(function(){
+               $("#varian_ukuran").blur(function(){
+               var varian_ukuran = $("#varian_ukuran").val();
+
+              $.post('cek_varian_ukuran.php',{varian_ukuran:$(this).val()}, function(data){
+                
+                if(data == 1){
+
+                    alert ("Varian Ukuran Sudah Ada");
+                    $("#varian_ukuran").val('');
+                    $("#varian_ukuran").focus();
+                }
+                else {
+                    
+                }
+              });
+                
+               });
+               });
+// end fungsi cek varian ukuran
+
   
 //fungsi hapus data 
     $(".btn-hapus-ukuran").click(function(){
@@ -570,6 +592,25 @@ mysqli_close($db);
 
 // end fungsi tambah data
 
+// fungsi cek varian warna 
+               $("#varian_warna").blur(function(){
+               var varian_warna = $("#varian_warna").val();
+
+              $.post('cek_varian_warna.php',{varian_warna:$(this).val()}, function(data){
+                
+                if(data == 1){
+
+                    alert ("Varian Warna Sudah Ada");
+                    $("#varian_warna").val('');
+                    $("#varian_warna").focus();
+                }
+                else {
+                    
+                }
+              });
+                
+               }); 
+// end fungsi cek varian warna
 
   
 //fungsi hapus data 
