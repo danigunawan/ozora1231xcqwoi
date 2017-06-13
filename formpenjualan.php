@@ -1494,9 +1494,14 @@ $.post("barcode.php",{kode_barang:kode_barang,sales:sales,level_harga:level_harg
                 $("#potongan1").focus();
               }
 
-              potongan = jumlah_barang * harga * potongan_persen / 100 ;
+              potongan = (parseInt(jumlah_barang,10) * parseInt(harga,10)) * parseInt(potongan_persen,10) / 100;
+              console.log(jumlah_barang)
+              console.log(harga)
+              console.log(potongan_persen)
+              console.log(potongan)
         };
     }
+
     var tax = $("#tax1").val();
     var jumlahbarang = $("#jumlahbarang").val();
     var satuan = $("#satuan_konversi").val();
@@ -1543,7 +1548,6 @@ $.post("barcode.php",{kode_barang:kode_barang,sales:sales,level_harga:level_harg
                 var total_kurang_potongan = total_kurang_potongan - parseInt(potongan_nominal,10);
                 }
               
-                console.log(potongan_nominal);
 
             }
 
@@ -1560,7 +1564,6 @@ $.post("barcode.php",{kode_barang:kode_barang,sales:sales,level_harga:level_harg
           var t_tax = ((parseInt(total_kurang_potongan,10) * parseInt(tax_faktur,10)) / 100);
 
           var total_akhir = parseInt(total_kurang_potongan, 10) + parseInt(t_tax,10);
-          console.log(total_akhir);
               if (potongan_persen > 100) {
                 alert ("Potongan %, Tidak Boleh Lebih Dari 100%");
                 $("#potongan_persen").val('100');

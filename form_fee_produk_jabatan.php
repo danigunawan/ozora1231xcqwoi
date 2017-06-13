@@ -19,7 +19,7 @@
 <h1>FORM KOMISI PRODUK / JABATAN </h1>
 <br><br>
         <!-- membuat tombol agar menampilkan modal -->
-        <button type="button" class="btn btn-warning btn-lg" id="cari_produk" data-toggle="modal" data-target="#myModal"> <span class='glyphicon glyphicon-search'> </span> Cari Produk</button>
+        <button type="button" class="btn btn-warning btn-lg" id="cari_produk" data-toggle="modal" > <span class='glyphicon glyphicon-search'> </span> Cari Produk</button>
         <br><br>
         <!-- Tampilan Modal -->
         <div id="myModal" class="modal fade" role="dialog">
@@ -368,6 +368,11 @@ $("#alert").html(info);
   $("#cari_produk").click(function(){
 
     $("[type='search']").focus();
+    $("#alert_berhasil").hide('fast');
+    $("#alert_gagal").hide('fast');
+    $("#nominal").show();
+    $("#prosentase").show();
+    $("#myModal").modal('show');
 
   });
 
