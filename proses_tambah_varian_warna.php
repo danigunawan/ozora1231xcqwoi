@@ -6,10 +6,10 @@
     // mengirim data menggunakan metode POST
 
 
-    $perintah = $db->prepare("INSERT INTO varian_warna (id,varian_warna) VALUES (?,?)");
+    $perintah = $db->prepare("INSERT INTO varian_warna (varian_warna) VALUES (?)");
 
-    $perintah->bind_param("ss",
-        $id, $nama);
+    $perintah->bind_param("s",
+        $nama);
         
        
         $nama = stringdoang($_POST['nama']); 
