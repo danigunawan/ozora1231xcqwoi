@@ -6,11 +6,17 @@ include 'sanitasi.php';
 include 'db.php';
 
 
-  $no_faktur = stringdoang($_GET['no_faktur']);
+  $no_faktur = stringdoang($_GET['no_faktur']); 
+  $nama_konsumen = stringdoang($_GET['nama_konsumen']);
+  $alamat_konsumen = stringdoang($_GET['alamat_konsumen']);
+  $kode_toko = stringdoang($_GET['kode_toko']); 
+
+      $manggil_nama_toko = $db->query("SELECT id,nama_toko,alamat_toko,no_toko FROM toko WHERE id = '$kode_toko' ");
+    $toko = mysqli_fetch_array($manggil_nama_toko);
 
     $select_penjualan = $db->query("SELECT p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.potongan,p.potongan_persen, pl.nama_pelanggan,pl.wilayah,da.nama_daftar_akun FROM penjualan p INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan INNER JOIN daftar_akun da ON p.cara_bayar = da.kode_daftar_akun  WHERE p.no_faktur = '$no_faktur' ORDER BY p.id DESC");
     $data0 = mysqli_fetch_array($select_penjualan);
-
+    
     $select_perusahaan = $db->query("SELECT foto,nama_perusahaan,alamat_perusahaan,no_telp FROM perusahaan ");
     $data_perusahaan = mysqli_fetch_array($select_perusahaan);
 
@@ -51,9 +57,9 @@ include 'db.php';
 
         <div class="col-sm-8">
           <center>
-            <h4> <b> <?php echo $data_perusahaan['nama_perusahaan']; ?> </b> </h4> 
-            <p> <?php echo $data_perusahaan['alamat_perusahaan']; ?><br>
-                  No.Telp:<?php echo $data_perusahaan['no_telp']; ?> </p>
+            <h4> <b> <?php echo $toko['nama_toko']; ?></h4> 
+            <p> <?php echo $toko['alamat_toko']; ?><br>
+                  No.Telp: <?php echo $toko['no_toko']; ?></p>
           </center>                 
         </div><!--penutup colsm5-->        
     </div><!--penutup row1-->
@@ -67,12 +73,9 @@ include 'db.php';
        <table>
         <tbody>
             
-            <tr><td><font class="satu">  Kepada Yth</td> <td>  :&nbsp;&nbsp;</td> <td>  <?php echo $data0['nama_pelanggan']; ?> </td></tr> 
-
+            <tr><td><font class="satu">  Kepada Yth</td> <td>  :&nbsp;&nbsp;</td> <td>  <?php echo $data0['nama_pelanggan']; ?> </td></tr>  
             <tr><td><font class="satu"><br>No Invoice</font></td> <td> <br>:</td> <td><font class="satu"> <br> <?php echo $no_faktur; ?></font></td></tr>
-            <tr><td><font class="satu"> Tanggal</td> <td> :&nbsp;&nbsp;</td> <td><?php echo $tanggal; ?></td></tr>
-                  
-
+            <tr><td><font class="satu"> Tanggal</td> <td> :&nbsp;&nbsp;</td> <td><?php echo $tanggal; ?></td></tr> 
         </tbody>
       </table>
 
@@ -80,8 +83,9 @@ include 'db.php';
 
     <div class="col-sm-6">
       <table>
-        <tbody>
-          <tr><td width="5%"><font class="satu"> Alamat</font></td> <td> :&nbsp;&nbsp;</td> <td><?php echo $data0['wilayah'];?></td></tr>
+        <tbody> 
+            <tr><td  width="25%"><font class="satu">Nama Konsumen </font></td> <td> :&nbsp;</td> <td><font class="satu"> <?php echo $nama_konsumen; ?> </font></td></tr>
+            <tr><td  width="25%"><font class="satu">Alamat Konsumen </font></td> <td> :&nbsp;</td> <td><font class="satu"> <?php echo $alamat_konsumen; ?> </font></td></tr> 
         </tbody>
       </table>
     </div> <!--end col-sm-2-->
@@ -105,7 +109,7 @@ include 'db.php';
     }
     </style>
 
-<table id="tableuser" class="table1">
+<table id="tableuser" class="table table-bordered table-sm">
         <thead>
 
             <th class="table1" style="width: 5%"> <center> No. </center> </th>
@@ -113,7 +117,7 @@ include 'db.php';
             <th class="table1" style="width: 5%"> <center> Jumlah </center> </th>
             <th class="table1" style="width: 10%"> <center> Satuan </center> </th>
             <th class="table1" style="width: 10%"> <center> Harga Satuan </center> </th>
-            <th class="table1" style="width: 10%"> <center> Harga Jual </center> </th>        
+            <th class="table1" style="width: 10%"> <center> Total Harga</center> </th>        
             
         </thead>
 
@@ -126,8 +130,7 @@ include 'db.php';
             //menyimpan data sementara yang ada pada $perintah
             while ($data5 = mysqli_fetch_array($query5))
             {
-
-    $pilih_konversi = $db->query("SELECT $data5[jumlah_barang] / sk.konversi AS jumlah_konversi, sk.harga_pokok / sk.konversi AS harga_konversi, sk.id_satuan, b.satuan,sk.konversi FROM satuan_konversi sk INNER JOIN barang b ON sk.id_produk = b.id  WHERE sk.id_satuan = '$data5[id_satuan]' AND sk.kode_produk = '$data5[kode_barang]'");
+ $pilih_konversi = $db->query("SELECT $data5[jumlah_barang] / sk.konversi AS jumlah_konversi, sk.harga_pokok / sk.konversi AS harga_konversi, sk.id_satuan, b.satuan,sk.konversi FROM satuan_konversi sk INNER JOIN barang b ON sk.id_produk = b.id  WHERE sk.id_satuan = '$data5[id_satuan]' AND sk.kode_produk = '$data5[kode_barang]'");
                 $data_konversi = mysqli_fetch_array($pilih_konversi);
 
           $query900 = $db->query("SELECT nama FROM satuan WHERE id = '$data_konversi[satuan]'");
@@ -151,13 +154,14 @@ include 'db.php';
             <td class='table1' align='center'>".$no_urut."</td>
             <td class='table1'>". $data5['nama_barang'] ."</td>
             <td class='table1' align='right'>". rp($jumlah_barang) ."</td>";
-             if ($data_konversi['harga_konversi'] != 0 || $data_konversi['harga_konversi'] != "") {                
+
+            if ($data_konversi['harga_konversi'] != 0 || $data_konversi['harga_konversi'] != "") {                
             echo "<td class='table1' align='right'>". $data5['satuan'] ." ( ".$konver." ".$cek011['nama']." ) </td>";
             }
             else{
               echo "<td class='table1' align='right'>". $data5['satuan'] ."</td>";
             }
-           echo "<td class='table1' align='right'>". rp($data5['harga']) ."</td>
+            echo "<td class='table1' align='right'>". rp($data5['harga']) ."</td>
             <td class='table1' align='right'>". rp($data5['subtotal']) ."</td>
             <tr>";
 
@@ -251,7 +255,7 @@ include 'db.php';
    </div>
 
    <div class="col-sm-3">    
-      <font class="satu"><b> <center>Hormat Kami,</center> <br><br><br> <font class="satu"> <center>(<?php echo $data_footer['petugas']; ?>)</center></font></b></font>
+      <font class="satu"><b> <center>Hormat Kami,</center> <br><br><br> <font class="satu"> <center>(<?php echo $_SESSION['nama']; ?>)</center></font></b></font>
   </div>
 
 </div> <!--/container-->
