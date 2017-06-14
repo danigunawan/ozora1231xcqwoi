@@ -2,6 +2,8 @@
     //memasukkan file db.php
     include 'db.php';
     include 'sanitasi.php';
+     include 'cache.class.php';
+
 
 
         
@@ -47,7 +49,13 @@ if (!$stmt) {
    ' - '.$db->error);
 }
 else {
+
+    masukkan_barang_ke_cache($kode_barang);
+
+
 echo '<META HTTP-EQUIV="Refresh" Content="0; URL=barang.php?kategori=semua&tipe=barang_jasa">';
+
+
 }
  
 // tutup statements
@@ -55,7 +63,38 @@ $stmt->close();
  
 
 //Untuk Memutuskan Koneksi Ke Database
-mysqli_close($db);           
+mysqli_close($db);   
+
+
+function masukkan_barang_ke_cache($kode_barang){
+
+     include 'cache.class.php';
+
+     // masukkan data produk ke cache
+        $c = new Cache();
+        $c->setCache('produk');
+
+        $query = $db->query("SELECT * FROM barang WHERE kode_barang = '$kode_barang'");
+        $data = $query->fetch_array();
+        
+        // menyimpan data barang ke cache
+        $c->store($data['kode_barang'], array(
+          'kode_barang' => $data['kode_barang'],
+          'nama_barang' => $data['nama_barang'],
+          'harga_beli' => $data['harga_beli'],
+          'harga_jual' => $data['harga_jual'],
+          'harga_jual2' => $data['harga_jual2'],
+          'harga_jual3' => $data['harga_jual3'],
+          'kategori' => $data['kategori'],
+          'suplier' => $data['suplier'],
+          'limit_stok' => $data['limit_stok'],
+          'over_stok' => $data['over_stok'],
+          'berkaitan_dgn_stok' => $data['berkaitan_dgn_stok'],
+          'status' => $data['status'],
+          'satuan' => $data['satuan'],
+          'id' => $data['id'],
+          ));
+}        
         
 ?>
 
