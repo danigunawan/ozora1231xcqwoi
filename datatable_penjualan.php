@@ -44,7 +44,7 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 }
 else{
 	// getting total number records without any search
-$sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan ";
+$sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan,p.keterangan ";
 $sql.="FROM penjualan p INNER JOIN gudang g ON p.kode_gudang = g.kode_gudang INNER JOIN toko t ON p.kode_toko = t.id INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan ";
 $query=mysqli_query($conn, $sql) or die("datatable_item_keluar.php: get employees");
 $totalData = mysqli_num_rows($query);
@@ -54,7 +54,7 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 
 if ($status == 'semua') {
 // getting total number records without any search
-$sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan ";
+$sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan,p.keterangan ";
 $sql.="FROM penjualan p INNER JOIN gudang g ON p.kode_gudang = g.kode_gudang INNER JOIN toko t ON p.kode_toko = t.id INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan  WHERE 1=1"; 
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 	$sql.=" AND ( p.no_faktur LIKE '".$requestData['search']['value']."%' ";  
@@ -70,7 +70,7 @@ if( !empty($requestData['search']['value']) ) {   // if there is a search parame
 }
 else{
 // getting total number records without any search
-$sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan ";
+$sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan,p.keterangan ";
 $sql.="FROM penjualan p INNER JOIN gudang g ON p.kode_gudang = g.kode_gudang INNER JOIN toko t ON p.kode_toko = t.id INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan WHERE p.status = '$status' AND 1=1";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 
@@ -148,7 +148,7 @@ if ($row['status'] == 'Lunas') {
 				<button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown' style='width:150px'> Cetak Penjualan <span class='caret'></span></button>
 				
 				<ul class='dropdown-menu'>
-				<li><a href='cetak_penjualan_surat_jalan.php?no_faktur=".$row['no_faktur']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."&kode_toko=".$row['kode_toko']."&nama_toko=".$row['nama_toko']."&kode_ekspedisi=".$row['kode_ekspedisi']."' target='blank'> Cetak Label </a></li>
+				<li><a href='cetak_penjualan_surat_jalan.php?no_faktur=".$row['no_faktur']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."&kode_toko=".$row['kode_toko']."&nama_toko=".$row['nama_toko']."&kode_ekspedisi=".$row['kode_ekspedisi']."&keterangan=".$row['keterangan']."' target='blank'> Cetak Label </a></li>
 				<li><a href='cetak_lap_penjualan_tunai_besar.php?no_faktur=".$row['no_faktur']."&nama_toko=".$row['nama_toko']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."&kode_toko=".$row['kode_toko']."' target='blank'> Cetak Invoice </a></li>
 				</ul>
 				</div>";
