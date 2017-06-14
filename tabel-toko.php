@@ -15,7 +15,7 @@ $columns = array(
     
     0=>'Nama toko', 
     1=>'Alamat toko', 
-    2=>'Nomor Telephone', 
+    2=>'Nomor Telpon Toko', 
     3=>'Hapus',
     4=>'Edit',
     5=>'id' 

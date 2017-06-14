@@ -178,7 +178,7 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
     <thead>
       <th> Nama Toko </th> 
       <th> Alamat Toko </th> 
-      <th> Nomor Telphone Toko </th> 
+      <th> Nomor Telpon Toko </th> 
       <th> Hapus </th>
       <th> Edit </th>   
     </thead>
