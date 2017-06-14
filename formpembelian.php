@@ -1350,12 +1350,13 @@ $("#pembayaran_pembelian").keyup(function(){
       $("#total_pembelian").val(tandaPemisahTitik(Math.round(hasil_akhir)));
       $("#potongan_persen").val(tandaPemisahTitik(Math.round(potongan_persen)));
 
-      var diskon_persen = $("#potongan_persen").val();
+      var diskon_persen = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#potongan_persen").val())))); 
 
             if (diskon_persen > 100){
               alert("Potongan Tidak Boleh Lebih Dari 100%")
               $("#potongan_pembelian").val('');
               $("#potongan_persen").val('');
+              $("#total_pembelian").val(total);
              }
 
       });

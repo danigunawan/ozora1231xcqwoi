@@ -136,7 +136,7 @@ $session_id = session_id();
 
 <div class="col-sm-2">
     <label> Level Harga </label><br>
-  <select style="font-size:15px; height:35px" type="text" name="level_harga" id="level_harga" class="form-control chosen" required="" >
+  <select style="font-size:15px; height:35px" type="text" name="level_harga" id="level_harga" class="form-control chosen" required="">
   <option>Level 1</option>
   <option>Level 2</option>
   <option>Level 3</option>
@@ -152,7 +152,7 @@ $session_id = session_id();
   <?php 
     
     //untuk menampilkan semua data pada tabel pelanggan dalam DB
-    $query01 = $db->query("SELECT nama,default_sales FROM user WHERE status_sales = 'iya' ");
+    $query01 = $db->query("SELECT nama,default_sales,status_sales FROM user WHERE status_sales = 'iya' ");
 
     //untuk menyimpan data sementara yang ada pada $query
     while($data01 = mysqli_fetch_array($query01))
@@ -831,13 +831,13 @@ tr:nth-child(even){background-color: #f2f2f2}
             
           <!-- TOMBOL SEMENTARA 
           <button type="submit" id="simpan_sementara" class="btn btn-primary" style="font-size:15px">  Simpan (F10)</button> // -->
-          <a href='cetak_penjualan_tunai.php' id="cetak_tunai" style="display: none;" class="btn btn-primary" target="blank"> Cetak Tunai  </a>
+          <a href='cetak_penjualan_tunai.php' id="cetak_tunai" style="display: none;" class="btn btn-primary" target="blank"> Cetak Label  </a>
 
        <!--   TOMBOL Bayar / Cetak 
           <button type="submit" id="cetak_langsung" target="blank" class="btn btn-success" style="font-size:15px"> Bayar / Cetak (Ctrl + K) </button>
           -->
 
-          <a href='cetak_penjualan_tunai_besar.php' id="cetak_tunai_besar" style="display: none;" class="btn btn-warning" target="blank"> Cetak Tunai Besar </a>
+          <a href='cetak_penjualan_tunai_besar.php' id="cetak_tunai_besar" style="display: none;" class="btn btn-warning" target="blank"> Cetak Invoice </a>
 
        <!--   TOMBOL CETAK SURAT JALAN
 
@@ -1494,9 +1494,14 @@ $.post("barcode.php",{kode_barang:kode_barang,sales:sales,level_harga:level_harg
                 $("#potongan1").focus();
               }
 
-              potongan = jumlah_barang * harga * potongan_persen / 100 ;
+              potongan = (parseInt(jumlah_barang,10) * parseInt(harga,10)) * parseInt(potongan_persen,10) / 100;
+              console.log(jumlah_barang)
+              console.log(harga)
+              console.log(potongan_persen)
+              console.log(potongan)
         };
     }
+
     var tax = $("#tax1").val();
     var jumlahbarang = $("#jumlahbarang").val();
     var satuan = $("#satuan_konversi").val();
@@ -1543,7 +1548,6 @@ $.post("barcode.php",{kode_barang:kode_barang,sales:sales,level_harga:level_harg
                 var total_kurang_potongan = total_kurang_potongan - parseInt(potongan_nominal,10);
                 }
               
-                console.log(potongan_nominal);
 
             }
 
@@ -1560,7 +1564,6 @@ $.post("barcode.php",{kode_barang:kode_barang,sales:sales,level_harga:level_harg
           var t_tax = ((parseInt(total_kurang_potongan,10) * parseInt(tax_faktur,10)) / 100);
 
           var total_akhir = parseInt(total_kurang_potongan, 10) + parseInt(t_tax,10);
-          console.log(total_akhir);
               if (potongan_persen > 100) {
                 alert ("Potongan %, Tidak Boleh Lebih Dari 100%");
                 $("#potongan_persen").val('100');
@@ -1853,8 +1856,8 @@ alert("Silakan Bayar Piutang");
 
 
              var no_faktur = info;
-             $("#cetak_tunai").attr('href', 'cetak_penjualan_tunai.php?no_faktur='+no_faktur+'');
-             $("#cetak_tunai_besar").attr('href', 'cetak_penjualan_tunai_besar.php?no_faktur='+no_faktur+'');
+             $("#cetak_tunai").attr('href', 'cetak_penjualan_tunai.php?no_faktur='+no_faktur+'&nama_konsumen='+nama_konsumen+'&alamat_konsumen='+alamat_konsumen+'&kode_toko='+kode_toko+'&kode_ekspedisi='+kode_ekspedisi+'&keterangan='+keterangan+'');
+             $("#cetak_tunai_besar").attr('href', 'cetak_penjualan_tunai_besar.php?no_faktur='+no_faktur+'&nama_konsumen='+nama_konsumen+'&alamat_konsumen='+alamat_konsumen+'&kode_toko='+kode_toko+'&kode_ekspedisi='+kode_ekspedisi+'');
              $("#cetak_surat_jalan").attr('href', 'cetak_penjualan_surat_jalan.php?no_faktur='+no_faktur+'');
              $("#alert_berhasil").show();
              $("#cetak_tunai").show();
@@ -1865,6 +1868,7 @@ alert("Silakan Bayar Piutang");
              $("#kredit").val('');
              $("#nama_konsumen").val('');
              $("#alamat_konsumen").val('');
+             $("#keterangan").val('');
              $("#ekspedisi").val('');
             
     var tabel_tbs_penjualan = $('#tabel_tbs_penjualan').DataTable();

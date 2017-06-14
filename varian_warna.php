@@ -39,8 +39,8 @@ tr:nth-child(even){background-color: #f2f2f2}
 
    
    
-            <button type="Tambah" id="submit_tambah" class="btn btn-success"><span class='glyphicon glyphicon-plus'> </span> Tambah</button>
 </form>
+            <button type="submit" id="submit_tambah" class="btn btn-success"><span class='glyphicon glyphicon-plus'> </span> Tambah</button>
         
         <div class="alert alert-success" style="display:none">
         <strong>Berhasil!</strong> Data berhasil Di Tambah
@@ -144,7 +144,7 @@ $pilih_akses_otoritas = $db->query("SELECT warna_tambah FROM otoritas_master_dat
 $otoritas = mysqli_num_rows($pilih_akses_otoritas);
 
     if ($otoritas > 0) {
-echo '<button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"> </i> WARNA</button> <b> Varian Warna </b>';
+echo '<button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"> </i> WARNA</button>';
 
 }
 ?>
@@ -222,9 +222,9 @@ mysqli_close($db);
 
    
    
-            <button type="Tambah" id="submit_tambah_ukuran" class="btn btn-success"><span class='glyphicon glyphicon-plus'> </span> Tambah</button>
+           
 </form>
-        
+      <button type="Tambah" id="submit_tambah_ukuran" class="btn btn-success"><span class='glyphicon glyphicon-plus'> </span> Tambah</button>   
         <div class="alert alert-success" style="display:none">
         <strong>Berhasil!</strong> Data berhasil Di Tambah
         </div>
@@ -326,7 +326,7 @@ $pilih_akses_otoritas = $db->query("SELECT ukuran_tambah FROM otoritas_master_da
 $otoritas = mysqli_num_rows($pilih_akses_otoritas);
 
     if ($otoritas > 0) {
-echo '<button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal_ukuran"><i class="fa fa-plus"> </i> UKURAN</button> <b> Varian Ukuran </b>';
+echo '<button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal_ukuran"><i class="fa fa-plus"> </i> UKURAN</button>';
 
 }
 ?>

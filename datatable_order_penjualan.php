@@ -69,11 +69,21 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 
 
     if ($data_akses['penjualan_edit'] > 0){
-      $nestedData[] = "<a href='proses_edit_penjualan_order.php?no_faktur=". $row['no_faktur_order']."&kode_pelanggan=". $row['kode_pelanggan']."&nama_pelanggan=". $row['nama_pelanggan']."&nama_toko=".$row['nama_toko']."&id_toko=".$row['toko']."' class='btn btn-success btn-sm'>Edit</a>";
+      if ($row['status_order'] != 'Dijual') {
+        $nestedData[] = "<a href='proses_edit_penjualan_order.php?no_faktur=". $row['no_faktur_order']."&kode_pelanggan=". $row['kode_pelanggan']."&nama_pelanggan=". $row['nama_pelanggan']."&nama_toko=".$row['nama_toko']."&id_toko=".$row['toko']."' class='btn btn-success btn-sm'>Edit</a>";
+      }
+      else{
+        $nestedData[] = "<p align='center'>x</p>";
+      }      
     }
 
     if ($data_akses['penjualan_hapus'] > 0){
-      $nestedData[] = "<button class='btn btn-danger btn-hapus btn-sm' data-id='".$row['id']."' data-pelanggan='".$row['nama_pelanggan']."' data-faktur='".$row['no_faktur_order']."' >Hapus</button>";
+      if ($row['status_order'] != 'Dijual') {
+        $nestedData[] = "<button class='btn btn-danger btn-hapus btn-sm' data-id='".$row['id']."' data-pelanggan='".$row['nama_pelanggan']."' data-faktur='".$row['no_faktur_order']."' >Hapus</button>";
+      }
+      else{
+        $nestedData[] = "<p align='center'>x</p>";
+      }      
     }
 
 

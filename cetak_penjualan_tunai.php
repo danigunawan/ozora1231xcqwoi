@@ -6,75 +6,123 @@ include 'sanitasi.php';
 include 'db.php';
 
 
+  $nama_konsumen = stringdoang($_GET['nama_konsumen']);
+  $alamat_konsumen = stringdoang($_GET['alamat_konsumen']); 
+  $kode_toko = stringdoang($_GET['kode_toko']); 
+  $no_faktur = stringdoang($_GET['no_faktur']);  
+  $kode_ekspedisi = stringdoang($_GET['kode_ekspedisi']); 
+  $keterangan = stringdoang($_GET['keterangan']); 
 
-$no_faktur = $_GET['no_faktur'];
+      $manggil_nama_toko = $db->query("SELECT id,nama_toko,no_toko FROM toko WHERE id = '$kode_toko' ");
+    $toko = mysqli_fetch_array($manggil_nama_toko);
 
-    $query0 = $db->query("SELECT * FROM penjualan WHERE no_faktur = '$no_faktur' ");
-    $data0 = mysqli_fetch_array($query0);
+      $manggil_nama_ekspedisi = $db->query("SELECT id,nama_ekspedisi FROM ekspedisi WHERE id = '$kode_ekspedisi' ");
+    $ekspedisi = mysqli_fetch_array($manggil_nama_ekspedisi);
 
-    $potongan = $data0['potongan'];
+    $select_perusahaan = $db->query("SELECT foto,nama_perusahaan,alamat_perusahaan,no_telp FROM perusahaan ");
+    $data_perusahaan = mysqli_fetch_array($select_perusahaan);
 
-    $query1 = $db->query("SELECT * FROM perusahaan ");
-    $data1 = mysqli_fetch_array($query1);
-
-    $query2 = $db->query("SELECT * FROM detail_penjualan WHERE no_faktur = '$no_faktur' ");
-
-    $query3 = $db->query("SELECT SUM(jumlah_barang) as total_item, SUM(subtotal) as sub_total FROM detail_penjualan WHERE no_faktur = '$no_faktur'");
-    $data3 = mysqli_fetch_array($query3);
-    $total_item = $data3['total_item'];
-    $sub_total = $data3['sub_total'];
-
-    $potongan_persen = $potongan / $sub_total * 100;
-
-    
  ?>
+<style type="text/css">
+/*unTUK mengatur ukuran font*/
+   .satu {
+   font-size: 15px;
+   font: verdana;
+   }
+</style>
 
 
+<div class="container">
+    <div class="row"> 
+       <div class="col-sm-6"> 
+        <div class="col-sm-6"><br>
+         <b>#<?php echo $no_faktur; ?> <br><br>
+         Dari: <?php echo $toko['nama_toko']; ?>  <br>
+         Telepon: <?php echo $toko['no_toko']; ?> <br></b>
+        </div>
 
-  <?php echo $data1['nama_perusahaan']; ?><br>
-  <?php echo $data1['alamat_perusahaan']; ?><br><br>
-  ===================<br>
-  No Faktur : <?php echo $data0['no_faktur']; ?> || Kasir : <?php echo $_SESSION['nama']; ?><br>
-  ===================<br>
- <table>
+        <div class="col-sm-6">
+            <img src='save_picture/<?php echo $data_perusahaan['foto']; ?>' class='img-rounded' alt='Cinque Terre' width='100' height='100`'>  
+        </div>
+  
+        <div class="col-sm-12">
+        <hr>
+         Nama Tujuan:<b> <?php echo $nama_konsumen; ?> </b><br>
+         Alamat Tujuan: <b><?php echo $alamat_konsumen; ?></b><br><br>
+         Informasi Pengirim: <br>
+         <b><?php echo $ekspedisi['nama_ekspedisi']; ?> </b><br><br>
+         <h6><b>Daftar Produk:</b></h6>
 
-  <tbody>
-           <?php 
-           while ($data2 = mysqli_fetch_array($query2)){
-           
-           echo '<tr><td width:"50%"> '. $data2['nama_barang'] .' </td> <td style="padding:3px"> '. $data2['jumlah_barang'] .'</td>  <td style="padding:3px"> '. rp($data2['harga']) .'</td>  <td style="padding:3px"> '. rp($data2['subtotal']) . ' </td></tr>';
-           
-           }
-           
-//Untuk Memutuskan Koneksi Ke Database
+<table id="tableuser" class="table table-bordered table-sm">
+        <thead>
 
-mysqli_close($db);            
-           
-           ?> 
- </tbody>
-</table>
-    ===================<br>
- <table>
-  <tbody>
-      <tr><td width="50%">Diskon</td> <td> :</td> <td><?php echo rp($data0['potongan']);?> </tr>
-      <tr><td width="50%">Diskon (%)</td> <td> :</td> <td><?php echo persen(round($potongan_persen)); ?> </tr>
-      <tr><td  width="50%">Pajak</td> <td> :</td> <td> <?php echo rp($data0['tax']);?> </td></tr>
-      <tr><td  width="50%">Total Item</td> <td> :</td> <td> <?php echo $total_item; ?> </td></tr>
-      <tr><td width="50%">Total Penjualan</td> <td> :</td> <td><?php echo rp($data0['total']); ?> </tr>
-      <tr><td  width="50%">Tunai</td> <td> :</td> <td> <?php echo rp($data0['tunai']); ?> </td></tr>
-      <tr><td  width="50%">Kembalian</td> <td> :</td> <td> <?php echo rp($data0['sisa']); ?>  </td></tr>
+            <th class="table1" style="width: 5%"> <center> No. </center> </th>
+            <th class="table1" style="width: 65%"> <center> Nama Produk </center> </th>
+            <th class="table1" style="width: 5%"> <center> Jumlah </center> </th>
+            <th class="table1" style="width: 10%"> <center> Satuan </center> </th>    
             
+        </thead>
 
-  </tbody>
-</table>
-    ===================<br>
-    ===================<br>
-    Tanggal : <?php echo tanggal($data0['tanggal']);?><br>
-    ===================<br><br>
-    Terima Kasih<br>
-    Selamat Datang Kembali<br>
-    Telp. <?php echo $data1['no_telp']; ?><br>
-    (* Sudah Termasuk PPN 10%)
+        <tbody>
+        <?php
+
+        $no_urut = 0;
+
+            $query5 = $db->query("SELECT nama_barang, jumlah_barang, harga, kode_barang, satuan AS id_satuan, asal_satuan, subtotal,satuan.nama AS satuan FROM detail_penjualan INNER JOIN satuan ON detail_penjualan.satuan = satuan.id WHERE no_faktur = '$no_faktur' ");
+            //menyimpan data sementara yang ada pada $perintah
+            while ($data5 = mysqli_fetch_array($query5))
+            {
+ $pilih_konversi = $db->query("SELECT $data5[jumlah_barang] / sk.konversi AS jumlah_konversi, sk.harga_pokok / sk.konversi AS harga_konversi, sk.id_satuan, b.satuan,sk.konversi FROM satuan_konversi sk INNER JOIN barang b ON sk.id_produk = b.id  WHERE sk.id_satuan = '$data5[id_satuan]' AND sk.kode_produk = '$data5[kode_barang]'");
+                $data_konversi = mysqli_fetch_array($pilih_konversi);
+
+          $query900 = $db->query("SELECT nama FROM satuan WHERE id = '$data_konversi[satuan]'");
+           $cek011 = mysqli_fetch_array($query900);
+
+
+                if ($data_konversi['harga_konversi'] != 0 || $data_konversi['harga_konversi'] != "") 
+                {             
+                   $jumlah_barang = $data_konversi['jumlah_konversi'];
+                   $konver = $jumlah_barang * $data_konversi['konversi'];
+                }
+                else{
+                  $jumlah_barang = $data5['jumlah_barang'];
+                  $konver = "";
+                }
+
+
+              $no_urut ++;
+
+            echo "<tr>
+            <td class='table1' align='center'>".$no_urut."</td>
+            <td class='table1'>". $data5['nama_barang'] ."</td>
+            <td class='table1' align='right'>". rp($jumlah_barang) ."</td>";
+
+            if ($data_konversi['harga_konversi'] != 0 || $data_konversi['harga_konversi'] != "") {                
+            echo "<td class='table1' align='right'>". $data5['satuan'] ." ( ".$konver." ".$cek011['nama']." ) </td>";
+            }
+            else{
+              echo "<td class='table1' align='right'>". $data5['satuan'] ."</td>";
+            } 
+
+            }
+
+            //Untuk Memutuskan Koneksi Ke Database
+
+            mysqli_close($db); 
+
+        ?>
+   
+
+
+      </tbody>
+    </table> 
+         <b>Keterangan:</b><br>
+         <?php echo $keterangan; ?>
+        </div>
+
+       </div>
+    </div>
+</div> <!--/container-->
 
 
  <script>
@@ -83,5 +131,6 @@ $(document).ready(function(){
 });
 </script>
 
- </body>
- </html>
+
+
+<?php include 'footer.php'; ?>
