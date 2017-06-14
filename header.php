@@ -33,7 +33,8 @@
 		<link rel="stylesheet" href="pos.css">
 		
 		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Quicksand" />
-
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.default.min.css" />
 
     	<script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>		<script src="my.js"></script>
 		<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
@@ -44,6 +45,8 @@
 		<script src="ckeditor/ckeditor.js"></script>
 
 		<script src="jquery-ui/jquery-ui.js"></script>
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
 
 
 
