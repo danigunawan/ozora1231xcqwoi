@@ -1395,7 +1395,6 @@ $(document).ready(function(){
 </script>
 
 
-
     <script>
    
    //untuk menampilkan data yang diambil pada form tbs penjualan berdasarkan id=formtambahproduk
@@ -1436,11 +1435,76 @@ $.post("barcode.php",{kode_barang:kode_barang,sales:sales,level_harga:level_harg
     var tabel_tbs_penjualan = $('#tabel_tbs_penjualan').DataTable();
         tabel_tbs_penjualan.draw();
 
-      $.get("cek_total_seluruh.php", function(data){
-        $("#total2").val(data);
-        $("#total1").val(data);
+      //perhitungan form pembayaran (total & subtotal / biaya admin) 
 
-        });
+var subtotal = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah(data))));
+
+   //end data produk
+   // data per faktur 
+    var potongan_persen = $("#potongan_persen").val();
+    var status_bertingkat = potongan_persen.indexOf("+");
+    var tax_faktur = $("#tax").val();
+        if (tax_faktur == "") {
+        tax_faktur = 0;
+        }   
+
+
+   var total = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#total2").val()))));
+    if (total == '') 
+    {
+          total = 0;
+    }
+
+    var subtotal_penjualan = parseInt(total,10) + parseInt(subtotal,10);
+        total =  subtotal_penjualan;
+    // perhitungan diskon bertingkat 
+   if (status_bertingkat > 0) {
+            var diskon_bertingkat = potongan_persen.split("+");
+            var potongan_nominal = 0;
+            var index;
+            var total_kurang_potongan = total;
+            var total_potongan_nominal = 0;
+            for (index = 0; index < diskon_bertingkat.length; ++index) {
+               
+                var diskon_persen = diskon_bertingkat[index];
+
+                if (diskon_persen != '' || diskon_persen != 0) {
+                 total_potongan_nominal = Math.round(total_potongan_nominal) + Math.round(((total_kurang_potongan * diskon_persen) / 100));
+                 potongan_nominal =  Math.round((total_kurang_potongan * diskon_persen) / 100);
+                var total_kurang_potongan = total_kurang_potongan - parseInt(potongan_nominal,10);
+                }
+              
+
+            }
+
+            var t_tax = ((parseInt(total_kurang_potongan,10) * parseInt(tax_faktur,10)) / 100);
+            var total_akhir = parseInt(total_kurang_potongan, 10) + parseInt(t_tax,10);
+
+            $("#total1").val(tandaPemisahTitik(parseInt(total_akhir)));
+          
+        } 
+        else {
+
+          var total_potongan_nominal =  Math.round(((total * potongan_persen) / 100));
+          var total_kurang_potongan = total - total_potongan_nominal;
+          var t_tax = ((parseInt(total_kurang_potongan,10) * parseInt(tax_faktur,10)) / 100);
+
+          var total_akhir = parseInt(total_kurang_potongan, 10) + parseInt(t_tax,10);
+              if (potongan_persen > 100) {
+                alert ("Potongan %, Tidak Boleh Lebih Dari 100%");
+                $("#potongan_persen").val('100');
+              }
+              else {
+
+                 
+                  
+              }
+
+        $("#total1").val(tandaPemisahTitik(total_akhir));
+        $("#total2").val(tandaPemisahTitik(subtotal_penjualan));
+        $("#potongan_penjualan").val(tandaPemisahTitik(parseInt(total_potongan_nominal)));
+            
+    } // end diskon bertingkat
 
      });
 }
@@ -1450,15 +1514,12 @@ $.post("barcode.php",{kode_barang:kode_barang,sales:sales,level_harga:level_harg
 
 });
 
-
-     
      });
      
      $("#form_barcode").submit(function(){
     return false;
     
-    });
-
+});
  </script>  
 
    <script>
