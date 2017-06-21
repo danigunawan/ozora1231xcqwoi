@@ -1605,7 +1605,17 @@ var subtotal = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah(data))));
 
                 if (diskon_persen != '' || diskon_persen != 0) {
                  total_potongan_nominal = Math.round(total_potongan_nominal) + Math.round(((total_kurang_potongan * diskon_persen) / 100));
-                 potongan_nominal =  Math.round((total_kurang_potongan * diskon_persen) / 100);
+
+                 //mencari potongan nominal
+                if (total == 0) {
+                 var  potongan_nominal = 0;
+                }
+                else{
+                 var   potongan_nominal =  Math.round((total_kurang_potongan * diskon_persen) / 100);
+                }
+                //mencari potongan nominal
+
+
                 var total_kurang_potongan = total_kurang_potongan - parseInt(potongan_nominal,10);
                 }
               
@@ -1623,6 +1633,16 @@ var subtotal = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah(data))));
           var total_potongan_nominal =  Math.round(((total * potongan_persen) / 100));
           var total_kurang_potongan = total - total_potongan_nominal;
           var t_tax = ((parseInt(total_kurang_potongan,10) * parseInt(tax_faktur,10)) / 100);
+
+                 //mencari potongan nominal
+                if (total == 0) {
+                 var  potongan_nominal = 0;
+                }
+                else{
+                 var   potongan_nominal =  Math.round((total_kurang_potongan * diskon_persen) / 100);
+                }
+                //mencari potongan nominal
+
 
           var total_akhir = parseInt(total_kurang_potongan, 10) + parseInt(t_tax,10);
               if (potongan_persen > 100) {
@@ -1671,7 +1691,7 @@ var subtotal = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah(data))));
 
 
 
-$("#kode_barang").focus();
+    $("#kode_barang").focus();
     
     $("#total1").val(tandaPemisahTitik(total_akhir));
     $("#total2").val(tandaPemisahTitik(subtotal_penjualan));
@@ -1682,7 +1702,7 @@ $("#kode_barang").focus();
     var tabel_tbs_penjualan = $('#tabel_tbs_penjualan').DataTable();
         tabel_tbs_penjualan.draw();
 
-     $("#ppn").attr("disabled", true);
+      $('#ppn').prop('disabled', true).trigger("chosen:updated");
      $("#kode_barang").val('');
      $("#kode_barang").trigger('chosen:updated');
      $("#kode_barang").trigger('chosen:open');
@@ -1715,8 +1735,7 @@ $("#kode_barang").focus();
 
     $.post("prosestbspenjualan.php",{no_faktur:no_faktur,kode_barang:kode_barang,nama_barang:nama_barang,jumlah_barang:jumlah_barang,harga:harga,harga_baru:harga_baru,level_harga:level_harga,potongan:potongan,tax:tax,satuan:satuan,sales:sales,ber_stok:ber_stok},function(data){
      
-
-      $("#ppn").attr("disabled", true);
+      $('#ppn').prop('disabled', true).trigger("chosen:updated");
       $("#kode_barang").val('');
       $("#kode_barang").trigger('chosen:updated');
       $("#kode_barang").trigger('chosen:open');
@@ -1733,14 +1752,8 @@ $("#kode_barang").focus();
      
      });
 }
-    
-
-        var session_id = $("#session_id").val();
+      var session_id = $("#session_id").val();
         
-     
-       
-    
-      
   });
 
     $("#formtambahproduk").submit(function(){
@@ -1748,18 +1761,11 @@ $("#kode_barang").focus();
     
     });
 
-
-
-//menampilkan no urut faktur setelah tombol click di pilih
+    //menampilkan no urut faktur setelah tombol click di pilih
       $("#cari_produk_penjualan").click(function() {
-
-      
- 
-      //menyembunyikan notif berhasil
+    //menyembunyikan notif berhasil
       $("#alert_berhasil").hide();
-      
-
-      });
+ });
 </script>
 
 
@@ -2468,19 +2474,21 @@ alert("Silakan Bayar Piutang");
 
 <script type="text/javascript">
 $(document).ready(function(){
-$("#cari_produk_penjualan").click(function(){
+
   var session_id = $("#session_id").val();
+    var status = "transaksi";
 
-  $.post("cek_tbs_penjualan.php",{session_id: "<?php echo $session_id; ?>"},function(data){
-        if (data != "1") {
+  $.post("cek_tbs_penjualan.php",{session_id: "<?php echo $session_id; ?>",status:status},function(data){
+        if (data == 1) {
 
+          $('#ppn').prop('disabled', true).trigger("chosen:updated");
 
-             $("#ppn").attr("disabled", false);
 
         }
+        else{
+          $('#ppn').prop('disabled', false).trigger("chosen:updated");
+        }
     });
-
-});
 });
 </script>
 
@@ -2964,6 +2972,22 @@ $(document).on('click','.btn-hapus-tbs',function(e){
       }   
       var total_akhir = parseInt(total,10) - parseInt(subtotal_tbs,10);
       total = total_akhir;
+
+      var status = "edit";
+
+    $.post("cek_tbs_penjualan.php",{session_id: "<?php echo $session_id; ?>",status:status},function(data){
+        if (data == 1) {
+
+          $('#ppn').prop('disabled', true).trigger("chosen:updated");
+
+
+        }
+        else{
+          $('#ppn').prop('disabled', false).trigger("chosen:updated");
+        }
+    });
+
+
       // perhitungan diskon bertingkat 
       if (status_bertingkat > 0) {
             var diskon_bertingkat = potongan_persen.split("+");
@@ -2977,8 +3001,18 @@ $(document).on('click','.btn-hapus-tbs',function(e){
 
                 if (diskon_persen != '' || diskon_persen != 0) {
                  total_potongan_nominal =  Math.round(total_potongan_nominal) +  Math.round(((total_kurang_potongan * diskon_persen) / 100));
-                 potongan_nominal =  Math.round((total_kurang_potongan * diskon_persen) / 100);
+
+                 //mencari potongan nominal
+                if (total == 0) {
+                 var  potongan_nominal = 0;
+                }
+                else{
+                 var   potongan_nominal =  Math.round((total_kurang_potongan * diskon_persen) / 100);
+                }
+
                 var total_kurang_potongan = total_kurang_potongan - parseInt(potongan_nominal,10);
+                //mencari potongan nominal
+
                 }
               
                 console.log( parseInt(potongan_nominal,10));
@@ -2995,6 +3029,15 @@ $(document).on('click','.btn-hapus-tbs',function(e){
           var total_potongan_nominal =  Math.round((total * potongan_persen) / 100);
           var total_kurang_potongan = total - total_potongan_nominal;
           var t_tax = ((parseInt(total_kurang_potongan,10) * parseInt(tax,10)) / 100);
+
+                //mencari potongan nominal
+                if (total == 0) {
+                 var  potongan_nominal = 0;
+                }
+                else{
+                 var   potongan_nominal =  Math.round((total_kurang_potongan * diskon_persen) / 100);
+                }
+                //mencari potongan nominal
 
           var total_akhir = parseInt(total_kurang_potongan, 10) + parseInt(t_tax,10);
 
