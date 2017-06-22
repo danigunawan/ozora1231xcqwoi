@@ -32,7 +32,7 @@ else
     }
     
     else{
-        $perintah = $db->query("SELECT b.kode_barangFROM barang b  WHERE b.kategori = '$kategori'");
+        $perintah = $db->query("SELECT b.kode_barang FROM barang b  WHERE b.kategori = '$kategori'");
     }
 }
 
@@ -601,45 +601,22 @@ $barang_edit = mysqli_num_rows($pilih_akses_barang_edit);
 </script>
 
 <script type="text/javascript">
-
-               $(document).ready(function(){
-               // KODE BARANG BLUR
-               $("#kode_barang").blur(function(){
+// KODE BARANG BLUR
+        $('#kode_barang').blur(function(){
                var kode_barang = $("#kode_barang").val();
 
-              $.post('cek_kode_barang.php',{kode_barang:$(this).val()}, function(data){
+              $.post('cek_kode_barang.php',{kode_barang:kode_barang}, function(data){
                 
                 if(data == 1){
 
                     alert ("Kode Barang Sudah Ada");
                     $("#kode_barang").val('');
+
                 }
-                else {
-                    
-                }
+
               });
                 
-               });
-
-               // KODE BARANG MOUSELEAVE
-               $("#kode_barang").mouseleave(function(){
-               var kode_barang = $("#kode_barang").val();
-
-              $.post('cek_kode_barang.php',{kode_barang:$(this).val()}, function(data){
-                
-                if(data == 1){
-
-                    alert ("Kode Barang Sudah Ada");
-                    $("#kode_barang").val('');
-                }
-                else {
-                    
-                }
-              });
-                
-               });
-               });
-
+        });
 </script>
 
                              
