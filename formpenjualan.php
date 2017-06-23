@@ -809,7 +809,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 
           
           <input type="hidden" name="kode_pelanggan" id="k_pelanggan" class="form-control" required="" >
-          <input type="text" name="ppn_input" id="ppn_input" value="Include" class="form-control" placeholder="ppn input">  
+          <input type="hidden" name="ppn_input" id="ppn_input" value="Include" class="form-control" placeholder="ppn input">  
       
 
           <div class="row">
