@@ -344,20 +344,18 @@
               <input type="text" name="total" id="total_pembelian1" class="form-control" placeholder="" readonly="" style="font-size: 20px; height: 15px" ></b>        
         </div>
         <div class="col-sm-6">
-          
+           <label> Potongan ( Rp ) </label><br>
+            <input type="text" name="potongan" id="potongan_pembelian" data-diskon="" style="height:15px;font-size:15px" class="form-control" autocomplete="off" placeholder=" ">
         </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-6">
-          <label> Potongan ( Rp ) </label><br>
-            <input type="text" name="potongan" id="potongan_pembelian" data-diskon="" style="height:15px;font-size:15px" class="form-control" autocomplete="off" placeholder=" ">
-        </div>
+     
         <div class="col-sm-6">
           <label> Potongan ( % ) </label><br>
             <input type="text" name="potongan_persen" id="potongan_persen" style="height:15px;font-size:15px" class="form-control" autocomplete="off" placeholder="">
         </div>
-        <div class="col-sm-4" style="display: none">          
+        <div class="col-sm-6">          
           <label> Tax ( % )</label><br>
             <input type="text" name="tax" id="tax" class="form-control" style="height:15px;font-size:15px" autocomplete="off" data-pajak="" placeholder="" >
         </div>
