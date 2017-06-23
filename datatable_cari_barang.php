@@ -211,6 +211,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 
     $nestedData[] = $row["kode_barang"];
     $nestedData[] = $row["nama_barang"];
+       $nestedData[] = "<a href='tambah_varian_barang.php?id=". $row['id']."' class='btn btn-primary' target='blank'>Tambah Varian</a>";
 
     $nestedData[] = "<p style='font-size:15px' align='right' class='edit-beli' data-id='".$row['id']."'> <span id='text-beli-".$row['id']."'>".rp($row["harga_beli"])."</span> <input type='hidden' id='input-beli-".$row['id']."' value='".$row['harga_beli']."' class='input_beli' data-jual-1='".$row['harga_jual']."'  data-berstok='".$row['berkaitan_dgn_stok']."'  data-id='".$row['id']."' data-kode='".$row['kode_barang']."' autofocus=''> </p>";
 
@@ -241,6 +242,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData[] = "<a href='satuan_konversi.php?id=". $row['id']."&nama=". $row['nama']."&satuan=". $row['satuan']."&harga=". $row['harga_beli']."&kode_barang=". $row['kode_barang']."' class='btn btn-secondary'>Konversi</a> ";
 
     $nestedData[] = $row["kategori"];
+ 
     
     $nestedData[] = $row["id"];
 

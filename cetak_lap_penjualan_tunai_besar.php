@@ -85,9 +85,8 @@ include 'db.php';
     <div class="col-sm-6">
       <table>
         <tbody> 
-            <tr><td  width="25%"><font class="satu">Nama</font></td> <td> :&nbsp;</td> <td><font class="satu"> <?php echo $nama_konsumen; ?> </font></td></tr>
-            <tr><td  width="25%"><font class="satu">Alamat</font></td> <td> :&nbsp;</td> <td><font class="satu"> <?php echo $alamat_konsumen; ?> </font></td></tr>
-          <tr><td width="5%"><font class="dua"> Alamat</font></td> <td> :&nbsp;&nbsp;</td> <td><?php echo $data0['wilayah'];?></td></tr>
+            <tr><td  width="25%"><font class="satu">Nama Konsumen </font></td> <td> :&nbsp;</td> <td><font class="satu"> <?php echo $nama_konsumen; ?> </font></td></tr>
+            <tr><td  width="25%"><font class="satu">Alamat Konsumen </font></td> <td> :&nbsp;</td> <td><font class="satu"> <?php echo $alamat_konsumen; ?> </font></td></tr> 
         </tbody>
       </table>
     </div> <!--end col-sm-2-->

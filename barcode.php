@@ -227,6 +227,7 @@ $jumlah = mysqli_num_rows($cek);
 
     }
 
+echo $a;
 
     } // END ELSE dari IF ($stok_barang < 0) {
 
@@ -344,46 +345,12 @@ $jumlah = mysqli_num_rows($cek);
             $perintah->execute();
 
     }
-
+echo $a;
 
 }// END berkaitan dgn stok == Jasa
 
 
 
-
-    ?>
-
-
-
-<?php
-    if ($ber_stok == 'Jasa' OR ($ber_stok == 'Barang' AND $stok_barang >= 0) OR ($ber_stok == 'barang' AND $stok_barang >= 0)){
-
-  //menampilkan semua data yang ada pada tabel tbs penjualan dalam DB
-                $perintah = $db->query("SELECT tp.id,tp.kode_barang,tp.satuan,tp.nama_barang,tp.jumlah_barang,tp.harga,tp.subtotal,tp.potongan,tp.tax,s.nama FROM tbs_penjualan tp INNER JOIN satuan s ON tp.satuan = s.id WHERE tp.session_id = '$session_id' AND tp.kode_barang = '$kode_barang'");
-                
-                //menyimpan data sementara yang ada pada $perintah
-                
-               $data1 = mysqli_fetch_array($perintah);
-
-                //menampilkan data
-                echo "<tr class='tr-kode-". $data1['kode_barang'] ." tr-id-". $data1['id'] ."' data-kode-barang='".$data1['kode_barang']."'>
-                <td>". $data1['kode_barang'] ."</td>
-                <td>". $data1['nama_barang'] ."</td>
-                <td class='edit-jumlah' data-id='".$data1['id']."' align='right'><span id='text-jumlah-".$data1['id']."'>". $data1['jumlah_barang'] ."</span> <input type='hidden' id='input-jumlah-".$data1['id']."' value='".$data1['jumlah_barang']."' class='input_jumlah' data-id='".$data1['id']."' autofocus='' data-kode='".$data1['kode_barang']."' data-harga='".$data1['harga']."' data-satuan='".$data1['satuan']."' > </td>
-                <td>". $data1['nama'] ."</td>
-                <td align='right'>". rp($data1['harga']) ."</td>
-              
-                <td align='right'><span id='text-potongan-".$data1['id']."'>". rp($data1['potongan']) ."</span></td>
-                <td align='right'><span id='text-tax-".$data1['id']."'>". rp($data1['tax']) ."</span></td>
-                  <td align='right'><span id='text-subtotal-".$data1['id']."'>". rp($data1['subtotal']) ."</span></td>";
-
-                echo "<td style='font-size:15px'> <button class='btn btn-danger btn-sm btn-hapus-tbs' id='hapus-tbs-".$data1['id']."' data-id='". $data1['id'] ."' data-kode-barang='". $data1['kode_barang'] ."' data-barang='". $data1['nama_barang'] ."' data-subtotal='". $data1['subtotal'] ."'>Hapus</button> </td> 
-
-                </tr>";
-
-              }
-//Untuk Memutuskan Koneksi Ke Database
-mysqli_close($db);   
 
     ?>
 

@@ -12,6 +12,7 @@ include 'db.php';
   $no_faktur = stringdoang($_GET['no_faktur']); 
   $nama_toko = stringdoang($_GET['nama_toko']); 
   $kode_ekspedisi = stringdoang($_GET['kode_ekspedisi']); 
+  $keterangan = stringdoang($_GET['keterangan']);
 
     	$manggil_nama_toko = $db->query("SELECT id,nama_toko,no_toko FROM toko WHERE id = '$kode_toko' ");
 		$toko = mysqli_fetch_array($manggil_nama_toko);
@@ -117,7 +118,7 @@ include 'db.php';
       </tbody>
     </table> 
          <b>Keterangan:</b><br>
-         (isi keterangan)
+         <?php echo $keterangan; ?>
         </div>
 
        </div>

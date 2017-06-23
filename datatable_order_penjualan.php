@@ -34,19 +34,19 @@ $columns = array(
 
 
 // getting total number records without any search
-$sql = " SELECT po.keterangan,po.toko,po.nama_konsumen,po.alamat_konsumen,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko ";
-$sql.=" FROM penjualan_order po INNER JOIN toko t ON po.toko = t.id INNER JOIN pelanggan pl ON po.kode_pelanggan = pl.kode_pelanggan ";
+$sql = " SELECT pl.kode_pelanggan,po.keterangan,po.toko,po.nama_konsumen,po.alamat_konsumen,po.id,po.no_faktur_order,po.total,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko ";
+$sql.=" FROM penjualan_order po INNER JOIN toko t ON po.toko = t.id INNER JOIN pelanggan pl ON po.kode_pelanggan = pl.id ";
 $query=mysqli_query($conn, $sql) or die("1.php: get employees");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
 
-$sql = "SELECT  po.keterangan,po.toko,po.nama_konsumen,po.alamat_konsumen,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko  ";
-$sql.=" FROM penjualan_order po INNER JOIN toko t ON po.toko = t.id INNER JOIN pelanggan pl ON po.kode_pelanggan = pl.kode_pelanggan  WHERE 1=1 ";
+$sql = "SELECT  pl.kode_pelanggan,po.keterangan,po.toko,po.nama_konsumen,po.alamat_konsumen,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko  ";
+$sql.=" FROM penjualan_order po INNER JOIN toko t ON po.toko = t.id INNER JOIN pelanggan pl ON po.kode_pelanggan = pl.id  WHERE 1=1 ";
 
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 	$sql.=" AND ( po.no_faktur_order LIKE '".$requestData['search']['value']."%' ";    
-	$sql.=" OR po.kode_pelanggan LIKE '".$requestData['search']['value']."%' ";
+	$sql.=" OR pl.kode_pelanggan LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR po.total LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR po.tanggal LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR t.nama_toko LIKE '".$requestData['search']['value']."%' ";
