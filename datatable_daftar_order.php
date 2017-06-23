@@ -29,14 +29,14 @@ $columns = array(
 
 
 // getting total number records without any search
-$sql = " SELECT po.keterangan,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko, po.nama_konsumen";
+$sql = " SELECT po.keterangan,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko, po.nama_konsumen, po.alamat_konsumen";
 $sql.=" FROM penjualan_order po INNER JOIN pelanggan pl ON po.kode_pelanggan = pl.id INNER JOIN toko t ON po.toko = t.id WHERE po.status_order = 'Diorder' ";
 $query=mysqli_query($conn, $sql) or die("1.php: get employees");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
 
-$sql = "SELECT  po.keterangan,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko, po.nama_konsumen";
+$sql = "SELECT  po.keterangan,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko, po.nama_konsumen, po.alamat_konsumen";
 $sql.=" FROM penjualan_order po INNER JOIN pelanggan pl ON po.kode_pelanggan = pl.id INNER JOIN toko t ON po.toko = t.id WHERE po.status_order = 'Diorder' AND 1=1 ";
 
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
@@ -71,6 +71,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData[] = rp($row['total']);
     $nestedData[] = $row['keterangan'];
     $nestedData[] = $row['user'];
+    $nestedData[] = $row['alamat_konsumen'];
     $nestedData[] = $row['id'];
 
 
