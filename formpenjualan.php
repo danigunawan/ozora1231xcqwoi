@@ -554,7 +554,10 @@ $session_id = session_id();
                 <h6 style="text-align: left ;"><i><b> * Short Key (F2) untuk mencari Kode Produk atau Nama Produk.</b></i></h6>
 
 
-<button class="btn btn-warning" id="btnOrder" type="button" data-toggle="collapse" data-target="#OrderPenjualan" aria-expanded="false" aria-controls="collapseExample"><i class='fa fa-list-ol'> </i>
+<button class="btn btn-warning" id="btnOrder" type="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample"><i class='fa fa-list-ol'> </i>
+Order Penjualan</button>
+
+<button class="btn btn-purple" id="btnOrderClose" type="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" style="display: none"><i class='fa fa-list-ol'> </i>
 Order Penjualan</button>
 
 <?php 
@@ -580,7 +583,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 ?>
 
 
-<div class="collapse" id="OrderPenjualan">
+<span id="OrderPenjualan" style="display: none">
     <div class="row">
       <div class="col-sm-3">
         <span id="select_order">
@@ -622,7 +625,7 @@ tr:nth-child(even){background-color: #f2f2f2}
             </table>
       </div>  
 </div>
-</div>
+</span>
 
 
 
@@ -965,6 +968,8 @@ $(document).ready(function(){
               $(nRow).attr('class', "pilih_order");
               $(nRow).attr('data-order', aData[0]);
               $(nRow).attr('data-total', aData[6]);
+              $(nRow).attr('data-konsumen', aData[3]);
+              $(nRow).attr('data-alamat', aData[9]);
 
           },
         });
@@ -980,6 +985,9 @@ $(document).ready(function(){
 
 <script type="text/javascript">
   $(document).on('click', '.pilih_order', function (e) {
+
+    document.getElementById("nama_konsumen").value = $(this).attr('data-konsumen');
+    document.getElementById("alamat_konsumen").value = $(this).attr('data-alamat');
 
     $.post("ambil_order_penjualan.php",{no_faktur_order:$(this).attr('data-order')},function(data){
 
@@ -1111,6 +1119,26 @@ $(document).ready(function(){
           $("#potongan_penjualan").val(potongaaan);
         }
 
+    $('#table_tbs_order').DataTable().destroy();
+          var dataTable = $('#table_tbs_order').DataTable( {
+          "processing": true,
+          "serverSide": true,
+          "ajax":{
+            url :"datatable_tbs_order.php", // json datasource
+           
+            type: "post",  // method  , by default get
+            error: function(){  // error handling
+              $(".employee-grid-error").html("");
+              $("#table_tbs_order").append('<tbody class="employee-grid-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
+              $("#employee-grid_processing").css("display","none");
+            }
+        },      
+    });
+
+    $("#OrderPenjualan").show();
+    $("#btnOrder").hide();
+    $("#btnOrderClose").show();
+
 });
 </script>
 <!--end javascript order all-->
@@ -1133,7 +1161,21 @@ $(document).ready(function(){
         },      
     });
 
+    $("#OrderPenjualan").show();
+    $("#btnOrder").hide();
+    $("#btnOrderClose").show();
+  });
 
+
+
+  $(document).on("click", "#btnOrderClose", function(){
+      
+      var table_tbs_order = $('#table_tbs_order').DataTable();
+          table_tbs_order.draw();
+
+    $("#OrderPenjualan").hide();
+    $("#btnOrder").show();
+    $("#btnOrderClose").hide();
   });
 </script>
 
