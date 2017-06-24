@@ -178,7 +178,20 @@ $pilih_akses_otoritas = $db->query("SELECT warna_hapus FROM otoritas_master_data
 $otoritas = mysqli_num_rows($pilih_akses_otoritas);
 
     if ($otoritas > 0) {
-echo "<td><button class='btn btn-danger btn-hapus' data-id='". $data['id'] ."' data-varian_warna='". $data['varian_warna'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> </td>";
+
+      $varian_warna = $db->query("SELECT kode_barang,nama_barang FROM barang WHERE id_varian_warna = '$data[id]'");
+      $jumlah_warna = mysqli_num_rows($varian_warna);
+      $data_warna = mysqli_fetch_array($varian_warna);
+
+      if ($jumlah_warna > 0) {
+        # code...
+        echo "<td><button class='btn btn-danger btn-alert-warna' data-kode='". $data_warna['kode_barang'] ."' data-nama='". $data_warna['nama_barang'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> </td>";
+      }
+      else{
+        echo "<td><button class='btn btn-danger btn-hapus' data-id='". $data['id'] ."' data-varian_warna='". $data['varian_warna'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> </td>";
+      }
+
+
 }
 
 $pilih_akses_otoritas = $db->query("SELECT warna_edit FROM otoritas_master_data WHERE id_otoritas = '$_SESSION[otoritas_id]' AND warna_edit = '1'");
@@ -238,12 +251,13 @@ mysqli_close($db);
 </div><!-- end of modal buat data  -->
 
 
+
 <!-- Modal Hapus data -->
 <div id="modal_hapus_ukuran" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
 
-
+   
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -278,6 +292,57 @@ mysqli_close($db);
 
   </div>
 </div><!-- end of modal hapus data  -->
+
+
+<!-- Modal Hapus alert data -->
+<div id="modal_hapus_alert_ukuran" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Peringatan Hapus Varian Ukuran</h4>
+      </div>
+
+      <div class="modal-body">
+   
+   <p>Data Ukuran Ini Sudah Terpakai , Silakan cek di data produk</p>
+     </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal"><span class='glyphicon glyphicon-remove-sign'> </span>Close</button>
+      </div>
+    </div>
+
+  </div>
+</div><!-- end of modal hapus alert data  -->
+
+
+<!-- Modal Hapus alert data -->
+<div id="modal_hapus_alert_warna" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Peringatan Hapus Varian Warna</h4>
+      </div>
+
+      <div class="modal-body">
+   
+   <p>Data Warna Ini Sudah Terpakai , Silakan cek di data produk</p>
+     </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal"><span class='glyphicon glyphicon-remove-sign'> </span>Close</button>
+      </div>
+    </div>
+
+  </div>
+</div><!-- end of modal hapus alert data  -->
+
 
 
 
@@ -358,15 +423,27 @@ $pilih_akses_otoritas = $db->query("SELECT ukuran_hapus FROM otoritas_master_dat
 $otoritas = mysqli_num_rows($pilih_akses_otoritas);
 
     if ($otoritas > 0) {
-echo "<td><button class='btn btn-danger btn-hapus-ukuran' data-id='". $data['id'] ."' data-varian_ukuran='". $data['varian_ukuran'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> </td>";
+
+$varian_ukuran = $db->query("SELECT kode_barang,nama_barang FROM barang WHERE id_varian_ukuran = '$data[id]'");
+$jumlah_ukuran = mysqli_num_rows($varian_ukuran);
+$data_ukuran = mysqli_fetch_array($varian_ukuran);
+
+      if ($jumlah_ukuran > 0) {
+        # code...
+        echo "<td><button class='btn btn-danger btn-alert-ukuran' data-kode='". $data_ukuran['kode_barang'] ."' data-nama='". $data_ukuran['nama_barang'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> </td>";
+      }
+      else{
+        echo "<td><button class='btn btn-danger btn-hapus-ukuran' data-id='". $data['id'] ."' data-varian_ukuran='". $data['varian_ukuran'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> </td>";
+      }
+
 }
 
 $pilih_akses_otoritas = $db->query("SELECT ukuran_edit FROM otoritas_master_data WHERE id_otoritas = '$_SESSION[otoritas_id]' AND ukuran_edit = '1'");
 $otoritas = mysqli_num_rows($pilih_akses_otoritas);
 
     if ($otoritas > 0) {
-echo "<td> <button class='btn btn-info btn-edit-ukuran' data-varian_ukuran='". $data['varian_ukuran'] ."' data-id='". $data['id'] ."'> <span class='glyphicon glyphicon-edit'> </span> Edit </button> </td>";
-}
+    echo "<td> <button class='btn btn-info btn-edit-ukuran' data-varian_ukuran='". $data['varian_ukuran'] ."' data-id='". $data['id'] ."'> <span class='glyphicon glyphicon-edit'> </span> Edit </button> </td>";
+  }
       echo "</tr>";
     
   }
@@ -491,6 +568,37 @@ mysqli_close($db);
     
     });
 // end fungsi hapus data
+
+
+//alert ukuran 
+    $(".btn-alert-ukuran").click(function(){
+    
+    var kode = $(this).attr("data-kode");
+    var nama = $(this).attr("data-nama");
+
+    $("#alert_data_varian_kode").val(kode);
+    $("#alert_data_varian_nama").val(nama);
+
+    $("#modal_hapus_alert_ukuran").modal('show');
+
+    });
+//alert ukuran 
+
+//alert warna 
+    $(".btn-alert-warna").click(function(){
+    
+    var kode = $(this).attr("data-kode");
+    var nama = $(this).attr("data-nama");
+
+    $("#alert_data_varian_kode").val(kode);
+    $("#alert_data_varian_nama").val(nama);
+
+    $("#modal_hapus_alert_warna").modal('show');
+
+    });
+//alert warna 
+
+
 
 //fungsi edit data 
     $(".btn-edit-ukuran").click(function(){

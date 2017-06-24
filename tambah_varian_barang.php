@@ -56,12 +56,12 @@ $data_barang = mysqli_fetch_array($query_barang);
 
 			    <?php 
 			    
-			    $query_ukuran = $db->query("SELECT varian_ukuran FROM varian_ukuran");
+			    $query_ukuran = $db->query("SELECT id,varian_ukuran FROM varian_ukuran");
 			        
 			    while($data_ukuran = mysqli_fetch_array($query_ukuran))
 			    {
 			    
-			    echo "<option value='".$data_ukuran['varian_ukuran'] ."'>".$data_ukuran['varian_ukuran'] ."</option>";
+			    echo "<option value='".$data_ukuran['id'] ."'>".$data_ukuran['varian_ukuran'] ."</option>";
 			    
 			    }
 			    
@@ -75,12 +75,12 @@ $data_barang = mysqli_fetch_array($query_barang);
 			<option value="">-- Tidak Ada Pilihan --</option>
             <?php 
             
-            $query_warna = $db->query("SELECT varian_warna FROM varian_warna");
+            $query_warna = $db->query("SELECT id,varian_warna FROM varian_warna");
                 
             while($data_warna = mysqli_fetch_array($query_warna))
             {
             
-            echo "<option value='".$data_warna['varian_warna'] ."'>".$data_warna['varian_warna'] ."</option>";
+            echo "<option value='".$data_warna['id'] ."'>".$data_warna['varian_warna'] ."</option>";
             
             }
             

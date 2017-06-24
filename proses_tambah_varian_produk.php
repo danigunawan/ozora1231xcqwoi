@@ -31,12 +31,12 @@ include 'sanitasi.php';
 
 if (!cek_kode_barang_double($kode_barang,$id_barang)) {
 	// buat prepared statements
-	$stmt = $db->prepare("INSERT INTO barang (kode_barang, nama_barang, harga_beli, harga_jual, harga_jual2, harga_jual3, satuan, kategori, gudang, status, suplier, limit_stok, over_stok, berkaitan_dgn_stok)
-	            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+	$stmt = $db->prepare("INSERT INTO barang (kode_barang, nama_barang, harga_beli, harga_jual, harga_jual2, harga_jual3, satuan, kategori, gudang, status, suplier, limit_stok, over_stok, berkaitan_dgn_stok,id_varian_ukuran,id_varian_warna)
+	            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 	  
 	// hubungkan "data" dengan prepared statements
-	$stmt->bind_param("ssiiiisssssiis", 
-	$kode_barang, $nama_barang, $harga_beli, $harga_jual, $harga_jual_2, $harga_jual_3, $satuan, $kategori, $gudang, $status, $suplier, $limit_stok, $over_stok, $tipe);
+	$stmt->bind_param("ssiiiisssssiisss", 
+	$kode_barang, $nama_barang, $harga_beli, $harga_jual, $harga_jual_2, $harga_jual_3, $satuan, $kategori, $gudang, $status, $suplier, $limit_stok, $over_stok, $tipe,$ukuran,$warna);
 	 
 
 	// jalankan query
@@ -100,8 +100,15 @@ function masukkan_barang_ke_cache($kode_barang){
 }
 function penamaan_varian($nama_barang,$ukuran,$warna){
 
+include 'db.php';
 
-	return $nama_barang." ".$ukuran." ".$warna;
+	$ukuran_ambil = $db->query("SELECT varian_ukuran FROM varian_ukuran WHERE id =  '$ukuran'");
+	$data_ukuran_ambil = mysqli_fetch_array($ukuran_ambil);
+
+	$warna_ambil = $db->query("SELECT varian_warna FROM varian_warna WHERE id =  '$warna'");
+	$data_warna_ambil = mysqli_fetch_array($warna_ambil);
+
+	return $nama_barang." ".$data_ukuran_ambil['varian_ukuran']." ".$data_warna_ambil['varian_warna'];
 }
 
  
