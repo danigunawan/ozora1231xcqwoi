@@ -29,14 +29,14 @@ $columns = array(
 
 
 // getting total number records without any search
-$sql = " SELECT po.keterangan,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko, po.nama_konsumen, po.alamat_konsumen";
+$sql = " SELECT po.keterangan,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko, po.nama_konsumen, po.alamat_konsumen, po.toko";
 $sql.=" FROM penjualan_order po INNER JOIN pelanggan pl ON po.kode_pelanggan = pl.id INNER JOIN toko t ON po.toko = t.id WHERE po.status_order = 'Diorder' ";
 $query=mysqli_query($conn, $sql) or die("1.php: get employees");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
 
-$sql = "SELECT  po.keterangan,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko, po.nama_konsumen, po.alamat_konsumen";
+$sql = "SELECT  po.keterangan,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko, po.nama_konsumen, po.alamat_konsumen, po.toko";
 $sql.=" FROM penjualan_order po INNER JOIN pelanggan pl ON po.kode_pelanggan = pl.id INNER JOIN toko t ON po.toko = t.id WHERE po.status_order = 'Diorder' AND 1=1 ";
 
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
@@ -61,9 +61,11 @@ $data = array();
 while( $row=mysqli_fetch_array($query) ) {  // preparing an array
   $nestedData=array(); 
 
+    $query_pelanggan = $db->query("SELECT kode_pelanggan FROM pelanggan WHERE id = '$row[kode_pelanggan]'");
+    $data_pelanggan = mysqli_fetch_array($query_pelanggan);
 
     $nestedData[] = $row['no_faktur_order'];
-    $nestedData[] = $row['kode_pelanggan'] ." - ".$row['nama_pelanggan'];
+    $nestedData[] = $data_pelanggan['kode_pelanggan'] ." - ".$row['nama_pelanggan'];
     $nestedData[] = $row['nama_toko'];
     $nestedData[] = $row['nama_konsumen'];
     $nestedData[] = $row['tanggal'];
@@ -72,6 +74,8 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData[] = $row['keterangan'];
     $nestedData[] = $row['user'];
     $nestedData[] = $row['alamat_konsumen'];
+    $nestedData[] = $data_pelanggan['kode_pelanggan'];
+    $nestedData[] = $row['toko'];
     $nestedData[] = $row['id'];
 
 

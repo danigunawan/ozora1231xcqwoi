@@ -970,6 +970,8 @@ $(document).ready(function(){
               $(nRow).attr('data-total', aData[6]);
               $(nRow).attr('data-konsumen', aData[3]);
               $(nRow).attr('data-alamat', aData[9]);
+              $(nRow).attr('data-market', aData[10]);
+              $(nRow).attr('data-toko', aData[11]);
 
           },
         });
@@ -988,6 +990,12 @@ $(document).ready(function(){
 
     document.getElementById("nama_konsumen").value = $(this).attr('data-konsumen');
     document.getElementById("alamat_konsumen").value = $(this).attr('data-alamat');
+
+    document.getElementById("kd_pelanggan").value = $(this).attr('data-market');
+    $("#kd_pelanggan").trigger("chosen:updated");
+    
+    document.getElementById("kode_toko").value = $(this).attr('data-toko');
+    $("#kode_toko").trigger("chosen:updated");
 
     $.post("ambil_order_penjualan.php",{no_faktur_order:$(this).attr('data-order')},function(data){
 
