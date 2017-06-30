@@ -724,13 +724,13 @@ Order Penjualan</button>
 
           <div class="col-sm-6">
               <div class="form-group">
-                  <input type="text" style="height:46px" value="<?php echo "$nama_konsumen"; ?>" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">
+                  <input type="text" style="height:46px" value="<?php echo "$nama_konsumen"; ?>" name="nama_konsumen" id="nama_konsumen" readonly="" class="form-control" placeholder="Nama Konsumen">
               </div>
           </div>
 
           <div class="col-sm-6">
               <div class="form-group">
-                  <input type="text" style="height:46px" value="<?php echo "$alamat_konsumen"; ?>" name="alamat_konsumen" id="alamat_konsumen" class="form-control" placeholder="Alamat Konsumen">
+                  <input type="text" style="height:46px" value="<?php echo "$alamat_konsumen"; ?>" name="alamat_konsumen" id="alamat_konsumen" readonly="" class="form-control" placeholder="Alamat Konsumen">
               </div>
           </div>
 
