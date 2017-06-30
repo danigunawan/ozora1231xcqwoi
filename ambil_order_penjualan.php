@@ -54,7 +54,7 @@ else{
 }
 
 
-$update_status_order = $db->query("UPDATE penjualan_order SET status_order = 'Masuk TBS' WHERE no_faktur_order = '$no_faktur' ");
+$update_status_order = $db->query("UPDATE penjualan_order SET status_order = 'Diproses' WHERE no_faktur_order = '$no_faktur' ");
 $update_tbs_fee = $db->query("UPDATE tbs_fee_produk SET session_id = '$session_id' WHERE no_faktur_order = '$no_faktur' ");
 
 ?>
