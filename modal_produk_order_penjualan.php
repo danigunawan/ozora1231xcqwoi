@@ -34,7 +34,7 @@ $columns = array(
 // getting total number records without any search
 $sql = "SELECT s.nama,b.kode_barang,b.nama_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.harga_jual3,b.kategori,b.status,b.suplier,b.limit_stok,b.satuan,b.id,b.berkaitan_dgn_stok";
 $sql.=" FROM barang b LEFT JOIN satuan s ON b.satuan = s.id ";
-$sql.=" ";
+$sql.=" WHERE b.status = 'Aktif'";
 
 $query = mysqli_query($conn, $sql) or die("eror 1");
 $totalData = mysqli_num_rows($query);
@@ -43,7 +43,7 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 $sql = "SELECT s.nama,b.kode_barang,b.nama_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.harga_jual3,b.kategori,b.status,b.suplier,b.limit_stok,b.satuan,b.id,b.berkaitan_dgn_stok";
 $sql.=" FROM barang b LEFT JOIN satuan s ON b.satuan = s.id ";
-$sql.=" WHERE 1=1";
+$sql.=" WHERE b.status = 'Aktif'";
 
     $sql.=" AND ( b.kode_barang LIKE '".$requestData['search']['value']."%'";  
     $sql.=" OR b.nama_barang LIKE '".$requestData['search']['value']."%' ";
