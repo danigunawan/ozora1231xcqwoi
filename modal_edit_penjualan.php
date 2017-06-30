@@ -38,7 +38,7 @@ $columns = array(
 // getting total number records without any search
 $sql = "SELECT b.status,s.nama AS nama_satuan ,b.id ,b.limit_stok ,b.kategori ,b.berkaitan_dgn_stok ,b.kode_barang ,b.nama_barang ,b.harga_beli ,b.harga_jual ,b.harga_jual2 ,b.harga_jual3 ,b.satuan ,b.suplier ";
 $sql.=" FROM barang b INNER JOIN satuan s ON b.satuan = s.id ";
-$sql.=" ";
+$sql.=" WHERE b.status = 'Aktif'";
 
 $query = mysqli_query($conn, $sql) or die("eror 1");
 $totalData = mysqli_num_rows($query);
@@ -47,7 +47,7 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 $sql = "SELECT b.status,s.nama AS nama_satuan ,b.id ,b.limit_stok ,b.kategori ,b.berkaitan_dgn_stok ,b.kode_barang ,b.nama_barang ,b.harga_beli ,b.harga_jual ,b.harga_jual2 ,b.harga_jual3 ,b.satuan ,b.suplier ";
 $sql.=" FROM barang b INNER JOIN satuan s ON b.satuan = s.id ";
-$sql.=" WHERE 1=1 ";
+$sql.=" WHERE b.status = 'Aktif' ";
 
 
 

@@ -35,14 +35,14 @@ $columns = array(
 if ($tipe == 'barang') {
     if ($kategori == 'semua' AND $tipe = 'barang') {
 
-        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang";
+        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang, b.id_varian_warna, b.id_varian_ukuran";
         $sql.=" FROM barang b INNER JOIN satuan s ON b.satuan = s.id WHERE b.berkaitan_dgn_stok = '$tipe' ";
 
 
     }
 
     else{
-        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang";
+        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang, b.id_varian_warna, b.id_varian_ukuran";
         $sql.=" FROM barang b INNER JOIN satuan s ON b.satuan = s.id WHERE b.kategori = '$kategori' AND b.berkaitan_dgn_stok = '$tipe' ";
     }
 
@@ -51,13 +51,13 @@ if ($tipe == 'barang') {
 else
 {
     if ($kategori == 'semua') {
-        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang";
+        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang, b.id_varian_warna, b.id_varian_ukuran";
         $sql.=" FROM barang b INNER JOIN satuan s ON b.satuan = s.id";
     
     }
     
     else{
-        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang";
+        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang, b.id_varian_warna, b.id_varian_ukuran";
         $sql.=" FROM barang b INNER JOIN satuan s ON b.satuan = s.id WHERE b.kategori = '$kategori'";
     }
 }
@@ -69,14 +69,14 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 if ($tipe == 'barang') {
     if ($kategori == 'semua' AND $tipe = 'barang') {
 
-        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang";
+        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang, b.id_varian_warna, b.id_varian_ukuran";
         $sql.=" FROM barang b INNER JOIN satuan s ON b.satuan = s.id WHERE 1=1 AND b.berkaitan_dgn_stok = '$tipe' ";
 
 
     }
 
     else{
-        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang";
+        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang, b.id_varian_warna, b.id_varian_ukuran";
         $sql.=" FROM barang b INNER JOIN satuan s ON b.satuan = s.id";
         $sql.="WHERE 1=1 AND b.kategori = '$kategori' AND b.berkaitan_dgn_stok = '$tipe' ";
     }
@@ -86,13 +86,13 @@ if ($tipe == 'barang') {
 else
 {
     if ($kategori == 'semua') {
-        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang";
+        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang, b.id_varian_warna, b.id_varian_ukuran";
         $sql.=" FROM barang b INNER JOIN satuan s ON b.satuan = s.id";
     
     }
     
     else{
-        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang";
+        $sql = "SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang, b.id_varian_warna, b.id_varian_ukuran";
         $sql.=" FROM barang b INNER JOIN satuan s ON b.satuan = s.id WHERE 1=1 AND b.kategori = '$kategori'";
     }
 }
@@ -211,7 +211,13 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 
     $nestedData[] = $row["kode_barang"];
     $nestedData[] = $row["nama_barang"];
-       $nestedData[] = "<a href='tambah_varian_barang.php?id=". $row['id']."' class='btn btn-primary' target='blank'>Tambah Varian</a>";
+
+if ($row['id_varian_ukuran'] == "" AND $row['id_varian_warna'] == "") {
+    $nestedData[] = "<a href='tambah_varian_barang.php?id=". $row['id']."' class='btn btn-primary' target='blank'> Varian</a>";
+ }
+ else{
+    $nestedData[] = "";
+ }
 
     $nestedData[] = "<p style='font-size:15px' align='right' class='edit-beli' data-id='".$row['id']."'> <span id='text-beli-".$row['id']."'>".rp($row["harga_beli"])."</span> <input type='hidden' id='input-beli-".$row['id']."' value='".$row['harga_beli']."' class='input_beli' data-jual-1='".$row['harga_jual']."'  data-berstok='".$row['berkaitan_dgn_stok']."'  data-id='".$row['id']."' data-kode='".$row['kode_barang']."' autofocus=''> </p>";
 

@@ -18,7 +18,7 @@ include 'cache_folder/cache.class.php';
 
 
 
-$query = $db->query("SELECT * FROM barang ");
+$query = $db->query("SELECT * FROM barang WHERE status = 'Aktif'");
 while ($data = $query->fetch_array()) {
  # code...
     // store an array
