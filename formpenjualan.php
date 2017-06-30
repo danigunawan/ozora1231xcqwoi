@@ -989,13 +989,16 @@ $(document).ready(function(){
   $(document).on('click', '.pilih_order', function (e) {
 
     document.getElementById("nama_konsumen").value = $(this).attr('data-konsumen');
+    $('#nama_konsumen').attr('readonly', true);
+
     document.getElementById("alamat_konsumen").value = $(this).attr('data-alamat');
+    $('#alamat_konsumen').attr('readonly', true);
 
     document.getElementById("kd_pelanggan").value = $(this).attr('data-market');
-    $("#kd_pelanggan").trigger("chosen:updated");
+    $('#kd_pelanggan').prop('disabled', true).trigger("chosen:updated");
     
     document.getElementById("kode_toko").value = $(this).attr('data-toko');
-    $("#kode_toko").trigger("chosen:updated");
+    $('#kode_toko').prop('disabled', true).trigger("chosen:updated");
 
     $.post("ambil_order_penjualan.php",{no_faktur_order:$(this).attr('data-order')},function(data){
 
