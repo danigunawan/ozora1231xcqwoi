@@ -25,13 +25,17 @@ include 'sanitasi.php';
 
     $jumlah_bayar_lama = $jumlah_bayar + $potongan_piutang;
 
-    $query_penjualan = $db->query("SELECT potongan, tax, ppn, total,potongan_persen, tanggal, kode_ekspedisi, sales FROM penjualan WHERE no_faktur = '$nomor_faktur'");
+    $query_penjualan = $db->query("SELECT potongan, tax, ppn, total,potongan_persen, tanggal, kode_ekspedisi, sales, tanggal_jt, tunai, sisa, nama_konsumen, alamat_konsumen FROM penjualan WHERE no_faktur = '$nomor_faktur'");
     $data_penjualan = mysqli_fetch_array($query_penjualan);
     $potongan = $data_penjualan['potongan'];
     $ppn = $data_penjualan['ppn'];
     $tax = $data_penjualan['tax'];
     $total_akhir = $data_penjualan['total'];
 
+    $tanggal_jt = $data_penjualan['tanggal_jt'];
+
+
+    $tunai = $data_penjualan['tunai'];
 
     $data_potongan_persen = $db->query("SELECT SUM(subtotal) AS subtotal FROM detail_penjualan WHERE no_faktur = '$nomor_faktur'");
     $data_penjualan_persen = mysqli_fetch_array($data_potongan_persen);
@@ -652,7 +656,7 @@ Order Penjualan</button>
 
           <div class="form-group col-sm-6">
           <label> Tanggal Jatuh Tempo </label><br>
-          <input type="text" name="tanggal_jt" id="tanggal_jt" style="height:15px;font-size:15px"  value="" class="form-control tanggal" >
+          <input type="text" name="tanggal_jt" id="tanggal_jt" style="height:15px;font-size:15px" value=" <?php echo $tanggal_jt ?>" class="form-control tanggal" >
           </div>
 
            <div class="col-sm-6">
@@ -698,7 +702,7 @@ Order Penjualan</button>
 
           <div class="col-sm-6">
              <label> Pembayaran </label><br>
-          <b><input type="text" name="pembayaran" id="pembayaran_penjualan" style="height: 50px; width:90%; font-size:25px;" autocomplete="off" class="form-control"   style="font-size: 20px"  onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);"></b>
+          <b><input type="text" name="pembayaran" id="pembayaran_penjualan" style="height: 50px; width:90%; font-size:25px;" value="<?php echo $tunai ?>" autocomplete="off" class="form-control"   style="font-size: 20px"  onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);"></b>
           </div>
                    
 </div>
@@ -3083,6 +3087,28 @@ if (ber_stok == 'Barang') {
 </script>
 
 
+<script type="text/javascript">
+$(document).ready(function(){
+  var pembayaran = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#pembayaran_penjualan").val() ))));
+  var total =  bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah( $("#total1").val() ))));
+  var sisa = pembayaran - total;
+  var sisa_kredit = total - pembayaran;
+
+  if (sisa < 0 ){
+    
+    $("#kredit").val( tandaPemisahTitik(sisa_kredit));
+    $("#sisa_pembayaran_penjualan").val('0');
+    $("#tanggal_jt").attr("disabled", false);
+        
+  }
+  else{
+    $("#sisa_pembayaran_penjualan").val(tandaPemisahTitik(sisa));
+    $("#kredit").val('0');
+    $("#tanggal_jt").attr("disabled", true);
+  } 
+            
+});
+</script>
 
 <!-- memasukan file footer.php -->
 <?php include 'footer.php'; ?>
