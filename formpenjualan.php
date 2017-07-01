@@ -223,7 +223,7 @@ $session_id = session_id();
 
 
 <!--tampilan modal-->
-<div id="myModal" class="modal fade" role="dialog">
+<div id="myModal" class="modal" role="dialog">
   <div class="modal-dialog ">
 
     <!-- isi modal-->
@@ -267,7 +267,7 @@ $session_id = session_id();
 
 
 <!--MULAI MODAL ORDER -->
-<div id="modal_order" class="modal fade" role="dialog">
+<div id="modal_order" class="modal" role="dialog">
   <div class="modal-dialog modal-lg">
     <!-- isi modal-->
     <div class="modal-content">
@@ -336,7 +336,7 @@ $session_id = session_id();
 </div><!-- end of modal hapus data  -->
 
 <!-- Modal edit data -->
-<div id="modal_edit" class="modal fade" role="dialog">
+<div id="modal_edit" class="modal" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
