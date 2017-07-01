@@ -10,9 +10,10 @@
 
     $session_id = session_id();
 
-    $query_default_ppn = $db->query("SELECT setting_ppn FROM perusahaan");
-    $data_default_ppn = mysqli_fetch_array($query_default_ppn);
-    $default_ppn = $data_default_ppn['setting_ppn'];
+$query_default_ppn = $db->query("SELECT setting_ppn, nilai_ppn FROM perusahaan");
+$data_default_ppn = mysqli_fetch_array($query_default_ppn);
+$default_ppn = $data_default_ppn['setting_ppn'];
+$nilai_ppn = $data_default_ppn['nilai_ppn'];
 
 ?>
 
@@ -77,28 +78,28 @@
                   ?>
                 </select> 
 
-            <div class="col-sm-3">
-              <label class="gg">PPN</label>
-              <select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control chosen">
-                <?php if ($default_ppn == 'Include'): ?>    
-                  <option>Include</option>  
-                  <option>Exclude</option>  
-                  <option>Non</option>
-                <?php endif ?>
+<div class="col-sm-3">
+<label class="gg">PPN</label>
+<select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control chosen">
+  <?php if ($default_ppn == 'Include'): ?>    
+    <option selected>Include</option>  
+    <option>Exclude</option>  
+    <option>Non</option>
+  <?php endif ?>
 
-                <?php if ($default_ppn == 'Exclude'): ?>
-                  <option>Exclude</option>  
-                  <option>Non</option>
-                  <option>Include</option>  
-                <?php endif ?>
+  <?php if ($default_ppn == 'Exclude'): ?>
+    <option selected>Exclude</option>  
+    <option>Non</option>
+    <option>Include</option>  
+  <?php endif ?>
 
-                <?php if ($default_ppn == 'Non'): ?>
-                  <option>Non</option>
-                  <option>Include</option>  
-                  <option>Exclude</option>  
-                <?php endif ?>
-              </select>
-            </div>
+  <?php if ($default_ppn == 'Non'): ?>
+    <option selected>Non</option>
+    <option>Include</option>  
+    <option>Exclude</option>  
+  <?php endif ?>
+</select>
+</div>
 
         </div> <!-- END ROW KOLOM SUPLIER -->
     
@@ -273,9 +274,13 @@
         <input  style="height:20px" type="text" class="form-control" name="potongan" autocomplete="off" id="potongan1" data-toggle="tooltip" data-placement="top" title="Jika Ingin Potongan Dalam Bentuk Persen (%), input : 10%" placeholder="Disc." >
       </div>
         
-      <div class="col-sm-2" style="width:90px">
-        <input  style="height:20px" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" placeholder="Pajak %" >
-      </div>
+  <div class="col-sm-1">
+    <?php if ($default_ppn == 'Include'): ?>
+      <input style="height:20px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" value="<?php echo $nilai_ppn ?>" placeholder="Tax%" >
+    <?php else: ?>
+      <input style="height:20px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" placeholder="Tax%" >
+    <?php endif ?>      
+  </div>
 
       <div class="col-sm-3">
         <button type="submit" id="submit_produk" class="btn btn-success"><i class='fa fa-plus'></i> Tambah (F3) </button>
@@ -357,7 +362,11 @@
         </div>
         <div class="col-sm-6">          
           <label> Tax ( % )</label><br>
-            <input type="text" name="tax" id="tax" class="form-control" style="height:15px;font-size:15px" autocomplete="off" data-pajak="" placeholder="" >
+          <?php if ($default_ppn == 'Exclude'): ?>
+            <input type="text" name="tax" id="tax" style="height:10px;font-size:15px" value="<?php echo $nilai_ppn ?>" style="height:10px;font-size:15px" class="form-control" autocomplete="off" >
+          <?php else: ?>
+            <input type="text" name="tax" id="tax" style="height:10px;font-size:15px" style="height:10px;font-size:15px" class="form-control" autocomplete="off" >
+          <?php endif ?> 
         </div>
       </div>
 
@@ -665,7 +674,7 @@
 
      $("#jumlah_barang").val(''); 
      $("#potongan1").val('');   
-     $("#tax1").val('');
+     
      $("#nama_barang").val('');
      $("#kode_barang").val('');
      $("#kode_barang").trigger('chosen:updated');
@@ -1713,6 +1722,7 @@ $.post('cek_kode_barang_tbs_pembelian.php',{kode_barang:kode_barang,session_id:s
 </script>
 
 
+
 <script type="text/javascript">
   $(document).ready(function(){
 
@@ -1744,14 +1754,20 @@ $.post('cek_kode_barang_tbs_pembelian.php',{kode_barang:kode_barang,session_id:s
       if (ppn == "Include"){
           $("#tax").attr("disabled", true);
           $("#tax1").attr("disabled", false);
+          $("#tax").val("");
+          $("#tax1").val("<?php echo $nilai_ppn ?>");
       }
       else if (ppn == "Exclude") {
         $("#tax1").attr("disabled", true);
         $("#tax").attr("disabled", false);
+        $("#tax1").val("");
+        $("#tax").val("<?php echo $nilai_ppn ?>");
       }
       else{
         $("#tax1").attr("disabled", true);
         $("#tax").attr("disabled", true);
+        $("#tax1").val("");
+        $("#tax").val("");
       }
     });
 

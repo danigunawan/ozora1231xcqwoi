@@ -24,7 +24,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 
 <h3><b> DATA PERUSAHAAN </b></h3><hr>
 <div class="table-responsive">
-<table id="tableuser" class="table table-bordered">
+<table id="tableuser" class="table table-bordered btn-sm">
 		<thead>
 			<th style='background-color: #4CAF50; color: white'> Nama Perusahaan</th>
 			<th style='background-color: #4CAF50; color: white'> Alamat Perusahaan</th>
@@ -33,6 +33,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 			<th style='background-color: #4CAF50; color: white'> Nomor Telepon </th>
 			<th style='background-color: #4CAF50; color: white'> Nomor Fax </th>
 			<th style='background-color: #4CAF50; color: white'> Setting PPN </th>
+			<th style='background-color: #4CAF50; color: white'> Pajak (%)</th>
 
 <?php
 include 'db.php';
@@ -84,6 +85,8 @@ $perusahaan_edit = mysqli_num_rows($pilih_akses_perusahaan_edit);
 				echo '<option>Include</option>';
 				echo '<option>Exclude</option>';
 			}
+
+				echo "<td style='font-size:15px;cursor:pointer;' align='left' class='edit-nilai' data-id='".$data1['id']."' > <span id='text-jumlah-".$data1['id']."'>".$data1['nilai_ppn']."</span> <input type='hidden' id='input-jumlah-".$data1['id']."' value='".$data1['nilai_ppn']."' class='input_jumlah_jual' data-id='".$data1['id']."' autofocus=''> </td>";
 
 include 'db.php';
 
@@ -146,6 +149,31 @@ $(document).ready(function(){
 			$("#select-ppn-"+id+"").hide();           
 
 		});
+	});
+</script>
+
+<script type="text/javascript">
+	$(document).on('dblclick','.edit-nilai',function(e){
+		var id = $(this).attr("data-id");
+
+        $("#text-jumlah-"+id+"").hide();
+        $("#input-jumlah-"+id+"").attr('type','text');
+
+    });
+
+	$(document).on('blur','.input_jumlah_jual',function(e){
+
+                                    var id = $(this).attr("data-id");
+                                    var input_tampil = $(this).val();
+
+
+                                    $.post("update_nilai_ppn.php",{id:id,input_tampil:input_tampil},function(data){
+                                    
+                                    $("#text-jumlah-"+id+"").show();
+                                    $("#text-jumlah-"+id+"").text(input_tampil);
+                                    $("#input-jumlah-"+id+"").attr("type", "hidden"); 
+
+                                    });
 	});
 </script>
 

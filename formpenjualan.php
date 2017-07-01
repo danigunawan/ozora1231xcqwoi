@@ -10,9 +10,10 @@ include 'sanitasi.php';
 $pilih_akses_kolom = $db->query("SELECT harga_produk_penjualan FROM otoritas_penjualan WHERE id_otoritas = '$_SESSION[otoritas_id]' ");
 $otoritas_kolom = mysqli_fetch_array($pilih_akses_kolom);
 
-$query_default_ppn = $db->query("SELECT setting_ppn FROM perusahaan");
+$query_default_ppn = $db->query("SELECT setting_ppn, nilai_ppn FROM perusahaan");
 $data_default_ppn = mysqli_fetch_array($query_default_ppn);
 $default_ppn = $data_default_ppn['setting_ppn'];
+$nilai_ppn = $data_default_ppn['nilai_ppn'];
 
 $session_id = session_id();
  ?>
@@ -180,25 +181,24 @@ $session_id = session_id();
 <label class="gg">PPN</label>
 <select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control chosen">
   <?php if ($default_ppn == 'Include'): ?>    
-    <option>Include</option>  
+    <option selected>Include</option>  
     <option>Exclude</option>  
     <option>Non</option>
   <?php endif ?>
 
   <?php if ($default_ppn == 'Exclude'): ?>
-    <option>Exclude</option>  
+    <option selected>Exclude</option>  
     <option>Non</option>
     <option>Include</option>  
   <?php endif ?>
 
   <?php if ($default_ppn == 'Non'): ?>
-    <option>Non</option>
+    <option selected>Non</option>
     <option>Include</option>  
     <option>Exclude</option>  
   <?php endif ?>
 </select>
 </div>
-
         <div class="col-sm-2">
           <br><label class="gg">Nama Konsumen</label>
           <input type="text" style="height:20px" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">              
@@ -507,8 +507,12 @@ $session_id = session_id();
     <input style="height:15px;" type="text" class="form-control" name="potongan" autocomplete="off" id="potongan1" data-toggle="tooltip" data-placement="top" title="Jika Ingin Potongan Dalam Bentuk Persen (%), input : 10%" placeholder="Disc.">
   </div>
 
-   <div class="col-sm-1">
-    <input style="height:15px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" placeholder="Tax%" >
+  <div class="col-sm-1">
+    <?php if ($default_ppn == 'Include'): ?>
+      <input style="height:15px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" value="<?php echo $nilai_ppn ?>" placeholder="Tax%" >
+    <?php else: ?>
+      <input style="height:15px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" placeholder="Tax%" >
+    <?php endif ?>      
   </div>
 
   <div class="col-sm-2">
@@ -687,7 +691,12 @@ tr:nth-child(even){background-color: #f2f2f2}
 
 
            <label> Pajak (%)</label>
-           <input type="text" name="tax" id="tax" style="height:10px;font-size:15px" value="<?php echo $data_diskon['tax']; ?>" style="height:10px;font-size:15px" class="form-control" autocomplete="off" >
+      
+          <?php if ($default_ppn == 'Exclude'): ?>
+            <input type="text" name="tax" id="tax" style="height:10px;font-size:15px" value="<?php echo $nilai_ppn ?>" style="height:10px;font-size:15px" class="form-control" autocomplete="off" >
+          <?php else: ?>
+            <input type="text" name="tax" id="tax" style="height:10px;font-size:15px" style="height:10px;font-size:15px" class="form-control" autocomplete="off" >
+          <?php endif ?> 
 
            </div>
 
@@ -1461,7 +1470,7 @@ $(document).ready(function(){
    $("#jumlah_barang").val('');
    $("#kode_barcode").val('');
    $("#potongan1").val('');
-   $("#tax1").val('');
+   
 
 $.get("cek_barang.php",{kode_barang:kode_barang},function(data){
 if (data != 1) {
@@ -1483,7 +1492,7 @@ $.post("barcode.php",{kode_barang:kode_barang,sales:sales,level_harga:level_harg
         $("#ber_stok").val('');
         $("#jumlah_barang").val('');
         $("#potongan1").val('');
-        $("#tax1").val('');
+        
       
     var tabel_tbs_penjualan = $('#tabel_tbs_penjualan').DataTable();
         tabel_tbs_penjualan.draw();
@@ -1715,7 +1724,7 @@ var subtotal = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah(data))));
     
      $("#jumlah_barang").val('');
      $("#potongan1").val('');
-     $("#tax1").val('');
+     
 
 
 
@@ -1765,7 +1774,7 @@ var subtotal = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah(data))));
      $("#ber_stok").val('');
      $("#jumlah_barang").val('');
      $("#potongan1").val('');
-     $("#tax1").val('');
+     
      
      });
 
@@ -1798,7 +1807,7 @@ var subtotal = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah(data))));
       $("#ber_stok").val('');
       $("#jumlah_barang").val('');
       $("#potongan1").val('');
-      $("#tax1").val('');
+      
 
     var tabel_tbs_penjualan = $('#tabel_tbs_penjualan').DataTable();
         tabel_tbs_penjualan.draw();
@@ -3752,14 +3761,20 @@ $(document).ready(function(){
       if (ppn == "Include"){
           $("#tax").attr("disabled", true);
           $("#tax1").attr("disabled", false);
+          $("#tax").val("");
+          $("#tax1").val("<?php echo $nilai_ppn ?>");
       }
       else if (ppn == "Exclude") {
         $("#tax1").attr("disabled", true);
         $("#tax").attr("disabled", false);
+        $("#tax1").val("");
+        $("#tax").val("<?php echo $nilai_ppn ?>");
       }
       else{
         $("#tax1").attr("disabled", true);
         $("#tax").attr("disabled", true);
+        $("#tax1").val("");
+        $("#tax").val("");
       }
     });
 
