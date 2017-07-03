@@ -147,7 +147,7 @@ $session_id = session_id();
 
 
 <div class="col-sm-2">
-<label class="gg" >Admin</label>
+<label >Admin</label><br>
 <select style="font-size:15px; height:35px" name="sales" id="sales" class="form-control chosen" required="">
 
   <?php 
@@ -178,7 +178,7 @@ $session_id = session_id();
 </div>
 
 <div class="col-sm-2">
-<label class="gg">PPN</label>
+<label>PPN</label><br>
 <select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control chosen">
   <?php if ($default_ppn == 'Include'): ?>    
     <option selected>Include</option>  
