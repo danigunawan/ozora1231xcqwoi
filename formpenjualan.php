@@ -654,7 +654,7 @@ tr:nth-child(even){background-color: #f2f2f2}
       
 
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
           
            <label style="font-size:15px"> <b> Subtotal </b></label><br>
       <input style="height:10px;font-size:15px" type="text" name="total" id="total2" class="form-control" placeholder="Total" readonly="" >
@@ -667,13 +667,6 @@ tr:nth-child(even){background-color: #f2f2f2}
 
                   ?>
 
-         <div class="col-sm-6">
-
-
-          <label> Diskon ( Rp )</label><br>
-          <input type="text" name="potongan" style="height:10px;font-size:15px" id="potongan_penjualan" value="<?php echo $data_diskon['diskon_nominal']; ?>" class="form-control" placeholder="" autocomplete="off"  onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
-            
-          </div>
 
 
       </div>
@@ -682,12 +675,20 @@ tr:nth-child(even){background-color: #f2f2f2}
           
           <div class="row">
 
+         <div class="col-sm-6">
+
+
+          <label> Diskon ( Rp )</label><br>
+          <input type="text" name="potongan" style="height:10px;font-size:15px" id="potongan_penjualan" value="<?php echo $data_diskon['diskon_nominal']; ?>" class="form-control" placeholder="" autocomplete="off"  onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
+            
+          </div>
+
           <div class="col-sm-6">
             <label> Diskon ( % )</label><br>
           <input type="text" name="potongan_persen" style="height:10px;font-size:15px" id="potongan_persen" value="<?php echo $data_diskon['diskon_persen']; ?>" class="form-control" placeholder="" autocomplete="off" >
           </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-6" style="display: none">
 
 
            <label> Pajak (%)</label>
@@ -3768,7 +3769,6 @@ $(document).ready(function(){
         $("#tax1").attr("disabled", true);
         $("#tax").attr("disabled", false);
         $("#tax1").val("");
-        $("#tax").val("<?php echo $nilai_ppn ?>");
       }
       else{
         $("#tax1").attr("disabled", true);
