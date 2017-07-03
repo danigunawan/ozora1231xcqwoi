@@ -25,8 +25,6 @@ include 'db.php';
 
     $jml_dibayar = $t_subtotal - $data0['potongan'];
 
-    $ambil_footer = $db->query("SELECT keterangan, petugas FROM setting_footer_cetak");
-    $data_footer = mysqli_fetch_array($ambil_footer);
 
     $ubah_tanggal = $data0['tanggal'];
     $tanggal = date('d F Y', strtotime($ubah_tanggal));
@@ -262,12 +260,12 @@ include 'db.php';
 
    <div class="col-sm-9">
      <font class="satu">
-     <?php echo $data_footer['keterangan'] ?>
+     
      </font>
    </div>
 
    <div class="col-sm-3">    
-      <font class="satu"><b> <center>Hormat Kami,</center> <br><br><br> <font class="satu"> <center>(<?php echo $data_footer['petugas']; ?>)</center></font></b></font>
+      <font class="satu"><b> <center>Hormat Kami,</center> <br><br><br> <font class="satu"> <center>(<?php echo $_SESSION['nama']; ?>)</center></font></b></font>
   </div>
 
 </div> <!--/container-->
