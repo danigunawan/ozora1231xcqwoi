@@ -15,7 +15,7 @@ $no_faktur = $_GET['no_faktur'];
     $query_perusahaan = $db->query("SELECT nama_perusahaan, alamat_perusahaan, no_telp FROM perusahaan ");
     $data_perusahaan = mysqli_fetch_array($query_perusahaan);
 
-    $query_detail_order = $db->query("SELECT * FROM detail_penjualan_order WHERE no_faktur_order = '$no_faktur' ");
+    $query_detail_order = $db->query("SELECT nama_barang,jumlah_barang,harga,subtotal FROM detail_penjualan_order WHERE no_faktur_order = '$no_faktur' ");
 
     $query_sum = $db->query("SELECT SUM(jumlah_barang) as total_item FROM detail_penjualan_order WHERE no_faktur_order = '$no_faktur'");
     $data_sum = mysqli_fetch_array($query_sum);

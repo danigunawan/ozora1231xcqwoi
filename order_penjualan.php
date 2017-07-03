@@ -164,6 +164,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 			echo "<th style='background-color: #4CAF50; color:white'> Hapus </th>";
 		}
 ?>
+      <th style='background-color: #4CAF50; color:white'> Cetak </th>
 			<th style='background-color: #4CAF50; color:white'> Detail </th>
 			<th style='background-color: #4CAF50; color:white'> Nomor Faktur </th>
       <th style='background-color: #4CAF50; color:white'> Toko </th>
@@ -207,7 +208,7 @@ tr:nth-child(even){background-color: #f2f2f2}
         },
             
             "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-                $(nRow).attr('class','tr-id-'+aData[13]+'');
+                $(nRow).attr('class','tr-id-'+aData[14]+'');
             },
         });
 
