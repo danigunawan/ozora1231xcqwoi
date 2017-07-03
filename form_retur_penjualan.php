@@ -299,20 +299,20 @@ $nilai_ppn = $data_default_ppn['nilai_ppn'];
       </div>
         
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <label> <b> Potongan (Rp) </b> </label><br>
             <input type="text" name="potongan" id="potongan_pembelian" class="form-control" data-diskon="" placeholder="Potongan" autocomplete="off"style="height: 25px" >
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <label> <b> Potongan (%) </b> </label><br>
             <input type="text" name="potongan_persen" id="potongan_persen" class="form-control" data-diskon="" placeholder="Potongan" autocomplete="off"style="height: 25px" >
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-4" style="display: none">
             <label> <b> Tax </b> </label><br>
-              <?php if ($default_ppn == 'Include'): ?>
-                <input style="height:15px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" value="<?php echo $nilai_ppn ?>" placeholder="Tax%" >
+              <?php if ($default_ppn == 'Exclude'): ?>
+                <input style="height:15px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax" value="<?php echo $nilai_ppn ?>" placeholder="Tax%" >
               <?php else: ?>
-                <input style="height:15px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" placeholder="Tax%" >
+                <input style="height:15px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax" placeholder="Tax%" >
               <?php endif ?>
         </div>
       </div>

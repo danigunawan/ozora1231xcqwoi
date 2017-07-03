@@ -312,6 +312,8 @@ $session_id = session_id();
 
   <div class="col-sm-4"> <!--tag pembuka col sm 4-->
 
+<div class="card card-block">
+
   <form action="proses_bayar_retur_beli.php" id="form_beli" method="POST"><!--tag pembuka form-->
 
 <div class="row">
@@ -328,19 +330,19 @@ $session_id = session_id();
 </div>
            
 <div class="row">
-  <div class="col-sm-4">
+  <div class="col-sm-6">
       <label><b> Potongan (Rp) </b></label><br>
       <input style="height: 20px" type="text" name="potongan" id="potongan_pembelian" class="form-control" data-diskon="" placeholder="Potongan" autocomplete="off">
   </div>
 
 
-  <div class="col-sm-4">
+  <div class="col-sm-6">
       <label><b> Potongan (%) </b></label><br>
       <input style="height: 20px" type="text" name="potongan_persen" id="potongan_persen" class="form-control" data-diskon="" placeholder="Potongan" autocomplete="off">
   </div>
 
 
-  <div class="col-sm-4">
+  <div class="col-sm-4" style="display: none">
       <label><b> Tax (%) </b></label><br>
       <input style="height: 20px" type="text" name="tax" id="tax" class="form-control" placeholder="Tax" data-pajak="" autocomplete="off">
   </div>
@@ -391,6 +393,7 @@ $session_id = session_id();
   <strong>Success!</strong> Pembayaran Berhasil
 </div>
   </div><!-- end of col sm 4 -->
+  </div>
 </div><!-- end of row -->
 
 			
@@ -1438,7 +1441,6 @@ $(document).on('click','.btn-hapus-tbs',function(e){
         $("#tax1").attr("disabled", true);
         $("#tax").attr("disabled", false);
         $("#tax1").val("");
-        $("#tax").val("<?php echo $nilai_ppn ?>");
       }
       else{
         $("#tax1").attr("disabled", true);

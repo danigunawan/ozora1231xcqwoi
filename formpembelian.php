@@ -344,23 +344,24 @@ $nilai_ppn = $data_default_ppn['nilai_ppn'];
   <div class="card card-block" style="width:80%; ">
 
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
           <b><label> Subtotal</label><br>
               <input type="text" name="total" id="total_pembelian1" class="form-control" placeholder="" readonly="" style="font-size: 20px; height: 15px" ></b>        
-        </div>
-        <div class="col-sm-6">
-           <label> Potongan ( Rp ) </label><br>
-            <input type="text" name="potongan" id="potongan_pembelian" data-diskon="" style="height:15px;font-size:15px" class="form-control" autocomplete="off" placeholder=" ">
         </div>
       </div>
 
       <div class="row">
      
         <div class="col-sm-6">
+           <label> Potongan ( Rp ) </label><br>
+            <input type="text" name="potongan" id="potongan_pembelian" data-diskon="" style="height:15px;font-size:15px" class="form-control" autocomplete="off" placeholder=" ">
+        </div>
+
+        <div class="col-sm-6">
           <label> Potongan ( % ) </label><br>
             <input type="text" name="potongan_persen" id="potongan_persen" style="height:15px;font-size:15px" class="form-control" autocomplete="off" placeholder="">
         </div>
-        <div class="col-sm-6">          
+        <div class="col-sm-6" style="display: none">          
           <label> Tax ( % )</label><br>
           <?php if ($default_ppn == 'Exclude'): ?>
             <input type="text" name="tax" id="tax" style="height:10px;font-size:15px" value="<?php echo $nilai_ppn ?>" style="height:10px;font-size:15px" class="form-control" autocomplete="off" >
@@ -1761,7 +1762,6 @@ $.post('cek_kode_barang_tbs_pembelian.php',{kode_barang:kode_barang,session_id:s
         $("#tax1").attr("disabled", true);
         $("#tax").attr("disabled", false);
         $("#tax1").val("");
-        $("#tax").val("<?php echo $nilai_ppn ?>");
       }
       else{
         $("#tax1").attr("disabled", true);
