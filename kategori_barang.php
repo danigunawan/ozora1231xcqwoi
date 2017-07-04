@@ -202,13 +202,15 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
     if (data != '') {
     $("#nama_kategori").val('');
     $(".alert").show('fast');
-    
+
+     var tabel_kategori = $('#tabel_kategori').DataTable();
+        tabel_kategori.draw();
+
     setTimeout(tutupalert, 2000);
     $(".modal").modal("hide");
     }
 
-    var tabel_kategori = $('#tabel_kategori').DataTable();
-        tabel_kategori.draw();
+   
     
     });
     }
@@ -274,16 +276,15 @@ $(document).on('click', '#btn_jadi_hapus', function (e) {
 		else { 
 					$.post("update_kategori.php",{id:id,nama_kategori:nama_kategori},function(data){
 
-			if (data != '') {
+			if (data == 1) {
 			$(".alert").show('fast');
-			$("#table_baru").load('tabel-kategori.php');
-			
+      var tabel_kategori = $('#tabel_kategori').DataTable();
+        tabel_kategori.draw();
+
 			setTimeout(tutupalert, 2000);
 			$(".modal").modal("hide");
 			}
 		   
-    var tabel_kategori = $('#tabel_kategori').DataTable();
-        tabel_kategori.draw();
 		
 		});
 		} 

@@ -212,33 +212,12 @@ echo '<button type="button" class="btn btn-info " data-toggle="modal" data-targe
 		
 		setTimeout(tutupalert, 2000);
 		$(".modal").modal("hide");
+    var table_satuan = $('#table_satuan').DataTable();
+       table_satuan.draw();
+
 		}
 
-		        $("#tabel_satuan").DataTable().destroy();
-          var dataTable = $('#tabel_satuan').DataTable( {
-          "processing": true,
-          "serverSide": true,
-          "ajax":{
-            url :"datatable_satuan.php", // json datasource
-            "data": function ( d ) {
-                  d.status = status;
-                  // d.custom = $('#myInput').val();
-                  // etc
-              },
-            type: "post",  // method  , by default get
-            error: function(){  // error handling
-              $(".employee-grid-error").html("");
-              $("#tabel_satuan").append('<tbody class="employee-grid-error"><tr><th colspan="3">Data Tidak Ditemukan.. !!</th></tr></tbody>');
-              $("#employee-grid_processing").css("display","none");
-              
-            }
-          },
-              "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-              $(nRow).attr('class','tr-id-'+aData[3]+'');
-            },
-
-      }); 
-		
+		      
 		
 		});
 		}
@@ -302,32 +281,8 @@ $(document).on('click', '#btn_jadi_hapus', function (e) {
 		if (data == 'sukses') {
 		$(".alert").show('fast');
 		$("#modal_edit").modal('hide');
-
-		
-		        $("#tabel_satuan").DataTable().destroy();
-          var dataTable = $('#tabel_satuan').DataTable( {
-          "processing": true,
-          "serverSide": true,
-          "ajax":{
-            url :"datatable_satuan.php", // json datasource
-            "data": function ( d ) {
-                  d.status = status;
-                  // d.custom = $('#myInput').val();
-                  // etc
-              },
-            type: "post",  // method  , by default get
-            error: function(){  // error handling
-              $(".employee-grid-error").html("");
-              $("#tabel_satuan").append('<tbody class="employee-grid-error"><tr><th colspan="3">Data Tidak Ditemukan.. !!</th></tr></tbody>');
-              $("#employee-grid_processing").css("display","none");
-              
-            }
-          },
-              "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-              $(nRow).attr('class','tr-id-'+aData[3]+'');
-            },
-
-      }); 
+    var table_satuan = $('#table_satuan').DataTable();
+       table_satuan.draw();
 
 		}
 		});
