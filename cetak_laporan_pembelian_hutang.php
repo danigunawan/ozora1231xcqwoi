@@ -90,13 +90,17 @@ $total_kredit = $cek20['total_kredit'];
 
  <table id="tableuser" class="table table-bordered table-sm">
             <thead>
-                  <th> Nomor Faktur </th>                  
+
                   <th> Tanggal </th>
+                  <th> Nomor Faktur </th>
                   <th> Suplier </th>
                   <th> Nilai Faktur </th>
                   <th> Potongan </th>
                   <th> Dibayar </th>
                   <th> Nilai Hutang </th>
+                  <th> Status </th>
+                  <th> Jatuh Tempo </th>
+                  <th> Petugas </th>
                                     
             </thead>
             
@@ -113,13 +117,16 @@ $total_kredit = $cek20['total_kredit'];
                         
                         //$sup = mysqli_fetch_array($tes);
                   echo "<tr>
+                  <td>". $data11['tanggal'] ." ". $data11['jam'] ."</td>
                   <td>". $data11['no_faktur'] ."</td>
-                  <td>". $data11['tanggal'] ."</td>
                   <td>". $data11['nama'] ."</td>
                   <td align='right'>". rp($data11['total']) ."</td>
                   <td align='right'>". rp($data11['potongan']) ."</td>
                   <td align='right'>". rp($data11['tunai']) ."</td>
                   <td align='right'>". rp($data11['kredit']) ."</td>
+                  <td align='right'>". $data11['status'] ."</td>
+                  <td align='right'>". $data11['tanggal_jt'] ."</td>
+                  <td align='right'>". $data11['user'] ."</td>
 
                   </tr>";
 
@@ -131,7 +138,10 @@ $total_kredit = $cek20['total_kredit'];
                   <td align='right'><p style='color:red'><b>".rp($total_akhir)."</b></p></td>
                   <td align='right'><p style='color:red'><b>".rp($total_potongan)."</b></p></td>
                   <td align='right'><p style='color:red'><b>".rp($total_bayar)."</b></p></td>
-                  <td align='right'><p style='color:red'><b>".rp($total_kredit)."</b></p>";
+                  <td align='right'><p style='color:red'><b>".rp($total_kredit)."</b></p>                  
+                  <td></td>
+                  <td></td>
+                  <td></td>";
 
 //Untuk Memutuskan Koneksi Ke Database
 
