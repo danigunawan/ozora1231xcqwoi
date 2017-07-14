@@ -8,9 +8,6 @@ include 'sanitasi.php';
 include 'db.php';
 
 
-//menampilkan seluruh data yang ada pada tabel pelanggan
-$query = $db->query("SELECT * FROM pelanggan");
-
 $query_otoritas_pelanggan = $db->query("SELECT pelanggan_tambah, pelanggan_hapus,pelanggan_edit FROM otoritas_master_data WHERE id_otoritas = '$_SESSION[otoritas_id]'");
 $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
 
@@ -59,8 +56,7 @@ $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
 					<label> Nama Marketplace </label><br>
 					<input type="text" name="nama" id="nama_pelanggan" class="form-control" autocomplete="off" required="" >
 
-					<label> Tanggal Lahir </label><br>
-					<input type="text" name="tgl_lahir" id="tgl_lahir" class="form-control" autocomplete="off" required="" >
+					<input type="hidden" name="tgl_lahir" id="tgl_lahir" class="form-control" autocomplete="off" required="" >
 
 					<label> Nomor Telp </label><br>
 					<input type="text" name="nomor" id="nomor" class="form-control" autocomplete="off" required="" >
@@ -224,8 +220,7 @@ $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
 					<label> Nama MarketPlace </label><br>
 					<input type="text" name="nama_edit" id="edit_nama" class="form-control" autocomplete="off" required="" >
 
-					<label> Tanggal Lahir </label><br>
-					<input type="text" name="tgl_lahir" id="edit_tgl_lahir" class="form-control" autocomplete="off" required="" >
+					<input type="hidden" name="tgl_lahir" id="edit_tgl_lahir" class="form-control" autocomplete="off" required="" >
 
 					<label> Nomor Telp </label><br>
 					<input type="text" name="nomor" id="edit_nomor" class="form-control" autocomplete="off" required="" >					
@@ -288,7 +283,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 
 <div class="table-responsive"><!-- membuat agar ada garis pada tabel, disetiap kolom -->
 <span id="table_baru">
-<table id="tableuser" class="table table-bordered">
+<table id="table_pelanggan" class="table table-bordered table-sm">
 		<thead>
 			
 			<th style='background-color: #4CAF50; color: white'> Kode Marketplace </th>
@@ -296,7 +291,6 @@ tr:nth-child(even){background-color: #f2f2f2}
 			<th style='background-color: #4CAF50; color: white'> Flafon </th>
 			<th style='background-color: #4CAF50; color: white'> Flafon Usia Piutang</th>
 			<th style='background-color: #4CAF50; color: white'> Level Harga </th>
-			<th style='background-color: #4CAF50; color: white'> Tgl. Lahir </th>
 			<th style='background-color: #4CAF50; color: white'> Nomor Telp </th>
 			<th style='background-color: #4CAF50; color: white'> E-mail </th>
 			<th style='background-color: #4CAF50; color: white'> Wilayah</th>
@@ -326,45 +320,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 			
 		</thead>
 		
-		<tbody>
-		<?php
-
-			//menyimpan data sementara yang ada pada $query
-			while ($data = mysqli_fetch_array($query))
-			{
-				//menampilkan data
-			echo "<tr>
-			
-			<td>". $data['kode_pelanggan'] ."</td>
-			<td>". $data['nama_pelanggan'] ."</td>
-			<td>". rp($data['flafon']) ."</td>
-			<td>". $data['flafon_usia'] ." Hari</td>
-			<td>". $data['level_harga'] ."</td>
-			<td>". tanggal($data['tgl_lahir']) ."</td>
-			<td>". $data['no_telp'] ."</td>
-			<td>". $data['e_mail'] ."</td>
-			<td>". $data['wilayah'] ."</td>";
-			
-    if ($data_otoritas_pelanggan['pelanggan_hapus'] > 0){
-
-
-			echo "<td> <button class='btn btn-danger btn-hapus' data-id='". $data['id'] ."' data-pelanggan='". $data['nama_pelanggan'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> </td>";
-
-		}
-
-    if ($data_otoritas_pelanggan['pelanggan_hapus'] > 0){
-			echo "<td> <button class='btn btn-info btn-edit' data-pelanggan='". $data['nama_pelanggan'] ."' data-kode='". $data['kode_pelanggan'] ."' data-tanggal='". $data['tgl_lahir'] ."' data-nomor='". $data['no_telp'] ."' data-email='". $data['e_mail'] ."' data-wilayah='". $data['wilayah'] ."' data-level-harga='". $data['level_harga'] ."' data-id='". $data['id'] ."' data-flafon='". $data['flafon'] ."' data-flafon-usia='". $data['flafon_usia'] ."'> <span class='glyphicon glyphicon-edit'> </span> Edit </button> </td>";
-		}
-
-			echo"</tr>";
-			}
-
-//Untuk Memutuskan Koneksi Ke Database
-mysqli_close($db);   
-			
-		?>
-		</tbody>
-
+		
 	</table>
 	</span>
 
@@ -372,26 +328,29 @@ mysqli_close($db);
 </div> <!--end of container-->
 
 
-	<script>
-	$(function() {
-	$( "#tgl_lahir" ).pickadate({ selectYears: 80, format: 'yyyy-mm-dd'});
-	});
-	</script>
-
-		<script>
-	$(function() {
-	$( "#edit_tgl_lahir" ).pickadate({ selectYears: 80, format: 'yyyy-mm-dd'});
-	});
-	</script>
-
-
-<script>
-//untuk menampilkan data tabel
-$(document).ready(function(){
-    $('.table').DataTable();
-});
-
-</script>
+<!-- DATATABLE AJAX -->
+    <script type="text/javascript" language="javascript" >
+      $(document).ready(function() {
+        var dataTable = $('#table_pelanggan').DataTable( {
+          "processing": true,
+          "serverSide": true,
+          "ajax":{
+            url :"tabel-pelanggan.php", // json datasource
+            type: "post",  // method  , by default get
+            error: function(){  // error handling
+              $(".employee-grid-error").html("");
+              $("#table_pelanggan").append('<tbody class="employee-grid-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
+              $("#employee-grid_processing").css("display","none");
+              
+            }
+          },
+            "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+              $(nRow).attr('class','tr-id-'+aData[10]+'');
+            },
+        });
+      });
+    </script>
+<!-- / DATATABLE AJAX -->
 
 <script type="text/javascript">
 
@@ -475,8 +434,8 @@ $(document).ready(function(){
 											
 											
 											$(".alert").show('fast');
-											$("#table_baru").load('tabel-pelanggan.php');
-											
+												var table_pelanggan = $('#table_pelanggan').DataTable();
+      											table_pelanggan.draw();											
 											setTimeout(tutupalert, 2000);
 											$(".modal").modal("hide");
 											}
@@ -591,7 +550,9 @@ $(document).ready(function(){
 
 								
 
-								$("#table_baru").load('tabel-pelanggan.php');
+								var table_pelanggan = $('#table_pelanggan').DataTable();
+      							table_pelanggan.draw();	
+
 								$("#modal_edit").modal('hide');
 								
 								

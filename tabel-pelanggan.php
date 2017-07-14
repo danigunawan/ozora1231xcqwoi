@@ -1,191 +1,95 @@
-<?php session_start();
 
-
+<?php include 'session_login.php';
+/* Database connection start */
+include 'db.php';
+/* Database connection end */
 include 'sanitasi.php';
-include 'db.php';
-
-$session_id = session_id();
-//menampilkan seluruh data yang ada pada tabel pelanggan
-$query = $db->query("SELECT * FROM pelanggan");
-
- ?>
 
 
 
-<table id="tableuser" class="table table-bordered">
-		<thead>
+$query_otoritas_pelanggan = $db->query("SELECT pelanggan_tambah, pelanggan_hapus,pelanggan_edit FROM otoritas_master_data WHERE id_otoritas = '$_SESSION[otoritas_id]'");
+$data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
+
+
+// storing  request (ie, get/post) global array to a variable  
+$requestData= $_REQUEST;
+
+$columns = array( 
+// datatable column index  => database column name
+	0 =>'id'
+);
+
+
+// getting total number records without any search
+$sql = "SELECT kode_pelanggan,nama_pelanggan,flafon,flafon_usia,level_harga,no_telp,e_mail,wilayah,id,tgl_lahir ";
+$sql.=" FROM pelanggan ";
+
+$query=mysqli_query($conn, $sql) or die("datatable_item_keluar.php: get employees");
+$totalData = mysqli_num_rows($query);
+$totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
+
+
+
+$sql = "SELECT kode_pelanggan,nama_pelanggan,flafon,flafon_usia,level_harga,no_telp,e_mail,wilayah,id,tgl_lahir ";
+$sql.=" FROM pelanggan WHERE 1=1";
+if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
+
+
+	$sql.=" AND ( kode_pelanggan LIKE '".$requestData['search']['value']."%' "; 
+	$sql.=" OR nama_pelanggan LIKE '".$requestData['search']['value']."%' ";
+	$sql.=" OR level_harga LIKE '".$requestData['search']['value']."%' )";
+
+}
+$query=mysqli_query($conn, $sql) or die("datatable_item_keluar.phpppp: get employees");
+$totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result. 
+
+
+$sql.= " ORDER BY id DESC LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
+
+/* $requestData['order'][0]['column'] contains colmun index, $requestData['order'][0]['dir'] contains order such as asc/desc  */	
+$query=mysqli_query($conn, $sql) or die("employee-grid-data.php: get employees");
+
+$data = array();
+while( $row=mysqli_fetch_array($query) ) {  // preparing an array
+	$nestedData=array(); 
+
+
+    	//menampilkan data
+			$nestedData[] = $row['kode_pelanggan'];
+			$nestedData[] = $row['nama_pelanggan'];
+			$nestedData[] = rp($row['flafon']);
+			$nestedData[] = $row['flafon_usia'];
+			$nestedData[] = $row['level_harga'];
+			$nestedData[] = $row['no_telp'];
+			$nestedData[] = $row['e_mail'];
+			$nestedData[] = $row['wilayah'];
 			
-			<th style='background-color: #4CAF50; color: white'> Kode Marketplace </th>
-			<th style='background-color: #4CAF50; color: white'> Nama Marketplace </th>
-			<th style='background-color: #4CAF50; color: white'> Flafon </th>
-				<th style='background-color: #4CAF50; color: white'> Flafon Usia </th>
-			<th style='background-color: #4CAF50; color: white'> Level Harga </th>
-			<th style='background-color: #4CAF50; color: white'> Tgl. Lahir </th>
-			<th style='background-color: #4CAF50; color: white'> Nomor Telp </th>
-			<th style='background-color: #4CAF50; color: white'> E-mail </th>
-			<th style='background-color: #4CAF50; color: white'> Wilayah</th>
-
-<?php 
-
-include 'db.php';
-
-$pilih_akses_pelanggan_hapus = $db->query("SELECT pelanggan_hapus FROM otoritas_master_data WHERE id_otoritas = '$_SESSION[otoritas_id]' AND pelanggan_hapus = '1'");
-$pelanggan_hapus = mysqli_num_rows($pilih_akses_pelanggan_hapus);
+ if ($data_otoritas_pelanggan['pelanggan_hapus'] > 0){
 
 
-    if ($pelanggan_hapus > 0){
-
-			echo "<th style='background-color: #4CAF50; color: white'> Hapus </th>";
-
-		}
-?>
-
-
-<?php 
-include 'db.php';
-
-$pilih_akses_pelanggan_edit = $db->query("SELECT pelanggan_edit FROM otoritas_master_data WHERE id_otoritas = '$_SESSION[otoritas_id]' AND pelanggan_edit = '1'");
-$pelanggan_edit = mysqli_num_rows($pilih_akses_pelanggan_edit);
-
-
-    if ($pelanggan_edit > 0){
-    	echo "<th style='background-color: #4CAF50; color: white'> Edit </th>";
-    }
-
- ?>
-			
-			
-		</thead>
-		
-		<tbody>
-		<?php
-
-			//menyimpan data sementara yang ada pada $query
-			while ($data = mysqli_fetch_array($query))
-			{
-				//menampilkan data
-			echo "<tr>
-			
-			<td>". $data['kode_pelanggan'] ."</td>
-			<td>". $data['nama_pelanggan'] ."</td>
-			<td>". rp($data['flafon']) ."</td>
-				<td>". $data['flafon_usia'] ." Hari</td>
-			<td>". $data['level_harga'] ."</td>
-			<td>". tanggal($data['tgl_lahir']) ."</td>
-			<td>". $data['no_telp'] ."</td>
-			<td>". $data['e_mail'] ."</td>
-			<td>". $data['wilayah'] ."</td>";
-			
-
-
-include 'db.php';
-
-$pilih_akses_pelanggan_hapus = $db->query("SELECT pelanggan_hapus FROM otoritas_master_data WHERE id_otoritas = '$_SESSION[otoritas_id]' AND pelanggan_hapus = '1'");
-$pelanggan_hapus = mysqli_num_rows($pilih_akses_pelanggan_hapus);
-
-
-    if ($pelanggan_hapus > 0){
-
-
-			echo "<td> <button class='btn btn-danger btn-hapus' data-id='". $data['id'] ."' data-pelanggan='". $data['nama_pelanggan'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> </td>";
+			$nestedData[] = " <button class='btn btn-danger btn-hapus btn-sm' data-id='". $row['id'] ."' data-pelanggan='". $row['nama_pelanggan'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> ";
 
 		}
 
-include 'db.php';
-
-$pilih_akses_pelanggan_edit = $db->query("SELECT pelanggan_edit FROM otoritas_master_data WHERE id_otoritas = '$_SESSION[otoritas_id]' AND pelanggan_edit = '1'");
-$pelanggan_edit = mysqli_num_rows($pilih_akses_pelanggan_edit);
-
-
-    if ($pelanggan_edit > 0){
-			echo "<td> <button class='btn btn-info btn-edit' data-pelanggan='". $data['nama_pelanggan'] ."' data-kode='". $data['kode_pelanggan'] ."' data-tanggal='". $data['tgl_lahir'] ."' data-nomor='". $data['no_telp'] ."' data-email='". $data['e_mail'] ."' data-wilayah='". $data['wilayah'] ."' data-level-harga='". $data['level_harga'] ."' data-id='". $data['id'] ."' data-flafon='". $data['flafon'] ."' data-flafon-usia='". $data['flafon_usia'] ."'> <span class='glyphicon glyphicon-edit'> </span> Edit </button> </td>";
+    if ($data_otoritas_pelanggan['pelanggan_hapus'] > 0){
+			$nestedData[] = " <button class='btn btn-info btn-edit btn-sm' data-pelanggan='". $row['nama_pelanggan'] ."' data-kode='". $row['kode_pelanggan'] ."' data-tanggal='". $row['tgl_lahir'] ."' data-nomor='". $row['no_telp'] ."' data-email='". $row['e_mail'] ."' data-wilayah='". $row['wilayah'] ."' data-level-harga='". $row['level_harga'] ."' data-id='". $row['id'] ."' data-flafon='". $row['flafon'] ."' data-flafon-usia='". $row['flafon_usia'] ."'> <span class='glyphicon glyphicon-edit'> </span> Edit </button> ";
 		}
 
-			echo"</tr>";
+				$nestedData[] = $row["id"];
+
+				$data[] = $nestedData;
 			}
 
-//Untuk Memutuskan Koneksi Ke Database
-mysqli_close($db);   
-			
-		?>
-		</tbody>
 
-	</table>
 
-		<script>
-		//untuk menampilkan data tabel
-		$(document).ready(function(){
-		$('.table').dataTable();
-		});
-		
-		</script>
+$json_data = array(
+			"draw"            => intval( $requestData['draw'] ),   // for every request/draw by clientside , they send a number as a parameter, when they recieve a response/data they first check the draw number, so we are sending same number in draw. 
+			"recordsTotal"    => intval( $totalData ),  // total number of records
+			"recordsFiltered" => intval( $totalFiltered ), // total number of records after searching, if there is no searching then totalFiltered = totalData
+			"data"            => $data   // total data array
+			);
 
-<script type="text/javascript">
-                             
-								$(document).ready(function(){
+echo json_encode($json_data);  // send data as json format
 
-					//fungsi hapus data 
-								$(document).on('click', '.btn-hapus', function (e) {
-								var nama_pelanggan = $(this).attr("data-pelanggan");
-								var id = $(this).attr("data-id");
-								$("#data_pelanggan").val(nama_pelanggan);
-								$("#id_hapus").val(id);
-								$("#modal_hapus").modal('show');
-								
-								
-								});
-								
-								
-								$("#btn_jadi_hapus").click(function(){
-								
-								var id = $("#id_hapus").val();
-								
-								$.post("hapus_pelanggan.php",{id:id},function(data){
-								if (data == "sukses") {
-								$("#table_baru").load('tabel-pelanggan.php');
-								$("#modal_hapus").modal('hide');
-								
-								}
-								
-								
-								});
-								
-								});
-					// end fungsi hapus data
+?>
 
-				    //fungsi edit data 
-								$(document).on('click', '.btn-edit', function (e) {
-								
-								$("#modal_edit").modal('show');
-								var nama = $(this).attr("data-pelanggan");
-								var kode = $(this).attr("data-kode");
-								var tanggal   = $(this).attr("data-tanggal");
-								var nomor = $(this).attr("data-nomor");
-								var email   = $(this).attr("data-email");
-								var wilayah = $(this).attr("data-wilayah");
-								var id   = $(this).attr("data-id");
-								$("#edit_nama").val(nama);
-								$("#edit_kode").val(kode);
-								$("#edit_tgl_lahir").val(tanggal);
-								$("#edit_nomor").val(nomor);
-								$("#edit_email").val(email);
-								$("#edit_wilayah").val(wilayah);
-								$("#id_edit").val(id);
-								
-								
-								});
-
-								$('form').submit(function(){
-								
-								return false;
-								});
-								
-								});
-								
-								
-								
-								
-								function tutupalert() {
-								$(".alert").hide("fast")
-								}
-								</script>
