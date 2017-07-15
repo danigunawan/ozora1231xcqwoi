@@ -58,6 +58,10 @@ else
 
 }
 
+      $manggil_ekspedisi = $db->query("SELECT nama_ekspedisi FROM ekspedisi WHERE id = '$nama_expedisi' ");
+      $data_ekspedisi = mysqli_fetch_array($manggil_ekspedisi);
+      echo $ekspedisi = $data_ekspedisi['nama_ekspedisi'];
+
 }
 // UPDATE HARGA JUAL 1
 

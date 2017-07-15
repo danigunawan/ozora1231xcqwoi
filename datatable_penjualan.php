@@ -183,14 +183,16 @@ else{
 
 
 
-$query_resi = $db->query("SELECT * FROM resi WHERE id_penjualan = '$row[id]' ");
+$query_resi = $db->query("SELECT id,id_penjualan,nomor_resi,nama_expedisi FROM resi WHERE id_penjualan = '$row[id]' ");
 $jumlah_resi = mysqli_num_rows($query_resi);
-$data_resi = mysqli_fetch_array($query_resi);
 
+$query_resi_2 = $db->query("SELECT rs.id,rs.id_penjualan,rs.nomor_resi,eks.nama_ekspedisi  FROM resi rs  LEFT JOIN ekspedisi eks ON rs.nama_expedisi = eks.id WHERE rs.id_penjualan = '$row[id]' ");
+$data_resi = mysqli_fetch_array($query_resi_2);
 
+	
 if ($jumlah_resi > 0) {
 	# code...
-	$nestedData[] = "<button style='background-color:#aa66cc;width:80px'' class='btn btn-info lihat_resi' id_penjualan='". $data_resi['id']."' nama_ekspedisi='". $data_resi['nama_expedisi'] ."' nomor_resi='". $data_resi['nomor_resi'] ."' ><i class='fa fa-search' aria-hidden='true'></i> Lihat</button>";
+	$nestedData[] = "<button style='background-color:#aa66cc;width:80px'' class='btn btn-info lihat_resi' id_penjualan='". $data_resi['id']."' nama_ekspedisi='". $data_resi['nama_ekspedisi'] ."' nomor_resi='". $data_resi['nomor_resi'] ."' ><i class='fa fa-search' aria-hidden='true'></i> Lihat</button>";
 }
 else{
 	$nestedData[] = "<button style='background-color:#2BBBAD;width:80px'' class='btn btn-default input_resi' id_penjualan='". $row['id']."'' ><i class='fa fa-send' aria-hidden='true'></i> Input</button>";

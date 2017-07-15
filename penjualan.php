@@ -43,12 +43,12 @@ $status = $_GET['status'];
           <?php 
           
       
-          $query_ekspedisi = $db->query("SELECT nama_ekspedisi FROM ekspedisi ");
+          $query_ekspedisi = $db->query("SELECT id,nama_ekspedisi FROM ekspedisi ");
           
 
           while($data_expedisi = mysqli_fetch_array($query_ekspedisi))
           {
-           echo "<option selected value='".$data_expedisi['nama_ekspedisi'] ."'>".$data_expedisi['nama_ekspedisi'] ."</option>"; 
+           echo "<option selected value='".$data_expedisi['id'] ."'>".$data_expedisi['nama_ekspedisi'] ."</option>"; 
           }
           ?>
           </select>
@@ -96,12 +96,12 @@ $status = $_GET['status'];
           <?php 
           
       
-          $query_ekspedisi = $db->query("SELECT nama_ekspedisi FROM ekspedisi ");
+          $query_ekspedisi = $db->query("SELECT id,nama_ekspedisi FROM ekspedisi ");
           
 
           while($data_expedisi = mysqli_fetch_array($query_ekspedisi))
           {
-           echo "<option selected value='".$data_expedisi['nama_ekspedisi'] ."'>".$data_expedisi['nama_ekspedisi'] ."</option>"; 
+           echo "<option selected value='".$data_expedisi['id'] ."'>".$data_expedisi['nama_ekspedisi'] ."</option>"; 
           }
           ?>
           </select>
@@ -167,8 +167,9 @@ $status = $_GET['status'];
                   $.post("update_resi.php",{id:id,input_nama_expedisi:input_nama_expedisi,jenis_edit:"nama_expedisi"},function(data){
 
                   $("#lihat_ekspedisi").attr("type","text");
-                  $("#lihat_ekspedisi").val(input_nama_expedisi);
+                  $("#lihat_ekspedisi").val(data);
                   $("#ganti_ekspedisi").hide();
+                  console.log(data);
                    
                    var table_penjualan = $('#table_penjualan').DataTable();
                    table_penjualan.draw();
