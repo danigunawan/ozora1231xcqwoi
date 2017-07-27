@@ -216,7 +216,7 @@ $otoritas_kolom = mysqli_fetch_array($pilih_akses_kolom);
     <div class="col-sm-3">
         <div class="form-group">
          <br><label class="gg">Invoice Marketplace</label>
-         <input type="number" style="height:20px;" value="<?php echo "$invoice_marketplace"; ?>"  name="invoice_marketplace" id="invoice_marketplace" class="form-control" placeholder="Invoice Marketplace">   
+         <input type="text" style="height:20px;" value="<?php echo "$invoice_marketplace"; ?>"  name="invoice_marketplace" id="invoice_marketplace" class="form-control" placeholder="Invoice Marketplace">   
         </div> 
     </div>
 
@@ -230,7 +230,7 @@ $otoritas_kolom = mysqli_fetch_array($pilih_akses_kolom);
     <div class="col-sm-3">
         <div class="form-group">
           <br><label class="gg">No Telpon Konsumen</label>
-          <input type="number" style="height:20px" value="<?php echo "$no_telpon_konsumen"; ?>"  name="no_telpon_konsumen" id="no_telpon_konsumen" class="form-control" placeholder="No Telpon Konsumen">
+          <input type="text" style="height:20px" value="<?php echo "$no_telpon_konsumen"; ?>"  name="no_telpon_konsumen" id="no_telpon_konsumen" class="form-control" placeholder="No Telpon Konsumen">
         </div>
     </div>
 
