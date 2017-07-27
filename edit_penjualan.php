@@ -13,7 +13,9 @@ include 'sanitasi.php';
  $nama_toko = $_GET['nama_toko'];
  $kode_toko = $_GET['kode_toko'];
  $nama_konsumen = $_GET['nama_konsumen'];
- $alamat_konsumen = $_GET['alamat_konsumen'];
+ $alamat_konsumen = $_GET['alamat_konsumen']; 
+ $invoice_marketplace = $_GET['invoice_marketplace']; 
+ $no_telpon_konsumen = $_GET['no_telpon_konsumen']; 
 
     $jumlah_bayar_piutang = $db->query("SELECT SUM(jumlah_bayar) AS jumlah_bayar FROM detail_pembayaran_piutang WHERE no_faktur_penjualan = '$nomor_faktur'");
     $ambil_jumlah = mysqli_fetch_array($jumlah_bayar_piutang);
@@ -211,10 +213,24 @@ $otoritas_kolom = mysqli_fetch_array($pilih_akses_kolom);
 
     <input type="hidden" name="nomor_faktur_penjualan" id="nomor_faktur_penjualan"  value="<?php echo $nomor_faktur; ?>" class="form-control tanggal" >
 
+    <div class="col-sm-3">
+        <div class="form-group">
+         <br><label class="gg">Invoice Marketplace</label>
+         <input type="number" style="height:20px;" value="<?php echo "$invoice_marketplace"; ?>"  name="invoice_marketplace" id="invoice_marketplace" class="form-control" placeholder="Invoice Marketplace">   
+        </div> 
+    </div>
+
     <div class="col-sm-2">
         <div class="form-group">
-      <br><label class="gg">Nama Konsumen</label>
+            <br><label class="gg">Nama Konsumen</label>
             <input type="text" style="height:20px" value="<?php echo "$nama_konsumen"; ?>" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="form-group">
+          <br><label class="gg">No Telpon Konsumen</label>
+          <input type="number" style="height:20px" value="<?php echo "$no_telpon_konsumen"; ?>"  name="no_telpon_konsumen" id="no_telpon_konsumen" class="form-control" placeholder="No Telpon Konsumen">
         </div>
     </div>
 
@@ -720,19 +736,7 @@ Order Penjualan</button>
           <div class="col-sm-6">
           <label> Kredit </label><br>
           <b><input type="text" name="kredit" id="kredit" class="form-control" style="height:15px;font-size:15px"  readonly="" required="" ></b>
-          </div>
-
-          <div class="col-sm-6">
-              <div class="form-group">
-                  <input type="text" style="height:46px" value="<?php echo "$nama_konsumen"; ?>" name="nama_konsumen" id="nama_konsumen" readonly="" class="form-control" placeholder="Nama Konsumen">
-              </div>
-          </div>
-
-          <div class="col-sm-6">
-              <div class="form-group">
-                  <input type="text" style="height:46px" value="<?php echo "$alamat_konsumen"; ?>" name="alamat_konsumen" id="alamat_konsumen" readonly="" class="form-control" placeholder="Alamat Konsumen">
-              </div>
-          </div>
+          </div> 
 
 </div>
           
@@ -1640,7 +1644,9 @@ else{
         var tanggal = $("#tanggal").val();
         var kode_gudang = $("#kode_gudang").val();
         var kode_toko = $("#nama_toko").val();
+        var invoice_marketplace = $("#invoice_marketplace").val();
         var nama_konsumen = $("#nama_konsumen").val();
+        var no_telpon_konsumen = $("#no_telpon_konsumen").val();
         var alamat_konsumen = $("#alamat_konsumen").val();
         var kode_ekspedisi = $("#kode_ekspedisi").val();
         var keterangan = $("#keterangan").val();
@@ -1671,16 +1677,27 @@ else{
   
      $("#total1").val(total);
 
+ } 
+   else if (invoice_marketplace == "")
+ {
+
+alert(" Invoice Marketplace Harus Diisi ");
+
+     $("#total1").val(total); 
  }
+   else if (no_telpon_konsumen == "")
+ {
 
+alert(" Nomor Telpon Konsumen Harus Diisi ");
 
+     $("#total1").val(total); 
+ }
    else if (nama_konsumen == "")
  {
 
 alert(" Nama Konsumen Harus Diisi ");
 
-     $("#total1").val(total);
-
+     $("#total1").val(total); 
  }
    else if (alamat_konsumen == "")
  {
@@ -1724,7 +1741,7 @@ alert("Pembayaran Harus Di Isi");
   $("#piutang").hide();
   $("#transaksi_baru").show();  
 
- $.post("proses_bayar_edit_jual.php",{total2:total2,kode_gudang:kode_gudang,kode_toko:kode_toko,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,tanggal:tanggal,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,keterangan:keterangan,jumlah_kredit_baru:jumlah_kredit_baru,x:x,ppn_input:ppn_input},function(info) {
+ $.post("proses_bayar_edit_jual.php",{total2:total2,kode_gudang:kode_gudang,kode_toko:kode_toko,invoice_marketplace:invoice_marketplace,nama_konsumen:nama_konsumen,no_telpon_konsumen:no_telpon_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,tanggal:tanggal,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,keterangan:keterangan,jumlah_kredit_baru:jumlah_kredit_baru,x:x,ppn_input:ppn_input},function(info) {
 
      $("#alert_berhasil").show();
      $("#pembayaran_penjualan").val('');
@@ -1799,7 +1816,9 @@ else{
         var tanggal = $("#tanggal").val();
         var kode_gudang = $("#kode_gudang").val();
         var kode_toko = $("#nama_toko").val();
+        var invoice_marketplace = $("#invoice_marketplace").val();
         var nama_konsumen = $("#nama_konsumen").val();
+        var no_telpon_konsumen = $("#no_telpon_konsumen").val();
         var alamat_konsumen = $("#alamat_konsumen").val();
         var kode_ekspedisi = $("#kode_ekspedisi").val();
         var keterangan = $("#keterangan").val();
@@ -1860,7 +1879,7 @@ else
         $("#piutang").hide();
         $("#transaksi_baru").show(); 
         
-        $.post("proses_bayar_edit_jual.php",{total2:total2,kode_gudang:kode_gudang,kode_toko:kode_toko,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,tanggal:tanggal,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,keterangan:keterangan,jumlah_kredit_baru:jumlah_kredit_baru,x:x,ppn_input:ppn_input},function(info) {
+        $.post("proses_bayar_edit_jual.php",{total2:total2,kode_gudang:kode_gudang,kode_toko:kode_toko,invoice_marketplace:invoice_marketplace,nama_konsumen:nama_konsumen,no_telpon_konsumen:no_telpon_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,tanggal:tanggal,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,keterangan:keterangan,jumlah_kredit_baru:jumlah_kredit_baru,x:x,ppn_input:ppn_input},function(info) {
         
         $("#alert_berhasil").show();
         $("#pembayaran_penjualan").val('');

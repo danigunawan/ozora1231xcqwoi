@@ -139,8 +139,9 @@ $session_id = session_id();
     <label> Level Harga </label><br>
   <select style="font-size:15px; height:35px" type="text" name="level_harga" id="level_harga" class="form-control chosen" required="">
   <option>Level 1</option>
-  <option>Level 2</option>
-  <option>Level 3</option>
+  <option>Level 2</option> 
+  <option>Level 3</option> 
+
 
     </select>
     </div>
@@ -199,10 +200,21 @@ $session_id = session_id();
   <?php endif ?>
 </select>
 </div>
-        <div class="col-sm-2">
-          <br><label class="gg">Nama Konsumen</label>
-          <input type="text" style="height:20px" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">              
-        </div>
+
+    <div class="col-sm-3">
+     <br><label class="gg">Invoice Marketplace</label>
+     <input type="text" style="height:20px;" " name="invoice_marketplace" id="invoice_marketplace" class="form-control" placeholder="Invoice Marketplace">    
+    </div>
+
+    <div class="col-sm-2">
+     <br><label class="gg">Nama Konsumen</label>
+     <input type="text" style="height:20px" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">       
+    </div>
+
+    <div class="col-sm-3">
+     <br><label class="gg">No Telpon Konsumen</label>
+     <input type="text" style="height:20px" name="no_telpon_konsumen" id="no_telpon_konsumen" class="form-control" placeholder="No Telpon Konsumen">
+    </div>
 
     <div class="col-sm-3">
         <div class="form-group">
@@ -210,6 +222,7 @@ $session_id = session_id();
       <textarea type="text" name="alamat_konsumen" id="alamat_konsumen" class="form-control" style="height:45px"></textarea>
         </div>
     </div>
+
 </div>  <!-- END ROW dari kode pelanggan - ppn -->
 
 
@@ -1934,7 +1947,9 @@ if (transaksi_baru == 1){
         var harga = $("#harga_produk").val();
         var kode_gudang = $("#kode_gudang").val();
         var kode_toko = $("#kode_toko").val();
+        var invoice_marketplace = $("#invoice_marketplace").val();
         var nama_konsumen = $("#nama_konsumen").val();
+        var no_telpon_konsumen = $("#no_telpon_konsumen").val();
         var alamat_konsumen = $("#alamat_konsumen").val();
         var kode_ekspedisi = $("#kode_ekspedisi").val();
         var sales = $("#sales").val();
@@ -1991,11 +2006,25 @@ alert(" Kode Gudang Harus Diisi ");
 alert(" Kode Toko Harus Diisi ");
 
  }
+   else if (invoice_marketplace == "")
+ {
+
+alert(" Invoice Marketplace Harus Diisi ");
+$("#invoice_marketplace").focus();
+
+ }
    else if (nama_konsumen == "")
  {
 
 alert(" Nama Konsumen Harus Diisi ");
 $("#nama_konsumen").focus();
+
+ }
+   else if (no_telpon_konsumen == "")
+ {
+
+alert(" Nomor Telpon Konsumen Harus Diisi ");
+$("#no_telpon_konsumen").focus();
 
  }
    else if (alamat_konsumen == "")
@@ -2044,7 +2073,7 @@ alert("Silakan Bayar Piutang");
     $.getJSON("cek_status_stok_penjualan.php?session_id="+session_id, function(result){
       if (result.status == 0) {
 
-         $.post("proses_bayar_jual.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,kode_gudang:kode_gudang,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
+         $.post("proses_bayar_jual.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,kode_gudang:kode_gudang,invoice_marketplace:invoice_marketplace,nama_konsumen:nama_konsumen,no_telpon_konsumen:no_telpon_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
 
 
              var no_faktur = info;
@@ -2058,7 +2087,9 @@ alert("Silakan Bayar Piutang");
              $("#pembayaran_penjualan").val('');
              $("#sisa_pembayaran_penjualan").val('');
              $("#kredit").val('');
+             $("#invoice_marketplace").val('');
              $("#nama_konsumen").val('');
+             $("#no_telpon_konsumen").val('');
              $("#alamat_konsumen").val('');
              $("#keterangan").val('');
              $("#ekspedisi").val('');
@@ -2151,7 +2182,9 @@ alert("Silakan Bayar Piutang");
         var total_hpp = $("#total_hpp").val();
         var harga = $("#harga_produk").val();
         var kode_gudang = $("#kode_gudang").val();
+        var invoice_marketplace = $("#invoice_marketplace").val();
         var nama_konsumen = $("#nama_konsumen").val();
+        var no_telpon_konsumen = $("#no_telpon_konsumen").val();
         var alamat_konsumen = $("#alamat_konsumen").val();
         var kode_ekspedisi = $("#kode_ekspedisi").val();
         var kode_toko = $("#kode_toko").val();
@@ -2200,11 +2233,25 @@ alert("Pembayaran Harus Di Isi");
 alert(" Kode Gudang Harus Diisi ");
 
  }
+   else if (invoice_marketplace == "")
+ {
+
+alert(" Invoice Marketplace Harus Diisi ");
+$("#invoice_marketplace").focus();
+
+ }
    else if (nama_konsumen == "")
  {
 
 alert(" Nama Konsumen Harus Diisi ");
 $("#nama_konsumen").focus();
+
+ }
+   else if (no_telpon_konsumen == "")
+ {
+
+alert(" Nomor Telpon Konsumen Harus Diisi ");
+$("#no_telpon_konsumen").focus();
 
  }
    else if (kode_ekspedisi == "")
@@ -2262,7 +2309,7 @@ alert("Silakan Bayar Piutang");
 
         if (result.status == 0) {
               
-              $.post("proses_bayar_tunai_cetak_langsung.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,kode_gudang:kode_gudang,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
+              $.post("proses_bayar_tunai_cetak_langsung.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,harga:harga,sales:sales,kode_gudang:kode_gudang,invoice_marketplace:invoice_marketplace,nama_konsumen:nama_konsumen,no_telpon_konsumen:no_telpon_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
               
                  var no_fak = info;
                  $("#cetak_surat_jalan").attr('href', 'cetak_penjualan_surat_jalan.php?no_faktur='+no_fak+'');
@@ -2367,7 +2414,9 @@ alert("Silakan Bayar Piutang");
         var pembayaran = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah( $("#pembayaran_penjualan").val() ))));
         var total_hpp = $("#total_hpp").val();
         var kode_gudang = $("#kode_gudang").val();
+        var invoice_marketplace = $("#invoice_marketplace").val();
         var nama_konsumen = $("#nama_konsumen").val();
+        var no_telpon_konsumen = $("#no_telpon_konsumen").val();
         var alamat_konsumen = $("#alamat_konsumen").val();
         var kode_ekspedisi = $("#kode_ekspedisi").val();
         var kode_toko = $("#kode_toko").val();
@@ -2388,11 +2437,25 @@ alert("Silakan Bayar Piutang");
         alert ("Jumlah Pembayaran Tidak Mencukupi");
       }
 
+         else if (invoice_marketplace == "")
+       {
+
+      alert(" Invoice Marketplace Harus Diisi ");
+      $("#invoice_marketplace").focus();
+
+       }
          else if (nama_konsumen == "")
        {
 
       alert(" Nama Konsumen Harus Diisi ");
       $("#nama_konsumen").focus();
+
+       }
+         else if (no_telpon_konsumen == "")
+       {
+
+      alert(" Nomor Telpon Konsumen Harus Diisi ");
+      $("#no_telpon_konsumen").focus();
 
        }
          else if (alamat_konsumen == "")
@@ -2474,7 +2537,7 @@ alert("Silakan Bayar Piutang");
             {
               //END BREAK Cek Flafon sesuai dengan kode pelanggan / ID Pelanggannya
           
-               $.post("proses_bayar_jual.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,sales:sales,kode_gudang:kode_gudang,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
+               $.post("proses_bayar_jual.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,sales:sales,kode_gudang:kode_gudang,invoice_marketplace:invoice_marketplace,nama_konsumen:nama_konsumen,no_telpon_konsumen:no_telpon_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
 
                      var no_faktur = info;
                      $("#cetak_tunai").attr('href', 'cetak_penjualan_tunai.php?no_faktur='+no_faktur+'&nama_konsumen='+nama_konsumen+'&alamat_konsumen='+alamat_konsumen+'&kode_toko='+kode_toko+'&kode_ekspedisi='+kode_ekspedisi+'&keterangan='+keterangan+'');
@@ -2492,7 +2555,9 @@ alert("Silakan Bayar Piutang");
                      $("#cetak_piutang").show();
                      $("#cetak_surat_jalan").show();
                      $("#tax").val('');
+                     $("#invoice_marketplace").val('');
                      $("#nama_konsumen").val('');
+                     $("#no_telpon_konsumen").val('');
                      $("#alamat_konsumen").val('');
                      $("#kode_ekspedisi").val('');
                      
