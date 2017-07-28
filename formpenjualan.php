@@ -2077,8 +2077,8 @@ alert("Silakan Bayar Piutang");
 
 
              var no_faktur = info;
-             $("#cetak_tunai").attr('href', 'cetak_penjualan_tunai.php?no_faktur='+no_faktur+'&nama_konsumen='+nama_konsumen+'&alamat_konsumen='+alamat_konsumen+'&kode_toko='+kode_toko+'&kode_ekspedisi='+kode_ekspedisi+'&keterangan='+keterangan+'');
-             $("#cetak_tunai_besar").attr('href', 'cetak_penjualan_tunai_besar.php?no_faktur='+no_faktur+'&nama_konsumen='+nama_konsumen+'&alamat_konsumen='+alamat_konsumen+'&kode_toko='+kode_toko+'&kode_ekspedisi='+kode_ekspedisi+'');
+             $("#cetak_tunai").attr('href', 'proses_cetak_penjualan_tunai.php?no_faktur='+no_faktur+'');
+             $("#cetak_tunai_besar").attr('href', 'proses_cetak_penjualan_tunai_besar.php?no_faktur='+no_faktur+'');
              $("#cetak_surat_jalan").attr('href', 'cetak_penjualan_surat_jalan.php?no_faktur='+no_faktur+'');
              $("#alert_berhasil").show();
              $("#cetak_tunai").show();
@@ -2540,10 +2540,9 @@ alert("Silakan Bayar Piutang");
                $.post("proses_bayar_jual.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,sisa_pembayaran:sisa_pembayaran,kredit:kredit,kode_pelanggan:kode_pelanggan,tanggal_jt:tanggal_jt,total:total,potongan:potongan,potongan_persen:potongan_persen,tax:tax,cara_bayar:cara_bayar,pembayaran:pembayaran,sisa:sisa,sisa_kredit:sisa_kredit,total_hpp:total_hpp,sales:sales,kode_gudang:kode_gudang,invoice_marketplace:invoice_marketplace,nama_konsumen:nama_konsumen,no_telpon_konsumen:no_telpon_konsumen,alamat_konsumen:alamat_konsumen,kode_ekspedisi:kode_ekspedisi,kode_toko:kode_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input},function(info) {
 
                      var no_faktur = info;
-                     $("#cetak_tunai").attr('href', 'cetak_penjualan_tunai.php?no_faktur='+no_faktur+'&nama_konsumen='+nama_konsumen+'&alamat_konsumen='+alamat_konsumen+'&kode_toko='+kode_toko+'&kode_ekspedisi='+kode_ekspedisi+'&keterangan='+keterangan+'');
-                     $("#cetak_piutang").attr('href', 'cetak_penjualan_piutang.php?no_faktur='+no_faktur+'');
-                     $("#cetak_surat_jalan").attr('href', 'cetak_penjualan_surat_jalan.php?no_faktur='+no_faktur+'');
-                     $("#cetak_surat_jalan").attr('href', 'cetak_penjualan_surat_jalan.php?no_faktur='+no_faktur+'');
+                     $("#cetak_tunai").attr('href', 'proses_cetak_penjualan_tunai.php?no_faktur='+no_faktur+'');
+                     $("#cetak_piutang").attr('href', 'proses_cetak_penjualan_piutang.php?no_faktur='+no_faktur+'');
+                     $("#cetak_surat_jalan").attr('href', 'cetak_penjualan_surat_jalan.php?no_faktur='+no_faktur+''); 
                      $("#alert_berhasil").show();
                      $("#pembayaran_penjualan").val('');
                      $("#sisa_pembayaran_penjualan").val('');

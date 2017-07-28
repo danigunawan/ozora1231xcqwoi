@@ -791,12 +791,12 @@ if ($_SESSION['otoritas'] == 'Pimpinan') {
 
     <a href="penjualan.php?status=semua" id="transaksi_baru" class="btn btn-primary" style="font-size:15px;display: none;">Transaksi Baru</a>
 
-    <a href='cetak_penjualan_tunai.php?no_faktur=<?php echo $nomor_faktur; ?>' id="cetak_tunai"  style="font-size:15px;display: none;" class="btn btn-success" target="blank">Cetak Tunai </a>
+    <a href='proses_cetak_penjualan_tunai.php?no_faktur=<?php echo $nomor_faktur; ?>' id="cetak_tunai"  style="font-size:15px;display: none;" class="btn btn-success" target="blank">Cetak Tunai </a>
 
-    <a href='cetak_penjualan_tunai_besar.php?no_faktur=<?php echo $nomor_faktur; ?>' id="cetak_tunai_besar" style="font-size:15px;display: none;"  class="btn btn-info" target="blank">Cetak Tunai Besar</a>
+    <a href='proses_cetak_penjualan_tunai_besar.php?no_faktur=<?php echo $nomor_faktur; ?>' id="cetak_tunai_besar" style="font-size:15px;display: none;"  class="btn btn-info" target="blank">Cetak Tunai Besar</a>
 
    
-    <a href='cetak_penjualan_piutang.php?no_faktur=<?php echo $nomor_faktur ?>' id="cetak_piutang"  style="font-size:15px;display: none;" class="btn btn-warning" target="blank"> <span class="  glyphicon glyphicon-print"> </span> Cetak Piutang </a>
+    <a href='proses_cetak_penjualan_piutang.php?no_faktur=<?php echo $nomor_faktur ?>' id="cetak_piutang"  style="font-size:15px;display: none;" class="btn btn-warning" target="blank"> <span class="  glyphicon glyphicon-print"> </span> Cetak Piutang </a>
     
 
               <div class="alert alert-success" id="alert_berhasil" style="display:none">
@@ -1889,6 +1889,7 @@ else
         $("#potongan_persen").val('');
         $("#tanggal_jt").val('');
         $("#cetak_piutang").show();
+        $("#cetak_tunai").show();
         
     var tabel_tbs_penjualan = $('#tabel_tbs_penjualan').DataTable();
         tabel_tbs_penjualan.draw();

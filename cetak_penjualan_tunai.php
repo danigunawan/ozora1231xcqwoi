@@ -4,19 +4,17 @@
 include 'header.php';
 include 'sanitasi.php';
 include 'db.php';
+  
+  $no_faktur = stringdoang($_GET['no_faktur']);   
 
 
-  $nama_konsumen = stringdoang($_GET['nama_konsumen']);
-  $alamat_konsumen = stringdoang($_GET['alamat_konsumen']); 
-  $kode_toko = stringdoang($_GET['kode_toko']); 
-  $no_faktur = stringdoang($_GET['no_faktur']);  
-  $kode_ekspedisi = stringdoang($_GET['kode_ekspedisi']); 
-  $keterangan = stringdoang($_GET['keterangan']); 
+    $query_penjualan = $db->query("SELECT nama_konsumen, alamat_konsumen, keterangan, invoice_marketplace, no_telpon_konsumen,kode_toko,kode_ekspedisi FROM penjualan  WHERE no_faktur = '$no_faktur'");
+    $data_penjualan = mysqli_fetch_array($query_penjualan);
 
-      $manggil_nama_toko = $db->query("SELECT id,nama_toko,no_toko FROM toko WHERE id = '$kode_toko' ");
+      $manggil_nama_toko = $db->query("SELECT id,nama_toko,no_toko FROM toko WHERE id = '$data_penjualan[kode_toko]' ");
     $toko = mysqli_fetch_array($manggil_nama_toko);
 
-      $manggil_nama_ekspedisi = $db->query("SELECT id,nama_ekspedisi FROM ekspedisi WHERE id = '$kode_ekspedisi' ");
+      $manggil_nama_ekspedisi = $db->query("SELECT id,nama_ekspedisi FROM ekspedisi WHERE id = '$data_penjualan[kode_ekspedisi]' ");
     $ekspedisi = mysqli_fetch_array($manggil_nama_ekspedisi);
 
     $select_perusahaan = $db->query("SELECT foto,nama_perusahaan,alamat_perusahaan,no_telp FROM perusahaan ");
@@ -36,7 +34,7 @@ include 'db.php';
     <div class="row"> 
        <div class="col-sm-6"> 
         <div class="col-sm-6"><br>
-         <b>#<?php echo $no_faktur; ?> <br><br>
+         <b>#<?php echo $data_penjualan['invoice_marketplace']; ?> <br><br>
          Dari: <?php echo $toko['nama_toko']; ?>  <br>
          Telepon: <?php echo $toko['no_toko']; ?> <br></b>
         </div>
@@ -47,8 +45,9 @@ include 'db.php';
   
         <div class="col-sm-12">
         <hr>
-         Nama Tujuan:<b> <?php echo $nama_konsumen; ?> </b><br>
-         Alamat Tujuan: <b><?php echo $alamat_konsumen; ?></b><br><br>
+         Nama Tujuan:<b> <?php echo $data_penjualan['nama_konsumen']; ?> </b><br>
+         Nomor Telpon Tujuan:<b> <?php echo $data_penjualan['no_telpon_konsumen']; ?> </b><br>
+         Alamat Tujuan: <b><?php echo $data_penjualan['alamat_konsumen']; ?></b><br><br>
          Informasi Pengirim: <br>
          <b><?php echo $ekspedisi['nama_ekspedisi']; ?> </b><br><br>
          <h6><b>Daftar Produk:</b></h6>
@@ -117,7 +116,7 @@ include 'db.php';
       </tbody>
     </table> 
          <b>Keterangan:</b><br>
-         <?php echo $keterangan; ?>
+         <?php echo  $data_penjualan['keterangan']; ?>
         </div>
 
        </div>

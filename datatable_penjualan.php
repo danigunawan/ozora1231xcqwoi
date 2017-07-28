@@ -162,8 +162,9 @@ if ($row['status'] == 'Lunas') {
 				<button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown' style='width:150px'> Cetak Penjualan <span class='caret'></span></button>
 				
 				<ul class='dropdown-menu'>
-				<li><a href='cetak_penjualan_surat_jalan.php?no_faktur=".$row['no_faktur']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."&kode_toko=".$row['kode_toko']."&nama_toko=".$row['nama_toko']."&kode_ekspedisi=".$row['kode_ekspedisi']."&keterangan=".$row['keterangan']."' target='blank'> Cetak Label </a></li>
-				<li><a href='cetak_lap_penjualan_tunai_besar.php?no_faktur=".$row['no_faktur']."&nama_toko=".$row['nama_toko']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."&kode_toko=".$row['kode_toko']."' target='blank'> Cetak Invoice </a></li>
+				<li><a href='proses_cetak_penjualan_tunai.php?no_faktur=".$row['no_faktur']."' target='blank'> Cetak Label </a></li>
+
+				<li><a href='proses_cetak_penjualan_tunai_besar.php?no_faktur=".$row['no_faktur']."' target='blank'> Cetak Invoice </a></li>
 				</ul>
 				</div>";
 	} 
@@ -172,8 +173,9 @@ if ($row['status'] == 'Lunas') {
 				<button class='btn btn-success dropdown-toggle' type='button' data-toggle='dropdown' style='width:150px'> Cetak Penjualan <span class='caret'></span></button>
 				
 				<ul class='dropdown-menu'>
-				<li><a href='cetak_penjualan_surat_jalan.php?no_faktur=".$row['no_faktur']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."&kode_toko=".$row['kode_toko']."&nama_toko=".$row['nama_toko']."&kode_ekspedisi=".$row['kode_ekspedisi']."&keterangan=".$row['keterangan']."' target='blank'> Cetak Label </a></li>
-				<li><a href='cetak_lap_penjualan_tunai_besar.php?no_faktur=".$row['no_faktur']."&nama_toko=".$row['nama_toko']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."&kode_toko=".$row['kode_toko']."' target='blank'> Cetak Invoice </a></li>
+				<li><a href='proses_cetak_penjualan_tunai.php?no_faktur=".$row['no_faktur']."' target='blank'> Cetak Label </a></li>
+
+				<li><a href='proses_cetak_penjualan_tunai_besar.php?no_faktur=".$row['no_faktur']."' target='blank'> Cetak Invoice </a></li>
 				</ul>
 				</div>";
 
@@ -194,8 +196,9 @@ if ($row['status'] == 'Piutang') {
 				<button class='btn btn-warning dropdown-toggle' type='button' data-toggle='dropdown' style='width:150px'> Cetak Piutang <span class='caret'></span></button>
 				
 				<ul class='dropdown-menu'>
-				<li><a href='cetak_lap_penjualan_piutang.php?no_faktur=".$row['no_faktur']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."' target='blank'> Cetak Piutang </a></li> 
-				<li><a href='cetak_penjualan_surat_jalan.php?no_faktur=".$row['no_faktur']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."&kode_toko=".$row['kode_toko']."' target='blank'> Cetak Label </a></li>
+					<li><a href='proses_cetak_lap_penjualan_piutang.php?no_faktur=".$row['no_faktur']."' target='blank'> Cetak Piutang </a></li> 
+
+					<li><a href='proses_cetak_penjualan_tunai.php?no_faktur=".$row['no_faktur']."' target='blank'> Cetak Label </a></li> 
 				</ul>
 				</div>";
     }
@@ -204,8 +207,9 @@ if ($row['status'] == 'Piutang') {
 				<button class='btn btn-light-green dropdown-toggle' type='button' data-toggle='dropdown' style='width:150px'> Cetak Piutang <span class='caret'></span></button>
 				
 				<ul class='dropdown-menu'>
-				<li><a href='cetak_lap_penjualan_piutang.php?no_faktur=".$row['no_faktur']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."' target='blank'> Cetak Piutang </a></li> 
-				<li><a href='cetak_penjualan_surat_jalan.php?no_faktur=".$row['no_faktur']."&nama_konsumen=".$row['nama_konsumen']."&alamat_konsumen=".$row['alamat_konsumen']."&kode_toko=".$row['kode_toko']."' target='blank'> Cetak Label </a></li>
+					<li><a href='proses_cetak_lap_penjualan_piutang.php?no_faktur=".$row['no_faktur']."' target='blank'> Cetak Piutang </a></li> 
+
+					<li><a href='proses_cetak_penjualan_tunai.php?no_faktur=".$row['no_faktur']."' target='blank'> Cetak Label </a></li>
 				</ul>
 				</div>";
     }
