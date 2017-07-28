@@ -66,12 +66,22 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 			
  if ($data_otoritas_pelanggan['pelanggan_hapus'] > 0){
 
+          $query_cek_pelanggan = $db->query("SELECT kode_pelanggan FROM penjualan WHERE kode_pelanggan = '$row[kode_pelanggan]' ");
+          $jumlah_cek_pelanggan = mysqli_num_rows($query_cek_pelanggan);
+
+
+        if ($jumlah_cek_pelanggan == 0){
 
 			$nestedData[] = " <button class='btn btn-danger btn-hapus btn-sm' data-id='". $row['id'] ."' data-pelanggan='". $row['nama_pelanggan'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> ";
+		}
+        else {
+            $nestedData[] = "<p style='color:red;'>Sudah Terpakai</p>";
+        }
 
 		}
 
     if ($data_otoritas_pelanggan['pelanggan_hapus'] > 0){
+
 			$nestedData[] = " <button class='btn btn-info btn-edit btn-sm' data-pelanggan='". $row['nama_pelanggan'] ."' data-kode='". $row['kode_pelanggan'] ."' data-tanggal='". $row['tgl_lahir'] ."' data-nomor='". $row['no_telp'] ."' data-email='". $row['e_mail'] ."' data-wilayah='". $row['wilayah'] ."' data-level-harga='". $row['level_harga'] ."' data-id='". $row['id'] ."' data-flafon='". $row['flafon'] ."' data-flafon-usia='". $row['flafon_usia'] ."'> <span class='glyphicon glyphicon-edit'> </span> Edit </button> ";
 		}
 

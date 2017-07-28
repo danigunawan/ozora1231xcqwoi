@@ -62,16 +62,27 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
           $nestedData[] = $row['nama_toko'];
           $nestedData[] = $row['alamat_toko'];
           $nestedData[] = $row['no_toko'];
-          if ($data_otoritas_master_data_toko['toko_edit'] == 1){
+          if ($data_otoritas_master_data_toko['toko_hapus'] == 1){
+
+          $query_cek_nama_toko = $db->query("SELECT kode_toko FROM penjualan WHERE kode_toko = '$row[id]' ");
+          $jumlah_cek_nama_toko = mysqli_num_rows($query_cek_nama_toko);
+
+
+       if ($jumlah_cek_nama_toko == 0){
           $nestedData[] = "<button class='btn btn-danger btn-hapus btn-sm' data-id='". $row['id'] ."' data-toko='". $row['nama_toko'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button>";
+          }
+          else{
+          $nestedData[] = "<p style='color:red;'>Sudah Terpakai</p>";
+          }
           }
           else{
 			$nestedData[] = "<p></p>";
           }
 
-          if ($data_otoritas_master_data_toko['toko_hapus'] == 1){
+          if ($data_otoritas_master_data_toko['toko_edit'] == 1){
+
           $nestedData[] = "<button class='btn btn-success btn-edit btn-sm' data-toko='". $row['nama_toko'] ."' data-alamat='". $row['alamat_toko'] ."'  data-no='". $row['no_toko'] ."'  data-id='". $row['id'] ."' > <span class='glyphicon glyphicon-edit'> </span> Edit </button>";
-      	  }
+        }
       	  else{
 			$nestedData[] = "<p></p>";
       	  }
