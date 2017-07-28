@@ -432,8 +432,18 @@ $session_id = session_id();
         </div>
           
         <div class="col-sm-6">
+          <label style="font-size:15px"> <b> Invoice Marketplace </b></label><br>
+          <input type="text" style="height:20px" name="invoice_marketplace" id="invoice_marketplace" class="form-control" placeholder="Invoice Marketplace">
+        </div>
+
+        <div class="col-sm-6">
           <label style="font-size:15px"> <b> Nama Konsumen </b></label><br>
           <input type="text" style="height:20px" name="nama_konsumen" id="nama_konsumen" class="form-control" placeholder="Nama Konsumen">
+        </div>
+
+        <div class="col-sm-6">
+          <label style="font-size:15px"> <b> No Telpon Konsumen </b></label><br>
+          <input type="text" style="height:20px" name="no_telpon_konsumen" id="no_telpon_konsumen" class="form-control" placeholder="Nomor Telpon Konsumen">
         </div>
 
         <div class="col-sm-6">
@@ -1159,7 +1169,9 @@ else{
         var ber_stok = $("#ber_stok").val();
         var ppn_input = $("#ppn_input").val();
         var ppn = $("#ppn").val();
+        var invoice_marketplace = $("#invoice_marketplace").val();
         var nama_konsumen = $("#nama_konsumen").val();
+        var no_telpon_konsumen = $("#no_telpon_konsumen").val();
         var alamat_konsumen = $("#alamat_konsumen").val();
         var nama_toko = $("#nama_toko").val();
 
@@ -1167,9 +1179,17 @@ else{
  if (kode_pelanggan == ""){
   alert("Silakan Pilih Marketplace");
  }
+ else if (invoice_marketplace == ""){
+  alert("Silakan Isi Invoice Marketplace Konsumen");
+  $("#invoice_marketplace").focus();
+ }
  else if (nama_konsumen == ""){
   alert("Silakan Isi Nama Konsumen");
   $("#nama_konsumen").focus();
+ }
+ else if (no_telpon_konsumen == ""){
+  alert("Silakan Isi Nomor Telpon Konsumen");
+  $("#no_telpon_konsumen").focus();
  }
  else if (alamat_konsumen == ""){
   alert("Silakan Isi Alamat Konsumen");
@@ -1188,7 +1208,7 @@ else{
 
   if (data != 1) {
 
- $.post("proses_order_penjualan.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,kode_pelanggan:kode_pelanggan,harga:harga,sales:sales,kode_gudang:kode_gudang,keterangan:keterangan,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen,ber_stok:ber_stok,ppn_input:ppn_input, nama_toko:nama_toko},function(info) {
+ $.post("proses_order_penjualan.php",{total2:total2,session_id:session_id,no_faktur:no_faktur,kode_pelanggan:kode_pelanggan,harga:harga,sales:sales,kode_gudang:kode_gudang,keterangan:keterangan,invoice_marketplace:invoice_marketplace,nama_konsumen:nama_konsumen,no_telpon_konsumen:no_telpon_konsumen,alamat_konsumen:alamat_konsumen,ber_stok:ber_stok,ppn_input:ppn_input, nama_toko:nama_toko},function(info) {
 
 
      $("#table-baru").hide();
@@ -1197,7 +1217,9 @@ else{
      $("#alert_berhasil").show();
      $("#total2").val('');
      $('#tbody').html('');
+     $("#invoice_marketplace").val('');
      $("#nama_konsumen").val('');
+     $("#no_telpon_konsumen").val('');
      $("#alamat_konsumen").val('');
      $("#keterangan").val('');
 

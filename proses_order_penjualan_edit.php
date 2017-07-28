@@ -39,11 +39,11 @@
             }
 
         // buat prepared statements
-        $query_update = $db->prepare("UPDATE penjualan_order SET toko = ?, kode_pelanggan = ?, total = ?, tanggal = ?, jam = ?, user = ? , keterangan = ?, nama_konsumen = ?, alamat_konsumen = ?, sales = ? WHERE no_faktur_order = ?");          
+        $query_update = $db->prepare("UPDATE penjualan_order SET toko = ?, kode_pelanggan = ?, total = ?, tanggal = ?, jam = ?, user = ? , keterangan = ?, invoice_marketplace = ?, nama_konsumen = ?, no_telpon_konsumen = ?, alamat_konsumen = ?, sales = ? WHERE no_faktur_order = ?");          
             
         // hubungkan "data" dengan prepared statements
-        $query_update->bind_param("isissssssis", 
-        $nama_toko, $kode_pelanggan, $total, $tanggal, $jam_sekarang , $user, $keterangan, $nama_konsumen, $alamat_konsumen, $sales, $nomor_faktur);
+        $query_update->bind_param("isissssssssis", 
+        $nama_toko, $kode_pelanggan, $total, $tanggal, $jam_sekarang , $user, $keterangan, $invoice_marketplace, $nama_konsumen, $no_telpon_konsumen, $alamat_konsumen, $sales, $nomor_faktur);
             
         // siapkan "data" query
         $nama_toko = angkadoang($_POST['nama_toko']);
@@ -53,7 +53,9 @@
         $sales = angkadoang($_POST['sales']);
         $user = $_SESSION['nama'];
         $tanggal = stringdoang($_POST['tanggal']);
+        $invoice_marketplace = stringdoang($_POST['invoice_marketplace']);
         $nama_konsumen = stringdoang($_POST['nama_konsumen']);
+        $no_telpon_konsumen = stringdoang($_POST['no_telpon_konsumen']);
         $alamat_konsumen = stringdoang($_POST['alamat_konsumen']);
         $nomor_faktur = stringdoang($_POST['no_faktur']);
             

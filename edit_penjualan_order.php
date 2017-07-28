@@ -22,7 +22,7 @@
   $out_pelanggan = mysqli_fetch_array($ambil_pelanggan);
   $level_harga = $out_pelanggan['level_harga'];
 
-  $ambil_penjualan = $db->query("SELECT sales, tanggal, nama_konsumen, alamat_konsumen, keterangan FROM penjualan_order WHERE no_faktur_order = '$no_faktur'");
+  $ambil_penjualan = $db->query("SELECT sales, tanggal, nama_konsumen, alamat_konsumen,invoice_marketplace,no_telpon_konsumen, keterangan FROM penjualan_order WHERE no_faktur_order = '$no_faktur'");
   $data_penjualan = mysqli_fetch_array($ambil_penjualan);
 
 
@@ -426,8 +426,18 @@
         </div>
           
         <div class="col-sm-6">
+          <label style="font-size:15px"> <b> Invoice Marketplace </b></label><br>
+          <input type="text" style="height:20px" name="invoice_marketplace" id="invoice_marketplace" value="<?php echo $data_penjualan['invoice_marketplace'] ?>" class="form-control" placeholder="Invoice Marketplace">
+        </div>
+
+        <div class="col-sm-6">
           <label style="font-size:15px"> <b> Nama Konsumen </b></label><br>
           <input type="text" style="height:20px" name="nama_konsumen" id="nama_konsumen" class="form-control" value="<?php echo $data_penjualan['nama_konsumen'] ?>" placeholder="Nama Konsumen">
+        </div>
+
+        <div class="col-sm-6">
+          <label style="font-size:15px"> <b> No Telpon Konsumen </b></label><br>
+          <input type="text" style="height:20px" name="no_telpon_konsumen" id="no_telpon_konsumen" value="<?php echo $data_penjualan['no_telpon_konsumen'] ?>" class="form-control" placeholder="Nomor Telpon Konsumen">
         </div>
 
         <div class="col-sm-6">
@@ -1027,7 +1037,9 @@ else if (level_harga == "Level 3") {
       var keterangan = $("#keterangan").val();   
       var ber_stok = $("#ber_stok").val();   
       var ppn_input = $("#ppn_input").val();
+      var invoice_marketplace = $("#invoice_marketplace").val();
       var nama_konsumen = $("#nama_konsumen").val();
+      var no_telpon_konsumen = $("#no_telpon_konsumen").val();
       var alamat_konsumen = $("#alamat_konsumen").val();
       var ppn = $("#ppn").val();
 
@@ -1037,6 +1049,15 @@ else if (level_harga == "Level 3") {
       }
       else if (nama_toko == ""){
         alert(" Kode Gudang Harus Diisi ");
+      }
+      else if (nama_konsumen == ""){
+        alert(" Nama Konsumen Harus Diisi ");
+      }
+      else if (invoice_marketplace == ""){
+        alert(" Invoice Marketplace Harus Diisi ");
+      }
+      else if (no_telpon_konsumen == ""){
+        alert(" Nomor Telpon Konsumen Harus Diisi ");
       }
       else if (alamat_konsumen == ""){
         alert("Silakan Isi Alamat Konsumen");
@@ -1055,7 +1076,7 @@ else if (level_harga == "Level 3") {
 
           if (data != "1") {
 
-            $.post("proses_order_penjualan_edit.php",{total2:total2,no_faktur:no_faktur,no_faktur:no_faktur,kode_pelanggan:kode_pelanggan,harga:harga,sales:sales,nama_toko:nama_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input,tanggal:tanggal,nama_konsumen:nama_konsumen,alamat_konsumen:alamat_konsumen},function(info) {
+            $.post("proses_order_penjualan_edit.php",{total2:total2,no_faktur:no_faktur,no_faktur:no_faktur,kode_pelanggan:kode_pelanggan,harga:harga,sales:sales,nama_toko:nama_toko,keterangan:keterangan,ber_stok:ber_stok,ppn_input:ppn_input,tanggal:tanggal,invoice_marketplace:invoice_marketplace,nama_konsumen:nama_konsumen,no_telpon_konsumen:no_telpon_konsumen,alamat_konsumen:alamat_konsumen},function(info) {
 
                $("#table-baru").html(info);
                $("#cetak_tunai").attr('href', 'cetak_penjualan_order.php?no_faktur='+no_faktur+'');

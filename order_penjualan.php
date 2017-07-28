@@ -169,7 +169,10 @@ tr:nth-child(even){background-color: #f2f2f2}
 			<th style='background-color: #4CAF50; color:white'> Nomor Faktur </th>
       <th style='background-color: #4CAF50; color:white'> Toko </th>
 			<th style='background-color: #4CAF50; color:white'> Marketplace</th>
+      <th style='background-color: #4CAF50; color:white'> Invoice Marketplace </th>
       <th style='background-color: #4CAF50; color:white'> Nama Konsumen </th>
+      <th style='background-color: #4CAF50; color:white'> Nomor Telpon Konsumen </th>
+      <th style='background-color: #4CAF50; color:white'> Alamat Konsumen </th>
 			<th style='background-color: #4CAF50; color:white'> Tanggal </th>
 			<th style='background-color: #4CAF50; color:white'> Jam </th>
 			<th style='background-color: #4CAF50; color:white'> Petugas </th>

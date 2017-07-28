@@ -128,11 +128,11 @@ echo $no_faktur = $nomor."/OR/".$data_bulan_terakhir."/".$tahun_terakhir;
 
 
               
-              $stmt = $db->prepare("INSERT INTO penjualan_order (no_faktur_order, kode_gudang, kode_pelanggan, total, tanggal, jam, user, status_order,keterangan, nama_konsumen, alamat_konsumen, toko, sales) VALUES (?,?,?,?,?,?,?,'Diorder',?,?,?,?,?)");
+              $stmt = $db->prepare("INSERT INTO penjualan_order (no_faktur_order, kode_gudang, kode_pelanggan, total, tanggal, jam, user, status_order,keterangan, invoice_marketplace, nama_konsumen, no_telpon_konsumen, alamat_konsumen, toko, sales) VALUES (?,?,?,?,?,?,?,'Diorder',?,?,?,?,?,?,?)");
               
     // hubungkan "data" dengan prepared statements
-              $stmt->bind_param("sssissssssii",
-              $no_faktur, $kode_gudang, $ambil_kode_pelanggan['id'], $total, $tanggal_sekarang, $jam_sekarang, $user, $keterangan, $nama_konsumen, $alamat_konsumen, $nama_toko, $sales);
+              $stmt->bind_param("sssissssssssii",
+              $no_faktur, $kode_gudang, $ambil_kode_pelanggan['id'], $total, $tanggal_sekarang, $jam_sekarang, $user, $keterangan, $invoice_marketplace, $nama_konsumen, $no_telpon_konsumen, $alamat_konsumen, $nama_toko, $sales);
               
               
               $kode_pelanggan = stringdoang($_POST['kode_pelanggan']);
@@ -140,7 +140,9 @@ echo $no_faktur = $nomor."/OR/".$data_bulan_terakhir."/".$tahun_terakhir;
               $kode_gudang = stringdoang($_POST['kode_gudang']);
               $total = angkadoang($_POST['total2']);
               $nama_toko = angkadoang($_POST['nama_toko']);            
-              $nama_konsumen = stringdoang($_POST['nama_konsumen']);
+              $invoice_marketplace = stringdoang($_POST['invoice_marketplace']);   
+              $nama_konsumen = stringdoang($_POST['nama_konsumen']);   
+              $no_telpon_konsumen = stringdoang($_POST['no_telpon_konsumen']);
               $alamat_konsumen = stringdoang($_POST['alamat_konsumen']);
               $sales = stringdoang($_POST['sales']);
               $user = $_SESSION['nama'];

@@ -34,14 +34,14 @@ $columns = array(
 
 
 // getting total number records without any search
-$sql = " SELECT pl.kode_pelanggan,po.keterangan,po.toko,po.nama_konsumen,po.alamat_konsumen,po.id,po.no_faktur_order,po.total,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko ";
+$sql = " SELECT pl.kode_pelanggan,po.keterangan,po.toko,po.invoice_marketplace,po.nama_konsumen,po.no_telpon_konsumen,po.alamat_konsumen,po.id,po.no_faktur_order,po.total,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko ";
 $sql.=" FROM penjualan_order po INNER JOIN toko t ON po.toko = t.id INNER JOIN pelanggan pl ON po.kode_pelanggan = pl.id ";
 $query=mysqli_query($conn, $sql) or die("1.php: get employees");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
 
-$sql = "SELECT  pl.kode_pelanggan,po.keterangan,po.toko,po.nama_konsumen,po.alamat_konsumen,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko  ";
+$sql = "SELECT  pl.kode_pelanggan,po.keterangan,po.toko,po.invoice_marketplace,po.nama_konsumen,po.no_telpon_konsumen,po.alamat_konsumen,po.id,po.no_faktur_order,po.total,po.kode_pelanggan,po.tanggal,po.jam,po.user,po.status_order,pl.nama_pelanggan, t.nama_toko  ";
 $sql.=" FROM penjualan_order po INNER JOIN toko t ON po.toko = t.id INNER JOIN pelanggan pl ON po.kode_pelanggan = pl.id  WHERE 1=1 ";
 
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
@@ -51,7 +51,9 @@ if( !empty($requestData['search']['value']) ) {   // if there is a search parame
   $sql.=" OR po.tanggal LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR t.nama_toko LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR po.user LIKE '".$requestData['search']['value']."%' ";
+  $sql.=" OR po.invoice_marketplace LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR po.nama_konsumen LIKE '".$requestData['search']['value']."%' ";
+  $sql.=" OR po.no_telpon_konsumen LIKE '".$requestData['search']['value']."%' ";
   $sql.=" OR pl.nama_pelanggan LIKE '".$requestData['search']['value']."%' )";
 }
 $query=mysqli_query($conn, $sql) or die("2.php: get employees");
@@ -90,8 +92,11 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData[] = "<button class='btn btn-info btn-sm detail' no_faktur='". $row['no_faktur_order'] ."' >Detail</button>";
     $nestedData[] = $row['no_faktur_order'];
     $nestedData[] = $row['nama_toko'];
-    $nestedData[] = $row['kode_pelanggan'] ." - ".$row['nama_pelanggan'];
+    $nestedData[] = $row['nama_pelanggan'];
+    $nestedData[] = $row['invoice_marketplace'];
     $nestedData[] = $row['nama_konsumen'];
+    $nestedData[] = $row['no_telpon_konsumen'];
+    $nestedData[] = $row['alamat_konsumen'];
     $nestedData[] = $row['tanggal'];
     $nestedData[] = $row['jam'];
     $nestedData[] = $row['user'];
