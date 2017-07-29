@@ -293,6 +293,7 @@ $session_id = session_id();
         <table id="table_order" align="center" class="table table-bordered table-sm">
             <thead>
               <th> Faktur Order  </th>
+              <th> Invoice Marketplace</th>
               <th> Marketplace</th>
               <th> Toko </th>
               <th> Konsumen </th>
@@ -1024,11 +1025,13 @@ $(document).ready(function(){
 
                     $(nRow).attr('class', "pilih_order");
                     $(nRow).attr('data-order', aData[0]);
-                    $(nRow).attr('data-total', aData[6]);
-                    $(nRow).attr('data-konsumen', aData[3]);
-                    $(nRow).attr('data-alamat', aData[9]);
-                    $(nRow).attr('data-market', aData[10]);
-                    $(nRow).attr('data-toko', aData[11]);
+                    $(nRow).attr('data-total', aData[7]);
+                    $(nRow).attr('data-konsumen', aData[4]);
+                    $(nRow).attr('data-alamat', aData[10]);
+                    $(nRow).attr('data-market', aData[11]);
+                    $(nRow).attr('data-toko', aData[12]);
+                    $(nRow).attr('data-telpon', aData[13]);
+                    $(nRow).attr('data-invoice', aData[1]); 
 
                 },
               });
@@ -1051,6 +1054,12 @@ $(document).ready(function(){
 
           document.getElementById("nama_konsumen").value = $(this).attr('data-konsumen');
           $('#nama_konsumen').attr('readonly', true);
+
+          document.getElementById("invoice_marketplace").value = $(this).attr('data-invoice');
+          $('#invoice_marketplace').attr('readonly', true);
+
+          document.getElementById("no_telpon_konsumen").value = $(this).attr('data-telpon');
+          $('#no_telpon_konsumen').attr('readonly', true);
 
           document.getElementById("alamat_konsumen").value = $(this).attr('data-alamat');
           $('#alamat_konsumen').attr('readonly', true);
@@ -3033,6 +3042,8 @@ $(document).ready(function(){
         $('#kode_toko').prop('disabled', false).trigger("chosen:updated");
         $('#nama_konsumen').attr('readonly', false).val('');
         $('#alamat_konsumen').attr('readonly', false).val('');
+        $('#invoice_marketplace').attr('readonly', false).val('');
+        $('#no_telpon_konsumen').attr('readonly', false).val('');
 
     var table_tbs_order = $('#table_tbs_order').DataTable();
         table_tbs_order.draw();
