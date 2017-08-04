@@ -194,9 +194,9 @@ $otoritas_kolom = mysqli_fetch_array($pilih_akses_kolom);
     <div class="col-sm-2">
       <label> Level Harga </label><br>
       <select style="font-size:15px; height:35px" type="text" name="level_harga" id="level_harga" class="form-control chosen" required="" >
-        <option value="Level 1">Level 1</option>
-        <option value="Level 2">Level 2</option>
-        <option value="Level 3">Level 3</option>
+        <option value="Level 1">Marketplace</option>
+        <option value="Level 2">Admin</option> 
+        <option value="Level 3"></option> 
       </select>
     </div>   
 

@@ -29,8 +29,7 @@ include 'db.php';
    }
 </style>
 
-
-<div class="container">
+ 
     <div class="row"> 
        <div class="col-sm-6"> 
         <div class="col-sm-6"><br>
@@ -120,8 +119,7 @@ include 'db.php';
         </div>
 
        </div>
-    </div>
-</div> <!--/container-->
+    </div> 
 
 
  <script>
