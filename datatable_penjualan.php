@@ -44,7 +44,7 @@ $columns = array(
 if ($status == 'semua') {
 // getting total number records without any search
 $sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.invoice_marketplace,p.status_cetak,p.no_telpon_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan ";
-$sql.="FROM penjualan p INNER JOIN gudang g ON p.kode_gudang = g.kode_gudang INNER JOIN toko t ON p.kode_toko = t.id INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan ";
+$sql.="FROM penjualan p LEFT JOIN gudang g ON p.kode_gudang = g.kode_gudang LEFT JOIN toko t ON p.kode_toko = t.id LEFT JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan ";
 $query=mysqli_query($conn, $sql) or die("datatable_item_keluar.php: get employees");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
@@ -52,7 +52,7 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 else{
 	// getting total number records without any search
 $sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.invoice_marketplace,p.status_cetak,p.no_telpon_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan,p.keterangan ";
-$sql.="FROM penjualan p INNER JOIN gudang g ON p.kode_gudang = g.kode_gudang INNER JOIN toko t ON p.kode_toko = t.id INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan ";
+$sql.="FROM penjualan p LEFT JOIN gudang g ON p.kode_gudang = g.kode_gudang LEFT JOIN toko t ON p.kode_toko = t.id LEFT JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan ";
 $query=mysqli_query($conn, $sql) or die("datatable_item_keluar.php: get employees");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
@@ -62,7 +62,7 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 if ($status == 'semua') {
 // getting total number records without any search
 $sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.invoice_marketplace,p.status_cetak,p.no_telpon_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan,p.keterangan ";
-$sql.="FROM penjualan p INNER JOIN gudang g ON p.kode_gudang = g.kode_gudang INNER JOIN toko t ON p.kode_toko = t.id INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan  WHERE 1=1"; 
+$sql.="FROM penjualan p LEFT JOIN gudang g ON p.kode_gudang = g.kode_gudang LEFT JOIN toko t ON p.kode_toko = t.id LEFT JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan  WHERE 1=1"; 
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 	$sql.=" AND ( p.no_faktur LIKE '".$requestData['search']['value']."%' ";  
 	$sql.=" OR pl.kode_pelanggan LIKE '".$requestData['search']['value']."%' ";     
@@ -83,7 +83,7 @@ if( !empty($requestData['search']['value']) ) {   // if there is a search parame
 else{
 // getting total number records without any search
 $sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.invoice_marketplace,p.status_cetak,p.no_telpon_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan,p.keterangan ";
-$sql.="FROM penjualan p INNER JOIN gudang g ON p.kode_gudang = g.kode_gudang INNER JOIN toko t ON p.kode_toko = t.id INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan WHERE p.status = '$status' AND 1=1";
+$sql.="FROM penjualan p LEFT JOIN gudang g ON p.kode_gudang = g.kode_gudang LEFT JOIN toko t ON p.kode_toko = t.id LEFT JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan WHERE p.status = '$status' AND 1=1";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 
 	$sql.=" AND ( p.no_faktur LIKE '".$requestData['search']['value']."%' ";  
