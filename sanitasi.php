@@ -90,7 +90,6 @@ $angka1 =  str_replace("FROM", " ", $angka1);
 $angka1 =  str_replace("from", " ", $angka1);
 
 
-
  return $angka1;
 }
 function urldoang($string){

@@ -3,6 +3,10 @@
 include 'db.php';
 /* Database connection end */
 include 'sanitasi.php';
+
+
+
+
  $status = $_POST['status'];
 
 // storing  request (ie, get/post) global array to a variable  
@@ -167,6 +171,12 @@ if ($row['status'] == 'Lunas') {
 				<li><a href='proses_cetak_penjualan_tunai_besar.php?no_faktur=".$row['no_faktur']."' target='blank'> Cetak Invoice </a></li>
 				</ul>
 				</div>";
+
+	$nestedData[] = "<fieldset class='form-group'>
+                  <input type='checkbox' class='pilih_checkbox_lunas' id='checkbox_lunas-".$row['id']."' data-faktur='".$row['no_faktur']."'  data-id='".$row['id']."' data-status='".$row['status']."' data-toggle-lunas='0' >
+                    <label for='checkbox_lunas-".$row['id']."' class='pilih_checkbox_lunas' data-faktur='".$row['no_faktur']."' data-toggle-lunas='0' ></label>
+                </fieldset>";
+				
 	} 
 	elseif ($row['status_cetak'] == '1') {
 	$nestedData[] ="<div class='dropdown'>
@@ -179,11 +189,17 @@ if ($row['status'] == 'Lunas') {
 				</ul>
 				</div>";
 
+	$nestedData[] = "<fieldset class='form-group'>
+                    <input type='checkbox' class='pilih_checkbox_lunas' id='checkbox_lunas-".$row['id']."' data-faktur='".$row['no_faktur']."' data-id='".$row['id']."' data-status='".$row['status']."' data-toggle-lunas='0' >
+                    <label for='checkbox_lunas-".$row['id']."' class='pilih_checkbox_lunas' data-faktur='".$row['no_faktur']."' data-toggle-lunas='0' ></label>
+                </fieldset>";
+
 	}
 }
 
 else{
 
+	$nestedData[] = "";
 	$nestedData[] = "";
 }
 
@@ -201,6 +217,11 @@ if ($row['status'] == 'Piutang') {
 					<li><a href='proses_cetak_penjualan_tunai.php?no_faktur=".$row['no_faktur']."' target='blank'> Cetak Label </a></li> 
 				</ul>
 				</div>";
+
+				$nestedData[] = "<fieldset class='form-group'>
+                    <input type='checkbox' class='pilih_checkbox_piutang' id='checkbox_piutang-".$row['id']."' data-faktur='".$row['no_faktur']."' data-status='".$row['status']."' data-toggle-piutang='0' >
+                    <label for='checkbox_piutang-".$row['id']."' class='pilih_checkbox_piutang' data-faktur='".$row['no_faktur']."' data-toggle-piutang='0'></label>
+                </fieldset>";
     }
 	elseif ($row['status_cetak'] == '1') {
 		$nestedData[] ="<div class='dropdown'>
@@ -212,12 +233,18 @@ if ($row['status'] == 'Piutang') {
 					<li><a href='proses_cetak_penjualan_tunai.php?no_faktur=".$row['no_faktur']."' target='blank'> Cetak Label </a></li>
 				</ul>
 				</div>";
+
+				$nestedData[] = "<fieldset class='form-group'>
+                    <input type='checkbox' class='pilih_checkbox_piutang' data-toggle-piutang='0' id='checkbox_piutang-".$row['id']."' data-status='".$row['status']."' data-faktur='".$row['no_faktur']."'>
+                    <label for='checkbox_piutang-".$row['id']."' class='pilih_checkbox_piutang' data-faktur='".$row['no_faktur']."' data-toggle-piutang='0'></label>
+                </fieldset>";
     }
     
 }
 
 else{
 
+	$nestedData[] = "";
 	$nestedData[] = "";
 	
 }

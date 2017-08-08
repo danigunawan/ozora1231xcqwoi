@@ -12,7 +12,12 @@ $status = $_GET['status'];
 
  ?>
 
+<style type="text/css">
+  p.vcenter {
+    vertical-align: middle;
+}
 
+</style>
 
 
 <div class="container"><!--start of container-->
@@ -433,7 +438,9 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
 		}
 ?>
 			<th style='background-color: #4CAF50; color:white'> Cetak  Tunai </th>
+      <th style='background-color: #4CAF50; color:white'> Ceklis Tunai </th>
 			<th style='background-color: #4CAF50; color:white'> Cetak Piutang </th>
+      <th style='background-color: #4CAF50; color:white'> Ceklis Piutang </th>
 			<th style='background-color: #4CAF50; color:white'> Detail </th>
       <th style='background-color: #4CAF50; color:white'> Resi Penjualan </th>      
 			<th style='background-color: #4CAF50; color:white'> Nomor Faktur </th> 
@@ -468,16 +475,181 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
 </span>
 </div>
 
+<p style="color:red;">Note: Silakan pilih Ceklis Piutang untuk Cetak Piutang , dan Ceklis Lunas untuk Cetak Lunas</p>
 
+<button style='background-color:#aa66cc;'  class='btn btn-info' id="cetak_label" target="blank"><i class='fa fa-print' ></i> Cetak Label</button>
+<button style='background-color:#ff77cc;'  class='btn btn-info' id="cetak_invoice" target="blank" ><i class='fa fa-print'></i> Cetak Invoice</button>
 
 </div><!--end of container-->
 		
+<input style="height:15px" type="hidden" class="form-control faktur"  id="data_faktur" name="data_faktur" value="">
+<input style="height:15px" type="hidden" class="form-control status"  id="data_status" name="data_status" value="">
+
+
+<!--CEKLIS CETAK-->
+
+<!--Mulai Script Proses untuk Detail-->
+<script>
+      $(document).on('click','.pilih_checkbox_lunas',function(e){
+
+//data togle dari modal
+    var data_toggle = $(this).attr('data-toggle-lunas');
+    var data_id = $(this).attr('data-id');
+
+    if(data_toggle == 0){
+         $(this).attr("data-toggle-lunas", 1);
+         $("#data_status").val("Lunas");
+    }
+    else{
+        $(this).attr("data-toggle-lunas", 0);
+        $("#data_status").val("");
+    }
+
+        $(".pilih_checkbox_lunas").show();
+        $(".pilih_checkbox_piutang").hide();
+
+        if ($(".pilih_checkbox_lunas").attr("data-toggle-lunas") == 0 ) {
+            $(".pilih_checkbox_piutang").show();
+            $(".pilih_checkbox_piutang").attr("data-toggle-piutang", 0);
+            $("#data_status").val("");
+        }
+        else{
+            $(".pilih_checkbox_piutang").hide();
+            $(".pilih_checkbox_piutang").attr("data-toggle-piutang", 0);
+            $("#data_status").val("Lunas");
+              
+        }
+
+});
+</script>
+<!--Akhir Script Proses untuk Detail-->
+
+
+<!--Mulai Script Proses untuk Detail-->
+<script>
+      $(document).on('click','.pilih_checkbox_piutang',function(e){
+//data togle dari modal
+    var data_toggle = $(this).attr('data-toggle-piutang');
+
+    if(data_toggle == 0){
+         $(this).attr("data-toggle-piutang", 1);
+         $("#data_status").val("Piutang");
+    }
+    else{
+        $(this).attr("data-toggle-piutang", 0);
+        $("#data_status").val("");
+    }
+
+
+    $(".pilih_checkbox_piutang").show();
+    $(".pilih_checkbox_lunas").hide();
+
+
+        if ($(".pilih_checkbox_piutang").attr("data-toggle-piutang") == 0 ) {
+                $(".pilih_checkbox_lunas").attr("data-toggle-lunas", 0);
+                $(".pilih_checkbox_lunas").show();
+                $("#data_status").val("");
+                
+        }
+        else{
+           $(".pilih_checkbox_lunas").attr("data-toggle-lunas", 0);
+            $(".pilih_checkbox_lunas").hide();
+            $("#data_status").val("Piutang");
+
+        }
+
+});
+</script>
+<!--Akhir Script Proses untuk Detail-->
+
+
+    <script type="text/javascript">
+
+      function ceklis(faktur,data_tog){
+        if (data_tog == 1){
+              var faktur_input = $('#data_faktur').val();
+              var faktur_real = faktur+","+faktur_input;
+                $('#data_faktur').val(faktur_real);
+
+        }
+        else{
+            var faktur_input = $('#data_faktur').val();
+            var faktur_fix = faktur_input.replace(faktur+",","");
+              $('#data_faktur').val(faktur_fix);
+        }
+      }
+
+    </script>
+
+
+    <script type="text/javascript" >
+      $(document).on('change','.pilih_checkbox_lunas',function(e){
+
+          var data_faktur = $(this).attr("data-faktur");
+          var data_toggle = $(this).attr("data-toggle-lunas");
+           ceklis(data_faktur,data_toggle);
+           $("#data_status").val("Lunas");   
+      }); 
+    </script>
+
+
+        <script type="text/javascript" >
+      $(document).on('change','.pilih_checkbox_piutang',function(e){
+
+          var data_faktur = $(this).attr("data-faktur");
+          var data_toggle = $(this).attr("data-toggle-piutang");
+           ceklis(data_faktur,data_toggle);  
+           $("#data_status").val("Piutang");   
+      }); 
+    </script>
+
+    <script type="text/javascript">
+      $(document).on('click','#cetak_invoice',function(e){
+          var data_faktur_kirim = $('#data_faktur').val();
+          var data_status = $('#data_status').val();
+              if (data_status == "Piutang") {
+                 window.location.href = 'cetak_piutang_ceklis.php?data_faktur='+data_faktur_kirim+'';
+                 $('#data_faktur').val("");
+                 $('#data_status').val("");
+                 $(".pilih_checkbox_lunas").attr("data-toggle-lunas",0);
+                 $(".pilih_checkbox_piutang").attr("data-toggle-piutang",0);
+
+              }
+              else{
+                 window.location.href = 'cetak_besar_tunai_ceklis.php?data_faktur='+data_faktur_kirim+'';
+                  $('#data_faktur').val("");
+                 $('#data_status').val("");
+                 $(".pilih_checkbox_lunas").attr("data-toggle-lunas",0);
+                 $(".pilih_checkbox_piutang").attr("data-toggle-piutang",0);
+     
+              }
+            });
+    </script>
+
+
+    <script type="text/javascript">
+      $(document).on('click','#cetak_label',function(e){
+          var data_faktur_kirim = $('#data_faktur').val();
+          var data_status = $('#data_status').val();
+                 $('#data_faktur').val("");
+                 $('#data_status').val("");
+                 $(".pilih_checkbox_lunas").attr("data-toggle-lunas",0);
+                 $(".pilih_checkbox_piutang").attr("data-toggle-piutang",0);
+
+                 window.location.href = 'cetak_penjualan_tunai_ceklis.php?data_faktur='+data_faktur_kirim+'';
+
+              
+            });
+    </script>
+
+
+<!--CEKLIS CETAK-->
+
 
 
 
   <script type="text/javascript">
   // ajax table penjualan
-  $(document).ready(function(){
     $(document).ready(function(){
 
       var status = $('#status').val();
@@ -503,7 +675,6 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
           }
 
       }); 
-  });
   });
 </script>
 
