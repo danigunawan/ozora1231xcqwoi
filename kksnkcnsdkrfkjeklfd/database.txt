@@ -1,0 +1,7 @@
+Table 		:
+				- penjualan 			> invoice_marketplace, no_telpon_konsumen, status_cetak
+				- order_penjualan 		> invoice_marketplace & no_telpon_konsumen
+Programmer	: 
+				- Ghaza
+Tanggal		:
+				- 27 Juli 2017
