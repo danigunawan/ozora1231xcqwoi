@@ -475,7 +475,7 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
 </span>
 </div>
 
-<p style="color:red;">Note: Silakan pilih Ceklis Piutang untuk Cetak Piutang , dan Ceklis Lunas untuk Cetak Lunas</p>
+<p style="color:red;">Note: Silakan pilih Cetak Ceklis jika ingin mencetak beruntun label</p>
 
 <button style='background-color:#aa66cc;'  class='btn btn-info' id="cetak_label" target="blank"><i class='fa fa-print' ></i> Cetak Label</button>
 <!-- <button style='background-color:#ff77cc;'  class='btn btn-info' id="cetak_invoice" target="blank" ><i class='fa fa-print'></i> Cetak Invoice</button> -->

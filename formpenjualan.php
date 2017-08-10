@@ -2739,7 +2739,7 @@ $(document).ready(function(){
             }
 
             var t_tax = ((parseInt(total_kurang_potongan,10) * parseInt(tax,10)) / 100);
-            var total_akhir = parseInt(total_kurang_potongan, 10) + parseInt(t_tax,10);
+            var total_akhir = parseInt(total_kurang_potongan, 10) + parseInt(t_tax,10)  + parseInt(ongkir,10);
 
             $("#total1").val(tandaPemisahTitik(Math.round(total_akhir)));
             $("#potongan_penjualan").val(tandaPemisahTitik(Math.round(total_potongan_nominal)));

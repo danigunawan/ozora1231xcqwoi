@@ -9,7 +9,7 @@ include 'db.php';
   $no_faktur = stringdoang($_GET['no_faktur']);  
 
 
-    $select_penjualan = $db->query("SELECT p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.potongan,p.potongan_persen, pl.nama_pelanggan,pl.wilayah,da.nama_daftar_akun,p.nama_konsumen,p.alamat_konsumen,p.kode_toko,p.invoice_marketplace,p.no_telpon_konsumen FROM penjualan p INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan INNER JOIN daftar_akun da ON p.cara_bayar = da.kode_daftar_akun  WHERE p.no_faktur = '$no_faktur' ORDER BY p.id DESC");
+    $select_penjualan = $db->query("SELECT p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.potongan,p.potongan_persen, pl.nama_pelanggan,pl.wilayah,da.nama_daftar_akun,p.nama_konsumen,p.alamat_konsumen,p.kode_toko,p.invoice_marketplace,p.no_telpon_konsumen,p.ongkir FROM penjualan p INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan INNER JOIN daftar_akun da ON p.cara_bayar = da.kode_daftar_akun  WHERE p.no_faktur = '$no_faktur' ORDER BY p.id DESC");
     $data0 = mysqli_fetch_array($select_penjualan);
     
       $manggil_nama_toko = $db->query("SELECT id,nama_toko,alamat_toko,no_toko FROM toko WHERE id = '$data0[kode_toko]' ");
@@ -27,7 +27,7 @@ include 'db.php';
 
    
 
-    $jml_dibayar = $t_subtotal - $data0['potongan'];
+    $jml_dibayar = $t_subtotal - $data0['potongan'] + $data0['ongkir'];
 
     $ambil_footer = $db->query("SELECT keterangan, petugas FROM setting_footer_cetak");
     $data_footer = mysqli_fetch_array($ambil_footer);
@@ -231,6 +231,15 @@ include 'db.php';
             <td class='table1'></td>
             <td class='table1' align='right'></td>
             <td class='table1' align='right'><?php echo rp($data0['potongan']); ?></td>
+        </tr>
+
+                <tr>
+            <td class='table1'></td>
+            <td class='table1'>Jumlah Ongkir </td>
+            <td class='table1' align='right'></td>
+            <td class='table1'></td>
+            <td class='table1' align='right'></td>
+            <td class='table1' align='right'><?php echo rp($data0['ongkir']); ?></td>
         </tr>
 
         <tr>

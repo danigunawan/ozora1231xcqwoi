@@ -80,8 +80,9 @@ $sub_total_kotor = $ambil_kotor['total_kotor'];
           <td>". $data1['potongan'] ."</td>
           <td>". $data1['tax'] ."</td>
           <td>". $data1['ongkir'] ."</td>
-          <td>". $data1['sisa'] ."</td>
           <td>". $data1['tunai'] ."</td>
+          <td>". $data1['sisa'] ."</td>
+          
       </tr>";
 
 

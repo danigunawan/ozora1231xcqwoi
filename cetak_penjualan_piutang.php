@@ -8,7 +8,7 @@ include 'db.php';
 
   $no_faktur = stringdoang($_GET['no_faktur']); 
 
-    $select_penjualan = $db->query("SELECT p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.potongan,p.potongan_persen, pl.nama_pelanggan,pl.wilayah,da.nama_daftar_akun ,p.tunai,p.invoice_marketplace  FROM penjualan p INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan INNER JOIN daftar_akun da ON p.cara_bayar = da.kode_daftar_akun  WHERE p.no_faktur = '$no_faktur' ORDER BY p.id DESC");
+    $select_penjualan = $db->query("SELECT p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.potongan,p.potongan_persen, pl.nama_pelanggan,pl.wilayah,da.nama_daftar_akun ,p.tunai,p.invoice_marketplace,p.ongkir  FROM penjualan p INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan INNER JOIN daftar_akun da ON p.cara_bayar = da.kode_daftar_akun  WHERE p.no_faktur = '$no_faktur' ORDER BY p.id DESC");
     $data0 = mysqli_fetch_array($select_penjualan);
 
     $select_perusahaan = $db->query("SELECT foto,nama_perusahaan,alamat_perusahaan,no_telp FROM perusahaan ");
@@ -21,7 +21,7 @@ include 'db.php';
 
     $potongan_persen = $data0['potongan_persen'];
 
-    $jml_dibayar = $t_subtotal - $data0['potongan'];
+    $jml_dibayar = $t_subtotal - $data0['potongan'] + $data0['ongkir'];
 
 
     $ubah_tanggal = $data0['tanggal'];
@@ -230,6 +230,17 @@ include 'db.php';
             <td class='table1' align='right'><?php echo persen($potongan_persen); ?></td>
             <td class='table1' align='right'><?php echo rp($data0['potongan']); ?></td>
         </tr>
+
+        
+        <tr>
+            <td class='table1'></td>
+            <td class='table1'>Jumlah Ongkir</td>
+            <td class='table1' align='right'></td>
+            <td class='table1' ></td>
+            <td class='table1' align='right'></td>
+            <td class='table1' align='right'><?php echo rp($data0['ongkir']); ?></td>
+        </tr>
+
 
          <tr>
             <td class='table1'></td>
