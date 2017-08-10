@@ -51,7 +51,7 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 }
 else{
 	// getting total number records without any search
-$sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.invoice_marketplace,p.status_cetak,p.no_telpon_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan,p.keterangan ";
+$sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.invoice_marketplace,p.status_cetak,p.no_telpon_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan,p.keterangan,p.ongkir ";
 $sql.="FROM penjualan p LEFT JOIN gudang g ON p.kode_gudang = g.kode_gudang LEFT JOIN toko t ON p.kode_toko = t.id LEFT JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan ";
 $query=mysqli_query($conn, $sql) or die("datatable_item_keluar.php: get employees");
 $totalData = mysqli_num_rows($query);
@@ -61,7 +61,7 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 
 if ($status == 'semua') {
 // getting total number records without any search
-$sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.invoice_marketplace,p.status_cetak,p.no_telpon_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan,p.keterangan ";
+$sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.invoice_marketplace,p.status_cetak,p.no_telpon_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan,p.keterangan,p.ongkir ";
 $sql.="FROM penjualan p LEFT JOIN gudang g ON p.kode_gudang = g.kode_gudang LEFT JOIN toko t ON p.kode_toko = t.id LEFT JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan  WHERE 1=1"; 
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 	$sql.=" AND ( p.no_faktur LIKE '".$requestData['search']['value']."%' ";  
@@ -82,7 +82,7 @@ if( !empty($requestData['search']['value']) ) {   // if there is a search parame
 }
 else{
 // getting total number records without any search
-$sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.invoice_marketplace,p.status_cetak,p.no_telpon_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan,p.keterangan ";
+$sql = "SELECT pl.kode_pelanggan AS code_card, p.tunai, p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.jam,p.user,p.sales,p.kode_meja,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen,p.alamat_konsumen,p.invoice_marketplace,p.status_cetak,p.no_telpon_konsumen,p.kode_ekspedisi,g.nama_gudang,p.kode_gudang,t.nama_toko,p.kode_toko,pl.nama_pelanggan,p.keterangan,p.ongkir ";
 $sql.="FROM penjualan p LEFT JOIN gudang g ON p.kode_gudang = g.kode_gudang LEFT JOIN toko t ON p.kode_toko = t.id LEFT JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan WHERE p.status = '$status' AND 1=1";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 
@@ -172,10 +172,7 @@ if ($row['status'] == 'Lunas') {
 				</ul>
 				</div>";
 
-	$nestedData[] = "<fieldset class='form-group'>
-                  <input type='checkbox' class='pilih_checkbox_lunas' id='checkbox_lunas-".$row['id']."' data-faktur='".$row['no_faktur']."'  data-id='".$row['id']."' data-status='".$row['status']."' data-toggle-lunas='0' >
-                    <label for='checkbox_lunas-".$row['id']."' class='pilih_checkbox_lunas' data-faktur='".$row['no_faktur']."' data-toggle-lunas='0' ></label>
-                </fieldset>";
+
 				
 	} 
 	elseif ($row['status_cetak'] == '1') {
@@ -189,19 +186,17 @@ if ($row['status'] == 'Lunas') {
 				</ul>
 				</div>";
 
-	$nestedData[] = "<fieldset class='form-group'>
-                    <input type='checkbox' class='pilih_checkbox_lunas' id='checkbox_lunas-".$row['id']."' data-faktur='".$row['no_faktur']."' data-id='".$row['id']."' data-status='".$row['status']."' data-toggle-lunas='0' >
-                    <label for='checkbox_lunas-".$row['id']."' class='pilih_checkbox_lunas' data-faktur='".$row['no_faktur']."' data-toggle-lunas='0' ></label>
-                </fieldset>";
-
 	}
+
+
 }
 
 else{
 
 	$nestedData[] = "";
-	$nestedData[] = "";
 }
+
+
 
 
 
@@ -217,11 +212,6 @@ if ($row['status'] == 'Piutang') {
 					<li><a href='proses_cetak_penjualan_tunai.php?no_faktur=".$row['no_faktur']."' target='blank'> Cetak Label </a></li> 
 				</ul>
 				</div>";
-
-				$nestedData[] = "<fieldset class='form-group'>
-                    <input type='checkbox' class='pilih_checkbox_piutang' id='checkbox_piutang-".$row['id']."' data-faktur='".$row['no_faktur']."' data-status='".$row['status']."' data-toggle-piutang='0' >
-                    <label for='checkbox_piutang-".$row['id']."' class='pilih_checkbox_piutang' data-faktur='".$row['no_faktur']."' data-toggle-piutang='0'></label>
-                </fieldset>";
     }
 	elseif ($row['status_cetak'] == '1') {
 		$nestedData[] ="<div class='dropdown'>
@@ -234,20 +224,22 @@ if ($row['status'] == 'Piutang') {
 				</ul>
 				</div>";
 
-				$nestedData[] = "<fieldset class='form-group'>
-                    <input type='checkbox' class='pilih_checkbox_piutang' data-toggle-piutang='0' id='checkbox_piutang-".$row['id']."' data-status='".$row['status']."' data-faktur='".$row['no_faktur']."'>
-                    <label for='checkbox_piutang-".$row['id']."' class='pilih_checkbox_piutang' data-faktur='".$row['no_faktur']."' data-toggle-piutang='0'></label>
-                </fieldset>";
+
     }
     
 }
 
 else{
 
-	$nestedData[] = "";
-	$nestedData[] = "";
-	
+	$nestedData[] = "";	
 }
+
+		$nestedData[] = "<fieldset class='form-group'>
+                  <input type='checkbox' class='pilih_checkbox_lunas' id='checkbox_lunas-".$row['id']."' data-faktur='".$row['no_faktur']."'  data-id='".$row['id']."' data-status='".$row['status']."' data-toggle-lunas='0' >
+                    <label for='checkbox_lunas-".$row['id']."' class='pilih_checkbox_lunas' data-faktur='".$row['no_faktur']."' data-toggle-lunas='0' ></label>
+                </fieldset>";
+
+                
 
 			$nestedData[] = "<button class='btn btn-info detail' no_faktur='". $row['no_faktur'] ."' >Detail</button>";
 
@@ -287,6 +279,7 @@ else{
 			$nestedData[] = $row["status"];
 			$nestedData[] = rp($row["potongan"]);
 			$nestedData[] = rp($row["tax"]);
+			$nestedData[] = rp($row["ongkir"]);			
 			$nestedData[] = rp($row["tunai"]);
 			$nestedData[] = rp($row["sisa"]);
 			$nestedData[] = rp($row["kredit"]);

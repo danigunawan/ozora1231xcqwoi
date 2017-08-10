@@ -12,6 +12,8 @@ include 'db.php';
 
  foreach ($faktur_kirim as $faktur_kirims) {
 
+    $query_update_status = $db->query("UPDATE penjualan SET status_cetak = '1' WHERE no_faktur = '$faktur_kirims' ");
+
     $select_penjualan = $db->query("SELECT p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.potongan,p.potongan_persen, pl.nama_pelanggan,pl.wilayah,da.nama_daftar_akun ,p.tunai,p.invoice_marketplace  FROM penjualan p INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan INNER JOIN daftar_akun da ON p.cara_bayar = da.kode_daftar_akun  WHERE p.no_faktur = '$faktur_kirims' ORDER BY p.id DESC");
     $data0 = mysqli_fetch_array($select_penjualan);
 

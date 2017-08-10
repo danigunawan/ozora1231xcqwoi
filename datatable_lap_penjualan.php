@@ -4,12 +4,13 @@ include 'db.php';
 include 'sanitasi.php';
 
 
-$query_sum = $db->query("SELECT SUM(total) AS total_bersih, SUM(potongan) AS total_potongan, SUM(tax) AS total_tax, SUM(tunai) AS total_tunai, SUM(sisa) AS total_sisa FROM penjualan");
+$query_sum = $db->query("SELECT SUM(total) AS total_bersih, SUM(potongan) AS total_potongan, SUM(tax) AS total_tax, SUM(tunai) AS total_tunai, SUM(sisa) AS total_sisa, SUM(ongkir) AS total_ongkir FROM penjualan");
 $data_sum = mysqli_fetch_array($query_sum);
 
 $sub_total_bersih = $data_sum['total_bersih'];
 $sub_total_potongan = $data_sum['total_potongan'];
 $sub_total_tax = $data_sum['total_tax'];
+$sub_total_ongkir = $data_sum['total_ongkir'];
 $sub_total_tunai = $data_sum['total_tunai'];
 $sub_total_sisa = $data_sum['total_sisa'];
 
@@ -39,7 +40,7 @@ $columns = array(
 );
 
 // getting total number records without any search
-$sql = "SELECT pel.nama_pelanggan,pel.kode_pelanggan,p.tunai,p.id,p.total,p.no_faktur,p.kode_pelanggan,p.tanggal,p.jam,p.user,p.status,p.potongan,p.tax,p.sisa, p.nama_konsumen, t.nama_toko ";
+$sql = "SELECT pel.nama_pelanggan,pel.kode_pelanggan,p.tunai,p.id,p.total,p.no_faktur,p.kode_pelanggan,p.tanggal,p.jam,p.user,p.status,p.potongan,p.tax,p.sisa, p.nama_konsumen, t.nama_toko,p.ongkir ";
 $sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id ";
 $query=mysqli_query($conn, $sql) or die("datatable_lap_penjualan.php: get employees");
 $totalData = mysqli_num_rows($query);
@@ -47,7 +48,7 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 
 
 
-$sql = "SELECT pel.nama_pelanggan,pel.kode_pelanggan AS code_card,p.tunai,p.id,p.total,p.no_faktur,p.kode_pelanggan,p.tanggal,p.jam,p.user,p.status,p.potongan,p.tax,p.sisa, p.nama_konsumen, t.nama_toko ";
+$sql = "SELECT pel.nama_pelanggan,pel.kode_pelanggan AS code_card,p.tunai,p.id,p.total,p.no_faktur,p.kode_pelanggan,p.tanggal,p.jam,p.user,p.status,p.potongan,p.tax,p.sisa, p.nama_konsumen, t.nama_toko,p.ongkir ";
 $sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id WHERE 1=1";
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 
@@ -89,6 +90,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 					$nestedData[] = $row['status'];
 					$nestedData[] = rp($row['potongan']);
 					$nestedData[] = rp($row['tax']);
+					$nestedData[] = rp($row['ongkir']);
 					$nestedData[] = rp($row['tunai']);
 					$nestedData[] = rp($row['sisa']);
 					$nestedData[] = $row["id"];
@@ -110,6 +112,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 					$nestedData[] = "<b style='color:red'>-<b>";
 					$nestedData[] = "<b style='color:red'>".rp($sub_total_potongan)."<b>";
 					$nestedData[] = "<b style='color:red'>".rp($sub_total_tax)."<b>";
+					$nestedData[] = "<b style='color:red'>".rp($sub_total_ongkir)."<b>";
 					$nestedData[] = "<b style='color:red'>".rp($sub_total_tunai)."<b>";
 					$nestedData[] = "<b style='color:red'>".rp($sub_total_sisa)."<b>";
 					$nestedData[] = "<b style='color:red'>-<b>";

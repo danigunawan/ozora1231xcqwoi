@@ -84,6 +84,32 @@ $daftar_akun1 = $db->query("SELECT kode_daftar_akun, nama_daftar_akun FROM dafta
  </select> 
 
       </td></tr>
+
+
+        <tr><td  width="45%"><p>Pendapatan Ongkir</p></td> <td width="7%"> :&nbsp;</td> 
+      	<td>
+
+		<select class="form-control" name="pend_ongkir">
+		<?php 
+		$daftar_akun1 = $db->query("SELECT kode_daftar_akun, nama_daftar_akun FROM daftar_akun ");
+		while($data_pendapatan = mysqli_fetch_array($daftar_akun1))
+		{
+		
+		echo "<option value='".$data_pendapatan['kode_daftar_akun'] ."'";
+
+		if ($data_setting['pendapatan_ongkir'] == $data_pendapatan['kode_daftar_akun']) {
+			echo "selected";
+		}
+
+
+		echo ">".$data_pendapatan['kode_daftar_akun'] ." - ".$data_pendapatan['nama_daftar_akun'] ."</option>";
+		} 
+ 		?>
+ 		</select> 
+
+      </td></tr>
+
+
       <tr><td  width="45%"><p>Persediaan</p></td> <td width="7%"> :&nbsp;</td>
       <td> 
 

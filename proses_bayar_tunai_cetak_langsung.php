@@ -149,11 +149,11 @@ echo $no_faktur = $nomor."/JL/".$data_bulan_terakhir."/".$tahun_terakhir;
 
             {
               
-              $stmt = $db->prepare("INSERT INTO penjualan (no_faktur, kode_gudang, nama_konsumen, alamat_konsumen, kode_ekspedisi,  kode_pelanggan, total, tanggal, jam, user, sales, status, potongan, tax, sisa, cara_bayar, tunai, status_jual_awal, keterangan, ppn) VALUES (?,?,?,?,?,?,?,?,?,'Lunas',?,?,?,?,?,'Tunai',?,?)");
+              $stmt = $db->prepare("INSERT INTO penjualan (no_faktur, kode_gudang, nama_konsumen, alamat_konsumen, kode_ekspedisi,  kode_pelanggan, total, tanggal, jam, user, sales, status, potongan, tax, sisa, cara_bayar, tunai, status_jual_awal, keterangan, ppn,ongkir) VALUES (?,?,?,?,?,?,?,?,?,'Lunas',?,?,?,?,?,'Tunai',?,?,?)");
               
     // hubungkan "data" dengan prepared statements
-              $stmt->bind_param("ssssssissssiiisiss",
-              $no_faktur, $kode_gudang, $nama_konsumen, $alamat_konsumen,$kode_ekspedisi, $kode_pelanggan, $total, $tanggal_sekarang, $jam_sekarang, $user, $sales, $potongan, $tax, $sisa, $cara_bayar, $pembayaran, $keterangan, $ppn_input);
+              $stmt->bind_param("ssssssissssiiisissi",
+              $no_faktur, $kode_gudang, $nama_konsumen, $alamat_konsumen,$kode_ekspedisi, $kode_pelanggan, $total, $tanggal_sekarang, $jam_sekarang, $user, $sales, $potongan, $tax, $sisa, $cara_bayar, $pembayaran, $keterangan, $ppn_input,$ongkir);
               
               
               $kode_pelanggan = stringdoang($_POST['kode_pelanggan']);
@@ -163,6 +163,7 @@ echo $no_faktur = $nomor."/JL/".$data_bulan_terakhir."/".$tahun_terakhir;
               $alamat_konsumen = stringdoang($_POST['alamat_konsumen']);
               $kode_ekspedisi = stringdoang($_POST['kode_ekspedisi']);
               $total = angkadoang($_POST['total']);
+              $ongkir = angkadoang($_POST['ongkir']);
               $total2 = angkadoang($_POST['total2']);
               $potongan = angkadoang($_POST['potongan']);
               $tax = angkadoang($_POST['tax']);
@@ -290,11 +291,11 @@ if ($potongan != "" || $potongan != 0 ) {
               
               
               
-              $stmt = $db->prepare("INSERT INTO penjualan (no_faktur, kode_gudang, nama_konsumen, alamat_konsumen, kode_ekspedisi, kode_pelanggan, total, tanggal, tanggal_jt, jam, user, sales, status, potongan, tax, kredit, nilai_kredit, cara_bayar, tunai, status_jual_awal, keterangan, ppn) VALUES (?,?,?,?,?,?,?,?,?,?,'Piutang',?,?,?,?,?,?,'Kredit',?,?)");
+              $stmt = $db->prepare("INSERT INTO penjualan (no_faktur, kode_gudang, nama_konsumen, alamat_konsumen, kode_ekspedisi, kode_pelanggan, total, tanggal, tanggal_jt, jam, user, sales, status, potongan, tax, kredit, nilai_kredit, cara_bayar, tunai, status_jual_awal, keterangan, ppn,ongkir) VALUES (?,?,?,?,?,?,?,?,?,?,'Piutang',?,?,?,?,?,?,'Kredit',?,?,?)");
               
 
-              $stmt->bind_param("ssssssisssssiiiisiss",
-              $no_faktur, $kode_gudang, $nama_konsumen, $alamat_konsumen, $kode_ekspedisi, $kode_pelanggan, $total , $tanggal_sekarang, $tanggal_jt, $jam_sekarang, $user, $sales, $potongan, $tax, $sisa_kredit, $sisa_kredit, $cara_bayar, $pembayaran, $keterangan, $ppn_input);
+              $stmt->bind_param("ssssssisssssiiiisissi",
+              $no_faktur, $kode_gudang, $nama_konsumen, $alamat_konsumen, $kode_ekspedisi, $kode_pelanggan, $total , $tanggal_sekarang, $tanggal_jt, $jam_sekarang, $user, $sales, $potongan, $tax, $sisa_kredit, $sisa_kredit, $cara_bayar, $pembayaran, $keterangan, $ppn_input,$ongkir);
               
               
               $kode_pelanggan = stringdoang($_POST['kode_pelanggan']);
@@ -304,6 +305,7 @@ if ($potongan != "" || $potongan != 0 ) {
               $alamat_konsumen = stringdoang($_POST['alamat_konsumen']);
               $kode_ekspedisi = stringdoang($_POST['kode_ekspedisi']);
               $total = angkadoang($_POST['total']);
+              $ongkir = angkadoang($_POST['ongkir']);
               $total2 = angkadoang($_POST['total2']);
               $potongan = angkadoang($_POST['potongan']);
               $tax = angkadoang($_POST['tax']);

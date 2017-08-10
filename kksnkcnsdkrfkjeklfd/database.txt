@@ -5,3 +5,12 @@ Programmer	:
 				- Ghaza
 Tanggal		:
 				- 27 Juli 2017
+
+
+Table 		:
+				- penjualan 			> ongkir
+				- setting_akun 		> pendapatan_ongkir
+Programmer	: 
+				- Fahrizal
+Tanggal		:
+				- 10 Agustus 2017

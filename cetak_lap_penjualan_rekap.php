@@ -13,6 +13,7 @@ $data1 = mysqli_fetch_array($query1);
 $total_akhir_kotor = 0;
 $total_potongan = 0;
 $total_tax = 0;
+$total_ongkir = 0;
 $total_jual = 0;
 $total_tunai = 0;
 $total_sisa = 0;
@@ -70,6 +71,7 @@ $total_kredit = 0;
                 <th style="background-color: #4CAF50; color: white;"> Total Kotor</th>
                 <th style="background-color: #4CAF50; color: white;"> Potongan </th>
                 <th style="background-color: #4CAF50; color: white;"> Tax </th>
+                <th style="background-color: #4CAF50; color: white;"> Ongkir </th>
                 <th style="background-color: #4CAF50; color: white;"> Total Bersih</th>
                 <th style="background-color: #4CAF50; color: white;"> Tunai </th>
                 <th style="background-color: #4CAF50; color: white;"> Kembalian </th>
@@ -80,13 +82,13 @@ $total_kredit = 0;
             <?php
 
   # JIKA SEMUA KATEGORI
-        $perintah_tampil = $db->query(" SELECT b.kategori,pel.nama_pelanggan,pel.kode_pelanggan AS code_card,p.tunai,p.id,p.tanggal,p.no_faktur,p.kode_pelanggan,p.total,p.jam,p.user,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen, t.nama_toko FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN detail_penjualan dp ON p.no_faktur = dp.no_faktur INNER JOIN barang b ON dp.kode_barang = b.kode_barang INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' GROUP BY p.no_faktur");
+        $perintah_tampil = $db->query(" SELECT b.kategori,pel.nama_pelanggan,pel.kode_pelanggan AS code_card,p.tunai,p.id,p.tanggal,p.no_faktur,p.kode_pelanggan,p.total,p.jam,p.user,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen, t.nama_toko,p.ongkir FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN detail_penjualan dp ON p.no_faktur = dp.no_faktur INNER JOIN barang b ON dp.kode_barang = b.kode_barang INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' GROUP BY p.no_faktur");
       
                   while ($data11 = mysqli_fetch_array($perintah_tampil))
 
                   {
 
-                      $total_kotor_jual = $data11['total'] + $data11['potongan'];
+                      $total_kotor_jual = $data11['total'] + $data11['potongan'] - $data11['ongkir'];
               
                       echo "<tr>
                       <td>". $data11['no_faktur'] ."</td>
@@ -100,6 +102,7 @@ $total_kredit = 0;
                       <td align='right'>". rp($total_kotor_jual) ."</td>
                       <td align='right'>". rp($data11['potongan']) ."</td>
                       <td align='right'>". rp($data11['tax']) ."</td>
+                      <td align='right'>". rp($data11['ongkir']) ."</td>
                       <td align='right'>". rp($data11['total']) ."</td>
                       <td align='right'>". rp($data11['tunai']) ."</td>
                       <td align='right'>". rp($data11['sisa']) ."</td>
@@ -110,6 +113,7 @@ $total_kredit = 0;
                        $total_akhir_kotor = $total_akhir_kotor + $total_kotor_jual;
                        $total_potongan = $total_potongan + $data11['potongan'];
                        $total_tax = $total_tax + $data11['tax'];
+                       $total_ongkir = $total_ongkir + $data11['ongkir'];
                        $total_jual = $total_jual + $data11['total'];
                        $total_tunai = $total_tunai + $data11['tunai'];
                        $total_sisa = $total_sisa + $data11['sisa'];
@@ -135,7 +139,8 @@ $total_kredit = 0;
       <td style='color:red'> - </td>
       <td style='color:red' align='right'> <?php echo rp($total_akhir_kotor);?> </td>
       <td style='color:red' align='right'> <?php echo rp($total_potongan);?> </td>
-      <td style='color:red' align='right'> <?php echo rp($total_tax);?> </td> 
+      <td style='color:red' align='right'> <?php echo rp($total_tax);?> </td>
+      <td style='color:red' align='right'> <?php echo rp($total_ongkir);?> </td> 
       <td style='color:red' align='right'> <?php echo rp($total_jual);?> </td>
       <td style='color:red' align='right'> <?php echo rp($total_tunai);?> </td>
       <td style='color:red' align='right'> <?php echo rp($total_sisa);?> </td>

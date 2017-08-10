@@ -58,6 +58,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 			<th style="background-color: #4CAF50; color: white;"> Status </th>
 			<th style="background-color: #4CAF50; color: white;"> Potongan </th>
 			<th style="background-color: #4CAF50; color: white;"> Tax </th>
+			<th style="background-color: #4CAF50; color: white;"> Ongkos Kirim </th>
 			<th style="background-color: #4CAF50; color: white;"> Tunai </th>
 			<th style="background-color: #4CAF50; color: white;"> Kembalian </th>
 						

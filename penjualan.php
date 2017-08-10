@@ -438,9 +438,8 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
 		}
 ?>
 			<th style='background-color: #4CAF50; color:white'> Cetak  Tunai </th>
-      <th style='background-color: #4CAF50; color:white'> Ceklis Tunai </th>
 			<th style='background-color: #4CAF50; color:white'> Cetak Piutang </th>
-      <th style='background-color: #4CAF50; color:white'> Ceklis Piutang </th>
+      <th style='background-color: #4CAF50; color:white'> Cetak Ceklis </th>
 			<th style='background-color: #4CAF50; color:white'> Detail </th>
       <th style='background-color: #4CAF50; color:white'> Resi Penjualan </th>      
 			<th style='background-color: #4CAF50; color:white'> Nomor Faktur </th> 
@@ -459,6 +458,7 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
 			<th style='background-color: #4CAF50; color:white'> Status </th>
 			<th style='background-color: #4CAF50; color:white'> Potongan </th>
 			<th style='background-color: #4CAF50; color:white'> Tax </th>
+      <th style='background-color: #4CAF50; color:white'> Ongkos Kirim </th>
       <th style='background-color: #4CAF50; color:white'> Tunai </th>
 			<th style='background-color: #4CAF50; color:white'> Kembalian </th>
 			<th style='background-color: #4CAF50; color:white'> Kredit </th>
@@ -478,7 +478,7 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
 <p style="color:red;">Note: Silakan pilih Ceklis Piutang untuk Cetak Piutang , dan Ceklis Lunas untuk Cetak Lunas</p>
 
 <button style='background-color:#aa66cc;'  class='btn btn-info' id="cetak_label" target="blank"><i class='fa fa-print' ></i> Cetak Label</button>
-<button style='background-color:#ff77cc;'  class='btn btn-info' id="cetak_invoice" target="blank" ><i class='fa fa-print'></i> Cetak Invoice</button>
+<!-- <button style='background-color:#ff77cc;'  class='btn btn-info' id="cetak_invoice" target="blank" ><i class='fa fa-print'></i> Cetak Invoice</button> -->
 
 </div><!--end of container-->
 		
@@ -496,6 +496,10 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
     var data_toggle = $(this).attr('data-toggle-lunas');
     var data_id = $(this).attr('data-id');
 
+        $(".pilih_checkbox_lunas").show();
+        $(".pilih_checkbox_piutang").hide();
+
+
     if(data_toggle == 0){
          $(this).attr("data-toggle-lunas", 1);
          $("#data_status").val("Lunas");
@@ -505,19 +509,17 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
         $("#data_status").val("");
     }
 
-        $(".pilih_checkbox_lunas").show();
-        $(".pilih_checkbox_piutang").hide();
 
-        if ($(".pilih_checkbox_lunas").attr("data-toggle-lunas") == 0 ) {
+
+        if ($(".pilih_checkbox_lunas").attr("data-toggle-lunas") == 0) {
             $(".pilih_checkbox_piutang").show();
             $(".pilih_checkbox_piutang").attr("data-toggle-piutang", 0);
             $("#data_status").val("");
         }
         else{
             $(".pilih_checkbox_piutang").hide();
-            $(".pilih_checkbox_piutang").attr("data-toggle-piutang", 0);
+            $(".pilih_checkbox_piutang").attr("data-toggle-piutang", 0 );
             $("#data_status").val("Lunas");
-              
         }
 
 });
@@ -525,8 +527,7 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
 <!--Akhir Script Proses untuk Detail-->
 
 
-<!--Mulai Script Proses untuk Detail-->
-<script>
+<!--Mulai Script Proses untuk Detail
       $(document).on('click','.pilih_checkbox_piutang',function(e){
 //data togle dari modal
     var data_toggle = $(this).attr('data-toggle-piutang');
@@ -544,23 +545,22 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
     $(".pilih_checkbox_piutang").show();
     $(".pilih_checkbox_lunas").hide();
 
-
         if ($(".pilih_checkbox_piutang").attr("data-toggle-piutang") == 0 ) {
                 $(".pilih_checkbox_lunas").attr("data-toggle-lunas", 0);
                 $(".pilih_checkbox_lunas").show();
                 $("#data_status").val("");
-                
         }
-        else{
+        else {
            $(".pilih_checkbox_lunas").attr("data-toggle-lunas", 0);
             $(".pilih_checkbox_lunas").hide();
             $("#data_status").val("Piutang");
-
         }
+
+
 
 });
 </script>
-<!--Akhir Script Proses untuk Detail-->
+Akhir Script Proses untuk Detail-->
 
 
     <script type="text/javascript">
@@ -593,7 +593,7 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
     </script>
 
 
-        <script type="text/javascript" >
+        <!-- <script type="text/javascript" > 
       $(document).on('change','.pilih_checkbox_piutang',function(e){
 
           var data_faktur = $(this).attr("data-faktur");
@@ -608,23 +608,32 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
           var data_faktur_kirim = $('#data_faktur').val();
           var data_status = $('#data_status').val();
               if (data_status == "Piutang") {
+                   if (data_faktur_kirim == "") {
+                  alert("Cetak tidak Ada yang terceklis , silakan pilih terlebih dahulu");
+                 }
+                 else{
                  window.location.href = 'cetak_piutang_ceklis.php?data_faktur='+data_faktur_kirim+'';
                  $('#data_faktur').val("");
                  $('#data_status').val("");
                  $(".pilih_checkbox_lunas").attr("data-toggle-lunas",0);
                  $(".pilih_checkbox_piutang").attr("data-toggle-piutang",0);
-
+                  }
               }
               else{
+                   if (data_faktur_kirim == "") {
+                  alert("Cetak tidak Ada yang terceklis , silakan pilih terlebih dahulu");
+                 }
+                 else{
                  window.location.href = 'cetak_besar_tunai_ceklis.php?data_faktur='+data_faktur_kirim+'';
                   $('#data_faktur').val("");
                  $('#data_status').val("");
                  $(".pilih_checkbox_lunas").attr("data-toggle-lunas",0);
                  $(".pilih_checkbox_piutang").attr("data-toggle-piutang",0);
+                  }
      
               }
             });
-    </script>
+    </script>-->
 
 
     <script type="text/javascript">
@@ -634,9 +643,12 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
                  $('#data_faktur').val("");
                  $('#data_status').val("");
                  $(".pilih_checkbox_lunas").attr("data-toggle-lunas",0);
-                 $(".pilih_checkbox_piutang").attr("data-toggle-piutang",0);
-
-                 window.location.href = 'cetak_penjualan_tunai_ceklis.php?data_faktur='+data_faktur_kirim+'';
+                 if (data_faktur_kirim == "") {
+                  alert("Cetak tidak Ada yang terceklis , silakan pilih terlebih dahulu");
+                 }
+                 else{
+                 window.location.href = 'cetak_penjualan_tunai_ceklis.php?data_faktur='+data_faktur_kirim+''; 
+                 }
 
               
             });
@@ -808,7 +820,7 @@ $penjualan_hapus = mysqli_num_rows($pilih_akses_penjualan_hapus);
             }
           },
               "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-              $(nRow).attr('class','tr-id-'+aData[21]+'');
+              $(nRow).attr('class','tr-id-'+aData[25]+'');
             },
 
         } );

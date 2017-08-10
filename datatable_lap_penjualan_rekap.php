@@ -10,19 +10,21 @@ $sampai_tanggal = stringdoang($_POST['sampai_tanggal']);
 $total_akhir_kotor = 0;
 $total_potongan = 0;
 $total_tax = 0;
+$total_ongkir = 0;
 $total_jual = 0;
 $total_tunai = 0;
 $total_sisa = 0;
 $total_kredit = 0;
 
 
-	$query_sum_total = $db->query("SELECT SUM(tunai) as tunai,SUM(total) as total,SUM(potongan) as potongan ,SUM(tax) as tax,SUM(sisa) as sisa,SUM(kredit) as kredit FROM penjualan WHERE tanggal >= '$dari_tanggal' AND tanggal <= '$sampai_tanggal' ");
+	$query_sum_total = $db->query("SELECT SUM(tunai) as tunai,SUM(total) as total,SUM(potongan) as potongan ,SUM(tax) as tax,SUM(sisa) as sisa,SUM(kredit) as kredit, SUM(ongkir) as ongkir FROM penjualan WHERE tanggal >= '$dari_tanggal' AND tanggal <= '$sampai_tanggal' ");
 
 	$data_sum_total = mysqli_fetch_array($query_sum_total);
 	
-			$total_akhir_kotor = $total_akhir_kotor + $data_sum_total['total'] + $data_sum_total['potongan'];
+			$total_akhir_kotor = $total_akhir_kotor + $data_sum_total['total'] + $data_sum_total['potongan'] - $data_sum_total['ongkir'];
 			$total_potongan = $total_potongan + $data_sum_total['potongan'];
 			$total_tax = $total_tax + $data_sum_total['tax'];
+			$total_ongkir = $total_tax + $data_sum_total['ongkir'];
 			$total_jual = $total_jual + $data_sum_total['total'];
 			$total_tunai = $total_tunai + $data_sum_total['tunai'];
 			$total_sisa = $total_sisa += $data_sum_total['sisa'];
@@ -53,7 +55,7 @@ $columns = array(
 
 // getting total number records without any search
 
-$sql = " SELECT b.kategori,pel.nama_pelanggan,pel.kode_pelanggan AS code_card,p.tunai,p.id,p.tanggal,p.no_faktur,p.kode_pelanggan,p.total,p.jam,p.user,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen, t.nama_toko ";
+$sql = " SELECT b.kategori,pel.nama_pelanggan,pel.kode_pelanggan AS code_card,p.tunai,p.id,p.tanggal,p.no_faktur,p.kode_pelanggan,p.total,p.jam,p.user,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen, t.nama_toko,p.ongkir ";
 $sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN detail_penjualan dp ON p.no_faktur = dp.no_faktur INNER JOIN barang b ON dp.kode_barang = b.kode_barang INNER JOIN toko t ON p.kode_toko = t.id";
 $sql.=" WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal'";
 
@@ -61,7 +63,7 @@ $query=mysqli_query($conn, $sql) or die("eror 1");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 	
-$sql = " SELECT b.kategori,pel.nama_pelanggan,pel.kode_pelanggan AS code_card,p.tunai,p.id,p.tanggal,p.no_faktur,p.kode_pelanggan,p.total,p.jam,p.user,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen, t.nama_toko ";
+$sql = " SELECT b.kategori,pel.nama_pelanggan,pel.kode_pelanggan AS code_card,p.tunai,p.id,p.tanggal,p.no_faktur,p.kode_pelanggan,p.total,p.jam,p.user,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen, t.nama_toko,p.ongkir ";
 $sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN detail_penjualan dp ON p.no_faktur = dp.no_faktur INNER JOIN barang b ON dp.kode_barang = b.kode_barang INNER JOIN toko t ON p.kode_toko = t.id";
 $sql.=" WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND 1=1";
 
@@ -105,6 +107,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 				$nestedData[] = "<p align='right'>".rp($total_kotor_jual)."</p>";
 				$nestedData[] = "<p align='right'>".rp($row['potongan'])."</p>";
 				$nestedData[] = "<p align='right'>".rp($row['tax'])."</p>";
+				$nestedData[] = "<p align='right'>".rp($row['ongkir'])."</p>";
 				$nestedData[] = "<p align='right'>".rp($row['total'])."</p>";
 				$nestedData[] = "<p align='right'>".rp($row['tunai'])."</p>";
 				$nestedData[] = "<p align='right'>".rp($row['sisa'])."</p>";
@@ -126,6 +129,7 @@ $nestedData=array();
       $nestedData[] = "<p style='color:red' align='right'> ".rp($total_akhir_kotor)." </p>";
       $nestedData[] = "<p style='color:red' align='right'> ".rp($total_potongan)." </p>";
       $nestedData[] = "<p style='color:red' align='right'> ".rp($total_tax)." </p>"; 
+      $nestedData[] = "<p style='color:red' align='right'> ".rp($total_ongkir)." </p>"; 
       $nestedData[] = "<p style='color:red' align='right'> ".rp($total_jual)." </p>";
       $nestedData[] = "<p style='color:red' align='right'> ".rp($total_tunai)." </p>";
       $nestedData[] = "<p style='color:red' align='right'> ".rp($total_sisa)." </p>";
