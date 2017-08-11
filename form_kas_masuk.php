@@ -151,7 +151,7 @@
             
             <div class="form-group col-sm-6">
             <label> Ke Akun </label><br>
-            <select type="text" name="ke_akun" id="keakun" class="form-control" disabled="true">
+            <select type="text" name="ke_akun" id="keakun" class="form-control chosen" disabled="true">
             <option value="<?php echo $data_tbs1['ke_akun']; ?>"><?php echo $data_tbs1['nama_daftar_akun']; ?></option>
             
             <?php 
@@ -172,7 +172,7 @@
 <?php else: ?>
 					<div class="form-group col-sm-6">
 					<label> Ke Akun </label><br>
-					<select type="text" name="ke_akun" id="keakun" class="form-control" >
+					<select type="text" name="ke_akun" id="keakun" class="form-control chosen" >
 					<option value="">--SILAHKAN PILIH--</option>
 
 					 <?php 
@@ -204,7 +204,7 @@
 
 					<div class="form-group col-sm-3">
 					<label> Dari Akun </label><br>
-					<select type="text" name="dari_akun" id="dariakun" class="form-control" >
+					<select type="text" name="dari_akun" id="dariakun" class="form-control chosen" >
 					<option value="">--SILAHKAN PILIH--</option>
 
 					 <?php 
@@ -337,6 +337,14 @@ $(document).ready(function(){
 });
 
 </script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".chosen").chosen({no_results_text: "Maaf, Data Tidak Ada!",search_contains:true});
+});
+</script>                       
 
 
 <script type="text/javascript">
