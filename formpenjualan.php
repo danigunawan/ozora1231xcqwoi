@@ -227,12 +227,6 @@ $session_id = session_id();
 
 
 </form><!--tag penutup form-->
-  
-  
-<br>
-<button type="button" id="cari_produk_penjualan" class="btn btn-info " data-toggle="modal" data-target="#myModal"><i class='fa  fa-search'> Cari (F1)</i>  </button> 
-<button type="button" id="daftar_order" class="btn btn-purple" data-toggle="modal"><i class='fa  fa-search'></i> Cari Order (F6) </button>
-<br><br>
 
 
 <!--tampilan modal-->
@@ -446,7 +440,11 @@ $session_id = session_id();
     </div>
         
     <button type="submit" id="submit_barcode" class="btn btn-primary" style="font-size:15px" ><i class="fa fa-barcode"></i> Submit Barcode</button>
-        
+    
+    <button type="button" id="cari_produk_penjualan" class="btn btn-info " data-toggle="modal" data-target="#myModal"><i class='fa  fa-search'> Cari (F1)</i>  </button> 
+    ||
+<button type="button" id="daftar_order" class="btn btn-purple" data-toggle="modal"><i class='fa  fa-search'></i> Cari Order (F6) </button>    
+
 </div>
         
 </form>
