@@ -13,13 +13,13 @@ $tipe = $_GET['tipe'];
 if ($tipe == 'barang') {
     if ($kategori == 'semua' AND $tipe = 'barang') {
 
-        $perintah = $db->query("SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang FROM barang b INNER JOIN satuan s ON b.satuan = s.id WHERE b.berkaitan_dgn_stok = '$tipe' ");
+        $perintah = $db->query("SELECT b.kode_barang FROM barang b WHERE b.berkaitan_dgn_stok = '$tipe' ");
 
 
     }
 
     else{
-        $perintah = $db->query("SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang FROM barang b INNER JOIN satuan s ON b.satuan = s.id WHERE b.kategori = '$kategori' AND b.berkaitan_dgn_stok = '$tipe' ");
+        $perintah = $db->query("SELECT b.kode_barang FROM barang b  WHERE b.kategori = '$kategori' AND b.berkaitan_dgn_stok = '$tipe' ");
     }
 
 }
@@ -27,12 +27,12 @@ if ($tipe == 'barang') {
 else
 {
     if ($kategori == 'semua') {
-        $perintah = $db->query("SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang FROM barang b INNER JOIN satuan s ON b.satuan = s.id ");
+        $perintah = $db->query("SELECT b.kode_barang  FROM barang b ");
     
     }
     
     else{
-        $perintah = $db->query("SELECT s.id AS id_satuan,s.nama,b.id,b.nama_barang,b.kode_barang,b.harga_beli,b.harga_jual,b.harga_jual2,b.id,b.harga_jual3,b.berkaitan_dgn_stok,b.stok_barang,b.satuan,b.kategori,b.gudang FROM barang b INNER JOIN satuan s ON b.satuan = s.id WHERE b.kategori = '$kategori'");
+        $perintah = $db->query("SELECT b.kode_barang FROM barang b  WHERE b.kategori = '$kategori'");
     }
 }
 
@@ -140,16 +140,7 @@ echo '<br><button type="button" class="btn btn-info" data-toggle="modal" data-ta
                         </div>
 
 
-                            <div class="form-group">
-                            <label> Golongan Produk </label>
-                            <br>
-                            <select type="text" name="golongan_produk" class="form-control" required="">
-                            <option value=""> -- SILAHKAN PILIH -- </option>
-                            <option> Barang </option>
-                            <option> Jasa </option>
-                            </select>
-                            </div>
-
+                        
 
                             <div class="form-group">
                             <label> Tipe Produk </label>
@@ -158,34 +149,33 @@ echo '<br><button type="button" class="btn btn-info" data-toggle="modal" data-ta
                             <option value=""> -- SILAHKAN PILIH -- </option>
                             <option value="Barang"> Barang </option>
                             <option value="Jasa"> Jasa </option>
-                            <option value="Alat"> Alat </option>
-                            <option value="BHP"> BHP </option>
-                            <option value="Obat Obatan"> Obat-obatan </option>
+                 
                             </select>
                             </div>
 
 
 
-                                    <div class="form-group">
-                                    <label> Kategori Produk </label>
-                                    <br>
-                                    <select type="text" name="kategori_obat" id="kategori_obat" class="form-control" required="">
-                                    <option value=""> -- SILAHKAN PILIH -- </option>
-                                    <?php 
-                                    
-                                    $ambil_kategori = $db->query("SELECT nama_kategori FROM kategori");
-                                    
-                                    while($data_kategori = mysqli_fetch_array($ambil_kategori))
-                                    {
-                                    
-                                    echo "<option>".$data_kategori['nama_kategori'] ."</option>";
-                                    
-                                    }
-                                    
-                                    ?>
-                                    </select>
-                                    </div>
+                            <div class="form-group">
+                            <label> Kategori Produk </label>
+                            <br>
+                            <select type="text" name="kategori_obat" id="kategori_obat" class="form-control" required="">
+                            <option value=""> -- SILAHKAN PILIH -- </option>
+                            <?php 
+                            
+                            $ambil_kategori = $db->query("SELECT nama_kategori FROM kategori");
+                            
+                            while($data_kategori = mysqli_fetch_array($ambil_kategori))
+                            {
+                            
+                            echo "<option>".$data_kategori['nama_kategori'] ."</option>";
+                            
+                            }
+                            
+                            ?>
+                            </select>
+                            </div>
 
+                  
 
                         <div class="form-group">
                             <label> Harga Beli </label>
@@ -268,7 +258,6 @@ echo '<br><button type="button" class="btn btn-info" data-toggle="modal" data-ta
                             <label> Status </label>
                             <br>
                             <select type="text" name="status" class="form-control" required="">
-                            <option value=""> -- SILAHKAN PILIH -- </option>
                             <option> Aktif </option>
                             <option> Tidak Aktif</option>
                             </select>
@@ -452,14 +441,10 @@ th {
 
           <li class="nav-item"><a class="nav-link active" href='barang.php?kategori=semua&tipe=barang'> Umum </a></li>
           <li class="nav-item"><a class="nav-link" href='barang_2.php?kategori=semua&tipe=barang' > Lain - lain </a></li>
-          <li class="nav-item"><a class="nav-link" href='persediaan_filter.php?kategori=semua&tipe=barang'>Filter Limit Stok</a></li>
-          <li class="nav-item"><a class="nav-link" href='persediaan_filter_over.php?kategori=semua&tipe=barang'>Filter Over Stok</a></li>
           <?php else: ?>
 
           <li class="nav-item"><a class="nav-link active" href='barang.php?kategori=semua&tipe=barang_jasa'> Umum </a></li>
-          <li class="nav-item"><a class="nav-link" href='barang_2.php?kategori=semua&tipe=barang_jasa' > Lain - lain </a></li>
-          <li class="nav-item"><a class="nav-link" href='persediaan_filter.php?kategori=semua&tipe=barang_jasa'>Filter Limit Stok</a></li>
-          <li class="nav-item"><a class="nav-link" href='persediaan_filter_over.php?kategori=semua&tipe=barang_jasa'>Filter Over Stok</a></li>   
+          <li class="nav-item"><a class="nav-link" href='barang_2.php?kategori=semua&tipe=barang_jasa' > Lain - lain </a></li>  
           <?php endif ?>
           
           
@@ -498,6 +483,7 @@ $barang_edit = mysqli_num_rows($pilih_akses_barang_edit);
              ?>
             <th style='background-color: #4CAF50; color: white'> Kode Barang </th>
             <th style='background-color: #4CAF50; color: white'> Nama Barang </th>
+            <th style='background-color: #4CAF50; color: white'> Varian </th>
             <th style='background-color: #4CAF50; color: white'> Harga Beli </th>
             <th style='background-color: #4CAF50; color: white'> Margin</th>
             <th style='background-color: #4CAF50; color: white'> Harga Jual Level 1</th>
@@ -508,6 +494,7 @@ $barang_edit = mysqli_num_rows($pilih_akses_barang_edit);
             <th style='background-color: #4CAF50; color: white'> Satuan </th>
             <th style='background-color: #4CAF50; color: white'> Satuan Konversi </th>
             <th style='background-color: #4CAF50; color: white'> Kategori </th>
+
             <!--
             <th> Gudang </th>
             -->
@@ -524,9 +511,6 @@ $barang_edit = mysqli_num_rows($pilih_akses_barang_edit);
     
     while($row = mysqli_fetch_array($perintah))
     {
-            $select_gudang = $db->query("SELECT nama_gudang FROM gudang WHERE kode_gudang = '$row[gudang]'");
-            $ambil_gudang = mysqli_fetch_array($select_gudang);
-
             $select = $db->query("SELECT SUM(sisa) AS jumlah_barang FROM hpp_masuk WHERE kode_barang = '$row[kode_barang]'");
             $ambil_sisa = mysqli_fetch_array($select);
 
@@ -569,14 +553,17 @@ $barang_edit = mysqli_num_rows($pilih_akses_barang_edit);
         },
             
             "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-                $(nRow).attr('class','tr-id-'+aData[14]+'');
+                $(nRow).attr('class','tr-id-'+aData[15]+'');
             },
         });
 
         $("#form").submit(function(){
         return false;
         });
-        
+
+
+   
+          
 
       } );
     </script>
@@ -614,45 +601,22 @@ $barang_edit = mysqli_num_rows($pilih_akses_barang_edit);
 </script>
 
 <script type="text/javascript">
-
-               $(document).ready(function(){
-               // KODE BARANG BLUR
-               $("#kode_barang").blur(function(){
+// KODE BARANG BLUR
+        $('#kode_barang').blur(function(){
                var kode_barang = $("#kode_barang").val();
 
-              $.post('cek_kode_barang.php',{kode_barang:$(this).val()}, function(data){
+              $.post('cek_kode_barang.php',{kode_barang:kode_barang}, function(data){
                 
                 if(data == 1){
 
                     alert ("Kode Barang Sudah Ada");
                     $("#kode_barang").val('');
+
                 }
-                else {
-                    
-                }
+
               });
                 
-               });
-
-               // KODE BARANG MOUSELEAVE
-               $("#kode_barang").mouseleave(function(){
-               var kode_barang = $("#kode_barang").val();
-
-              $.post('cek_kode_barang.php',{kode_barang:$(this).val()}, function(data){
-                
-                if(data == 1){
-
-                    alert ("Kode Barang Sudah Ada");
-                    $("#kode_barang").val('');
-                }
-                else {
-                    
-                }
-              });
-                
-               });
-               });
-
+        });
 </script>
 
                              
@@ -711,11 +675,11 @@ var harga_jual1 = $("#harga_jual").val();
 var harga_jual2 = $("#harga_jual2").val();
 var harga_jual3 = $("#harga_jual3").val();
 
-if (harga_jual1 < harga_beli)
-{
-    alert("Harga Jual 1 lebih kecil dari harga beli");
-}
+var range_harga1 = parseInt(harga_jual1) - parseInt(harga_beli);
 
+if (range_harga1 < 0){
+    alert("Harga Level 1 Tidak Boleh Lebih Kecil Dari Harga Beli.");
+}
    
    });
 </script>

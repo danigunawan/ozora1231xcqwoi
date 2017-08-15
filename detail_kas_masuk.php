@@ -1,4 +1,4 @@
-<?php 
+tabel t<?php 
 
 include 'sanitasi.php';
 include 'db.php';

@@ -56,14 +56,31 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 
 
           $nestedData[] = $row['nama_ekspedisi'];
-          if ($data_otoritas_master_data_ekspedisi['ekspedisi_edit'] == 1){
-          $nestedData[] = "<button class='btn btn-danger btn-hapus btn-sm' data-id='". $row['id'] ."' data-ekspedisi='". $row['nama_ekspedisi'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button>";
+          if ($data_otoritas_master_data_ekspedisi['ekspedisi_hapus'] == 1){
+
+    $query_cek_ekspedisi = $db->query("SELECT kode_ekspedisi FROM penjualan WHERE kode_ekspedisi = '$row[id]' ");
+              $jumlah_cek_ekspedisi = mysqli_num_rows($query_cek_ekspedisi);
+
+      $query_cek_ekspedisi_resi = $db->query("SELECT nama_expedisi FROM resi WHERE nama_expedisi = '$row[id]' ");
+              $jumlah_cek_ekspedisi_resi = mysqli_num_rows($query_cek_ekspedisi_resi);
+
+       if ($jumlah_cek_ekspedisi == 0 AND $jumlah_cek_ekspedisi_resi == 0){
+
+        $nestedData[] = "<button class='btn btn-danger btn-hapus btn-sm' data-id='". $row['id'] ."' data-ekspedisi='". $row['nama_ekspedisi'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button>";
+
+      }
+      else{
+      $nestedData[] = "<p style='color:red;'>Sudah Terpakai</p>";
+      }
+
+          
+
           }
           else{
 			$nestedData[] = "<p></p>";
           }
 
-          if ($data_otoritas_master_data_ekspedisi['ekspedisi_hapus'] == 1){
+          if ($data_otoritas_master_data_ekspedisi['ekspedisi_edit'] == 1){
           $nestedData[] = "<button class='btn btn-success btn-edit btn-sm' data-ekspedisi='". $row['nama_ekspedisi'] ."' data-id='". $row['id'] ."' > <span class='glyphicon glyphicon-edit'> </span> Edit </button>";
       	  }
       	  else{

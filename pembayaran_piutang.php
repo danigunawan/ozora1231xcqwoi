@@ -56,7 +56,7 @@ echo '<a href="form_pembayaran_piutang.php" class="btn btn-info"> <i class="fa f
    <p>Apakah Anda yakin Ingin Menghapus Data ini ?</p>
    <form >
     <div class="form-group">
-    <label> Nama Pelanggan :</label>
+    <label> Nama Marketplace :</label>
      <input type="text" id="pelanggan" class="form-control" readonly=""> 
      <input type="hidden" id="id_hapus" class="form-control" > 
 
@@ -133,7 +133,7 @@ if ($pembayaran_piutang['pembayaran_piutang_hapus'] > 0) {
 			<th style="background-color: #4CAF50; color:white"> Nomor Faktur </th>
 			<th style="background-color: #4CAF50; color:white"> Tanggal </th>
 			<th style="background-color: #4CAF50; color:white"> Jam </th>
-			<th style="background-color: #4CAF50; color:white"> Kode Pelanggan </th>
+			<th style="background-color: #4CAF50; color:white"> Kode Marketplace </th>
 			<th style="background-color: #4CAF50; color:white"> Keterangan </th>
 			<th style="background-color: #4CAF50; color:white"> Total </th>
 			<th style="background-color: #4CAF50; color:white"> User Buat </th>
@@ -167,7 +167,7 @@ if ($pembayaran_piutang['pembayaran_piutang_edit'] > 0) {
 
 if ($pembayaran_piutang['pembayaran_piutang_hapus'] > 0) {		
 
-			echo "<td> <button class='btn btn-danger btn-hapus' data-id='". $data1['id'] ."' data-suplier='". $data1['nama_suplier'] ."' data-no-faktur='". $data1['no_faktur_pembayaran'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> </td>";
+			echo "<td> <button class='btn btn-danger btn-hapus' data-id='". $data1['id'] ."' data-suplier='". $data1['nama_pelanggan'] ."' data-no-faktur='". $data1['no_faktur_pembayaran'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> </td>";
 }
 
 		echo "<td> <a href='cetak_lap_pembayaran_piutang.php?no_faktur_pembayaran=".$data1['no_faktur_pembayaran']."'  class='btn btn-primary' target='blank'><span class='glyphicon glyphicon-print'> </span> Cetak Piutang </a> </td>

@@ -56,7 +56,7 @@ include 'db.php';
 
 
 
-<h3>LAPORAN DATA STOK PERIODE</h3> <hr>
+<h3>LAPORAN KARTU STOK PERIODE</h3> <hr>
 
 <button type="button" id="cari_produk_penjualan" class="btn btn-info " data-toggle="modal" data-target="#myModal"><i class='fa  fa-search'> Cari (F1)</i>  </button> 
 <br><br>

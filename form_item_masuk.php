@@ -79,7 +79,7 @@ $perintah = $db->query("SELECT * FROM item_masuk");
 
 
         
-        $perintah = $db->query("SELECT * FROM barang WHERE berkaitan_dgn_stok = 'Barang' || berkaitan_dgn_stok = ''");
+        $perintah = $db->query("SELECT * FROM barang WHERE berkaitan_dgn_stok = 'Barang' || berkaitan_dgn_stok = '' AND status = 'Aktif'");
         
         //menyimpan data sementara yang ada pada $perintah
         while ($data1 = mysqli_fetch_array($perintah))

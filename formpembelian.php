@@ -10,6 +10,11 @@
 
     $session_id = session_id();
 
+$query_default_ppn = $db->query("SELECT setting_ppn, nilai_ppn FROM perusahaan");
+$data_default_ppn = mysqli_fetch_array($query_default_ppn);
+$default_ppn = $data_default_ppn['setting_ppn'];
+$nilai_ppn = $data_default_ppn['nilai_ppn'];
+
 ?>
 
 
@@ -60,10 +65,8 @@
                   ?>
                 </select>
             </div>      
-               
-            <div class="col-sm-3">
-              <label> Gudang </label><br>            
-                <select name="kode_gudang" id="kode_gudang" class="form-control chosen" required="" data-placeholder="SILAKAN PILIH...">
+                        
+                <select style="display: none;" name="kode_gudang" id="kode_gudang"  required="" data-placeholder="SILAKAN PILIH...">
                   <?php 
                     // menampilkan seluruh data yang ada pada tabel suplier
                     $query = $db->query("SELECT * FROM gudang");              
@@ -73,17 +76,30 @@
                       echo "<option value='".$data['kode_gudang'] ."'>".$data['nama_gudang'] ."</option>";
                     }
                   ?>
-                </select>
-            </div>
+                </select> 
 
-            <div class="col-sm-3">
-              <label>PPN</label>
-                <select name="ppn" id="ppn" class="form-control ">
-                  <option value="Include">Include</option>  
-                  <option value="Exclude">Exclude</option>
-                  <option value="Non">Non</option>          
-                </select>
-            </div>
+<div class="col-sm-3">
+<label class="gg">PPN</label>
+<select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control chosen">
+  <?php if ($default_ppn == 'Include'): ?>    
+    <option selected>Include</option>  
+    <option>Exclude</option>  
+    <option>Non</option>
+  <?php endif ?>
+
+  <?php if ($default_ppn == 'Exclude'): ?>
+    <option selected>Exclude</option>  
+    <option>Non</option>
+    <option>Include</option>  
+  <?php endif ?>
+
+  <?php if ($default_ppn == 'Non'): ?>
+    <option selected>Non</option>
+    <option>Include</option>  
+    <option>Exclude</option>  
+  <?php endif ?>
+</select>
+</div>
 
         </div> <!-- END ROW KOLOM SUPLIER -->
     
@@ -103,7 +119,7 @@
           </div>
           <div class="modal-body">
               <span class="modal_baru">
-                <div class="table-resposive">
+                <div class="table-responsive">
                   <center>
                     <table id="tabel_cari" class="table table-bordered table-sm">
                           <thead> <!-- untuk memberikan nama pada kolom tabel -->
@@ -258,9 +274,13 @@
         <input  style="height:20px" type="text" class="form-control" name="potongan" autocomplete="off" id="potongan1" data-toggle="tooltip" data-placement="top" title="Jika Ingin Potongan Dalam Bentuk Persen (%), input : 10%" placeholder="Disc." >
       </div>
         
-      <div class="col-sm-2" style="width:90px">
-        <input  style="height:20px" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" placeholder="Pajak %" >
-      </div>
+  <div class="col-sm-1">
+    <?php if ($default_ppn == 'Include'): ?>
+      <input style="height:20px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" value="<?php echo $nilai_ppn ?>" placeholder="Tax%" >
+    <?php else: ?>
+      <input style="height:20px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" placeholder="Tax%" >
+    <?php endif ?>      
+  </div>
 
       <div class="col-sm-3">
         <button type="submit" id="submit_produk" class="btn btn-success"><i class='fa fa-plus'></i> Tambah (F3) </button>
@@ -293,9 +313,9 @@
             <th> Jumlah Barang </th>
             <th> Satuan </th>
             <th> Harga </th>
-            <th> Subtotal </th>
             <th> Potongan </th>
             <th> Tax </th>
+            <th> Subtotal </th>
             <th> Hapus </th>
                                     
           </thead> <!-- tag penutup tabel -->
@@ -324,27 +344,30 @@
   <div class="card card-block" style="width:80%; ">
 
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
           <b><label> Subtotal</label><br>
               <input type="text" name="total" id="total_pembelian1" class="form-control" placeholder="" readonly="" style="font-size: 20px; height: 15px" ></b>        
-        </div>
-        <div class="col-sm-6">
-          
         </div>
       </div>
 
       <div class="row">
+     
         <div class="col-sm-6">
-          <label> Potongan ( Rp ) </label><br>
+           <label> Potongan ( Rp ) </label><br>
             <input type="text" name="potongan" id="potongan_pembelian" data-diskon="" style="height:15px;font-size:15px" class="form-control" autocomplete="off" placeholder=" ">
         </div>
+
         <div class="col-sm-6">
           <label> Potongan ( % ) </label><br>
             <input type="text" name="potongan_persen" id="potongan_persen" style="height:15px;font-size:15px" class="form-control" autocomplete="off" placeholder="">
         </div>
-        <div class="col-sm-4" style="display: none">          
+        <div class="col-sm-6" style="display: none">          
           <label> Tax ( % )</label><br>
-            <input type="text" name="tax" id="tax" class="form-control" style="height:15px;font-size:15px" autocomplete="off" data-pajak="" placeholder="" >
+          <?php if ($default_ppn == 'Exclude'): ?>
+            <input type="text" name="tax" id="tax" style="height:10px;font-size:15px" value="<?php echo $nilai_ppn ?>" style="height:10px;font-size:15px" class="form-control" autocomplete="off" >
+          <?php else: ?>
+            <input type="text" name="tax" id="tax" style="height:10px;font-size:15px" style="height:10px;font-size:15px" class="form-control" autocomplete="off" >
+          <?php endif ?> 
         </div>
       </div>
 
@@ -652,7 +675,7 @@
 
      $("#jumlah_barang").val(''); 
      $("#potongan1").val('');   
-     $("#tax1").val('');
+     
      $("#nama_barang").val('');
      $("#kode_barang").val('');
      $("#kode_barang").trigger('chosen:updated');
@@ -1135,7 +1158,7 @@ else
 
 
 <script>
-
+/*
 //untuk menampilkan sisa penjualan secara otomatis
   $(document).ready(function(){
 
@@ -1335,12 +1358,13 @@ $("#pembayaran_pembelian").keyup(function(){
       $("#total_pembelian").val(tandaPemisahTitik(Math.round(hasil_akhir)));
       $("#potongan_persen").val(tandaPemisahTitik(Math.round(potongan_persen)));
 
-      var diskon_persen = $("#potongan_persen").val();
+      var diskon_persen = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#potongan_persen").val())))); 
 
             if (diskon_persen > 100){
               alert("Potongan Tidak Boleh Lebih Dari 100%")
               $("#potongan_pembelian").val('');
               $("#potongan_persen").val('');
+              $("#total_pembelian").val(total);
              }
 
       });
@@ -1701,60 +1725,54 @@ $.post('cek_kode_barang_tbs_pembelian.php',{kode_barang:kode_barang,session_id:s
 
 
 <script type="text/javascript">
-    $(document).ready(function(){
-
-
-      /*$("#tax").attr("disabled", true);*/
-
-    // cek ppn exclude 
-    var session_id = $("#session_id").val();
-    $.get("cek_ppn_ex.php",{session_id:session_id},function(data){
-      if (data == 1) {
-          $("#ppn").val('Exclude');
-     $("#ppn").attr("disabled", true);
-     $("#tax1").attr("disabled", false);
-      }
-      else if(data == 2){
-
-      $("#ppn").val('Include');
-     $("#ppn").attr("disabled", true);
-       $("#tax1").attr("disabled", false);
-      }
-      else
-      {
-
-     $("#ppn").val('Non');
-     $("#tax1").attr("disabled", true);
-
-      }
-
-    });
-
-
-    $("#ppn").change(function(){
+  $(document).ready(function(){
 
     var ppn = $("#ppn").val();
-    $("#ppn_input").val(ppn);
+      $("#ppn_input").val(ppn);
 
-  if (ppn == "Include"){
-
-      $("#tax1").attr("disabled", false);
-
-  }
-
-  else if (ppn == "Exclude") {
-    $("#tax1").attr("disabled", false);
-  }
-  else{
-
-    $("#tax1").attr("disabled", true);
-  }
-
-
-  });
-  });
+      if (ppn == "Include"){
+          $("#tax").attr("disabled", true);
+          $("#tax1").attr("disabled", false);
+      }
+      else if (ppn == "Exclude") {
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", false);
+      }
+      else{
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", true);
+      }
+    });
 </script>
 
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $("#ppn").change(function(){
+      var ppn = $("#ppn").val();
+      $("#ppn_input").val(ppn);
+
+      if (ppn == "Include"){
+          $("#tax").attr("disabled", true);
+          $("#tax1").attr("disabled", false);
+          $("#tax").val("");
+          $("#tax1").val("<?php echo $nilai_ppn ?>");
+      }
+      else if (ppn == "Exclude") {
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", false);
+        $("#tax1").val("");
+      }
+      else{
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", true);
+        $("#tax1").val("");
+        $("#tax").val("");
+      }
+    });
+
+  });
+</script>
 
  <script type="text/javascript">              
                                  $(document).on('dblclick','.edit-jumlah',function(e){
@@ -2048,6 +2066,50 @@ $(document).ready(function(){
 
 </script>
 
+<!--Mulai Script Key Up Potongan Produk-->
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#potongan1").keyup(function(){
+
+    //jumlah barang
+    var jumlah_barang = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#jumlah_barang").val()))));
+    if (jumlahbarang == ''){
+      jumlahbarang = 0;
+    }
+
+    // harga barang
+    var harga = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#harga_produk").val()))));
+    if (harga == ''){
+      harga = 0;
+    }
+
+    //potongan barang
+    var potongan = $("#potongan1").val();
+
+    //Potongan Persen
+    var pos = potongan.search("%");
+    if (pos > 0){
+      var potongan_persen = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#potongan1").val()))));
+
+      potongan_persen = potongan_persen.replace("%","");
+      if(potongan_persen > 100){
+        alert("Potongan Tidak Boleh Lebih 100%");
+          $("#potongan1").val(0);
+          $("#potongan1").focus();
+      }
+    };
+
+    //Hitungan
+    var subtotal = parseInt(jumlah_barang,10) * parseInt(harga,10)
+    if(potongan > subtotal){
+      alert("Potongan Tidak Boleh Melebihi Total Harga Barang !!");
+      $("#potongan1").val(0);
+      $("#potongan1").focus();
+    }
+  });
+});
+</script>
+<!--Akhir Script Key Up Potongan Produk-->
 
 <!-- memasukan file footer.php -->
 <?php include 'footer.php'; ?>

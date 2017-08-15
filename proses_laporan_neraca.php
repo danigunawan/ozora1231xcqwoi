@@ -640,3 +640,6 @@ else{
 
 </div>
 </div>
+
+
+ <a href='cetak_lap_neraca.php?tanggal=<?php echo $sampai_tanggal;?>' target="blank" id="cetak_lap" class='btn btn-info'><i class='fa fa-print'> </i> Cetak Neraca</a>

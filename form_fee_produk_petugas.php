@@ -5,7 +5,7 @@
  include 'sanitasi.php';
  include 'header.php';
  include 'navbar.php';
- 
+
 
   $query = $db->query("SELECT * FROM fee_produk");
 
@@ -21,12 +21,12 @@
 
 <br><br>
         <!-- membuat tombol agar menampilkan modal -->
-        <button type="button" class="btn btn-danger btn-md" id="cari_petugas" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-search"> </span> Cari Petugas</button>
+        <button type="button" class="btn btn-danger btn-md" id="cari_petugas" data-toggle="modal"><span class="glyphicon glyphicon-search"> </span> Cari Petugas</button>
         <br><br>
         <!-- Tampilan Modal -->
         <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
-        
+
         <!-- Isi Modal-->
         <div class="modal-content">
         <div class="modal-header">
@@ -34,10 +34,10 @@
         <h4 class="modal-title">Data User</h4>
         </div>
         <div class="modal-body"> <!--membuat kerangka untuk tempat tabel -->
-        
+
         <!--perintah agar modal update-->
 <span class="modal_baru">
- <div class="table-responsive">       
+ <div class="table-responsive">
 <table id="tableuser" class="table table-bordered">
     <thead>
       <th> Username </th></th>
@@ -47,9 +47,9 @@
       <th> Otoritas </th>
       <th> Status </th>
 
-      
+
     </thead>
-    
+
     <tbody>
     <?php
 
@@ -72,16 +72,16 @@
   </table>
 </div>
 </span>
-          
+
 </div> <!-- tag penutup modal body -->
-        
+
         <!-- tag pembuka modal footer -->
         <div class="modal-footer">
-       
+
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div> <!--tag penutup moal footer -->
         </div>
-        
+
         </div>
         </div>
 
@@ -99,7 +99,7 @@
         <!-- Tampilan Modal -->
         <div id="my_Modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
-        
+
         <!-- Isi Modal-->
         <div class="modal-content">
         <div class="modal-header">
@@ -107,14 +107,14 @@
         <h4 class="modal-title">Data Barang</h4>
         </div>
         <div class="modal-body"> <!--membuat kerangka untuk tempat tabel -->
-        
+
         <!--perintah agar modal update-->
         <span class="modal_baru">
           <div class="table-responsive">                             <!-- membuat agar ada garis pada tabel, disetiap kolom-->
  <table id="tableuser" class="table table-bordered">
 
         <thead> <!-- untuk memberikan nama pada kolom tabel -->
-        
+
         <th> Kode Barang </th>
             <th> Nama Barang </th>
             <th> Harga Beli </th>
@@ -125,30 +125,30 @@
             <th> Status </th>
             <th> Suplier </th>
             <th> Foto </th>
-        
+
         </thead> <!-- tag penutup tabel -->
-        
-        <tbody> <!-- tag pembuka tbody, yang digunakan untuk menampilkan data yang ada di database --> 
+
+        <tbody> <!-- tag pembuka tbody, yang digunakan untuk menampilkan data yang ada di database -->
 <?php
 
 
-        
+
         $perintah = $db->query("SELECT * FROM barang");
-        
+
         //menyimpan data sementara yang ada pada $perintah
         while ($data1 = mysqli_fetch_array($perintah))
         {
-        
+
         // menampilkan data
         echo "<tr class='pilih_barang' data-kode='". $data1['kode_barang'] ."' nama-barang='". $data1['nama_barang'] ."'
         satuan='". $data1['satuan'] ."' harga='". $data1['harga_beli'] ."' jumlah-barang='". $data1['stok_barang'] ."'>
-        
+
             <td>". $data1['kode_barang'] ."</td>
             <td>". $data1['nama_barang'] ."</td>
             <td>". rp($data1['harga_beli']) ."</td>
             <td>". rp($data1['harga_jual']) ."</td>";
-            
-            
+
+
 // mencari jumlah Barang
             $query0 = $db->query("SELECT SUM(jumlah_barang) AS jumlah_pembelian FROM detail_pembelian WHERE kode_barang = '$data1[kode_barang]'");
             $cek0 = mysqli_fetch_array($query0);
@@ -173,7 +173,7 @@
             $total_1 = $jumlah_pembelian + $jumlah_item_masuk + $jumlah_retur_penjualan + $jumlah_stok_awal + $jumlah_fisik;
 
 
- 
+
 
             $query3 = $db->query("SELECT SUM(jumlah_barang) AS jumlah_penjualan FROM detail_penjualan WHERE kode_barang = '$data1[kode_barang]'");
             $cek3 = mysqli_fetch_array($query3);
@@ -189,7 +189,7 @@
             $jumlah_retur_pembelian = $cek5['jumlah_retur_pembelian'];
 
 
- 
+
 
 
 
@@ -197,42 +197,42 @@
             $total_2 = $jumlah_penjualan + $jumlah_item_keluar + $jumlah_retur_pembelian;
 
             $stok_barang = $total_1 - $total_2;
-            
-            
-            
-            
-            
+
+
+
+
+
             echo "<td>". $stok_barang ."</td>
             <td>". $data1['satuan'] ."</td>
             <td>". $data1['kategori'] ."</td>
             <td>". $data1['status'] ."</td>
             <td>". $data1['suplier'] ."</td>
-            
+
             <td><img src='save_picture/". $data1['foto'] ."' height='20px' width='40px' ></td>
             </tr>";
-      
+
          }
 
 //Untuk Memutuskan Koneksi Ke Database
 
-mysqli_close($db); 
+mysqli_close($db);
 ?>
-    
+
         </tbody> <!--tag penutup tbody-->
-        
+
         </table> <!-- tag penutup table-->
         </div>
 </span>
-        	
+
 </div> <!-- tag penutup modal body -->
-        
+
         <!-- tag pembuka modal footer -->
         <div class="modal-footer">
-       
+
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div> <!--tag penutup moal footer -->
         </div>
-        
+
         </div>
         </div>
 
@@ -268,14 +268,11 @@ mysqli_close($db);
 
 
 <span id="alert">
-  
+
 
 </span>
 
 </div><!-- end row -->
-<br>
-<br>
-<label> User : <?php echo $_SESSION['user_name']; ?> </label> 
 
 
 
@@ -283,13 +280,13 @@ mysqli_close($db);
 </div><!-- end container -->
 
 <script>
-// untuk memunculkan data tabel 
+// untuk memunculkan data tabel
 $(document).ready(function(){
     $('.table').DataTable();
 
 
 });
-  
+
 
 
 </script>
@@ -304,10 +301,10 @@ $(document).ready(function(){
 
   $('#myModal').modal('hide');
   });
-   
 
 
-   
+
+
   </script> <!--tag penutup perintah java script-->
 
 
@@ -319,14 +316,14 @@ $(document).ready(function(){
   document.getElementById("kode_produk").value = $(this).attr('data-kode');
   document.getElementById("nama_produk").value = $(this).attr('nama-barang');
 
-  
+
   $('#my_Modal').modal('hide');
   });
-   
 
 
 
-   
+
+
   </script> <!--tag penutup perintah java script-->
 
 
@@ -340,8 +337,8 @@ $(document).ready(function(){
        var kode_produk = $("#kode_produk").val();
        var jumlah_prosentase = $("#jumlah_prosentase").val();
        var jumlah_nominal = $("#jumlah_nominal").val();
-       
-       
+
+
 
  if (jumlah_prosentase > 100)
  {
@@ -368,16 +365,16 @@ $(document).ready(function(){
 
 $("#alert").html(info);
 
-    $("#alert_berhasil").show('fast');
-    $("#alert_gagal").show('fast');
+     $("#alert_berhasil").show('fast');
+     $("#alert_gagal").show('fast');
      $("#nama_produk").val('');
      $("#kode_produk").val('');
      $("#jumlah_prosentase").val('');
      $("#jumlah_nominal").val('');
      $("#nama_petugas").val('');
 
-    
-       
+
+
    });
 
 
@@ -389,18 +386,18 @@ $("#alert").html(info);
     return false;
 });
 
-    
+
 
   });
-        
+
   </script>
 
   <script type="text/javascript">
-  
+
       $("#jumlah_prosentase").keyup(function(){
       var jumlah_prosentase = $("#jumlah_prosentase").val();
       var jumlah_nominal = $("#jumlah_nominal").val();
-      
+
       if (jumlah_prosentase > 100)
       {
 
@@ -408,7 +405,7 @@ $("#alert").html(info);
           $("#jumlah_prosentase").val('');
       }
 
-      else if (jumlah_prosentase == "") 
+      else if (jumlah_prosentase == "")
       {
         $("#nominal").show();
       }
@@ -419,34 +416,40 @@ $("#alert").html(info);
       }
 
 
-    
+
       });
 
 
               $("#jumlah_nominal").keyup(function(){
               var jumlah_nominal = $("#jumlah_nominal").val();
               var jumlah_prosentase = $("#jumlah_prosentase").val();
-              
-              if (jumlah_nominal == "") 
+
+              if (jumlah_nominal == "")
               {
               $("#prosentase").show();
               }
-              
+
               else
               {
               $("#prosentase").hide();
               }
-              
-              
-              
+
+
+
               });
 
-                  $("#cari_petugas").click(function(){
-                    $("#alert").hide(fast);
-                  });
-     
+
 
   </script>
 
+<script type="text/javascript">
+  $(document).on("click","#cari_petugas",function(){
+    $("#alert_berhasil").hide('fast');
+    $("#alert_gagal").hide('fast');
+    $("#nominal").show();
+    $("#prosentase").show();
+    $("#myModal").modal('show');
+  });
+</script>
 
 <?php include 'footer.php'; ?>

@@ -35,7 +35,7 @@ while ($data = mysqli_fetch_array($perintah))
       }
 
 
-$perintah1 = $db->query("INSERT INTO tbs_retur_penjualan (no_faktur_retur, no_faktur_penjualan	, nama_barang, kode_barang, jumlah_beli, jumlah_retur, harga, subtotal, potongan, tax,satuan, satuan_jual) VALUES ( '$data[no_faktur_retur]', '$data[no_faktur_penjualan]', '$data[nama_barang]', '$data[kode_barang]', '$data[jumlah_beli]', '$jumlah_retur', '$harga', '$data[subtotal]', '$data[potongan]', '$data[tax]','$data[satuan]','$data[asal_satuan]')");
+$perintah1 = $db->query("INSERT INTO tbs_retur_penjualan (no_faktur_retur, no_faktur_penjualan	, nama_barang, kode_barang, jumlah_beli, jumlah_retur, harga, subtotal, potongan, tax,satuan, satuan_jual, nama_konsumen, nama_toko) VALUES ( '$data[no_faktur_retur]', '$data[no_faktur_penjualan]', '$data[nama_barang]', '$data[kode_barang]', '$data[jumlah_beli]', '$jumlah_retur', '$harga', '$data[subtotal]', '$data[potongan]', '$data[tax]','$data[satuan]','$data[asal_satuan]','$data[nama_konsumen]','$data[nama_toko]')");
 
 
 }

@@ -82,7 +82,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 					$nestedData[] = "<button class='btn btn-danger btn-hapus' data-id='". $row['id'] ."' data-suplier='". $row['nama'] ."' data-no_faktur_pembayaran='". $row['no_faktur_pembayaran'] ."'> Hapus  </button>";
 					} 
 
-					$nestedData[] = "<a href='cetak_lap_pembayaran_hutang.php?no_faktur_pembayaran=".$row['no_faktur_pembayaran']."&nama_suplier=".$row['nama']."' class='btn btn-primary' target='blank'>Cetak Hutang  </a>";
+					$nestedData[] = "<a href='cetak_lap_pembayaran_hutang.php?no_faktur_pembayaran=".$row['no_faktur_pembayaran']."&nama_suplier=".$row['nama']."' class='btn btn-primary' target='blank'>Cetak   </a>";
 						$nestedData[] = $row['no_faktur_pembayaran'];
 						$nestedData[] = $row['tanggal'] ." ". $row['jam'];
 						$nestedData[] = $row['nama'];

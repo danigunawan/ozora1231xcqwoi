@@ -126,7 +126,7 @@ else {
         $jumlah_barang = $data['jumlah_retur'];
       }
 
-        $query2 = "INSERT INTO detail_retur_penjualan (no_faktur_retur, no_faktur_penjualan, tanggal, jam, nama_barang, kode_barang, jumlah_beli, jumlah_retur, harga, subtotal, potongan, tax,asal_satuan,satuan) VALUES ('$no_faktur_retur','$data[no_faktur_penjualan]','$tanggal_sekarang','$jam_sekarang','$data[nama_barang]','$data[kode_barang]','$data[jumlah_beli]','$jumlah_barang','$harga','$data[subtotal]','$data[potongan]','$data[tax]','$data[satuan_jual]','$data[satuan]')";
+        $query2 = "INSERT INTO detail_retur_penjualan (no_faktur_retur, no_faktur_penjualan, tanggal, jam, nama_barang, kode_barang, jumlah_beli, jumlah_retur, harga, subtotal, potongan, tax,asal_satuan,satuan, nama_toko, nama_konsumen) VALUES ('$no_faktur_retur','$data[no_faktur_penjualan]','$tanggal_sekarang','$jam_sekarang','$data[nama_barang]','$data[kode_barang]','$data[jumlah_beli]','$jumlah_barang','$harga','$data[subtotal]','$data[potongan]','$data[tax]','$data[satuan_jual]','$data[satuan]','$data[nama_toko]','$data[nama_konsumen]')";
 
             if ($db->query($query2) === TRUE) {
                 

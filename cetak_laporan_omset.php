@@ -31,7 +31,7 @@ else{
  ?>
 
 
- <div style="padding-left: 5%; padding-right: 5%">
+ <div class="container">
  <div class="row"><!--row1-->
         <div class="col-sm-2">
                 <img src='save_picture/<?php echo $data1['foto']; ?>' class='img-rounded' alt='Cinque Terre' width='160' height='140`'> 
@@ -69,7 +69,9 @@ else{
             <thead>
                 <th> Tanggal</th>
                 <th> No. Faktur</th>
-                <th> Nama Pelanggan</th>
+                <th> Marketplace</th>
+                <th> Toko</th>
+                <th> Konsumen</th>
                 <th> Sales</th>
                 <th> Total Omset </th>
                 <th> Terbayar  </th>
@@ -81,16 +83,16 @@ else{
         
 
         if ($kode_pelanggan == 'semua' AND $sales == 'semua') {
-          $select = $db->query("SELECT p.no_faktur, p.tanggal, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal'");
+          $select = $db->query("SELECT p.no_faktur, p.tanggal, p.kode_pelanggan, t.nama_toko, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal'");
         }
         else if ($kode_pelanggan == 'semua' AND $sales != 'semua') {
-          $select = $db->query("SELECT p.no_faktur, p.tanggal, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.sales = '$sales'");
+          $select = $db->query("SELECT p.no_faktur, p.tanggal, p.kode_pelanggan, t.nama_toko, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.sales = '$sales'");
         }
         else if ($kode_pelanggan != 'semua' AND $sales == 'semua') {
-          $select = $db->query("SELECT p.no_faktur, p.tanggal, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kode_pelanggan = '$kode_pelanggan'");
+          $select = $db->query("SELECT p.no_faktur, p.tanggal, p.kode_pelanggan, t.nama_toko, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kode_pelanggan = '$kode_pelanggan'");
         }
         else{
-          $select = $db->query("SELECT p.no_faktur, p.tanggal, p.kode_pelanggan, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kode_pelanggan = '$kode_pelanggan' AND p.sales = '$sales'");
+          $select = $db->query("SELECT p.no_faktur, p.tanggal, p.kode_pelanggan, t.nama_toko, pel.nama_pelanggan, p.total, p.tunai, p.sales, p.sisa, p.nama_konsumen FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON p.kode_toko = t.id WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kode_pelanggan = '$kode_pelanggan' AND p.sales = '$sales'");
         }
 
           while ($data = mysqli_fetch_array($select))
@@ -104,6 +106,8 @@ else{
             <td>". $data['tanggal'] ."</td>
             <td>". $data['no_faktur'] ."</td>
             <td>". $data['nama_pelanggan'] ."</td>
+            <td>". $data['nama_toko'] ."</td>
+            <td>". $data['nama_konsumen'] ."</td>
             <td>". $data['sales'] ."</td>
             <td>". rp($data_sum['total_penjualan']) ."</td>
             <td>". rp($data_sum['total_kas']) ."</td>
@@ -115,6 +119,8 @@ else{
           echo "<tr>
 
             <td style='color:red'>TOTAL</td>
+            <td style='color:red'></td>
+            <td style='color:red'></td>
             <td style='color:red'></td>
             <td style='color:red'></td>
             <td style='color:red'></td>

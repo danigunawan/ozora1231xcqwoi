@@ -46,7 +46,7 @@ $nama = $cek['nama'];
     }
     else 
     {
-    echo '<div class="alert alert-danger" id="alert_gagal" style="display:none">
+  echo '<div class="alert alert-danger" id="alert_gagal" style="display:none">
         <strong>Gagal!</strong> Penambahan Data Fee Sudah Ada
         </div>';
     }

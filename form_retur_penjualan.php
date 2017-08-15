@@ -8,106 +8,109 @@ include 'db.php';
 include 'sanitasi.php';
 
 //menampilkan seluruh data yang ada pada tabel penjualan
-$perintah = $db->query("SELECT * FROM retur_penjualan");
 
 $session_id = session_id();
-
+   
+$query_default_ppn = $db->query("SELECT setting_ppn, nilai_ppn FROM perusahaan");
+$data_default_ppn = mysqli_fetch_array($query_default_ppn);
+$default_ppn = $data_default_ppn['setting_ppn'];
+$nilai_ppn = $data_default_ppn['nilai_ppn'];
 
  ?>
 
 <!--membuat tampilan form agar terlihat rapih dalam satu tempat-->
-<div class="container">
+<div style="padding-left: 5%; padding-right: 2%">
 
 
-          <h3> <u>FORM RETUR PENJUALAN</u> </h3><br> 
+  <h3> <u>FORM RETUR PENJUALAN</u> </h3><hr>
 
 
-
-
+<!--membuat tampilan halaman menjadi 8 bagian-->
+<div class="col-sm-8">
 
   <!-- membuat form menjadi beberapa bagian -->
   <form enctype="multipart/form-data" role="form" action="form_retur_penjualan.php" method="post ">
 
-					<input type="hidden" name="session_id" id="session_id" class="form-control" readonly="" value="<?php echo $session_id; ?>"  >
+    <input type="hidden" name="session_id" id="session_id" class="form-control" readonly="" value="<?php echo $session_id; ?>"  >
 
-	<div class="row">
-    <div class="col-sm-2">
-          <label> Kode Pelanggan </label> </label><br>
-          
-          <select data-placeholder="--SILAHKAN PILIH--" name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen">
-          
-          <?php 
-          
-          // menampilkan seluruh data yang ada pada tabel suplier
-          $query = $db->query("SELECT * FROM pelanggan");
-          
-          // menyimpan data sementara yang ada pada $query
-          while($data = mysqli_fetch_array($query))
-          {
-          
-          echo "<option value='".$data['kode_pelanggan'] ."' >".$data['kode_pelanggan'] ." - ".$data['nama_pelanggan'] ."</option>";
-          
-          }
-          
-          
+    <div class="row"><!--START ROW -->
+
+      <div class="col-sm-2">
+        <label> Marketplace </label><br>
+        <select name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen">
+          <?php
+            $query = $db->query("SELECT kode_pelanggan, nama_pelanggan FROM pelanggan");
+            while($data = mysqli_fetch_array($query)){
+              echo "<option value='".$data['kode_pelanggan'] ."' >".$data['kode_pelanggan'] ." - ".$data['nama_pelanggan'] ."</option>";
+            }
           ?>
-          </select>
-    </div>
-
-    <div class="col-sm-2">
-          <label> <b> User </b> </label><br>
-          <input type="text" name="user" class="form-control" readonly="" style="height: 15px" value="<?php echo $_SESSION['user_name']; ?>" required="">
-    </div>
-
-        <div class="col-sm-2">
-          <label>PPN</label> </label>
-          <select name="ppn" id="ppn" class="form-control">
-            <option value="Include">Include</option>  
-            <option value="Exclude">Exclude</option>
-            <option value="Non">Non</option>          
-          </select>
-    </div>
-    
-    <div class="col-sm-2"> 
-             <label> <b> Cara Bayar </b> </label><br>
-             <select type="text" name="cara_bayar" id="carabayar1" class="form-control" >
-             <?php 
-             
-             
-             $sett_akun = $db->query("SELECT sa.kas, da.nama_daftar_akun FROM setting_akun sa INNER JOIN daftar_akun da ON sa.kas = da.kode_daftar_akun");
-             $data_sett = mysqli_fetch_array($sett_akun);
-             
-             
-             
-             echo "<option selected value='".$data_sett['kas']."'>".$data_sett['nama_daftar_akun'] ."</option>";
-             
-             $query = $db->query("SELECT nama_daftar_akun, kode_daftar_akun FROM daftar_akun WHERE tipe_akun = 'Kas & Bank'");
-             while($data = mysqli_fetch_array($query))
-             {
-             
-             
-             
-             
-             echo "<option value='".$data['kode_daftar_akun']."'>".$data['nama_daftar_akun'] ."</option>";
-             
-             
-             
-             
-             }
-             
-             
-             ?>
-             </select>
+        </select>
       </div>
 
-  </div>
+      <div class="col-sm-2">
+        <label> Toko </label><br>
+        <select name="nama_toko" id="nama_toko" class="form-control chosen">
+          <?php
+            $query = $db->query("SELECT nama_toko, id FROM toko");
+            while($data = mysqli_fetch_array($query)){
+              echo "<option value='".$data['id'] ."' >".$data['nama_toko'] ."</option>";
+            }
+          ?>
+        </select>
+      </div>
 
-          </form> <!-- tag penutup form -->
+<div class="col-sm-2">
+<label class="gg">PPN</label>
+<select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control chosen">
+  <?php if ($default_ppn == 'Include'): ?>    
+    <option selected>Include</option>  
+    <option>Exclude</option>  
+    <option>Non</option>
+  <?php endif ?>
+
+  <?php if ($default_ppn == 'Exclude'): ?>
+    <option selected>Exclude</option>  
+    <option>Non</option>
+    <option>Include</option>  
+  <?php endif ?>
+
+  <?php if ($default_ppn == 'Non'): ?>
+    <option selected>Non</option>
+    <option>Include</option>  
+    <option>Exclude</option>  
+  <?php endif ?>
+</select>
+</div>
+
+      <div class="col-sm-2">
+        <label> <b> Cara Bayar </b> </label><br>
+        <select type="text" name="cara_bayar" id="carabayar1" class="form-control chosen">
+          <?php 
+            $sett_akun = $db->query("SELECT sa.kas, da.nama_daftar_akun FROM setting_akun sa INNER JOIN daftar_akun da ON sa.kas = da.kode_daftar_akun");
+            $data_sett = mysqli_fetch_array($sett_akun);
+
+            $query = $db->query("SELECT nama_daftar_akun, kode_daftar_akun FROM daftar_akun WHERE tipe_akun = 'Kas & Bank'");
+            while($data = mysqli_fetch_array($query)){
+              if ($data_sett['kas'] == $data['kode_daftar_akun']) {
+                echo "<option selected value='".$data['kode_daftar_akun']."'>".$data['nama_daftar_akun'] ."</option>";
+              }
+              else{
+                echo "<option value='".$data['kode_daftar_akun']."'>".$data['nama_daftar_akun'] ."</option>";
+              }              
+            }
+          ?>
+        </select>
+      </div>
 
 
- <!--membuat tampilan halaman menjadi 8 bagian-->
-  <div class="col-sm-8">
+      <div class="col-sm-2">
+        <label> <b> Petugas </b> </label><br>
+        <input type="text" name="user" class="form-control" readonly="" style="height: 15px" value="<?php echo $_SESSION['nama']; ?>" required="">
+      </div>
 
+    </div><!--END ROW -->
+
+  </form> <!-- tag penutup form -->
 
 
 <!-- membuat tombol agar menampilkan modal -->
@@ -128,66 +131,6 @@ $session_id = session_id();
 
 <span class="modal_retur_baru">
 
-      <!--perintah agar modal update-->
-
-<div class="table-responsive">
-      <!-- membuat agar ada garis pada tabel, disetiap kolom-->
-        <table id="tableuser" class="table table-bordered">
-    <thead> <!-- untuk memberikan nama pada kolom tabel -->
-      
-      <th> Nomor Faktur </th>
-      <th> Kode Pelanggan </th>
-      <th> Kode Barang </th>
-      <th> Nama Barang </th>
-      <!--
-      <th> Jumlah Beli </th>
-      -->
-      <th> Satuan </th>
-      <th> Harga Barang  </th>
-      <th> Subtotal </th>
-      <th> Potongan </th>
-      <th> Tax </th>
-      <th> Sisa Barang </th>
-      
-    </thead> <!-- tag penutup tabel -->
-    
-    <tbody> <!-- tag pembuka tbody, yang digunakan untuk menampilkan data yang ada di database --> 
-    <?php
-
-
-
-
-    // menampilkan seluruh data yang ada pada tabel barang yang terdapat pada DB
-    $perintah = $db->query("SELECT dp.no_faktur, dp.tanggal, dp.kode_barang, dp.nama_barang, dp.jumlah_barang, dp.satuan, dp.harga, dp.subtotal, dp.potongan, dp.tax, dp.status, dp.sisa, p.kode_pelanggan, pl.nama_pelanggan FROM detail_penjualan dp INNER JOIN penjualan p ON dp.no_faktur = p.no_faktur INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan WHERE dp.sisa > '0' ");
-
-    //menyimpan data sementara yang ada pada $perintah
-      while ($data1 = mysqli_fetch_array($perintah))
-      {
-
-        // menampilkan data
-      echo "<tr class='pilih' data-kode='". $data1['kode_barang'] ."' nama-barang='". $data1['nama_barang'] ."'
-      satuan='". $data1['satuan'] ."' no_faktur='". $data1['no_faktur'] ."' harga='". $data1['harga'] ."' jumlah-barang='". $data1['jumlah_barang'] ."' sisa='". $data1['sisa'] ."' >
-      
-      <td>". $data1['no_faktur'] ."</td>
-      <td>". $data1['kode_pelanggan'] ." - ". $data1['nama_pelanggan'] ."</td>
-      <td>". $data1['kode_barang'] ."</td>
-      <td>". $data1['nama_barang'] ."</td>
-      <td>". $data1['satuan'] ."</td>
-      <td>". rp($data1['harga']) ."</td>
-      <td>". rp($data1['subtotal']) ."</td>
-      <td>". rp($data1['potongan']) ."</td>
-      <td>". rp($data1['tax']) ."</td>
-      <td>". $data1['sisa'] ."</td>
-      </tr>";
-      
-       }
-
-    ?>
-    </tbody> <!--tag penutup tbody-->
-
-  </table> <!-- tag penutup table-->
-
-</div>
 </span>
 
 </div> <!-- tag penutup modal body -->
@@ -207,66 +150,56 @@ $session_id = session_id();
   
 <div class="row">
 
-  <div class="form-group col-sm-3">
-    <input type="text" class="form-control" name="kode_barang" autocomplete="off" id="kode_barang" placeholder="Kode Produk" style="height: 30px">
+  <div class="form-group col-sm-2">
+    <input type="text" class="form-control" name="kode_barang" autocomplete="off" id="kode_barang" placeholder="Kode Produk" style="height: 15px">
     </div>
 
 
-  <div class="form-group col-sm-3"> <!-- agar tampilan berada pada satu group -->
-  <!-- memasukan teks pada kolom kode barang -->
-  <input type="text" class="form-control" readonly="" name="nama_barang" id="nama_barang" placeholder="Nama Barang" style="height: 30px">
-  </div>
-  
+  <div class="form-group col-sm-2">
+    <input type="text" class="form-control" readonly="" name="nama_barang" id="nama_barang" placeholder="Nama Barang" style="height: 15px">
+  </div>  
 
-  <div class="form-group col-sm-3">
-    <input type="text" class="form-control" name="jumlah_retur" id="jumlah_retur" autocomplete="off" placeholder="0"  style="height: 30px">
+  <div class="form-group col-sm-1">
+    <input type="text" class="form-control" name="jumlah_retur" id="jumlah_retur" autocomplete="off" placeholder="0"  style="height: 15px">
   </div>
  
- <div class="form-group col-sm-2">
-          
-          <select name="satuan_konversi" id="satuan_konversi" class="form-control"  >
-          
-          <?php 
-          
-          
-          $query = $db->query("SELECT id, nama  FROM satuan");
-          while($data = mysqli_fetch_array($query))
-          {
-          
-          echo "<option value='".$data['id']."'>".$data['nama'] ."</option>";
-          }
-                      
-          ?>
-          
-          </select>
-
-        </div>
-
-</div>
-    
-<div class="row">
+  <div class="form-group col-sm-1">
+    <select name="satuan_konversi" id="satuan_konversi" class="form-control"  >
+    <?php 
+      $query = $db->query("SELECT id, nama  FROM satuan");
+      while($data = mysqli_fetch_array($query)){
+        echo "<option value='".$data['id']."'>".$data['nama'] ."</option>";
+      }
+    ?>
+    </select>
+  </div>
   
-  <div class="form-group col-sm-3">
-  <input type="text" id="harga_produk" name="harga" class="form-control" autocomplete="off" value="" placeholder="Harga Barang"style="height: 30px">
+  <div class="form-group col-sm-1">
+  <input type="text" id="harga_produk" name="harga" class="form-control" autocomplete="off" value="" placeholder="Harga"style="height: 15px">
   </div>
 
-    <div class="form-group col-sm-3">
-  <input type="text" id="potongan1" name="potongan1" class="form-control" autocomplete="off" value="" placeholder="Potongan"style="height: 30px">
+    <div class="form-group col-sm-1">
+  <input type="text" id="potongan1" name="potongan1" class="form-control" autocomplete="off" value="" placeholder="Disc."style="height: 15px">
+  </div>
+
+  <div class="col-sm-1">
+    <?php if ($default_ppn == 'Include'): ?>
+      <input style="height:15px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" value="<?php echo $nilai_ppn ?>" placeholder="Tax%" >
+    <?php else: ?>
+      <input style="height:15px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" placeholder="Tax%" >
+    <?php endif ?>      
   </div>
 
   <div class="form-group col-sm-2">
-  <input type="text" id="tax1" name="tax1" class="form-control" autocomplete="off" value="" placeholder="Pajak (%)"style="height: 30px">
+    <input type="text" id="konsumen" name="konsumen" class="form-control" autocomplete="off" value="" placeholder="Konsumen"style="height: 15px" readonly="">
   </div>
 
+  <div class="form-group col-sm-12">
+    <button type="submit" id="submit_produk" class="btn btn-success"> <i class='fa fa-plus'> </i> Tambah</button>
+  </div>
 
-  <div class="form-group col-sm-4">
-
-  <button type="submit" id="submit_produk" class="btn btn-success"> <i class='fa fa-plus'> </i> Tambah Produk</button>
-</div>
 </div>
   
-
-
     <input type="hidden" class="form-control" name="harga_lama" id="harga_lama">
     <input type="hidden" class="form-control" name="harga_baru" id="harga_baru">
     <input type="hidden" class="form-control" name="jumlahbarang" id="jumlahbarang">
@@ -278,21 +211,17 @@ $session_id = session_id();
     <input type="hidden" id="satuan_pcs" name="satuan_pcs" class="form-control" value="" required="">
     <input type="hidden" name="session_id" id="session_id" class="form-control" value="<?php echo $session_id; ?>">
     <input type="hidden" id="no_faktur2" name="no_faktur_penjualan" class="form-control" = required="">
-    <input type="hidden" name="jumlah_beli" class="form-control" value="<?php echo $data1['jumlah_barang']; ?>">
     <input type="hidden" id="sisabarang" name="sisa" class="form-control" value="">
-    <br><br>
 
   
 </form>
-									
-
-      
 
   <div class="table-responsive"><!--tag untuk membuat garis pada tabel-->   
   <span id="result">      
-  <table id="table" class="table table-bordered">
+  <table id="table" class="table table-bordered table-sm">
     <thead>
       <th> Nomor Faktur Penjualan </th>
+      <th> Konsumen </th>
       <th> Nama Barang</th>
       <th> Kode Barang </th>
       <th> Jumlah Jual </th>
@@ -312,7 +241,7 @@ $session_id = session_id();
      <?php
 
     //untuk menampilkan semua data yang ada pada tabel tbs penjualan dalam DB
-    $perintah = $db->query("SELECT tp.id, tp.no_faktur_penjualan, tp.nama_barang, tp.kode_barang, tp.jumlah_beli, tp.jumlah_retur, tp.satuan, tp.harga, tp.harga, tp.potongan, tp.tax, tp.subtotal, s.nama AS satuan_retur,ss.nama AS satuan_jual FROM tbs_retur_penjualan tp INNER JOIN satuan s ON tp.satuan = s.id INNER JOIN satuan ss ON tp.satuan_jual = ss.id  WHERE tp.session_id = '$session_id'");
+    $perintah = $db->query("SELECT tp.id, tp.no_faktur_penjualan, tp.nama_barang, tp.kode_barang, tp.jumlah_beli, tp.jumlah_retur, tp.satuan, tp.harga, tp.harga, tp.potongan, tp.tax, tp.subtotal, s.nama AS satuan_retur,ss.nama AS satuan_jual, tp.nama_konsumen FROM tbs_retur_penjualan tp INNER JOIN satuan s ON tp.satuan = s.id INNER JOIN satuan ss ON tp.satuan_jual = ss.id  WHERE tp.session_id = '$session_id'");
 
     //menyimpan data sementara yang ada pada $perintah
       while ($data1 = mysqli_fetch_array($perintah))
@@ -321,6 +250,7 @@ $session_id = session_id();
         // menampilkan data
       echo "<tr class='tr-id-".$data1['id']."'>
       <td>". $data1['no_faktur_penjualan'] ."</td>
+      <td>". $data1['nama_konsumen'] ."</td>
       <td>". $data1['nama_barang'] ."</td>
       <td>". $data1['kode_barang'] ."</td>
       <td>". rp($data1['jumlah_beli']) ."</td>
@@ -357,65 +287,66 @@ $session_id = session_id();
 
   <div class="col-sm-4"> <!--tag pembuka col sm 4-->
 
-  <form action="proses_bayar_retur_jual.php" id="form_beli" method="POST"><!--tag pembuka form-->
+  <div class="card card-block" style="width: 75%;">
+
+    <form action="proses_bayar_retur_jual.php" id="form_beli" method="POST"><!--tag pembuka form-->
       
-      <label> <b> Subtotal</b> </label><br>
-      <input type="text" name="total" id="total_retur_pembelian1" class="form-control" placeholder="Total" readonly="" style="height: 25px" >
+      <div class="row">
+        <div class="col-sm-12">
+          <label> <b> Subtotal</b> </label><br>
+          <input type="text" name="total" id="total_retur_pembelian1" class="form-control" placeholder="Total" readonly="" style="height: 25px" >
+        </div>
+      </div>
+        
+      <div class="row">
+        <div class="col-sm-6">
+            <label> <b> Potongan (Rp) </b> </label><br>
+            <input type="text" name="potongan" id="potongan_pembelian" class="form-control" data-diskon="" placeholder="Potongan" autocomplete="off"style="height: 25px" >
+        </div>
+        <div class="col-sm-6">
+            <label> <b> Potongan (%) </b> </label><br>
+            <input type="text" name="potongan_persen" id="potongan_persen" class="form-control" data-diskon="" placeholder="Potongan" autocomplete="off"style="height: 25px" >
+        </div>
+        <div class="col-sm-4" style="display: none">
+            <label> <b> Tax </b> </label><br>
+              <?php if ($default_ppn == 'Exclude'): ?>
+                <input style="height:15px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax" value="<?php echo $nilai_ppn ?>" placeholder="Tax%" >
+              <?php else: ?>
+                <input style="height:15px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax" placeholder="Tax%" >
+              <?php endif ?>
+        </div>
+      </div>
 
-			<label> <b> Total Akhir</b> </label><br>
-      <!--readonly = agar tek yang ada kolom total tidak bisa diubah hanya bisa dibaca-->
-			<input type="text" name="total" id="total_retur_pembelian" class="form-control" placeholder="Total" readonly="" style="font-size: 25px">
+      <div class="row">
+        <div class="col-sm-6">
+          <label> <b> Total Akhir</b> </label><br>
+          <input type="text" name="total" id="total_retur_pembelian" class="form-control" placeholder="Total" readonly="" style="font-size: 25px">
+        </div>
 
+        <div class="col-sm-6">
+          <label> <b> Pembayaran </b> </label><br>
+          <input type="text" name="pembayaran" id="pembayaran_pembelian" autocomplete="off" class="form-control" placeholder="Pembayaran" style="font-size: 25px" style="height: 25px" >
+        </div>
 
-      
+        <div class="col-sm-12">
+          <label> <b> Kembalian </b> </label><br>
+          <input type="text" name="sisa" id="sisa_pembayaran_pembelian" class="form-control" placeholder="Sisa Pembayaran" readonly="" style="height: 25px" >
+        </div>
+      </div>
 
-<div class="row">
-  <div class="col-sm-4">
-      <label> <b> Potongan (Rp) </b> </label><br>
-      <input type="text" name="potongan" id="potongan_pembelian" class="form-control" data-diskon="" placeholder="Potongan" autocomplete="off"style="height: 25px" >
+        <input type="hidden" name="jumlah" id="jumlah1" class="form-control" placeholder="jumlah"><br>
+        <input type="hidden" name="ppn_input" id="ppn_input" value="Include" class="form-control" placeholder="ppn input">
+        <input type="hidden" name="session_id" id="session_id" class="form-control" value="<?php echo $session_id; ?>">
+        <input type="hidden" name="kode_pelanggan" id="kd_pelanggan1" class="form-control">
+    
+  			<button type="submit" id="pembayaran" class="btn btn-info"> <i class='fa fa-send'> </i> Bayar </button>      
+        <a class="btn btn-info" href="form_retur_penjualan.php" id="transaksi_baru" style="display: none"> <i class="fa fa-refresh"></i> Transaksi Baru</a>
+        <a href='batal_retur_penjualan.php?session_id=<?php echo $session_id;?>' id="batal" class='btn btn-danger'><i class='fa fa-close'> </i> Batal </a>
+        <a href='cetak_retur_penjualan.php' id="cetak_retur" style="display: none;" class="btn btn-success" target="blank"><i class="fa fa-print"> </i> Cetak Retur Penjualan </a>
+       
+    </form><!--tag penutup form-->
   </div>
-  <div class="col-sm-4">
-      <label> <b> Potongan (%) </b> </label><br>
-      <input type="text" name="potongan_persen" id="potongan_persen" class="form-control" data-diskon="" placeholder="Potongan" autocomplete="off"style="height: 25px" >
-  </div>
-  <div class="col-sm-4">
-      <label> <b> Tax </b> </label><br>
-      <input type="text" name="tax" id="tax" class="form-control" placeholder="Tax" data-pajak="" autocomplete="off"style="height: 25px" >
-  </div>
-</div>
-
-      <label> <b> Pembayaran </b> </label><br>
-      <input type="text" name="pembayaran" id="pembayaran_pembelian" autocomplete="off" class="form-control" placeholder="Pembayaran" style="font-size: 25px" style="height: 25px" >
-
-      <label> <b> Kembalian </b> </label><br>
-      <input type="text" name="sisa" id="sisa_pembayaran_pembelian" class="form-control" placeholder="Sisa Pembayaran" readonly="" style="height: 25px" >
-
-      <input type="hidden" name="jumlah" id="jumlah1" class="form-control" placeholder="jumlah"><br> 
-
-      <input type="hidden" name="ppn_input" id="ppn_input" value="Include" class="form-control" placeholder="ppn input">
-
-
-<!-- memasukan teks pada kolom suplier, dan nomor faktur namun disembunyikan -->
-      <input type="hidden" name="session_id" id="session_id" class="form-control" value="<?php echo $session_id; ?>">
-
-      <input type="hidden" name="kode_pelanggan" id="kd_pelanggan1" class="form-control">
   
-  
-
-		
-
-      <!--membuat tombol submit bayar & Hutang-->
-			<button type="submit" id="pembayaran" class="btn btn-info"> <i class='fa fa-send'> </i> Bayar </button>
-      
-      <a class="btn btn-info" href="form_retur_penjualan.php" id="transaksi_baru" style="display: none"> <i class="fa fa-refresh"></i> Transaksi Baru</a>
-
-      <!--membuaat link pada tombol batal-->
-      <a href='batal_retur_penjualan.php?session_id=<?php echo $session_id;?>' id="batal" class='btn btn-danger'><i class='fa fa-close'> </i> Batal </a>
-
-      <a href='cetak_retur_penjualan.php' id="cetak_retur" style="display: none;" class="btn btn-success" target="blank"><i class="fa fa-print"> </i> Cetak Retur Penjualan </a>
-     
-
-					</form><!--tag penutup form-->
 <div class="alert alert-success" id="alert_berhasil" style="display:none">
   <strong>Success!</strong> Pembayaran Berhasil
 </div>
@@ -533,6 +464,8 @@ $session_id = session_id();
   document.getElementById("satuan_pcs").value = $(this).attr('asal_satuan');
   document.getElementById("harga_pcs").value = $(this).attr('harga_pcs');
   document.getElementById("satuan_jual").value = $(this).attr('satuan');
+  document.getElementById("konsumen").value = $(this).attr('nama-konsumen');
+
 
   $('#myModal').modal('hide');
   });
@@ -540,7 +473,7 @@ $session_id = session_id();
 
 // tabel lookup table_barang
   $(function () {
-  $("#table_barang").dataTable();
+  $("#table").dataTable();
   });
 
    
@@ -563,6 +496,8 @@ $session_id = session_id();
     var tax1 = $("#tax1").val();
     var ppn = $("#ppn").val();
     var satuan_jual = $("#satuan_jual").val();
+    var konsumen = $("#konsumen").val();
+    var nama_toko = $("#nama_toko").val();
 
     var jumlah_retur = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#jumlah_retur").val()))));
     var jumlahbarang = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#jumlahbarang").val()))));
@@ -605,7 +540,7 @@ if (jumlah_retur == ""){
   alert("Jumlah Barang Harus Diisi");
   }
   else if (kode_pelanggan == ""){
-  alert("Kode Pelanggan Harus Dipilih");
+  alert("Kode Marketplace Harus Dipilih");
   }
   else
   {
@@ -615,7 +550,7 @@ if (jumlah_retur == ""){
     $("#total_retur_pembelian1").val(tandaPemisahTitik(total_akhir));
      
 
-    $.post("proses_tbs_retur_penjualan.php",{session_id:session_id,no_faktur_penjualan:no_faktur,kode_barang:kode_barang,jumlah_retur:jumlah_retur,satuan_produk:satuan_produk,nama_barang:nama_barang,harga:harga,potongan1:potongan1,tax1:tax1,satuan_jual:satuan_jual},function(info) {
+    $.post("proses_tbs_retur_penjualan.php",{session_id:session_id,no_faktur_penjualan:no_faktur,kode_barang:kode_barang,jumlah_retur:jumlah_retur,satuan_produk:satuan_produk,nama_barang:nama_barang,harga:harga,potongan1:potongan1,tax1:tax1,satuan_jual:satuan_jual,konsumen:konsumen,nama_toko:nama_toko},function(info) {
 
 
      $("#ppn").attr("disabled", true);
@@ -625,6 +560,7 @@ if (jumlah_retur == ""){
      $("#jumlah_retur").val('');
      $("#no_faktur2").val('');
      $("#harga_produk").val('');
+     $("#konsumen").val('');
      $("#kode_barang").focus();
 
 
@@ -643,30 +579,22 @@ if (jumlah_retur == ""){
 
 
   
-      $("#cari_produk_pembelian").click(function() {
-      $.get('no_faktur_rj.php', function(data) {
-      /*optional stuff to do after getScript */ 
-      $("#nomorfaktur").val(data);
-      $("#cetak_retur").hide(''); 
-      });
-      //modal baru
-      
-
-      //menyembunyikan notif berhasil
-      $("#alert_berhasil").hide();
-      /* Act on the event */
-      
-var kode_pelanggan = $("#kd_pelanggan").val();
-
- $.post("modal_retur_jual_baru.php", {kode_pelanggan:kode_pelanggan}, function(info) {
-
-
-$(".modal_retur_baru").html(info);
-      
-      
-      });
-
+$("#cari_produk_pembelian").click(function() {
+  $.get('no_faktur_rj.php', function(data) {
+    $("#nomorfaktur").val(data);
+    $("#cetak_retur").hide(''); 
   });
+
+  $("#alert_berhasil").hide();
+
+  var kode_pelanggan = $("#kd_pelanggan").val();
+  var nama_toko = $("#nama_toko").val();
+
+  $.post("modal_retur_jual_baru.php", {kode_pelanggan:kode_pelanggan, nama_toko:nama_toko}, function(info) {
+    $(".modal_retur_baru").html(info);
+  });
+
+});
   
       
   </script>
@@ -711,67 +639,47 @@ $("#cari_produk_pembelian").click(function(){
   var jumlah_kas = $("#jumlah1").val();
   var sisauang =  jumlah_kas -  pembayaran_pembelian;
 
-      if (sisauang < 0) 
+  if (sisauang < 0) {
+    alert("Jumlah Kas Tidak Mencukupi Atau Kolom Cara Bayar Masih Kosong");
+  }
+  else if (total == ""){
+    alert("Jumlah Total Kosong! Anda Belum Melakukan Pemesan");
+  }
+  else if (sisa == ""){
+    alert("Jumlah Pembayaran Tidak Mencukupi");
+  }
+  else if (sisa < 0){
+    alert("Jumlah Pembayaran Tidak Mencukupi");
+         $("#pembayaran_pembelian").val('');
+         $("#sisa_pembayaran_pembelian").val('');
+  }
+  else if ( kode_pelanggan == "") {
+    alert("Kode Marketplace Harus Di Isi");
+  }
+  else if (jumlah_retur == "0"){
+    alert("jumlah Retur Harus Di Isi");
+  }
+  else{
 
-      {
-        alert("Jumlah Kas Tidak Mencukupi Atau Kolom Cara Bayar Masih Kosong");
-      }
+      $("#transaksi_baru").show();
+      $("#pembayaran").hide();
+      $("#batal").hide();
 
-  else if (total == "")
- {
+     $.post("proses_bayar_retur_jual.php",{session_id:session_id,sisa:sisa,kode_pelanggan:kode_pelanggan,total:total,cara_bayar:carabayar,potongan:potongan_pembelian,tax:tax,pembayaran:pembayaran_pembelian,total1:total1,ppn_input:ppn_input},function(info) {
 
-  alert("Jumlah Total Kosong! Anda Belum Melakukan Pemesan");
-
- }
-
- else if (sisa == "")
- {
-
-  alert("Jumlah Pembayaran Tidak Mencukupi");
-
- }
-
-
- else if ( kode_pelanggan == "") 
- {
-
-alert("Kode Pelanggan Harus Di Isi");
-
- }
-
-
- else if (jumlah_retur == "0")
- {
-
-  alert("jumlah Retur Harus Di Isi");
-
- }
-
-
- else
-
- {
-
-  $("#transaksi_baru").show();
-  $("#pembayaran").hide();
-  $("#batal").hide();
-
- $.post("proses_bayar_retur_jual.php",{session_id:session_id,sisa:sisa,kode_pelanggan:kode_pelanggan,total:total,cara_bayar:carabayar,potongan:potongan_pembelian,tax:tax,pembayaran:pembayaran_pembelian,total1:total1,ppn_input:ppn_input},function(info) {
-
-     $("#demo").html(info);
-     $("#result").html(info);
-     $("#alert_berhasil").show();
-     $("#cetak_retur").show();    
-     $("#total_retur_pembelian").val('');
-     $("#pembayaran_pembelian").val('');
-     $("#sisa_pembayaran_pembelian").val('');
-     $("#potongan_pembelian").val('');
-     $("#tax").val('');
-     $("#total_retur_pembelian1"). val('');
-  
-    
-       
-   });
+         $("#demo").html(info);
+         $("#result").html(info);
+         $("#alert_berhasil").show();
+         $("#cetak_retur").show();    
+         $("#total_retur_pembelian").val('');
+         $("#pembayaran_pembelian").val('');
+         $("#sisa_pembayaran_pembelian").val('');
+         $("#potongan_pembelian").val('');
+         
+         $("#total_retur_pembelian1"). val('');      
+        
+           
+       });
 
  }
 
@@ -905,7 +813,7 @@ $("#potongan_pembelian").keyup(function(){
               }
               else if (cara_bayar == "") {
                 alert ("Kolom Cara Bayar Masih Kosong");
-                 $("#tax").val('');
+                 
                  $("#potongan_pembelian").val('');
                  $("#potongan_persen").val('');
               }
@@ -1299,35 +1207,55 @@ $(document).on('click','.btn-hapus-tbs',function(e){
 </script>
 
 
+
 <script type="text/javascript">
-    $(document).ready(function(){
-
-      $("#tax").attr("disabled", true);
-
-
-    $("#ppn").change(function(){
+  $(document).ready(function(){
 
     var ppn = $("#ppn").val();
-    $("#ppn_input").val(ppn);
+      $("#ppn_input").val(ppn);
 
-  if (ppn == "Include"){
+      if (ppn == "Include"){
+          $("#tax").attr("disabled", true);
+          $("#tax1").attr("disabled", false);
+      }
+      else if (ppn == "Exclude") {
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", false);
+      }
+      else{
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", true);
+      }
+    });
+</script>
 
-      $("#tax").attr("disabled", true);
-      $("#tax1").attr("disabled", false);
-  }
+<script type="text/javascript">
+  $(document).ready(function(){
 
-  else if (ppn == "Exclude") {
-    $("#tax1").attr("disabled", true);
-      $("#tax").attr("disabled", false);
-  }
-  else{
+    $("#ppn").change(function(){
+      var ppn = $("#ppn").val();
+      $("#ppn_input").val(ppn);
 
-    $("#tax1").attr("disabled", true);
-      $("#tax").attr("disabled", true);
-  }
+      if (ppn == "Include"){
+          $("#tax").attr("disabled", true);
+          $("#tax1").attr("disabled", false);
+          $("#tax").val("");
+          $("#tax1").val("<?php echo $nilai_ppn ?>");
+      }
+      else if (ppn == "Exclude") {
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", false);
+        $("#tax1").val("");
+        $("#tax").val("<?php echo $nilai_ppn ?>");
+      }
+      else{
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", true);
+        $("#tax1").val("");
+        $("#tax").val("");
+      }
+    });
 
-
-  });
   });
 </script>
 
@@ -1440,4 +1368,3 @@ $(document).on('click','.btn-hapus-tbs',function(e){
 
 <!-- memasukan file footer.php -->
 <?php include 'footer.php'; ?>
-

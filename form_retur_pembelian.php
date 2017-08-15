@@ -10,8 +10,12 @@ include 'sanitasi.php';
 //menampilkan seluruh data yang ada pada tabel pembelian
 $perintah = $db->query("SELECT * FROM retur_pembelian");
 
-$session_id = session_id();
+$query_default_ppn = $db->query("SELECT setting_ppn, nilai_ppn FROM perusahaan");
+$data_default_ppn = mysqli_fetch_array($query_default_ppn);
+$default_ppn = $data_default_ppn['setting_ppn'];
+$nilai_ppn = $data_default_ppn['nilai_ppn'];
 
+$session_id = session_id();
 
  ?>
 
@@ -51,27 +55,33 @@ $session_id = session_id();
       </div>
 
 
-      <div class="col-sm-2">
-          
-          <label> User </label><br>
-          <!-- readonly = digunakan agar teks atau isi hanya bisa dibaca tapi tidak bisa diubah -->
-          <input type="text" name="user" class="form-control" readonly="" style="height: 20px" value="<?php echo $_SESSION['user_name']; ?>" required="">
 
-      </div>
+<div class="col-sm-2">
+<label class="gg">PPN</label>
+<select type="hidden" style="font-size:15px; height:35px" name="ppn" id="ppn" class="form-control chosen">
+  <?php if ($default_ppn == 'Include'): ?>    
+    <option selected>Include</option>  
+    <option>Exclude</option>  
+    <option>Non</option>
+  <?php endif ?>
 
+  <?php if ($default_ppn == 'Exclude'): ?>
+    <option selected>Exclude</option>  
+    <option>Non</option>
+    <option>Include</option>  
+  <?php endif ?>
 
-      <div class="col-sm-2">
-            <label>PPN</label>
-            <select name="ppn" id="ppn" class="form-control">
-            <option value="Include">Include</option>  
-            <option value="Exclude">Exclude</option>
-            <option value="Non">Non</option>          
-            </select>
-      </div>
+  <?php if ($default_ppn == 'Non'): ?>
+    <option selected>Non</option>
+    <option>Include</option>  
+    <option>Exclude</option>  
+  <?php endif ?>
+</select>
+</div>
 
       <div class="col-sm-2">
            <label> Cara Bayar </label><br>
-           <select type="text" name="cara_bayar" id="carabayar1" class="form-control" >
+           <select type="text" name="cara_bayar" id="carabayar1" class="form-control chosen">
            
            <?php 
            
@@ -87,6 +97,15 @@ $session_id = session_id();
            ?>
            
            </select>
+      </div>
+
+
+
+      <div class="col-sm-2">
+          
+          <label> Petugas </label><br>
+          <input type="text" name="user" class="form-control" readonly="" style="height: 15px" value="<?php echo $_SESSION['nama']; ?>" required="">
+
       </div>
 
     </div>
@@ -141,18 +160,18 @@ $session_id = session_id();
   
 <div class="row">
   <div class="form-group col-sm-3">
-    <input type="text" class="form-control" name="kode_barang" autocomplete="off" id="kode_barang" placeholder="Kode Produk">
+    <input type="text" style="height:15px;" class="form-control" name="kode_barang" autocomplete="off" id="kode_barang" placeholder="Kode Produk">
     </div>
 
 
   <div class="form-group col-sm-3"> <!-- agar tampilan berada pada satu group col-sm-3 -->
   <!-- memasukan teks pada kolom kode barang -->
-  <input type="text" class="form-control" name="nama_barang" readonly="" id="nama_barang" placeholder="Nama Barang">
+  <input type="text" style="height:15px;" class="form-control" name="nama_barang" readonly="" id="nama_barang" placeholder="Nama Barang">
   </div>
   
 
   <div class="form-group col-sm-2">
-    <input type="text" class="form-control" name="jumlah_retur" autocomplete="off" id="jumlah_retur" placeholder="Jumlah Retur">
+    <input type="text" style="height:15px;" class="form-control" name="jumlah_retur" autocomplete="off" id="jumlah_retur" placeholder="Jumlah Retur">
   </div>
 
 <div class="form-group col-sm-3">
@@ -180,15 +199,19 @@ $session_id = session_id();
 
 <div class="row">
   <div class="form-group col-sm-3">
-    <input type="text" class="form-control" name="potongan1" data-toggle="tooltip" data-placement="top" id="potongan1" placeholder="Potongan (Rp)" autocomplete="off">
+    <input type="text" style="height:15px;" class="form-control" name="potongan1" data-toggle="tooltip" data-placement="top" id="potongan1" placeholder="Potongan (Rp)" autocomplete="off">
   </div>
 
   <div class="form-group col-sm-3">
-    <input type="text" class="form-control" name="potongan2" data-toggle="tooltip" data-placement="top" id="potongan2" placeholder="Potongan (%)" autocomplete="off">
+    <input type="text" style="height:15px;" class="form-control" name="potongan2" data-toggle="tooltip" data-placement="top" id="potongan2" placeholder="Potongan (%)" autocomplete="off">
   </div>
 
-  <div class="form-group col-sm-2">
-    <input type="text" class="form-control" name="tax1"  id="tax1" placeholder="Pajak (%)" autocomplete="off">
+  <div class="col-sm-2">
+    <?php if ($default_ppn == 'Include'): ?>
+      <input style="height:15px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" value="<?php echo $nilai_ppn ?>" placeholder="Tax%" >
+    <?php else: ?>
+      <input style="height:15px;" type="text" class="form-control" name="tax" autocomplete="off" id="tax1" placeholder="Tax%" >
+    <?php endif ?>      
   </div>
 
 
@@ -289,6 +312,8 @@ $session_id = session_id();
 
   <div class="col-sm-4"> <!--tag pembuka col sm 4-->
 
+<div class="card card-block">
+
   <form action="proses_bayar_retur_beli.php" id="form_beli" method="POST"><!--tag pembuka form-->
 
 <div class="row">
@@ -305,19 +330,19 @@ $session_id = session_id();
 </div>
            
 <div class="row">
-  <div class="col-sm-4">
+  <div class="col-sm-6">
       <label><b> Potongan (Rp) </b></label><br>
       <input style="height: 20px" type="text" name="potongan" id="potongan_pembelian" class="form-control" data-diskon="" placeholder="Potongan" autocomplete="off">
   </div>
 
 
-  <div class="col-sm-4">
+  <div class="col-sm-6">
       <label><b> Potongan (%) </b></label><br>
       <input style="height: 20px" type="text" name="potongan_persen" id="potongan_persen" class="form-control" data-diskon="" placeholder="Potongan" autocomplete="off">
   </div>
 
 
-  <div class="col-sm-4">
+  <div class="col-sm-4" style="display: none">
       <label><b> Tax (%) </b></label><br>
       <input style="height: 20px" type="text" name="tax" id="tax" class="form-control" placeholder="Tax" data-pajak="" autocomplete="off">
   </div>
@@ -368,6 +393,7 @@ $session_id = session_id();
   <strong>Success!</strong> Pembayaran Berhasil
 </div>
   </div><!-- end of col sm 4 -->
+  </div>
 </div><!-- end of row -->
 
 			
@@ -1376,35 +1402,54 @@ $(document).on('click','.btn-hapus-tbs',function(e){
   });//penutup ready(function()
 </script>
 
+
 <script type="text/javascript">
-    $(document).ready(function(){
-
-      $("#tax").attr("disabled", true);
-
-
-    $("#ppn").change(function(){
+  $(document).ready(function(){
 
     var ppn = $("#ppn").val();
-    $("#ppn_input").val(ppn);
+      $("#ppn_input").val(ppn);
 
-  if (ppn == "Include"){
+      if (ppn == "Include"){
+          $("#tax").attr("disabled", true);
+          $("#tax1").attr("disabled", false);
+      }
+      else if (ppn == "Exclude") {
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", false);
+      }
+      else{
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", true);
+      }
+    });
+</script>
 
-      $("#tax").attr("disabled", true);
-      $("#tax1").attr("disabled", false);
-  }
+<script type="text/javascript">
+  $(document).ready(function(){
 
-  else if (ppn == "Exclude") {
-    $("#tax1").attr("disabled", true);
-      $("#tax").attr("disabled", false);
-  }
-  else{
+    $("#ppn").change(function(){
+      var ppn = $("#ppn").val();
+      $("#ppn_input").val(ppn);
 
-    $("#tax1").attr("disabled", true);
-      $("#tax").attr("disabled", true);
-  }
+      if (ppn == "Include"){
+          $("#tax").attr("disabled", true);
+          $("#tax1").attr("disabled", false);
+          $("#tax").val("");
+          $("#tax1").val("<?php echo $nilai_ppn ?>");
+      }
+      else if (ppn == "Exclude") {
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", false);
+        $("#tax1").val("");
+      }
+      else{
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", true);
+        $("#tax1").val("");
+        $("#tax").val("");
+      }
+    });
 
-
-  });
   });
 </script>
 
@@ -1510,5 +1555,51 @@ $(document).on('click','.btn-hapus-tbs',function(e){
 
                              </script>
 
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    var ppn = $("#ppn").val();
+      $("#ppn_input").val(ppn);
+
+      if (ppn == "Include"){
+          $("#tax").attr("disabled", true);
+          $("#tax1").attr("disabled", false);
+      }
+      else if (ppn == "Exclude") {
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", false);
+      }
+      else{
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", true);
+      }
+    });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $("#ppn").change(function(){
+      var ppn = $("#ppn").val();
+      $("#ppn_input").val(ppn);
+
+      if (ppn == "Include"){
+          $("#tax").attr("disabled", true);
+          $("#tax1").attr("disabled", false);
+      }
+      else if (ppn == "Exclude") {
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", false);
+      }
+      else{
+        $("#tax1").attr("disabled", true);
+        $("#tax").attr("disabled", true);
+      }
+    });
+
+  });
+</script>
+  
 <!-- memasukan file footer.php -->
 <?php include 'footer.php'; ?>

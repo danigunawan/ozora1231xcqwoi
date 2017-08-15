@@ -7,30 +7,6 @@ include 'navbar.php';
 include 'sanitasi.php';
 include 'db.php';
 
-//menampilkan seluruh data yang ada pada tabel penjualan
-//$perintah = $db->query("SELECT pel.nama_pelanggan ,p.total, p.no_faktur ,p.kode_pelanggan ,p.tanggal ,p.jam ,p.user ,p.status ,p.potongan ,p.tax ,p.sisa FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan ORDER BY p.no_faktur DESC");
-
-
-$jumlah_total_bersih = $db->query("SELECT SUM(total) AS total_bersih FROM penjualan");
-$ambil = mysqli_fetch_array($jumlah_total_bersih);
-
-$sub_total_bersih = $ambil['total_bersih'];
-
-
-$jumlah_total_kotor = $db->query("SELECT SUM(subtotal) AS total_kotor FROM detail_penjualan");
-$ambil_kotor = mysqli_fetch_array($jumlah_total_kotor);
-
-$sub_total_kotor = $ambil_kotor['total_kotor'];
-
-$jumlah_potongan = $db->query("SELECT SUM(potongan) AS total_potongan FROM penjualan");
-$ambil_potongan = mysqli_fetch_array($jumlah_potongan);
-
-$sub_total_potongan = $ambil_potongan['total_potongan'];
-
-$jumlah_total_tax = $db->query("SELECT SUM(tax) AS total_tax FROM penjualan");
-$ambil_tax = mysqli_fetch_array($jumlah_total_tax);
-
-$sub_total_tax = $ambil_tax['total_tax'];
 
  ?>
 
@@ -71,7 +47,9 @@ tr:nth-child(even){background-color: #f2f2f2}
 <table id="table_lap_penjualan" class="table table-bordered table-sm">
 		<thead>
 			<th style="background-color: #4CAF50; color: white;"> Nomor Faktur </th>
-			<th style="background-color: #4CAF50; color: white;"> Kode Pelanggan</th>
+			<th style="background-color: #4CAF50; color: white;"> Marketplace</th>
+			<th style="background-color: #4CAF50; color: white;"> Toko</th>
+			<th style="background-color: #4CAF50; color: white;"> Konsumen</th>
 			<th style="background-color: #4CAF50; color: white;"> Total Kotor </th>
 			<th style="background-color: #4CAF50; color: white;"> Total Bersih </th>
 			<th style="background-color: #4CAF50; color: white;"> Tanggal </th>
@@ -80,6 +58,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 			<th style="background-color: #4CAF50; color: white;"> Status </th>
 			<th style="background-color: #4CAF50; color: white;"> Potongan </th>
 			<th style="background-color: #4CAF50; color: white;"> Tax </th>
+			<th style="background-color: #4CAF50; color: white;"> Ongkos Kirim </th>
 			<th style="background-color: #4CAF50; color: white;"> Tunai </th>
 			<th style="background-color: #4CAF50; color: white;"> Kembalian </th>
 						
@@ -92,8 +71,6 @@ tr:nth-child(even){background-color: #f2f2f2}
 </div> <!--/ responsive-->
 <a href='download_lap_penjualan.php' type='submit' target="blank" id="btn-download" class='btn btn-purple'><i class="fa fa-download"> </i> Download Excel</a>
 
-<h3><i> Sub. Total Bersih : <b>Rp. <?php echo rp($sub_total_bersih); ?></b> --- Sub. Total Kotor : <b>Rp. <?php echo rp($sub_total_kotor); ?></b></i></h3> 
-<h3><i> Total Potongan : <b>Rp. <?php echo rp($sub_total_potongan); ?></b> --- Total Pajak : <b>Rp. <?php echo rp($sub_total_tax); ?></b></i></h3> 
 </div> <!--/ container-->
 
 <!--DATA TABLE MENGGUNAKAN AJAX-->

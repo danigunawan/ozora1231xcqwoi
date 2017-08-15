@@ -118,9 +118,10 @@
 
       
           <div class="form-group col-sm-4">
-          <label> Kode Pelanggan </label>
+          <label> Kode Marketplace </label>
           <br>
           <select type="text" name="kode_pelanggan" id="kd_pelanggan" class="form-control chosen" required="">
+          <option value="" selected="">Pilih Kode Marketplace</option>
      
           
           <?php 
@@ -145,16 +146,16 @@
           <div class="form-group col-sm-4">
           <label> Cara Bayar </label><br>
           <select type="text" name="cara_bayar" id="carabayar1" class="form-control" >
+          <option value="" selected="">Pilih Cara Bayar</option>
           
-             <?php 
-             
+             <?php  
              
              $sett_akun = $db->query("SELECT sa.kas, da.nama_daftar_akun FROM setting_akun sa INNER JOIN daftar_akun da ON sa.kas = da.kode_daftar_akun");
              $data_sett = mysqli_fetch_array($sett_akun);
              
              
              
-             echo "<option selected value='".$data_sett['kas']."'>".$data_sett['nama_daftar_akun'] ."</option>";
+             echo "<option value='".$data_sett['kas']."'>".$data_sett['nama_daftar_akun'] ."</option>";
              
              $query = $db->query("SELECT nama_daftar_akun, kode_daftar_akun FROM daftar_akun WHERE tipe_akun = 'Kas & Bank'");
              while($data = mysqli_fetch_array($query))
@@ -235,7 +236,7 @@
   </div>
   
   <div class="form-group col-sm-3">
-    <input type="text" class="form-control" name="kredit" id="kredit" placeholder="Kredit" readonly="">
+    <input type="text" class="form-control" name="kredit" id="kredit"  placeholder="Kredit" readonly="">
   </div>
 
 
@@ -370,7 +371,8 @@ mysqli_close($db);
 // jika dipilih, nim akan masuk ke input dan modal di tutup
   $(document).on('click', '.pilih', function (e) {
   document.getElementById("nomorfakturbeli").value = $(this).attr('no-faktur');
-  document.getElementById("kredit").value = $(this).attr('kredit');
+  document.getElementById("kredit").value = $(this).attr('kredit');jumlah_bayar
+  document.getElementById("jumlah_bayar").value = $(this).attr('kredit');
   document.getElementById("total").value = $(this).attr('total');
   document.getElementById("tanggal_jt").value = $(this).attr('tanggal_jt');
   
@@ -380,6 +382,52 @@ mysqli_close($db);
 
    
   </script> <!--tag penutup perintah java script-->
+                            
+<script>
+
+// untuk memunculkan jumlah kas secara otomatis
+  $(document).ready(function(){
+    $("#jumlah_bayar").keyup(function(){
+      var jumlah_bayar = $("#jumlah_bayar").val();
+      var jumlah_kas = $("#jumlah1").val();
+      var kredit = jumlah_kas - jumlah_bayar;
+      var carabayar1 = $("#carabayar1").val();
+
+      if ( carabayar1 == "") 
+
+      { 
+        alert("Kolom Cara Bayar Masih Kosong");
+        $("#submit_tambah").show();  
+
+      } 
+
+
+    });
+
+  });
+
+
+</script>
+
+  <script type="text/javascript">
+  //alert ketika potongan melebihi kredit
+  
+      $("#potongan_penjualan").keyup(function(){
+      var kredit = $("#kredit").val();
+      var potongan_penjualan = $("#potongan_penjualan").val();
+      var hasil_potongan = potongan_penjualan - kredit;
+ 
+            
+      if (hasil_potongan > 0 )
+      {
+      alert("Potongan Anda Melebihi Sisa");
+      $("#potongan_penjualan").val('');
+
+      }
+      
+      });
+
+  </script>
 
 <script>
    //perintah javascript yang diambil dari form tbs pembelian dengan id=form tambah produk
@@ -390,15 +438,17 @@ mysqli_close($db);
       var kredit = $("#kredit").val();
       var kode_pelanggan = $("#kd_pelanggan").val();
       var no_faktur_penjualan = $("#nomorfakturbeli").val();
+      var jumlah_bayar1 = $("#jumlah_bayar").val();
       var total = $("#total").val();
       var tanggal_jt = $("#tanggal_jt").val();
       var session_id = $("#session_id").val();
       var tanggal = $("#tanggal").val();
       var cara_bayar = $("#carabayar1").val();
       var potongan = $("#potongan_penjualan").val();
-      var total_kredit = kredit - potongan;
       var potongan1 = $("#potongan1").val();
       var faktur = $("#faktur").val();
+      var carabayar1 = $("#carabayar1").val();
+      var total_kredit = kredit - potongan;
 
       var total = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#totalbayar").val()))));
       var jumlah_bayar = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#jumlah_bayar").val()))));
@@ -420,7 +470,7 @@ mysqli_close($db);
       $("#total").val(total_kredit);
       $("#potongan1").val(potongan);
       $("#faktur").val(no_faktur_penjualan); 
-      $("#kredit").val('');
+      $("#kredit").val(kredit);
       $("#jumlah_bayar").val('');
       $("#potongan_penjualan").val('');
       
@@ -428,14 +478,20 @@ mysqli_close($db);
       {
 
       alert("Jumlah Bayar Anda Melebihi Sisa");
-      
+        $("#totalbayar").val(''); 
+        $("#jumlah_bayar").val(jumlah_bayar1);       
       }
-      
+      else if ( carabayar1 == "") 
+
+      { 
+        alert("Kolom Cara Bayar Masih Kosong"); 
+        $("#totalbayar").val(''); 
+      } 
       else if (jumlah_bayar == ""){
       alert("Jumlah Bayar Harus Diisi");
       }
       else if (kode_pelanggan == ""){
-      alert("Kode Pelanggan Harus Dipilih");
+      alert("Kode Marketplace Harus Dipilih");
       }
       else if (cara_bayar == ""){
       alert("Cara Bayar Harus Dipilih");
@@ -554,11 +610,15 @@ $(document).ready(function(){
    var faktur = $("#faktur").val();
 
    
-     $("#carabayar1").val('');
+     $("#carabayar1").val(cara_bayar);
      $("#totalbayar").val('');
      $("#potongan1").val(potongan);
      $("#faktur").val(no_faktur_penjualan); 
 
+      //metode POST untuk mengirim dari file cek_jumlah_kas.php ke dalam variabel "dari akun"
+      $.post('cek_tbs_pembayaran_piutang.php', function(data) {
+        /*optional stuff to do after success */
+        console.log(data)
 if (cara_bayar == "")
   {
   
@@ -568,9 +628,12 @@ if (cara_bayar == "")
   
   else if (kode_pelanggan == "")
   {
-  alert("Kode Pelangan Harus Di Isi");
+  alert("Kode Marketplace Harus Di Isi");
   }
-
+  else if(data == 0)  
+  {
+     alert("Penjualan Harus Di Isi"); 
+  }
 
 
 
@@ -604,7 +667,7 @@ else
 
 
  }
-
+ });
  $("form").submit(function(){
     return false;
 });
@@ -689,36 +752,7 @@ $(".chosen").chosen({no_results_text: "Maaf, Data Tidak Ada!"});
 
 </script>
 
-                            
-<script>
 
-// untuk memunculkan jumlah kas secara otomatis
-  $(document).ready(function(){
-    $("#jumlah_bayar").keyup(function(){
-      var jumlah_bayar = $("#jumlah_bayar").val();
-      var jumlah_kas = $("#jumlah1").val();
-      var kredit = jumlah_kas - jumlah_bayar;
-      var carabayar1 = $("#carabayar1").val();
-
-      if ( carabayar1 == "") 
-
-      {
-          $("#submit_tambah").hide();
-
-        alert("Kolom Cara Bayar Masih Kosong");
-
-      }
-      else {
-        $("#submit_tambah").show();
-      }
-
-
-    });
-
-  });
-
-
-</script>
 
 <script type="text/javascript">
                                

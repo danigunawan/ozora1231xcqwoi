@@ -10,6 +10,11 @@ $nama_gudang = $_GET['nama_gudang'];
 $kode_gudang = $_GET['kode_gudang'];
 $nama_toko = $_GET['nama_toko'];
 $kode_toko = $_GET['kode_toko'];
+$nama_konsumen = $_GET['nama_konsumen'];
+$alamat_konsumen = $_GET['alamat_konsumen'];
+$kode_ekspedisi = $_GET['kode_ekspedisi'];
+$invoice_marketplace = $_GET['invoice_marketplace'];
+$no_telpon_konsumen = $_GET['no_telpon_konsumen'];
 
 $perintah3 = $db->query("SELECT * FROM tbs_penjualan WHERE no_faktur = '$no_faktur'");
 $data1 = mysqli_num_rows($perintah3);
@@ -46,7 +51,7 @@ $perintah1 = $db->query("INSERT INTO tbs_penjualan (no_faktur, kode_barang, nama
 
 }
 
- header ('location:edit_penjualan.php?no_faktur='.$no_faktur.'&kode_pelanggan='.$kode_pelanggan.'&nama_gudang='.$nama_gudang.'&kode_gudang='.$kode_gudang.'&nama_toko='.$nama_toko.'&kode_toko='.$kode_toko.'');
+ header ('location:edit_penjualan.php?no_faktur='.$no_faktur.'&kode_pelanggan='.$kode_pelanggan.'&nama_toko='.$nama_toko.'&kode_toko='.$kode_toko.'&nama_konsumen='.$nama_konsumen.'&alamat_konsumen='.$alamat_konsumen.'&kode_ekspedisi='.$kode_ekspedisi.'&invoice_marketplace='.$invoice_marketplace.'&no_telpon_konsumen='.$no_telpon_konsumen.'');
 
 
 //Untuk Memutuskan Koneksi Ke Database

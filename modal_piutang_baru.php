@@ -9,7 +9,7 @@ include 'db.php';
     <thead> <!-- untuk memberikan nama pada kolom tabel -->
       
        <th> Nomor Faktur </th>
-       <th> Kode Pelanggan</th>  
+       <th> Kode Marketplace</th>  
        <th> Tanggal </th>
        <th> Jam </th>
        <th> Tanggal Jatuh Tempo </th>     

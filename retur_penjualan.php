@@ -53,7 +53,7 @@ echo '<a href="form_retur_penjualan.php"  class="btn btn-info"><i class="fa fa-p
    <p>Apakah Anda yakin Ingin Menghapus Data ini ?</p>
    <form >
     <div class="form-group">
-    <label> Kode Pelanggan :</label>
+    <label> Kode Marketplace :</label>
      <input type="text" id="data_pelanggan" class="form-control" readonly=""> 
     <label> No faktur :</label>
      <input type="text" id="hapus_faktur" class="form-control" readonly=""> 
@@ -143,7 +143,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 
 <div class="table-responsive">
 <span id="tabel_baru">
-<table id="tableuser" class="table table-bordered">
+<table id="tableuser" class="table table-bordered table-sm">
 		<thead>
 			<th style='background-color: #4CAF50; color:white'> Detail </th>
 
@@ -161,8 +161,8 @@ if ($retur_penjualan['retur_penjualan_hapus'] > 0) {
 			
 			
 			<th style='background-color: #4CAF50; color:white'> Cetak </th>
-			<th style='background-color: #4CAF50; color:white'> Nomor Faktur Retur </th>
-			<th style='background-color: #4CAF50; color:white'> Kode Pelanggan </th>
+			<th style='background-color: #4CAF50; color:white'> Faktur Retur </th>
+			<th style='background-color: #4CAF50; color:white'> Marketplace </th>
 			<th style='background-color: #4CAF50; color:white'> Total </th>
 			<th style='background-color: #4CAF50; color:white'> Potongan </th>
 			<th style='background-color: #4CAF50; color:white'> Tax </th>
@@ -186,11 +186,11 @@ if ($retur_penjualan['retur_penjualan_hapus'] > 0) {
 				//menampilkan data
 			echo "<tr class='tr-id-".$data1['id']."'>
 
-			<td> <button class='btn btn-info detail' no_faktur_retur='". $data1['no_faktur_retur'] ."' ><span class='glyphicon glyphicon-th-list'></span> Detail </button> </td>";
+			<td> <button class='btn btn-info detail btn-sm' no_faktur_retur='". $data1['no_faktur_retur'] ."' ><span class='glyphicon glyphicon-th-list'></span> Detail </button> </td>";
 
 if ($retur_penjualan['retur_penjualan_edit'] > 0) {
 
-			echo "<td> <a href='proses_edit_retur_penjualan.php?no_faktur_retur=". $data1['no_faktur_retur']."' class='btn btn-success'> <span class='glyphicon glyphicon-edit'></span> Edit </a> </td>";
+			echo "<td> <a href='proses_edit_retur_penjualan.php?no_faktur_retur=". $data1['no_faktur_retur']."' class='btn btn-success btn-sm'> <span class='glyphicon glyphicon-edit'></span> Edit </a> </td>";
 		}
 
 
@@ -202,19 +202,19 @@ $row_alert = mysqli_num_rows($pilih);
 	if ($row_alert > 0) {
 		
 
-		echo "<td> <button class='btn btn-danger btn-alert' data-id='". $data1['id'] ."' data-faktur='". $data1['no_faktur_retur'] ."' data-pelanggan='". $data1['kode_pelanggan'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button>  </td>";
+		echo "<td> <button class='btn btn-danger btn-alert btn-sm' data-id='". $data1['id'] ."' data-faktur='". $data1['no_faktur_retur'] ."' data-pelanggan='". $data1['kode_pelanggan'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button>  </td>";
 	} 
 
 	else {
 
-		echo "<td> <button class='btn btn-danger btn-hapus' data-id='". $data1['id'] ."' data-faktur='". $data1['no_faktur_retur'] ."' data-pelanggan='". $data1['kode_pelanggan'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button>  </td>";
+		echo "<td> <button class='btn btn-danger btn-hapus btn-sm' data-id='". $data1['id'] ."' data-faktur='". $data1['no_faktur_retur'] ."' data-pelanggan='". $data1['nama_pelanggan'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button>  </td>";
 	}
 
 
 			
 }
 			
-			echo "<td> <a href='cetak_lap_retur_penjualan.php?no_faktur_retur=".$data1['no_faktur_retur']."' class='btn btn-primary' target='blank'><span class='glyphicon glyphicon-print'> </span> Cetak Retur</a> </td>
+			echo "<td> <a href='cetak_lap_retur_penjualan.php?no_faktur_retur=".$data1['no_faktur_retur']."' class='btn btn-primary btn-sm' target='blank'><span class='glyphicon glyphicon-print'> </span> Cetak</a> </td>
 
 			<td>". $data1['no_faktur_retur'] ."</td>
 			<td>". $data1['kode_pelanggan'] ." ". $data1['nama_pelanggan'] ."</td>

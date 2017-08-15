@@ -156,6 +156,10 @@ $toko_lihat = stringdoang(isset($_POST['toko_lihat']));
 $toko_tambah = stringdoang(isset($_POST['toko_tambah']));
 $toko_edit = stringdoang(isset($_POST['toko_edit']));
 $toko_hapus = stringdoang(isset($_POST['toko_hapus']));
+$ukuran_lihat = stringdoang(isset($_POST['ukuran_lihat']));
+$ukuran_tambah = stringdoang(isset($_POST['ukuran_tambah']));
+$ukuran_edit = stringdoang(isset($_POST['ukuran_edit']));
+$ukuran_hapus = stringdoang(isset($_POST['ukuran_hapus']));
 
 // tiga pilihan
 $laporan_pemasukan_tanggal_lihat = stringdoang(isset($_POST['laporan_pemasukan_tanggal_lihat']));
@@ -192,6 +196,22 @@ $harga_produk_penjualan = stringdoang(isset($_POST['harga_produk_penjualan']));
 
 
 $menu_setting_lihat = stringdoang(isset($_POST['menu_setting_lihat']));
+$warna_lihat = stringdoang(isset($_POST['warna_lihat']));
+$warna_tambah = stringdoang(isset($_POST['warna_tambah']));
+$warna_edit = stringdoang(isset($_POST['warna_edit']));
+$warna_hapus = stringdoang(isset($_POST['warna_hapus']));
+
+
+$order_lihat = stringdoang(isset($_POST['order_lihat']));
+$order_tambah = stringdoang(isset($_POST['order_tambah']));
+$order_edit = stringdoang(isset($_POST['order_edit']));
+$order_hapus = stringdoang(isset($_POST['order_hapus']));
+
+$tombol_submit_order = stringdoang(isset($_POST['tombol_submit']));
+$tombol_order = stringdoang(isset($_POST['tombol_order']));
+$edit_produk_order = stringdoang(isset($_POST['edit_produk']));
+$hapus_produk_order = stringdoang(isset($_POST['hapus_produk']));
+
 $peringatan_jatuh_tempo_hutang = stringdoang(isset($_POST['peringatan_jatuh_tempo_hutang']));
 
 $update_otoritas_item_keluar = $db->prepare("UPDATE otoritas_item_keluar SET item_keluar_lihat = ?, item_keluar_tambah = ?, item_keluar_edit = ?, item_keluar_hapus = ? WHERE id_otoritas = ?");
@@ -251,10 +271,10 @@ $update_otoritas_laporan->bind_param("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
 $update_otoritas_laporan->execute();
 
 
-$update_otoritas_master_data = $db->prepare("UPDATE otoritas_master_data SET master_data_lihat = ?, user_lihat = ?, user_tambah = ?, user_edit = ?, user_hapus = ?, satuan_lihat = ?, satuan_tambah = ?, satuan_edit = ?, satuan_hapus = ?, jabatan_lihat = ?, jabatan_tambah = ?, jabatan_edit = ?, jabatan_hapus = ?, suplier_lihat = ?, suplier_tambah = ?, suplier_edit = ?, suplier_hapus = ?, pelanggan_lihat = ?, pelanggan_tambah = ?, pelanggan_edit = ?, pelanggan_hapus = ?, item_lihat = ?, item_tambah = ?, item_edit = ?, item_hapus = ?, pemasukan_lihat = ?, pemasukan_tambah = ?, pemasukan_edit = ?, pemasukan_hapus = ?, pengeluaran_lihat = ?, pengeluaran_tambah = ?, pengeluaran_edit = ?, pengeluaran_hapus = ?, komisi_faktur_lihat = ?, komisi_faktur_tambah = ?, komisi_faktur_edit = ?, komisi_faktur_hapus = ?, komisi_produk_lihat = ?, komisi_produk_tambah = ?, komisi_produk_edit = ?, komisi_produk_hapus = ?, set_perusahaan_lihat = ?, set_perusahaan_edit = ?, set_diskon_tax_lihat = ?, set_diskon_tax_edit = ?, hak_otoritas_lihat = ?, hak_otoritas_tambah = ?, hak_otoritas_edit = ?, hak_otoritas_hapus = ?, kategori_lihat = ?, kategori_tambah = ?, kategori_edit = ?, kategori_hapus = ?, gudang_lihat = ?, gudang_tambah = ?, gudang_edit = ?, gudang_hapus = ?, grup_akun_lihat = ?, grup_akun_tambah = ?, grup_akun_edit = ?, grup_akun_hapus = ?, daftar_akun_lihat = ?, daftar_akun_tambah = ?, daftar_akun_edit = ?, daftar_akun_hapus = ?, set_akun_lihat = ?, daftar_pajak_lihat = ?, daftar_pajak_tambah = ?, daftar_pajak_edit = ?, daftar_pajak_hapus = ?, ekspedisi_lihat = ?, ekspedisi_tambah = ?, ekspedisi_edit = ?,ekspedisi_hapus = ?, toko_lihat = ?, toko_tambah = ?, toko_edit = ?,toko_hapus = ?  WHERE id_otoritas = ?");
+$update_otoritas_master_data = $db->prepare("UPDATE otoritas_master_data SET master_data_lihat = ?, user_lihat = ?, user_tambah = ?, user_edit = ?, user_hapus = ?, satuan_lihat = ?, satuan_tambah = ?, satuan_edit = ?, satuan_hapus = ?, jabatan_lihat = ?, jabatan_tambah = ?, jabatan_edit = ?, jabatan_hapus = ?, suplier_lihat = ?, suplier_tambah = ?, suplier_edit = ?, suplier_hapus = ?, pelanggan_lihat = ?, pelanggan_tambah = ?, pelanggan_edit = ?, pelanggan_hapus = ?, item_lihat = ?, item_tambah = ?, item_edit = ?, item_hapus = ?, pemasukan_lihat = ?, pemasukan_tambah = ?, pemasukan_edit = ?, pemasukan_hapus = ?, pengeluaran_lihat = ?, pengeluaran_tambah = ?, pengeluaran_edit = ?, pengeluaran_hapus = ?, komisi_faktur_lihat = ?, komisi_faktur_tambah = ?, komisi_faktur_edit = ?, komisi_faktur_hapus = ?, komisi_produk_lihat = ?, komisi_produk_tambah = ?, komisi_produk_edit = ?, komisi_produk_hapus = ?, set_perusahaan_lihat = ?, set_perusahaan_edit = ?, set_diskon_tax_lihat = ?, set_diskon_tax_edit = ?, hak_otoritas_lihat = ?, hak_otoritas_tambah = ?, hak_otoritas_edit = ?, hak_otoritas_hapus = ?, kategori_lihat = ?, kategori_tambah = ?, kategori_edit = ?, kategori_hapus = ?, gudang_lihat = ?, gudang_tambah = ?, gudang_edit = ?, gudang_hapus = ?, grup_akun_lihat = ?, grup_akun_tambah = ?, grup_akun_edit = ?, grup_akun_hapus = ?, daftar_akun_lihat = ?, daftar_akun_tambah = ?, daftar_akun_edit = ?, daftar_akun_hapus = ?, set_akun_lihat = ?, warna_lihat = ?, warna_tambah = ?, warna_edit = ?, warna_hapus = ?, ukuran_lihat = ?, ukuran_tambah = ?, ukuran_edit = ?, ukuran_hapus = ?, daftar_pajak_lihat = ?, daftar_pajak_tambah = ?, daftar_pajak_edit = ?, daftar_pajak_hapus = ?  WHERE id_otoritas = ?");
 
 $update_otoritas_master_data->bind_param("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
-    $master_data_lihat, $user_lihat, $user_tambah, $user_edit, $user_hapus, $satuan_lihat, $satuan_tambah, $satuan_edit, $satuan_hapus, $jabatan_lihat, $jabatan_tambah, $jabatan_edit, $jabatan_hapus, $suplier_lihat, $suplier_tambah, $suplier_edit, $suplier_hapus, $pelanggan_lihat, $pelanggan_tambah, $pelanggan_edit, $pelanggan_hapus, $item_lihat, $item_tambah, $item_edit, $item_hapus, $pemasukan_lihat, $pemasukan_tambah, $pemasukan_edit, $pemasukan_hapus, $pengeluaran_lihat, $pengeluaran_tambah, $pengeluaran_edit, $pengeluaran_hapus, $komisi_faktur_lihat, $komisi_faktur_tambah, $komisi_faktur_edit, $komisi_faktur_hapus, $komisi_produk_lihat, $komisi_produk_tambah, $komisi_produk_edit, $komisi_produk_hapus, $set_perusahaan_lihat, $set_perusahaan_edit, $set_diskon_tax_lihat, $set_diskon_tax_edit, $hak_otoritas_lihat, $hak_otoritas_tambah, $hak_otoritas_edit, $hak_otoritas_hapus, $kategori_lihat, $kategori_tambah, $kategori_edit, $kategori_hapus, $gudang_lihat, $gudang_tambah, $gudang_edit, $gudang_hapus, $grup_akun_lihat, $grup_akun_tambah, $grup_akun_edit, $grup_akun_hapus, $daftar_akun_lihat, $daftar_akun_tambah, $daftar_akun_edit, $daftar_akun_hapus, $set_akun_lihat, $daftar_pajak_lihat, $daftar_pajak_tambah, $daftar_pajak_edit, $daftar_pajak_hapus, $ekspedisi_lihat, $ekspedisi_tambah, $ekspedisi_edit, $ekspedisi_hapus, $toko_lihat, $toko_tambah, $toko_edit, $toko_hapus, $id);
+    $master_data_lihat, $user_lihat, $user_tambah, $user_edit, $user_hapus, $satuan_lihat, $satuan_tambah, $satuan_edit, $satuan_hapus, $jabatan_lihat, $jabatan_tambah, $jabatan_edit, $jabatan_hapus, $suplier_lihat, $suplier_tambah, $suplier_edit, $suplier_hapus, $pelanggan_lihat, $pelanggan_tambah, $pelanggan_edit, $pelanggan_hapus, $item_lihat, $item_tambah, $item_edit, $item_hapus, $pemasukan_lihat, $pemasukan_tambah, $pemasukan_edit, $pemasukan_hapus, $pengeluaran_lihat, $pengeluaran_tambah, $pengeluaran_edit, $pengeluaran_hapus, $komisi_faktur_lihat, $komisi_faktur_tambah, $komisi_faktur_edit, $komisi_faktur_hapus, $komisi_produk_lihat, $komisi_produk_tambah, $komisi_produk_edit, $komisi_produk_hapus, $set_perusahaan_lihat, $set_perusahaan_edit, $set_diskon_tax_lihat, $set_diskon_tax_edit, $hak_otoritas_lihat, $hak_otoritas_tambah, $hak_otoritas_edit, $hak_otoritas_hapus, $kategori_lihat, $kategori_tambah, $kategori_edit, $kategori_hapus, $gudang_lihat, $gudang_tambah, $gudang_edit, $gudang_hapus, $grup_akun_lihat, $grup_akun_tambah, $grup_akun_edit, $grup_akun_hapus, $daftar_akun_lihat, $daftar_akun_tambah, $daftar_akun_edit, $daftar_akun_hapus, $set_akun_lihat, $warna_lihat, $warna_tambah, $warna_edit, $warna_hapus, $ukuran_lihat, $ukuran_tambah, $ukuran_edit, $ukuran_hapus,$daftar_pajak_lihat, $daftar_pajak_tambah, $daftar_pajak_edit, $daftar_pajak_hapus, $id);
 
 $update_otoritas_master_data->execute();
 
@@ -322,6 +342,24 @@ $update_otoritas_setting->bind_param("iii",
     $menu_setting_lihat, $peringatan_jatuh_tempo_hutang, $id);
 
 $update_otoritas_setting->execute();
+
+// oredr penjualan
+$update_otoritas_order_penjualan = $db->prepare("UPDATE otoritas_order_penjualan SET order_lihat = ?, order_tambah = ?, order_edit = ?, order_hapus = ? WHERE id_otoritas = ? ");
+
+$update_otoritas_order_penjualan->bind_param("iiiii",
+    $order_lihat, $order_tambah, $order_edit, $order_hapus, $id);
+
+$update_otoritas_order_penjualan->execute();
+// order penjualan
+
+//form order penjualan
+$update_otoritas_form_order_penjualan = $db->prepare("UPDATE otoritas_form_order_penjualan SET  tombol_submit = ?, tombol_order = ?, edit_produk = ?, hapus_produk = ? WHERE id_otoritas = ? ");
+
+$update_otoritas_form_order_penjualan->bind_param("iiiii",
+    $tombol_submit_order, $tombol_order, $edit_produk_order, $hapus_produk_order , $id);
+
+$update_otoritas_form_order_penjualan->execute();
+//form order penjualan
 
 
 header('location: hak_otoritas.php?nama='.$nama.'&id='.$id.'');

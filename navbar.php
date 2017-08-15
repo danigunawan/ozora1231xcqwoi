@@ -58,13 +58,19 @@
 <?php 
 include 'db.php';
 
-$pilih_akses_lihat = $db->query("SELECT open.penjualan_lihat, open.retur_lihat, open.retur_penjualan_lihat, opemb.pembelian_lihat, opemb.retur_pembelian_lihat, omd.master_data_lihat, omd.user_lihat, omd.satuan_lihat, omd.pelanggan_lihat, omd.jabatan_lihat, omd.suplier_lihat, omd.master_data_lihat, omd.item_lihat, omd.komisi_faktur_lihat, omd.komisi_produk_lihat, omd.set_perusahaan_lihat, omd.set_diskon_tax_lihat, omd.hak_otoritas_lihat, omd.kategori_lihat, omd.gudang_lihat, omd.daftar_akun_lihat, omd.grup_akun_lihat, omd.set_akun_lihat, omd.daftar_pajak_lihat, omd.ekspedisi_lihat,omd.toko_lihat, p.pembayaran_lihat, p.pembayaran_hutang_lihat, p.pembayaran_piutang_lihat, otk.transaksi_kas_lihat, okm.kas_masuk_lihat, okk.kas_keluar_lihat, okmu.kas_mutasi_lihat, op.persediaan_lihat, oim.item_masuk_lihat, oik.item_keluar_lihat, osa.stok_awal_lihat, oso.stok_opname_lihat, okas.kas_lihat, olap.akuntansi_lihat, olap.laporan_mutasi_stok_lihat, olap.laporan_lihat, olap.buku_besar_lihat, olap.laporan_jurnal_lihat, olap.laporan_laba_rugi_lihat, olap.laporan_laba_kotor_lihat, olap.laporan_neraca_lihat, olap.transaksi_jurnal_manual_lihat, olap.cash_flow_tanggal_lihat, olap.cash_flow_periode_lihat, olap.laporan_komisi_lihat, olap.laporan_komisi_produk_lihat, olap.laporan_komisi_faktur_lihat, olap.laporan_pembelian_lihat, olap.laporan_hutang_beredar_lihat, olap.laporan_penjualan_lihat, olap.laporan_piutang_beredar_lihat, olap.laporan_retur_penjualan_lihat, olap.laporan_retur_pembelian_lihat, olap.laporan_pembayaran_hutang_lihat, olap.laporan_pembayaran_piutang_lihat, osett.menu_setting_lihat, osett.peringatan_jatuh_tempo_hutang FROM hak_otoritas AS ho INNER JOIN otoritas_penjualan AS open ON ho.id = open.id_otoritas INNER JOIN otoritas_pembelian AS opemb ON ho.id = opemb.id_otoritas INNER JOIN otoritas_master_data AS omd ON ho.id = omd.id_otoritas INNER JOIN otoritas_pembayaran AS p ON ho.id = p.id_otoritas INNER JOIN otoritas_transaksi_kas AS otk ON ho.id = otk.id_otoritas INNER JOIN otoritas_kas_masuk AS okm ON ho.id = okm.id_otoritas INNER JOIN otoritas_kas_keluar AS okk ON ho.id = okk.id_otoritas INNER JOIN otoritas_kas_mutasi AS okmu ON ho.id = okmu.id_otoritas INNER JOIN otoritas_persediaan AS op ON ho.id = op.id_otoritas INNER JOIN otoritas_item_masuk AS oim ON ho.id = oim.id_otoritas INNER JOIN otoritas_item_keluar AS oik ON ho.id = oik.id_otoritas INNER JOIN otoritas_stok_awal AS osa ON ho.id = osa.id_otoritas INNER JOIN otoritas_stok_opname AS oso ON ho.id = oso.id_otoritas INNER JOIN otoritas_laporan AS olap ON ho.id = olap.id_otoritas INNER JOIN otoritas_kas AS okas ON ho.id = okas.id_otoritas INNER JOIN otoritas_setting AS osett ON ho.id = osett.id_otoritas WHERE ho.id = '$_SESSION[otoritas_id]'");
+$pilih_akses_lihat = $db->query("SELECT open.penjualan_lihat,oop.order_lihat, open.retur_lihat, open.retur_penjualan_lihat, opemb.pembelian_lihat, opemb.retur_pembelian_lihat, omd.master_data_lihat, omd.user_lihat, omd.satuan_lihat, omd.pelanggan_lihat, omd.jabatan_lihat, omd.suplier_lihat, omd.master_data_lihat, omd.item_lihat, omd.komisi_faktur_lihat, omd.komisi_produk_lihat, omd.set_perusahaan_lihat, omd.set_diskon_tax_lihat, omd.hak_otoritas_lihat, omd.kategori_lihat, omd.gudang_lihat, omd.daftar_akun_lihat, omd.grup_akun_lihat, omd.set_akun_lihat, omd.daftar_pajak_lihat,omd.ekspedisi_lihat,omd.toko_lihat, omd.warna_lihat, p.pembayaran_lihat, p.pembayaran_hutang_lihat, p.pembayaran_piutang_lihat, otk.transaksi_kas_lihat, okm.kas_masuk_lihat, okk.kas_keluar_lihat, okmu.kas_mutasi_lihat, op.persediaan_lihat, oim.item_masuk_lihat, oik.item_keluar_lihat, osa.stok_awal_lihat, oso.stok_opname_lihat, okas.kas_lihat, olap.akuntansi_lihat, olap.laporan_mutasi_stok_lihat, olap.laporan_lihat, olap.buku_besar_lihat, olap.laporan_jurnal_lihat, olap.laporan_laba_rugi_lihat, olap.laporan_laba_kotor_lihat, olap.laporan_neraca_lihat, olap.transaksi_jurnal_manual_lihat, olap.cash_flow_tanggal_lihat, olap.cash_flow_periode_lihat, olap.laporan_komisi_lihat, olap.laporan_komisi_produk_lihat, olap.laporan_komisi_faktur_lihat, olap.laporan_pembelian_lihat, olap.laporan_hutang_beredar_lihat, olap.laporan_penjualan_lihat, olap.laporan_piutang_beredar_lihat, olap.laporan_retur_penjualan_lihat, olap.laporan_retur_pembelian_lihat, olap.laporan_pembayaran_hutang_lihat, olap.laporan_pembayaran_piutang_lihat, osett.menu_setting_lihat, osett.peringatan_jatuh_tempo_hutang FROM hak_otoritas AS ho INNER JOIN otoritas_penjualan AS open ON ho.id = open.id_otoritas INNER JOIN otoritas_pembelian AS opemb ON ho.id = opemb.id_otoritas INNER JOIN otoritas_master_data AS omd ON ho.id = omd.id_otoritas INNER JOIN otoritas_pembayaran AS p ON ho.id = p.id_otoritas INNER JOIN otoritas_transaksi_kas AS otk ON ho.id = otk.id_otoritas INNER JOIN otoritas_kas_masuk AS okm ON ho.id = okm.id_otoritas INNER JOIN otoritas_kas_keluar AS okk ON ho.id = okk.id_otoritas INNER JOIN otoritas_kas_mutasi AS okmu ON ho.id = okmu.id_otoritas INNER JOIN otoritas_persediaan AS op ON ho.id = op.id_otoritas INNER JOIN otoritas_item_masuk AS oim ON ho.id = oim.id_otoritas INNER JOIN otoritas_item_keluar AS oik ON ho.id = oik.id_otoritas INNER JOIN otoritas_stok_awal AS osa ON ho.id = osa.id_otoritas INNER JOIN otoritas_stok_opname AS oso ON ho.id = oso.id_otoritas INNER JOIN otoritas_laporan AS olap ON ho.id = olap.id_otoritas INNER JOIN otoritas_kas AS okas ON ho.id = okas.id_otoritas INNER JOIN otoritas_setting AS osett ON ho.id = osett.id_otoritas INNER JOIN otoritas_order_penjualan AS oop ON ho.id = oop.id_otoritas WHERE ho.id = '$_SESSION[otoritas_id]'");
 $lihat = mysqli_fetch_array($pilih_akses_lihat);
 
 
 
 if ($lihat['penjualan_lihat'] > 0){
-                echo '<li><a href="penjualan.php?status=semua" class="waves-effect"> <i class="fa fa-shopping-cart"></i> Penjualan </a></li>';
+    echo '<li><a href="penjualan.php?status=semua" class="waves-effect"> <i class="fa fa-shopping-cart"></i> Penjualan </a></li>';
+}
+
+if ($lihat['order_lihat'] > 0){
+
+echo '<li><a href="form_order_penjualan.php" class="waves-effect"> <i class="fa fa-shopping-cart"></i> Order Penjualan </a></li>';
+
 }
 
 if ($lihat['pembelian_lihat'] > 0){
@@ -103,11 +109,15 @@ if ($lihat['suplier_lihat'] > 0){
 }
 
 if ($lihat['pelanggan_lihat'] > 0){
-                                echo '<li><a href="pelanggan.php" class="waves-effect">Pelanggan</a></li>';
+                                echo '<li><a href="pelanggan.php" class="waves-effect">Marketplace</a></li>';
 }
 
 if ($lihat['item_lihat'] > 0){
                                 echo '<li><a href="barang.php?kategori=semua&tipe=barang_jasa" class="waves-effect" >Produk</a></li>';
+}
+
+if ($lihat['warna_lihat'] > 0){
+                                echo '<li><a href="varian_warna.php" class="waves-effect">Varian</a></li>';
 }
 
 if ($lihat['satuan_lihat'] > 0){
@@ -126,12 +136,12 @@ if ($lihat['komisi_faktur_lihat'] > 0){
                                 echo '<li><a href="fee_faktur.php" class="waves-effect">Komisi Faktur</a></li>';
 }
 
-if ($lihat['gudang_lihat'] > 0){
-                                echo '<li><a href="gudang.php" class="waves-effect">Gudang</a></li>';
-}
+//if ($lihat['gudang_lihat'] > 0){
+//                               echo '<li><a href="gudang.php" class="waves-effect">Gudang</a></li>';
+//}
 
 if ($lihat['daftar_akun_lihat'] > 0){
-                                echo '<li><a href="daftar_akun.php?kategori=semua" class="waves-effect">Daftar Akun</a></li>';
+                                echo '<li><a href="daftar_akun.php?kategori=Aktiva" class="waves-effect">Daftar Akun</a></li>';
 }
 
 if ($lihat['grup_akun_lihat'] > 0){
@@ -227,8 +237,8 @@ if ($lihat['pembayaran_hutang_lihat'] > 0){
                             echo '<li><a href="stok_opname.php" class="waves-effect">Stok Opname</a></li>';
 }
 
-echo '<li><a href="kartu_stok.php" class="waves-effect" style="font-size: 16px">Lap. Data Stok</a></li>';
-echo '<li><a href="kartu_stok_periode.php" class="waves-effect" style="font-size: 16px">Lap. Data Stok Periode</a></li>';
+echo '<li><a href="kartu_stok.php" class="waves-effect" style="font-size: 16px">Kartu Stok</a></li>';
+echo '<li><a href="kartu_stok_periode.php" class="waves-effect" style="font-size: 16px">Kartu Stok Periode</a></li>';
 
  if ($lihat['laporan_mutasi_stok_lihat'] > 0){
                             echo '<li><a href="lap_mutasi_stok.php" class="waves-effect">Lap. Mutasi Stok</a></li>';
@@ -310,6 +320,8 @@ if ($lihat['akuntansi_lihat'] > 0){
                             echo '<li><a href="lap_penjualan.php" class="waves-effect">Lap. Penjualan</a></li>';
 }
 
+echo '<li><a href="order_penjualan.php" class="waves-effect">Lap. Order Penjualan</a></li>';
+
  if ($lihat['laporan_pembelian_lihat'] > 0){
                             echo '<li><a href="lap_pembelian.php" class="waves-effect">Lap. Pembelian</a></li>';
 }
@@ -381,7 +393,8 @@ echo '<li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-cog
             if ($lihat['daftar_pajak_lihat'] > 0){
                     echo '<li><a href="daftar_pajak.php" class="waves-effect">Daftar Pajak</a></li>';
             }
-        echo '<li><a href="footer_cetak_penjualan_besar.php" class="waves-effect">Setting Footer Cetak</a></li>';
+//tidak dipakai di Aplikasi Ozora
+//<li><a href="footer_cetak_penjualan_besar.php" class="waves-effect">Setting Footer Cetak</a></li>
 
 if ($lihat['menu_setting_lihat'] > 0){
 echo '</ul>
@@ -469,7 +482,3 @@ echo '</ul>
 
     <main>
 
-    
-<?php 
-include 'modal_reminder_jatuh_tempo_hutang.php';
- ?>

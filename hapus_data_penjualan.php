@@ -23,7 +23,7 @@ while($data_detail_penjualan = mysqli_fetch_array($detail_penjualan)){
 }
 
 
-
+$query6 = $db->query("DELETE FROM resi WHERE id_penjualan = '$id'");
 $query3 = $db->query("DELETE FROM laporan_fee_produk WHERE no_faktur = '$no_faktur'");
 $query4 = $db->query("DELETE FROM laporan_fee_faktur WHERE no_faktur = '$no_faktur'");
 $query5 = $db->query("DELETE  FROM tbs_penjualan WHERE no_faktur = '$no_faktur'");

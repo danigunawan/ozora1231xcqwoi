@@ -30,7 +30,7 @@ $columns = array(
 // getting total number records without any search
 $sql =" SELECT bb.berkaitan_dgn_stok,tp.id,tp.no_faktur,tp.kode_barang,tp.satuan,tp.nama_barang,tp.jumlah_barang,tp.harga,tp.subtotal,tp.potongan,tp.tax,s.nama ";
 $sql.=" FROM tbs_penjualan tp INNER JOIN satuan s ON tp.satuan = s.id INNER JOIN barang bb ON tp.kode_barang = bb.kode_barang ";
-$sql.=" WHERE no_faktur = '$no_faktur' ";
+$sql.=" WHERE no_faktur = '$no_faktur' AND no_faktur_order IS NULL";
 
 $query = mysqli_query($conn, $sql) or die("eror 1");
 $totalData = mysqli_num_rows($query);
@@ -39,7 +39,7 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 $sql ="SELECT bb.berkaitan_dgn_stok,tp.id,tp.no_faktur,tp.kode_barang,tp.satuan,tp.nama_barang,tp.jumlah_barang,tp.harga,tp.subtotal,tp.potongan,tp.tax,s.nama ";
 $sql.=" FROM tbs_penjualan tp INNER JOIN satuan s ON tp.satuan = s.id INNER JOIN barang bb ON tp.kode_barang = bb.kode_barang ";
-$sql.="  WHERE no_faktur = '$no_faktur' AND 1=1 ";
+$sql.="  WHERE no_faktur = '$no_faktur' AND no_faktur_order IS NULL";
 
     $sql.=" AND (tp.kode_barang LIKE '".$requestData['search']['value']."%'";  
     $sql.=" OR tp.nama_barang LIKE '".$requestData['search']['value']."%' ";
@@ -83,10 +83,10 @@ $row_piutang = mysqli_num_rows($pilih);
       $nestedData[] = $row["nama"];
 
 
-      $nestedData[] = "<p  align='right'>".$row["harga"]."</p>";
-      $nestedData[] = "<p style='font-size:15px' align='right'><span id='text-potongan-".$row['id']."'> ".$row["potongan"]." </span> </p>";
-      $nestedData[] = "<p style='font-size:15px' align='right'><span id='text-tax-".$row['id']."'> ".$row["tax"]." </span> </p>";
-      $nestedData[] = "<p style='font-size:15px' align='right'><span id='text-subtotal-".$row['id']."'> ".$row["subtotal"]." </span> </p>";
+      $nestedData[] = "<p  align='right'>".rp($row["harga"])."</p>";
+      $nestedData[] = "<p style='font-size:15px' align='right'><span id='text-potongan-".$row['id']."'> ".rp($row["potongan"])." </span> </p>";
+      $nestedData[] = "<p style='font-size:15px' align='right'><span id='text-tax-".$row['id']."'> ".rp($row["tax"])." </span> </p>";
+      $nestedData[] = "<p style='font-size:15px' align='right'><span id='text-subtotal-".$row['id']."'> ".rp($row["subtotal"])." </span> </p>";
 
       if ($row_retur > 0 || $row_piutang > 0) {
 
@@ -94,7 +94,7 @@ $row_piutang = mysqli_num_rows($pilih);
       $nestedData[] = "<button class='btn btn-danger btn-alert-hapus' data-id='".$row['id']."' data-subtotal='".$row['subtotal']."' data-faktur='".$row['no_faktur']."' data-kode='".$row['kode_barang']."'><span class='glyphicon glyphicon-trash'></span> Hapus </button>";
     }
     else{
-      $nestedData[] = "<button class='btn btn-danger btn-hapus-tbs' data-id='". $row['id'] ."' data-subtotal='".$row['subtotal']."' data-kode-barang='". $row['kode_barang'] ."' data-barang='". $row['nama_barang'] ."'><span class='glyphicon glyphicon-trash'> </span> Hapus </button>";
+      $nestedData[] = "<button class='btn btn-danger btn-hapus-tbs btn-sm' data-id='". $row['id'] ."' data-subtotal='".$row['subtotal']."' data-kode-barang='". $row['kode_barang'] ."' data-barang='". $row['nama_barang'] ."'><span class='glyphicon glyphicon-trash'> </span> Hapus </button>";
     }
 
 

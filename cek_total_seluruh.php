@@ -19,10 +19,9 @@ $session_id = session_id();
  $data = mysqli_fetch_array($query);
  $total = $data['total_penjualan'];
 
+ $total_akhir =  intval($total);
 
-$a =  intval($total);
-
-echo rp($a);
+echo rp($total_akhir);
 
         //Untuk Memutuskan Koneksi Ke Database
 

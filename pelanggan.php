@@ -8,9 +8,6 @@ include 'sanitasi.php';
 include 'db.php';
 
 
-//menampilkan seluruh data yang ada pada tabel pelanggan
-$query = $db->query("SELECT * FROM pelanggan");
-
 $query_otoritas_pelanggan = $db->query("SELECT pelanggan_tambah, pelanggan_hapus,pelanggan_edit FROM otoritas_master_data WHERE id_otoritas = '$_SESSION[otoritas_id]'");
 $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
 
@@ -21,14 +18,14 @@ $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
 
 
 <div class="container"> <!-- start of container -->
-<h3><b>DATA PELANGGAN</b></h3> <hr>
+<h3><b>DATA MARKETPLACE</b></h3> <hr>
 <!-- Trigger the modal with a button -->
 
 <?php 
 
     if ($data_otoritas_pelanggan['pelanggan_tambah'] > 0){
 
-    	echo '<button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal"> <i class="fa fa-plus"> </i> PELANGGAN</button>';
+    	echo '<button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal"> <i class="fa fa-plus"> </i> MARKETPLACE</button>';
 
     }
 
@@ -46,21 +43,20 @@ $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Tambah Data Pelanggan</h4>
+        <h4 class="modal-title">Tambah Data Marketplace</h4>
       </div>
     <div class="modal-body">
 <form role="form">
 		<div class="form-group">
 					
-					<label> Kode Pelanggan </label><br>
+					<label> Kode Marketplace </label><br>
 					<input type="text" name="kode_pelanggan" id="kode_pelanggan" class="form-control" autocomplete="off" required="" >
 					
 
-					<label> Nama Pelanggan </label><br>
+					<label> Nama Marketplace </label><br>
 					<input type="text" name="nama" id="nama_pelanggan" class="form-control" autocomplete="off" required="" >
 
-					<label> Tanggal Lahir </label><br>
-					<input type="text" name="tgl_lahir" id="tgl_lahir" class="form-control" autocomplete="off" required="" >
+					<input type="hidden" name="tgl_lahir" id="tgl_lahir" class="form-control" autocomplete="off" required="" >
 
 					<label> Nomor Telp </label><br>
 					<input type="text" name="nomor" id="nomor" class="form-control" autocomplete="off" required="" >
@@ -76,7 +72,7 @@ $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
 					<label> Flafon </label><br>
 					<input type="text" name="flafon" id="flafon" class="form-control" autocomplete="off" placeholder="Flafon (Jumlah Maximal Piutang)" required="" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);" >
 
-						<label> Flafon Usia </label><br>
+						<label> Flafon Usia Piutang</label><br>
 					<input type="text" name="flafon_usia" id="flafon_usia" class="form-control" autocomplete="off" placeholder="Flafon Usia Piutang" required=""   >
 
 					<label> Level Harga </label><br>
@@ -173,7 +169,7 @@ $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Konfirmasi Hapus Data Pelanggan</h4>
+        <h4 class="modal-title">Konfirmasi Hapus Data Marketplace</h4>
       </div>
 
       <div class="modal-body">
@@ -181,7 +177,7 @@ $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
    <p>Apakah Anda yakin Ingin Menghapus Data ini ?</p>
    <form >
     <div class="form-group">
-    <label> Nama Pelanggan :</label>
+    <label> Nama Marketplace :</label>
      <input type="text" id="data_pelanggan" class="form-control" readonly=""> 
      <input type="hidden" id="id_hapus" class="form-control" > 
     </div>
@@ -213,19 +209,18 @@ $data_otoritas_pelanggan = mysqli_fetch_array($query_otoritas_pelanggan);
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Edit Data Pelanggan</h4>
+        <h4 class="modal-title">Edit Data MarketPlace</h4>
       </div>
       <div class="modal-body">
   <form role="form">
 					<div class="form-group">
-					<label> Kode Pelanggan </label><br>
+					<label> Kode MarketPlace </label><br>
 					<input type="text" name="kode_edit" id="edit_kode" class="form-control" autocomplete="off" required="" >
 						
-					<label> Nama Pelanggan </label><br>
+					<label> Nama MarketPlace </label><br>
 					<input type="text" name="nama_edit" id="edit_nama" class="form-control" autocomplete="off" required="" >
 
-					<label> Tanggal Lahir </label><br>
-					<input type="text" name="tgl_lahir" id="edit_tgl_lahir" class="form-control" autocomplete="off" required="" >
+					<input type="hidden" name="tgl_lahir" id="edit_tgl_lahir" class="form-control" autocomplete="off" required="" >
 
 					<label> Nomor Telp </label><br>
 					<input type="text" name="nomor" id="edit_nomor" class="form-control" autocomplete="off" required="" >					
@@ -288,15 +283,14 @@ tr:nth-child(even){background-color: #f2f2f2}
 
 <div class="table-responsive"><!-- membuat agar ada garis pada tabel, disetiap kolom -->
 <span id="table_baru">
-<table id="tableuser" class="table table-bordered">
+<table id="table_pelanggan" class="table table-bordered table-sm">
 		<thead>
 			
-			<th style='background-color: #4CAF50; color: white'> Kode Pelanggan </th>
-			<th style='background-color: #4CAF50; color: white'> Nama Pelanggan </th>
+			<th style='background-color: #4CAF50; color: white'> Kode Marketplace </th>
+			<th style='background-color: #4CAF50; color: white'> Nama Marketplace </th>
 			<th style='background-color: #4CAF50; color: white'> Flafon </th>
-			<th style='background-color: #4CAF50; color: white'> Flafon Usia </th>
+			<th style='background-color: #4CAF50; color: white'> Flafon Usia Piutang</th>
 			<th style='background-color: #4CAF50; color: white'> Level Harga </th>
-			<th style='background-color: #4CAF50; color: white'> Tgl. Lahir </th>
 			<th style='background-color: #4CAF50; color: white'> Nomor Telp </th>
 			<th style='background-color: #4CAF50; color: white'> E-mail </th>
 			<th style='background-color: #4CAF50; color: white'> Wilayah</th>
@@ -326,45 +320,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 			
 		</thead>
 		
-		<tbody>
-		<?php
-
-			//menyimpan data sementara yang ada pada $query
-			while ($data = mysqli_fetch_array($query))
-			{
-				//menampilkan data
-			echo "<tr>
-			
-			<td>". $data['kode_pelanggan'] ."</td>
-			<td>". $data['nama_pelanggan'] ."</td>
-			<td>". rp($data['flafon']) ."</td>
-			<td>". $data['flafon_usia'] ." Hari</td>
-			<td>". $data['level_harga'] ."</td>
-			<td>". tanggal($data['tgl_lahir']) ."</td>
-			<td>". $data['no_telp'] ."</td>
-			<td>". $data['e_mail'] ."</td>
-			<td>". $data['wilayah'] ."</td>";
-			
-    if ($data_otoritas_pelanggan['pelanggan_hapus'] > 0){
-
-
-			echo "<td> <button class='btn btn-danger btn-hapus' data-id='". $data['id'] ."' data-pelanggan='". $data['nama_pelanggan'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> </td>";
-
-		}
-
-    if ($data_otoritas_pelanggan['pelanggan_hapus'] > 0){
-			echo "<td> <button class='btn btn-info btn-edit' data-pelanggan='". $data['nama_pelanggan'] ."' data-kode='". $data['kode_pelanggan'] ."' data-tanggal='". $data['tgl_lahir'] ."' data-nomor='". $data['no_telp'] ."' data-email='". $data['e_mail'] ."' data-wilayah='". $data['wilayah'] ."' data-level-harga='". $data['level_harga'] ."' data-id='". $data['id'] ."' data-flafon='". $data['flafon'] ."' data-flafon-usia='". $data['flafon_usia'] ."'> <span class='glyphicon glyphicon-edit'> </span> Edit </button> </td>";
-		}
-
-			echo"</tr>";
-			}
-
-//Untuk Memutuskan Koneksi Ke Database
-mysqli_close($db);   
-			
-		?>
-		</tbody>
-
+		
 	</table>
 	</span>
 
@@ -372,26 +328,29 @@ mysqli_close($db);
 </div> <!--end of container-->
 
 
-	<script>
-	$(function() {
-	$( "#tgl_lahir" ).pickadate({ selectYears: 80, format: 'yyyy-mm-dd'});
-	});
-	</script>
-
-		<script>
-	$(function() {
-	$( "#edit_tgl_lahir" ).pickadate({ selectYears: 80, format: 'yyyy-mm-dd'});
-	});
-	</script>
-
-
-<script>
-//untuk menampilkan data tabel
-$(document).ready(function(){
-    $('.table').DataTable();
-});
-
-</script>
+<!-- DATATABLE AJAX -->
+    <script type="text/javascript" language="javascript" >
+      $(document).ready(function() {
+        var dataTable = $('#table_pelanggan').DataTable( {
+          "processing": true,
+          "serverSide": true,
+          "ajax":{
+            url :"tabel-pelanggan.php", // json datasource
+            type: "post",  // method  , by default get
+            error: function(){  // error handling
+              $(".employee-grid-error").html("");
+              $("#table_pelanggan").append('<tbody class="employee-grid-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
+              $("#employee-grid_processing").css("display","none");
+              
+            }
+          },
+            "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+              $(nRow).attr('class','tr-id-'+aData[10]+'');
+            },
+        });
+      });
+    </script>
+<!-- / DATATABLE AJAX -->
 
 <script type="text/javascript">
 
@@ -442,12 +401,12 @@ $(document).ready(function(){
 																
 								if (kode_pelanggan == "") {
 
-									alert("Kode Pelanggan Harus Diisi");
+									alert("Kode Marketplace Harus Diisi");
 								}
 
 								else if (nama_pelanggan == "") {
 
-									alert("Nama Pelanggan Harus Diisi");
+									alert("Nama Marketplace Harus Diisi");
 								}
 
 								else if (wilayah == "") {
@@ -475,8 +434,8 @@ $(document).ready(function(){
 											
 											
 											$(".alert").show('fast');
-											$("#table_baru").load('tabel-pelanggan.php');
-											
+												var table_pelanggan = $('#table_pelanggan').DataTable();
+      											table_pelanggan.draw();											
 											setTimeout(tutupalert, 2000);
 											$(".modal").modal("hide");
 											}
@@ -567,10 +526,10 @@ $(document).ready(function(){
 								var flafon_usia = $("#edit_flafon_usia").val();
 
 								if (nama == ""){
-									alert("Nama Harus Diisi");
+									alert("Nama Marketplace Harus Diisi");
 								}
 								else if (kode == ""){
-									alert("Kode Pelangggan Harus Diisi");
+									alert("Kode Marketplace Harus Diisi");
 								}
 								else if (nomor == ""){
 									alert("Nomor Telpon Harus Diisi");
@@ -591,7 +550,9 @@ $(document).ready(function(){
 
 								
 
-								$("#table_baru").load('tabel-pelanggan.php');
+								var table_pelanggan = $('#table_pelanggan').DataTable();
+      							table_pelanggan.draw();	
+
 								$("#modal_edit").modal('hide');
 								
 								

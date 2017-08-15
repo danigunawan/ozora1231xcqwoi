@@ -35,7 +35,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 
 <form class="form-inline" role="form">	
 
-  				<div class="form-group"> 
+  				<div class="form-group" style="display: none"> 
 
 	  				 <select type="text" name="kategori" id="kategori" class="form-control chosen" required="">
 	     			  <option value="Semua Kategori"> Semua Kategori </option>
@@ -72,15 +72,17 @@ tr:nth-child(even){background-color: #f2f2f2}
 <table id="table_lap_penjualan_rekap" class="table table-bordered table-sm">
 		<thead>
 			<th style="background-color: #4CAF50; color: white;"> Nomor Faktur </th>
+			<th style="background-color: #4CAF50; color: white;"> Marketplace</th>
+			<th style="background-color: #4CAF50; color: white;"> Toko </th>
+			<th style="background-color: #4CAF50; color: white;"> Konsumen</th>
 			<th style="background-color: #4CAF50; color: white;"> Tanggal </th>	
 			<th style="background-color: #4CAF50; color: white;"> Jam </th>
-			<th style="background-color: #4CAF50; color: white;"> Kategori </th>
-			<th style="background-color: #4CAF50; color: white;"> Kode Pelanggan</th>
 			<th style="background-color: #4CAF50; color: white;"> User </th>
 			<th style="background-color: #4CAF50; color: white;"> Status </th>
 			<th style="background-color: #4CAF50; color: white;"> Total Kotor</th>
 			<th style="background-color: #4CAF50; color: white;"> Potongan </th>
 			<th style="background-color: #4CAF50; color: white;"> Tax </th>
+			<th style="background-color: #4CAF50; color: white;"> Ongkos Kirim</th>
 			<th style="background-color: #4CAF50; color: white;"> Total Bersih</th>
 			<th style="background-color: #4CAF50; color: white;"> Tunai </th>
 			<th style="background-color: #4CAF50; color: white;"> Kembalian </th>
@@ -142,7 +144,6 @@ tr:nth-child(even){background-color: #f2f2f2}
 			$('#table_lap_penjualan_rekap').DataTable().destroy();
 			var dari_tanggal = $("#dari_tanggal").val();
       		var sampai_tanggal = $("#sampai_tanggal").val();
-      		var kategori = $("#kategori").val();
       		if (dari_tanggal == '') {
             alert("Silakan dari tanggal diisi terlebih dahulu.");
             $("#dari_tanggal").focus();
@@ -156,12 +157,12 @@ tr:nth-child(even){background-color: #f2f2f2}
           var dataTable = $('#table_lap_penjualan_rekap').DataTable( {
           "processing": true,
           "serverSide": true,
+          "info": false,
           "ajax":{
             url :"datatable_lap_penjualan_rekap.php", // json datasource
            	"data": function ( d ) {
                       d.dari_tanggal = $("#dari_tanggal").val();
                       d.sampai_tanggal = $("#sampai_tanggal").val();
-                      d.kategori = $("#kategori").val();
                       // d.custom = $('#myInput').val();
                       // etc
                   },
@@ -180,9 +181,9 @@ tr:nth-child(even){background-color: #f2f2f2}
         });
 
         $("#cetak").show();
-    	$("#cetak_lap").attr("href", "cetak_lap_penjualan_rekap.php?&dari_tanggal="+dari_tanggal+"&sampai_tanggal="+sampai_tanggal+"&kategori="+kategori);
+    	$("#cetak_lap").attr("href", "cetak_lap_penjualan_rekap.php?&dari_tanggal="+dari_tanggal+"&sampai_tanggal="+sampai_tanggal);
     	$("#download").show();
-    	$("#download_lap").attr("href", "download_lap_penjualan_rekap.php?&dari_tanggal="+dari_tanggal+"&sampai_tanggal="+sampai_tanggal+"&kategori="+kategori);
+    	$("#download_lap").attr("href", "download_lap_penjualan_rekap.php?&dari_tanggal="+dari_tanggal+"&sampai_tanggal="+sampai_tanggal);
         }//end else
         $("form").submit(function(){
         return false;

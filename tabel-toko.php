@@ -15,15 +15,16 @@ $columns = array(
     
     0=>'Nama toko', 
     1=>'Alamat toko', 
-    2=>'Hapus',
-    3=>'Edit',
-    4=>'id' 
+    2=>'Nomor Telpon Toko', 
+    3=>'Hapus',
+    4=>'Edit',
+    5=>'id' 
 
 );
 
 // getting total number records without any search
-$sql =" SELECT id,nama_toko,alamat_toko ";
-$sql.=" FROM toko ";
+$sql =" SELECT id, nama_toko, alamat_toko, no_toko";
+$sql.=" FROM toko";
 $sql.="";
 
 $query = mysqli_query($conn, $sql) or die("eror 1");
@@ -31,17 +32,18 @@ $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
-$sql =" SELECT id,nama_toko,alamat_toko ";
-$sql.=" FROM toko ";
+$sql =" SELECT id,nama_toko,alamat_toko,no_toko";
+$sql.="  FROM toko ";
 $sql.=" WHERE 1=1 ";
 
     $sql.=" AND (nama_toko LIKE '".$requestData['search']['value']."%'";  
-    $sql.=" OR alamat_toko LIKE '".$requestData['search']['value']."%' )";   
+    $sql.=" OR alamat_toko LIKE '".$requestData['search']['value']."%'"; 
+    $sql.=" OR no_toko LIKE '".$requestData['search']['value']."%' )";   
 }
 
 
 $query=mysqli_query($conn, $sql) or die("eror 2");
-$totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result. 
+$totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search resul 
         
 $sql.=" ORDER BY id ".$requestData['order'][0]['dir']."  LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
 
@@ -59,16 +61,28 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 
           $nestedData[] = $row['nama_toko'];
           $nestedData[] = $row['alamat_toko'];
-          if ($data_otoritas_master_data_toko['toko_edit'] == 1){
+          $nestedData[] = $row['no_toko'];
+          if ($data_otoritas_master_data_toko['toko_hapus'] == 1){
+
+          $query_cek_nama_toko = $db->query("SELECT kode_toko FROM penjualan WHERE kode_toko = '$row[id]' ");
+          $jumlah_cek_nama_toko = mysqli_num_rows($query_cek_nama_toko);
+
+
+       if ($jumlah_cek_nama_toko == 0){
           $nestedData[] = "<button class='btn btn-danger btn-hapus btn-sm' data-id='". $row['id'] ."' data-toko='". $row['nama_toko'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button>";
+          }
+          else{
+          $nestedData[] = "<p style='color:red;'>Sudah Terpakai</p>";
+          }
           }
           else{
 			$nestedData[] = "<p></p>";
           }
 
-          if ($data_otoritas_master_data_toko['toko_hapus'] == 1){
-          $nestedData[] = "<button class='btn btn-success btn-edit btn-sm' data-toko='". $row['nama_toko'] ."' data-alamat='". $row['alamat_toko'] ."' data-id='". $row['id'] ."' > <span class='glyphicon glyphicon-edit'> </span> Edit </button>";
-      	  }
+          if ($data_otoritas_master_data_toko['toko_edit'] == 1){
+
+          $nestedData[] = "<button class='btn btn-success btn-edit btn-sm' data-toko='". $row['nama_toko'] ."' data-alamat='". $row['alamat_toko'] ."'  data-no='". $row['no_toko'] ."'  data-id='". $row['id'] ."' > <span class='glyphicon glyphicon-edit'> </span> Edit </button>";
+        }
       	  else{
 			$nestedData[] = "<p></p>";
       	  }

@@ -8,6 +8,12 @@ include 'db.php';
 
   $no_faktur = stringdoang($_GET['no_faktur']);
   $nama_toko = stringdoang($_GET['nama_toko']);
+  $nama_konsumen = stringdoang($_GET['nama_konsumen']);
+  $alamat_konsumen = stringdoang($_GET['alamat_konsumen']);
+  $kode_toko = stringdoang($_GET['kode_toko']); 
+
+      $manggil_nama_toko = $db->query("SELECT id,nama_toko,alamat_toko,no_toko FROM toko WHERE id = '$kode_toko' ");
+    $toko = mysqli_fetch_array($manggil_nama_toko);
 
     $select_penjualan = $db->query("SELECT p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.potongan,p.potongan_persen, pl.nama_pelanggan,pl.wilayah,da.nama_daftar_akun FROM penjualan p INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan INNER JOIN daftar_akun da ON p.cara_bayar = da.kode_daftar_akun  WHERE p.no_faktur = '$no_faktur' ORDER BY p.id DESC");
     $data0 = mysqli_fetch_array($select_penjualan);
@@ -52,9 +58,9 @@ include 'db.php';
 
         <div class="col-sm-8">
           <center>
-            <h4> <b> <?php echo $data_perusahaan['nama_perusahaan']; ?> </b> </h4> 
-            <p> <?php echo $data_perusahaan['alamat_perusahaan']; ?><br>
-                  No.Telp:<?php echo $data_perusahaan['no_telp']; ?> </p>
+            <h4> <b> <?php echo $nama_toko ?></h4> 
+            <p> <?php echo $toko['alamat_toko']; ?><br>
+                  No.Telp: <?php echo $toko['no_toko']; ?></p>
           </center>                 
         </div><!--penutup colsm5-->        
     </div><!--penutup row1-->
@@ -68,12 +74,9 @@ include 'db.php';
        <table>
         <tbody>
             
-            <tr><td><font class="satu">  Kepada Yth</td> <td>  :&nbsp;&nbsp;</td> <td>  <?php echo $data0['nama_pelanggan']; ?> </td></tr> 
-
+            <tr><td><font class="satu">  Kepada Yth</td> <td>  :&nbsp;&nbsp;</td> <td>  <?php echo $data0['nama_pelanggan']; ?> </td></tr>  
             <tr><td><font class="satu"><br>No Invoice</font></td> <td> <br>:</td> <td><font class="satu"> <br> <?php echo $no_faktur; ?></font></td></tr>
-            <tr><td><font class="satu"> Tanggal</td> <td> :&nbsp;&nbsp;</td> <td><?php echo $tanggal; ?></td></tr>
-                  
-
+            <tr><td><font class="satu"> Tanggal</td> <td> :&nbsp;&nbsp;</td> <td><?php echo $tanggal; ?></td></tr> 
         </tbody>
       </table>
 
@@ -81,9 +84,9 @@ include 'db.php';
 
     <div class="col-sm-6">
       <table>
-        <tbody>
-          <tr><td width="5%"><font class="satu">Nama Toko</font></td> <td> :&nbsp;&nbsp;</td> <td><?php echo $nama_toko ?></td></tr>
-          <tr><td width="5%"><font class="dua"> Alamat</font></td> <td> :&nbsp;&nbsp;</td> <td><?php echo $data0['wilayah'];?></td></tr>
+        <tbody> 
+            <tr><td  width="25%"><font class="satu">Nama Konsumen </font></td> <td> :&nbsp;</td> <td><font class="satu"> <?php echo $nama_konsumen; ?> </font></td></tr>
+            <tr><td  width="25%"><font class="satu">Alamat Konsumen </font></td> <td> :&nbsp;</td> <td><font class="satu"> <?php echo $alamat_konsumen; ?> </font></td></tr> 
         </tbody>
       </table>
     </div> <!--end col-sm-2-->
@@ -107,7 +110,7 @@ include 'db.php';
     }
     </style>
 
-<table id="tableuser" class="table1">
+<table id="tableuser" class="table table-bordered table-sm">
         <thead>
 
             <th class="table1" style="width: 5%"> <center> No. </center> </th>
@@ -115,7 +118,7 @@ include 'db.php';
             <th class="table1" style="width: 5%"> <center> Jumlah </center> </th>
             <th class="table1" style="width: 10%"> <center> Satuan </center> </th>
             <th class="table1" style="width: 10%"> <center> Harga Satuan </center> </th>
-            <th class="table1" style="width: 10%"> <center> Harga Jual </center> </th>        
+            <th class="table1" style="width: 10%"> <center> Total Harga</center> </th>        
             
         </thead>
 
@@ -253,7 +256,7 @@ include 'db.php';
    </div>
 
    <div class="col-sm-3">    
-      <font class="satu"><b> <center>Hormat Kami,</center> <br><br><br> <font class="satu"> <center>(<?php echo $data_footer['petugas']; ?>)</center></font></b></font>
+      <font class="satu"><b> <center>Hormat Kami,</center> <br><br><br> <font class="satu"> <center>(<?php echo $_SESSION['nama']; ?>)</center></font></b></font>
   </div>
 
 </div> <!--/container-->

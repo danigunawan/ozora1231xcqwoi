@@ -6,9 +6,9 @@ include 'sanitasi.php';
 include 'db.php';
 
 
-  $no_faktur = stringdoang($_GET['no_faktur']);
+  $no_faktur = stringdoang($_GET['no_faktur']); 
 
-    $select_penjualan = $db->query("SELECT p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.potongan,p.potongan_persen, pl.nama_pelanggan,pl.wilayah,da.nama_daftar_akun ,p.tunai FROM penjualan p INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan INNER JOIN daftar_akun da ON p.cara_bayar = da.kode_daftar_akun  WHERE p.no_faktur = '$no_faktur' ORDER BY p.id DESC");
+    $select_penjualan = $db->query("SELECT p.no_faktur,p.total,p.kode_pelanggan,p.tanggal,p.tanggal_jt,p.potongan,p.potongan_persen, pl.nama_pelanggan,pl.wilayah,da.nama_daftar_akun ,p.tunai,p.invoice_marketplace,p.ongkir  FROM penjualan p INNER JOIN pelanggan pl ON p.kode_pelanggan = pl.kode_pelanggan INNER JOIN daftar_akun da ON p.cara_bayar = da.kode_daftar_akun  WHERE p.no_faktur = '$no_faktur' ORDER BY p.id DESC");
     $data0 = mysqli_fetch_array($select_penjualan);
 
     $select_perusahaan = $db->query("SELECT foto,nama_perusahaan,alamat_perusahaan,no_telp FROM perusahaan ");
@@ -21,16 +21,15 @@ include 'db.php';
 
     $potongan_persen = $data0['potongan_persen'];
 
-    $jml_dibayar = $t_subtotal - $data0['potongan'];
+    $jml_dibayar = $t_subtotal - $data0['potongan'] + $data0['ongkir'];
 
-    $ambil_footer = $db->query("SELECT keterangan, petugas FROM setting_footer_cetak");
-    $data_footer = mysqli_fetch_array($ambil_footer);
 
     $ubah_tanggal = $data0['tanggal'];
     $tanggal = date('d F Y', strtotime($ubah_tanggal));
 
     $ganti_tanggal = $data0['tanggal_jt'];
     $tanggal_jt = date('d F Y', strtotime($ganti_tanggal));
+
 
 
  ?>
@@ -68,9 +67,9 @@ include 'db.php';
        <table>
         <tbody>
             
-            <tr><td><font class="satu">  Kepada Yth</td> <td>  :&nbsp;&nbsp;</td> <td>  <?php echo $data0['nama_pelanggan']; ?> </td></tr> 
+            <tr><td><font class="satu">  Kepada Yth</td> <td>  :&nbsp;&nbsp;</td> <td>  <?php echo $data0['nama_pelanggan']; ?> </td></tr>  
 
-            <tr><td><font class="satu"><br>No Invoice</font></td> <td> <br>:</td> <td><font class="satu"> <br> <?php echo $no_faktur; ?></font></td></tr>
+            <tr><td><font class="satu"><br>No Invoice</font></td> <td> <br>:</td> <td><font class="satu"> <br> #<?php echo $data0['invoice_marketplace']; ?></font></td></tr>
             <tr><td><font class="satu"> Tanggal</td> <td> :&nbsp;&nbsp;</td> <td><?php echo $tanggal; ?></td></tr>
                   
 
@@ -107,7 +106,7 @@ include 'db.php';
     }
     </style>
 
-<table id="tableuser" class="table1">
+<table id="tableuser" class="table table-bordered table-sm">
         <thead>
 
             <th class="table1" style="width: 5%"> <center> No. </center> </th>
@@ -115,7 +114,7 @@ include 'db.php';
             <th class="table1" style="width: 5%"> <center> Jumlah </center> </th>
             <th class="table1" style="width: 5%"> <center> Satuan </center> </th>
             <th class="table1" style="width: 10%"> <center> Harga Satuan </center> </th>
-            <th class="table1" style="width: 10%"> <center> Harga Jual </center> </th>        
+            <th class="table1" style="width: 10%"> <center> Jumlah Harga </center> </th>        
             
         </thead>
 
@@ -233,6 +232,16 @@ include 'db.php';
             <td class='table1' align='right'><?php echo rp($data0['potongan']); ?></td>
         </tr>
 
+        <tr>
+            <td class='table1'></td>
+            <td class='table1'>Jumlah Ongkir</td>
+            <td class='table1' align='right'></td>
+            <td class='table1' ></td>
+            <td class='table1' align='right'></td>
+            <td class='table1' align='right'><?php echo rp($data0['ongkir']); ?></td>
+        </tr>
+
+        
          <tr>
             <td class='table1'></td>
             <td class='table1'>Jumlah Pembayaran</td>
@@ -258,12 +267,12 @@ include 'db.php';
 
    <div class="col-sm-9">
      <font class="satu">
-     <?php echo $data_footer['keterangan'] ?>
+     
      </font>
    </div>
 
    <div class="col-sm-3">    
-      <font class="satu"><b> <center>Hormat Kami,</center> <br><br><br> <font class="satu"> <center>(<?php echo $data_footer['petugas']; ?>)</center></font></b></font>
+      <font class="satu"><b> <center>Hormat Kami,</center> <br><br><br> <font class="satu"> <center>(<?php echo $_SESSION['nama']; ?>)</center></font></b></font>
   </div>
 
 </div> <!--/container-->

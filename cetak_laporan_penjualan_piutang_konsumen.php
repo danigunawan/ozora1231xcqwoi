@@ -10,7 +10,7 @@ $konsumen = stringdoang($_GET['konsumen']);
 $sales = stringdoang($_GET['sales']);
 
 
-    $query_perusahaan = $db->query("SELECT nama_perusahaan,alamat_perusahaan,no_telp FROM perusahaan ");
+    $query_perusahaan = $db->query("SELECT foto,nama_perusahaan,alamat_perusahaan,no_telp FROM perusahaan ");
     $data_perusahaan = mysqli_fetch_array($query_perusahaan);
 
 
@@ -20,28 +20,28 @@ $data_sum_dari_detail_pembayaran = 0;
 
 // LOGIKA UNTUK AMBIL BERDASARKAN KONSUMEN DAN SALES (QUERY TAMPIL AWAL)
 if ($konsumen == 'semua' AND $sales == 'semua'){
-   $query_sum_dari_penjualan = $db->query("SELECT p.no_faktur,SUM(p.tunai) AS tunai_penjualan,SUM(p.total) AS total_akhir, SUM(p.kredit) AS total_kredit,pel.nama_pelanggan,p.sales FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kredit != 0  ");
+   $query_sum_dari_penjualan = $db->query("SELECT p.no_faktur,SUM(p.tunai) AS tunai_penjualan,SUM(p.total) AS total_akhir, SUM(p.kredit) AS total_kredit,pel.nama_pelanggan,p.sales, p.nama_konsumen FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kredit != 0  ");
 
-  $query_no_faktur_penjualan = $db->query("SELECT p.no_faktur,pel.nama_pelanggan,p.sales FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kredit != 0  ");
+  $query_no_faktur_penjualan = $db->query("SELECT p.no_faktur,pel.nama_pelanggan,p.sales, p.nama_konsumen FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kredit != 0  ");
 }
 else if ($konsumen != 'semua' AND $sales == 'semua'){
 
-  $query_sum_dari_penjualan = $db->query("SELECT p.no_faktur,SUM(p.tunai) AS tunai_penjualan,SUM(p.total) AS total_akhir, SUM(p.kredit) AS total_kredit,pel.nama_pelanggan,p.sales FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kredit != 0 AND p.kode_pelanggan = '$konsumen' ");
+  $query_sum_dari_penjualan = $db->query("SELECT p.no_faktur,SUM(p.tunai) AS tunai_penjualan,SUM(p.total) AS total_akhir, SUM(p.kredit) AS total_kredit,pel.nama_pelanggan,p.sales, p.nama_konsumen FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kredit != 0 AND p.kode_pelanggan = '$konsumen' ");
 
 
-  $query_no_faktur_penjualan = $db->query("SELECT p.no_faktur,pel.nama_pelanggan,p.sales FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kredit != 0  AND p.kode_pelanggan = '$konsumen' ");
+  $query_no_faktur_penjualan = $db->query("SELECT p.no_faktur,pel.nama_pelanggan,p.sales, p.nama_konsumen FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kredit != 0  AND p.kode_pelanggan = '$konsumen' ");
 }
 else if ($konsumen == 'semua' AND $sales != 'semua'){
 
-  $query_sum_dari_penjualan = $db->query("SELECT p.no_faktur,SUM(p.tunai) AS tunai_penjualan,SUM(p.total) AS total_akhir, SUM(p.kredit) AS total_kredit,pel.nama_pelanggan,p.sales FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kredit != 0 AND p.sales = '$sales' ");
+  $query_sum_dari_penjualan = $db->query("SELECT p.no_faktur,SUM(p.tunai) AS tunai_penjualan,SUM(p.total) AS total_akhir, SUM(p.kredit) AS total_kredit,pel.nama_pelanggan,p.sales, p.nama_konsumen FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kredit != 0 AND p.sales = '$sales' ");
 
 
-  $query_no_faktur_penjualan = $db->query("SELECT p.no_faktur,pel.nama_pelanggan,p.sales FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kredit != 0  p.sales = '$sales'  ");
+  $query_no_faktur_penjualan = $db->query("SELECT p.no_faktur,pel.nama_pelanggan,p.sales, p.nama_konsumen FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kredit != 0  p.sales = '$sales'  ");
 
 }
 else{
 
-  $query_sum_dari_penjualan = $db->query("SELECT p.no_faktur,SUM(p.tunai) AS tunai_penjualan,SUM(p.total) AS total_akhir, SUM(p.kredit) AS total_kredit,pel.nama_pelanggan,p.sales FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kredit != 0 AND p.kode_pelanggan = '$konsumen' AND p.sales = '$sales' ");
+  $query_sum_dari_penjualan = $db->query("SELECT p.no_faktur,SUM(p.tunai) AS tunai_penjualan,SUM(p.total) AS total_akhir, SUM(p.kredit) AS total_kredit,pel.nama_pelanggan,p.sales, p.nama_konsumen FROM penjualan p LEFT JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND p.kredit != 0 AND p.kode_pelanggan = '$konsumen' AND p.sales = '$sales' ");
 
 
   $query_no_faktur_penjualan = $db->query("SELECT no_faktur FROM penjualan  WHERE tanggal >= '$dari_tanggal' AND tanggal <= '$sampai_tanggal' AND kredit != 0  AND kode_pelanggan = '$konsumen' AND sales = '$sales'  ");
@@ -132,7 +132,9 @@ else
  <table id="tableuser" class="table table-bordered table-sm">
             <thead>
       <th style="background-color: #4CAF50; color: white;"> Nomor Faktur </th>
-      <th style="background-color: #4CAF50; color: white;"> Nama Konsumen</th>
+      <th style="background-color: #4CAF50; color: white;"> Marketplace</th>
+      <th style="background-color: #4CAF50; color: white;"> Toko</th>
+      <th style="background-color: #4CAF50; color: white;"> Konsumen</th>
       <th style="background-color: #4CAF50; color: white;"> Sales </th>
       <th style="background-color: #4CAF50; color: white;"> Tgl. Transaksi </th>
       <th style="background-color: #4CAF50; color: white;"> Tgl. Jatuh Tempo </th>
@@ -149,21 +151,21 @@ else
 // LOGIKA UNTUK FILTER BERDASARKAN KONSUMEN DAN SALES (QUERY TAMPIL AWAL)
 if ($konsumen == 'semua' AND $sales == 'semua')
 {
-          $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 ORDER BY dp.tanggal DESC ");
+          $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit, dp.nama_konsumen, t.nama_toko FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON dp.kode_toko = t.id WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 ORDER BY dp.tanggal DESC ");
  }
 
 else if ($konsumen != 'semua' AND $sales == 'semua')
  {
-          $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 AND dp.kode_pelanggan = '$konsumen' ORDER BY dp.tanggal DESC ");
+          $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit, dp.nama_konsumen, t.nama_toko FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON dp.kode_toko = t.id WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 AND dp.kode_pelanggan = '$konsumen' ORDER BY dp.tanggal DESC ");
 
  }  
 else if ($konsumen == 'semua' AND $sales != 'semua')
 {
-         $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 AND dp.sales = '$sales' ORDER BY dp.tanggal DESC ");
+         $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit, dp.nama_konsumen, t.nama_toko FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON dp.kode_toko = t.id WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 AND dp.sales = '$sales' ORDER BY dp.tanggal DESC ");
 }
 else
 {
-        $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 AND dp.kode_pelanggan = '$konsumen' AND dp.sales = '$sales' ORDER BY dp.tanggal DESC ");
+        $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit, dp.nama_konsumen, t.nama_toko FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan INNER JOIN toko t ON dp.kode_toko = t.id WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 AND dp.kode_pelanggan = '$konsumen' AND dp.sales = '$sales' ORDER BY dp.tanggal DESC ");
 
 }
 // LOGIKA UNTUK FILTER BERDASARKAN KONSUMEN DAN SALES (QUERY TAMPIL AWAL)
@@ -188,6 +190,8 @@ $tot_bayar = $data_detail_pembayaran_piutang['total_bayar'] + $total_tunai;
                   echo "<tr>
                   <td>". $data_penjualan['no_faktur'] ."</td>
                   <td>". $data_penjualan['nama_pelanggan'] ."</td>
+                  <td>". $data_penjualan['nama_toko'] ."</td>
+                  <td>". $data_penjualan['nama_konsumen'] ."</td>
                   <td>". $data_penjualan['sales'] ."</td>
                   <td>". $data_penjualan['tanggal'] ."</td>
                   <td>". $data_penjualan['tanggal_jt'] ."</td>
@@ -208,6 +212,8 @@ $tot_bayar = $data_detail_pembayaran_piutang['total_bayar'] + $total_tunai;
                   }
 
     echo "<td><p style='color:red'> TOTAL </p></td>
+      <td><p style='color:red'> - </p></td>
+      <td><p style='color:red'> - </p></td>
       <td><p style='color:red'> - </p></td>
       <td><p style='color:red'> - </p></td>
       <td><p style='color:red'> - </p></td>

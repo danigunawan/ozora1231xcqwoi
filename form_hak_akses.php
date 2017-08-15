@@ -10,7 +10,7 @@
     $nama = $_GET['nama'];
     $id = $_GET['id'];
 
-    $otoritas_akses = $db->query("SELECT * FROM hak_otoritas ho INNER JOIN otoritas_penjualan open ON ho.id = open.id_otoritas INNER JOIN otoritas_pembelian opem ON ho.id = opem.id_otoritas INNER JOIN otoritas_master_data omd ON ho.id = omd.id_otoritas INNER JOIN otoritas_pembayaran opemb ON ho.id = opemb.id_otoritas INNER JOIN otoritas_transaksi_kas otk ON ho.id = otk.id_otoritas INNER JOIN otoritas_kas_keluar okk ON ho.id = okk.id_otoritas INNER JOIN otoritas_kas_masuk okm ON ho.id = okm.id_otoritas INNER JOIN otoritas_kas_mutasi okmut ON ho.id = okmut.id_otoritas INNER JOIN otoritas_persediaan operse ON ho.id = operse.id_otoritas INNER JOIN otoritas_stok_opname oso ON ho.id = oso.id_otoritas INNER JOIN otoritas_stok_awal osa ON ho.id = osa.id_otoritas INNER JOIN otoritas_item_masuk oim ON ho.id = oim.id_otoritas INNER JOIN otoritas_item_keluar oik ON ho.id = oik.id_otoritas INNER JOIN otoritas_kas ok ON ho.id = ok.id_otoritas INNER JOIN otoritas_laporan ol ON ho.id = ol.id_otoritas INNER JOIN otoritas_setting oset ON ho.id = oset.id_otoritas WHERE ho.id = '$id'");
+    $otoritas_akses = $db->query("SELECT * FROM hak_otoritas ho INNER JOIN otoritas_penjualan open ON ho.id = open.id_otoritas INNER JOIN otoritas_pembelian opem ON ho.id = opem.id_otoritas INNER JOIN otoritas_master_data omd ON ho.id = omd.id_otoritas INNER JOIN otoritas_pembayaran opemb ON ho.id = opemb.id_otoritas INNER JOIN otoritas_transaksi_kas otk ON ho.id = otk.id_otoritas INNER JOIN otoritas_kas_keluar okk ON ho.id = okk.id_otoritas INNER JOIN otoritas_kas_masuk okm ON ho.id = okm.id_otoritas INNER JOIN otoritas_kas_mutasi okmut ON ho.id = okmut.id_otoritas INNER JOIN otoritas_persediaan operse ON ho.id = operse.id_otoritas INNER JOIN otoritas_stok_opname oso ON ho.id = oso.id_otoritas INNER JOIN otoritas_stok_awal osa ON ho.id = osa.id_otoritas INNER JOIN otoritas_item_masuk oim ON ho.id = oim.id_otoritas INNER JOIN otoritas_item_keluar oik ON ho.id = oik.id_otoritas INNER JOIN otoritas_kas ok ON ho.id = ok.id_otoritas INNER JOIN otoritas_laporan ol ON ho.id = ol.id_otoritas INNER JOIN otoritas_setting oset ON ho.id = oset.id_otoritas INNER JOIN otoritas_form_order_penjualan ofop ON ho.id = ofop.id_otoritas INNER JOIN otoritas_order_penjualan oop ON ho.id = oop.id_otoritas WHERE ho.id = '$id'");
     $data_otoritas = mysqli_fetch_array($otoritas_akses);
 
 
@@ -412,6 +412,130 @@ else{
 
 
 
+
+<div class="form-group col-sm-2"> <!-- start otoritas penjualan -->
+<label>Form Order Penjualan</label><br>
+
+<?php 
+
+if ($data_otoritas['tombol_submit'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="formordercheckbox17" name="tombol_submit" checked="">
+    <label for="formordercheckbox17">Tombol Submit</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="formordercheckbox17" name="tombol_submit">
+    <label for="formordercheckbox17">Tombol Submit</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['tombol_order'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="formordercheckbox18" name="tombol_order" checked=""> 
+    <label for="formordercheckbox18">Tombol Order</label><br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="formordercheckbox18" name="tombol_order"> 
+    <label for="formordercheckbox18">Tombol Order</label><br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['edit_produk'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="formordercheckbox19" name="edit_produk" checked="">
+    <label for="formordercheckbox19">Edit Produk</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="formordercheckbox19" name="edit_produk">
+    <label for="formordercheckbox19">Edit Produk</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['hapus_produk'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="formordercheckbox20" name="hapus_produk" checked="">
+    <label for="formordercheckbox20">Hapus Produk</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="formordercheckbox20" name="hapus_produk">
+    <label for="formordercheckbox20">Hapus Produk</label> <br>';  
+}
+
+ ?>
+
+</div> <!-- / of form otoritas order -->
+
+
+<div class="form-group col-sm-2"> <!-- start otoritas penjualan -->
+<label>Order Penjualan</label><br>
+
+<?php 
+
+if ($data_otoritas['order_lihat'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="ordercheckbox17" name="order_lihat" checked="">
+    <label for="checkbox17">Lihat</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="ordercheckbox17" name="order_lihat">
+    <label for="checkbox17">Lihat</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['order_tambah'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="ordercheckbox18" name="order_tambah" checked=""> 
+    <label for="ordercheckbox18">Tambah</label><br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="ordercheckbox18" name="order_tambah"> 
+    <label for="ordercheckbox18">Tambah</label><br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['order_edit'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="ordercheckbox19" name="order_edit" checked="">
+    <label for="ordercheckbox19">Edit</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="ordercheckbox19" name="order_edit">
+    <label for="ordercheckbox19">Edit</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['order_hapus'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="ordercheckbox20" name="order_hapus" checked="">
+    <label for="ordercheckbox20">Hapus</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="ordercheckbox20" name="order_hapus">
+    <label for="ordercheckbox20">Hapus</label> <br>';  
+}
+
+ ?>
+
+</div> <!-- / of otoritas order -->
+
 <div class="form-group col-sm-2"> <!-- start otoritas pembelian -->
 <label>Pembelian</label><br>
 
@@ -600,6 +724,8 @@ else{
  ?>
 
 </div> <!-- / of otoritas jabatan -->
+
+
 
 
 <div class="form-group col-sm-2"> <!-- start otoritas suplier -->
@@ -2698,6 +2824,130 @@ else{
 ?>
 
 </div> <!-- / of otoritas lap_retur pembelian - harga produk penjualan-->
+
+<div class="form-group col-sm-2"> <!-- start otoritas Varian Warna -->
+<label>Varian Warna</label><br>
+
+<?php 
+
+if ($data_otoritas['warna_lihat'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox282" name="warna_lihat" checked="">
+    <label for="checkbox282">Lihat</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox282" name="warna_lihat">
+    <label for="checkbox282">Lihat</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['warna_tambah'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox283" name="warna_tambah" checked=""> 
+    <label for="checkbox283">Tambah</label><br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox283" name="warna_tambah"> 
+    <label for="checkbox283">Tambah</label><br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['warna_edit'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox284" name="warna_edit" checked="">
+    <label for="checkbox284">Edit</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox284" name="warna_edit">
+    <label for="checkbox284">Edit</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['warna_hapus'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox285" name="warna_hapus" checked="">
+    <label for="checkbox285">Hapus</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox285" name="warna_hapus">
+    <label for="checkbox285">Hapus</label> <br>';  
+}
+
+ ?>
+
+</div> <!-- / of otoritas varian warna -->
+
+
+<div class="form-group col-sm-2"> <!-- start otoritas Varian Ukuran -->
+<label>Varian Ukuran</label><br>
+
+<?php 
+
+if ($data_otoritas['ukuran_lihat'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox382" name="ukuran_lihat" checked="">
+    <label for="checkbox382">Lihat</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox382" name="ukuran_lihat">
+    <label for="checkbox382">Lihat</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['ukuran_tambah'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox383" name="ukuran_tambah" checked=""> 
+    <label for="checkbox383">Tambah</label><br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox383" name="ukuran_tambah"> 
+    <label for="checkbox383">Tambah</label><br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['ukuran_edit'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox384" name="ukuran_edit" checked="">
+    <label for="checkbox384">Edit</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox384" name="ukuran_edit">
+    <label for="checkbox384">Edit</label> <br>';  
+}
+
+ ?>
+
+<?php 
+
+if ($data_otoritas['ukuran_hapus'] == '1'){
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox385" name="ukuran_hapus" checked="">
+    <label for="checkbox385">Hapus</label> <br>';
+}
+
+else{
+    echo '<input type="checkbox" value="1" class="cekcbox filled-in" id="checkbox385" name="ukuran_hapus">
+    <label for="checkbox385">Hapus</label> <br>';  
+}
+
+ ?>
+
+</div> <!-- / of otoritas varian warna -->
+
 
 
 <div class="col-sm-12">
