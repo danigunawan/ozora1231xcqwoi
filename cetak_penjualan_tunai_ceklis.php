@@ -54,18 +54,18 @@ foreach ($faktur_kirim as $faktur_kirims) {
 .iosSlider .slider .item {
   float: left;
   width: 50%;
-
   padding-right: 10px;
-}
+  border-style: solid;
+  }
 </style>
 
 <?php if ($faktur_kirims > 0): ?>
 
         <div class="item">
-        <div class="col-sm-6"><br>
-         <b>#<?php echo $data_penjualan['invoice_marketplace']; ?> <br><br>
+        <div class="col-sm-6">
+         <b>#<?php echo $data_penjualan['invoice_marketplace']; ?> <br>
          Dari: <?php echo $toko['nama_toko']; ?>  <br>
-         Telepon: <?php echo $toko['no_toko']; ?> <br></b>
+         Telepon: <?php echo $toko['no_toko']; ?></b>
         </div>
 
         <div class="col-sm-6">
@@ -76,9 +76,9 @@ foreach ($faktur_kirim as $faktur_kirims) {
         <hr>
          Nama Tujuan:<b> <?php echo $data_penjualan['nama_konsumen']; ?> </b><br>
          Nomor Telpon Tujuan:<b> <?php echo $data_penjualan['no_telpon_konsumen']; ?> </b><br>
-         Alamat Tujuan: <b><?php echo $data_penjualan['alamat_konsumen']; ?></b><br><br>
-         Informasi Pengirim: <br>
-         <b><?php echo $ekspedisi['nama_ekspedisi']; ?> </b><br><br>
+         Alamat Tujuan: <b><?php echo $data_penjualan['alamat_konsumen']; ?></b><br>
+         Informasi Pengirim: <b><?php echo $ekspedisi['nama_ekspedisi']; ?> </b><br>
+        <br>
          <h6><b>Daftar Produk:</b></h6>
 
             <table id="tableuser" class="table table-bordered table-sm">

@@ -3073,6 +3073,11 @@ $(document).ready(function(){
        if (pot_fakt_rp == "" || pot_fakt_rp == 0 ) {
           pot_fakt_rp = 0;
         }
+    var ongkir = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#ongkir").val()))));
+       if (ongkir == '') 
+        {
+          ongkir = 0;
+        }
 
 
     var tax_faktur = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#tax").val()))));
@@ -3095,7 +3100,7 @@ $(document).ready(function(){
             var hasil_tax = 0;
           }
 
-          var total_akhir = parseInt(total_akhier) + parseInt(Math.round(hasil_tax));
+          var total_akhir = parseInt(total_akhier) + parseInt(Math.round(hasil_tax)) + parseInt(ongkir);
 
       }
      else if(pot_fakt_rp == 0){
@@ -3120,7 +3125,7 @@ $(document).ready(function(){
             var hasil_tax = 0;
           }
 
-          var total_akhir = parseInt(total_akhier);
+          var total_akhir = parseInt(total_akhier) + parseInt(ongkir);
 
       }
      else if(pot_fakt_rp != 0 && pot_fakt_per != 0){
@@ -3145,7 +3150,7 @@ $(document).ready(function(){
               var hasil_tax = 0;
             }
 
-          var total_akhir = parseInt(total_akhier) + parseInt(Math.round(hasil_tax));
+          var total_akhir = parseInt(total_akhier) + parseInt(Math.round(hasil_tax)) + parseInt(ongkir);
 
       }
 

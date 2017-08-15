@@ -46,6 +46,7 @@ $nama_konsumen = stringdoang($_POST['nama_konsumen']);
 $no_telpon_konsumen = stringdoang($_POST['no_telpon_konsumen']);     
 $alamat_konsumen = stringdoang($_POST['alamat_konsumen']);     
 $kode_ekspedisi = stringdoang($_POST['kode_ekspedisi']);
+$ongkir = stringdoang($_POST['ongkir']);
            
 
 $select_kode_pelanggan = $db->query("SELECT id,nama_pelanggan FROM pelanggan WHERE id = '$kode_pelanggan'");
@@ -109,7 +110,7 @@ $ambil_kode_pelanggan = mysqli_fetch_array($select_kode_pelanggan);
 
 
             // pengambilan data untuk jurnal
-            $select_setting_akun = $db->query("SELECT persediaan,hpp_penjualan,total_penjualan,pajak_jual,potongan_jual,persediaan,pembayaran_kredit FROM setting_akun");
+            $select_setting_akun = $db->query("SELECT persediaan,hpp_penjualan,total_penjualan,pajak_jual,potongan_jual,pembayaran_kredit,pendapatan_ongkir FROM setting_akun");
             $ambil_setting = mysqli_fetch_array($select_setting_akun);
 
 
@@ -131,12 +132,12 @@ $ambil_kode_pelanggan = mysqli_fetch_array($select_kode_pelanggan);
                 echo "1";
             
             // buat prepared statements
-            $stmt2 = $db->prepare("UPDATE penjualan SET no_faktur = ?, kode_gudang = ?, kode_pelanggan = ?, kode_toko = ?, invoice_marketplace = ?, nama_konsumen = ?, no_telpon_konsumen = ?, alamat_konsumen = ?, kode_ekspedisi = ?, total = ?, tanggal = ?, jam = ?, user = ?, sales = ?, status = 'Lunas', potongan = ?, potongan_persen = ? , tax = ?, sisa = ?, kredit='0', cara_bayar = ?, tunai = ?, status_jual_awal = 'Tunai', ppn = ? WHERE no_faktur = ?");
+            $stmt2 = $db->prepare("UPDATE penjualan SET no_faktur = ?, kode_gudang = ?, kode_pelanggan = ?, kode_toko = ?, invoice_marketplace = ?, nama_konsumen = ?, no_telpon_konsumen = ?, alamat_konsumen = ?, kode_ekspedisi = ?, total = ?, tanggal = ?, jam = ?, user = ?, sales = ?, status = 'Lunas', potongan = ?, potongan_persen = ? , tax = ?, sisa = ?, kredit='0', cara_bayar = ?, tunai = ?, status_jual_awal = 'Tunai', ppn = ? , ongkir = ? WHERE no_faktur = ?");
             
             
             // hubungkan "data" dengan prepared statements
-            $stmt2->bind_param("sssssssssissssisiisiss", 
-            $nomor_faktur, $kode_gudang, $kode_pelanggan,$kode_toko, $invoice_marketplace, $nama_konsumen, $no_telpon_konsumen, $alamat_konsumen, $kode_ekspedisi, $total, $tanggal, $jam_sekarang , $user, $sales, $potongan,$potongan_persen, $tax, $sisa, $cara_bayar, $pembayaran, $ppn_input, $nomor_faktur);
+            $stmt2->bind_param("sssssssssissssisiisisis", 
+            $nomor_faktur, $kode_gudang, $kode_pelanggan,$kode_toko, $invoice_marketplace, $nama_konsumen, $no_telpon_konsumen, $alamat_konsumen, $kode_ekspedisi, $total, $tanggal, $jam_sekarang , $user, $sales, $potongan,$potongan_persen, $tax, $sisa, $cara_bayar, $pembayaran, $ppn_input, $ongkir,$nomor_faktur);
 
             
 
@@ -169,6 +170,9 @@ echo $ppn_input;
   //Total Penjualan
         $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[total_penjualan]', '0', '$total_penjualan', 'Penjualan', '$nomor_faktur','1', '$user')");
 
+ //Total Penjualan
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal_sekarang $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[pendapatan_ongkir]', '0', '$ongkir', 'Penjualan', '$nomor_faktur','1', '$user')");
+
 } 
 
 
@@ -180,6 +184,9 @@ echo $ppn_input;
 
  //Total Penjualan
         $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[total_penjualan]', '0', '$total_penjualan', 'Penjualan', '$nomor_faktur','1', '$user')");
+
+//Total Ongkir
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal_sekarang $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[pendapatan_ongkir]', '0', '$ongkir', 'Penjualan', '$nomor_faktur','1', '$user')");
 
 if ($pajak != "" || $pajak != 0) {
   //PAJAK
@@ -196,6 +203,9 @@ else {
 echo $ppn_input;
  //Total Penjualan
         $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[total_penjualan]', '0', '$total_penjualan', 'Penjualan', '$nomor_faktur','1', '$user')");
+
+ //Total ongkir
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal_sekarang $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[pendapatan_ongkir]', '0', '$ongkir', 'Penjualan', '$nomor_faktur','1', '$user')");
 
 
 if ($pajak != "" || $pajak != 0) {
@@ -220,13 +230,14 @@ if ($potongan != "" || $potongan != 0 ) {
             else if ($sisa_kredit != 0 ) 
 
             {
+
             echo "2";
-            $stmt2 = $db->prepare("UPDATE penjualan SET no_faktur = ?,  kode_gudang = ?, kode_pelanggan = ?, kode_toko = ?,invoice_marketplace = ?,nama_konsumen = ?, no_telpon_konsumen = ?, alamat_konsumen = ?, kode_ekspedisi = ?, total = ?, tanggal = ?, jam = ?, tanggal_jt = ?, user = ?, sales = ?, status = 'Piutang', potongan = ?,potongan_persen = ? , tax = ?, sisa = '0', kredit = ?, cara_bayar = ?, tunai = ?, status_jual_awal = 'Kredit', ppn = ? WHERE no_faktur = ?");
+            $stmt2 = $db->prepare("UPDATE penjualan SET no_faktur = ?,  kode_gudang = ?, kode_pelanggan = ?, kode_toko = ?,invoice_marketplace = ?,nama_konsumen = ?, no_telpon_konsumen = ?, alamat_konsumen = ?, kode_ekspedisi = ?, total = ?, tanggal = ?, jam = ?, tanggal_jt = ?, user = ?, sales = ?, status = 'Piutang', potongan = ?,potongan_persen = ? , tax = ?, sisa = '0', kredit = ?, cara_bayar = ?, tunai = ?, status_jual_awal = 'Kredit', ppn = ? , ongkir = ? WHERE no_faktur = ?");
             
             
             // hubungkan "data" dengan prepared statements
-            $stmt2->bind_param("sssssssssisssssisiisiss", 
-            $nomor_faktur, $kode_gudang, $kode_pelanggan,$kode_toko, $invoice_marketplace,  $nama_konsumen, $no_telpon_konsumen,$alamat_konsumen, $kode_ekspedisi, $total , $tanggal, $jam_sekarang, $tanggal_jt, $user, $sales, $potongan, $potongan_persen , $tax, $sisa_kredit, $cara_bayar, $pembayaran, $ppn_input, $nomor_faktur);
+            $stmt2->bind_param("sssssssssisssssisiisisis", 
+            $nomor_faktur, $kode_gudang, $kode_pelanggan,$kode_toko, $invoice_marketplace,  $nama_konsumen, $no_telpon_konsumen,$alamat_konsumen, $kode_ekspedisi, $total , $tanggal, $jam_sekarang, $tanggal_jt, $user, $sales, $potongan, $potongan_persen , $tax, $sisa_kredit, $cara_bayar, $pembayaran, $ppn_input,  $ongkir, $nomor_faktur);
             
 
             
@@ -235,17 +246,17 @@ if ($potongan != "" || $potongan != 0 ) {
 
 
 //PERSEDIAAN    
-        $insert_jurnal = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[persediaan]', '0', '$total_hpp', 'Penjualan', '$nomor_faktur','1', '$user')");
+        $insert_jurnal = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Kredit - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[persediaan]', '0', '$total_hpp', 'Penjualan', '$nomor_faktur','1', '$user')");
         
 
 //HPP    
-      $insert_jurnal = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[hpp_penjualan]', '$total_hpp', '0', 'Penjualan', '$nomor_faktur','1', '$user')");
+      $insert_jurnal = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Kredit - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[hpp_penjualan]', '$total_hpp', '0', 'Penjualan', '$nomor_faktur','1', '$user')");
 
  //KAS
-        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$cara_bayar', '$pembayaran', '0', 'Penjualan', '$nomor_faktur','1', '$user')");
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Kredit - $ambil_kode_pelanggan[nama_pelanggan]', '$cara_bayar', '$pembayaran', '0', 'Penjualan', '$nomor_faktur','1', '$user')");
 
  //PIUTANG
-        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Piutang - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[pembayaran_kredit]', '$sisa_kredit', '0', 'Penjualan', '$nomor_faktur','1', '$user')");
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Kredit - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[pembayaran_kredit]', '$sisa_kredit', '0', 'Penjualan', '$nomor_faktur','1', '$user')");
 
 
 if ($ppn_input == "Non") {
@@ -254,7 +265,11 @@ if ($ppn_input == "Non") {
 
 echo $ppn_input;
   //Total Penjualan
-        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[total_penjualan]', '0', '$total_penjualan', 'Penjualan', '$nomor_faktur','1', '$user')");
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Kredit - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[total_penjualan]', '0', '$total_penjualan', 'Penjualan', '$nomor_faktur','1', '$user')");
+
+
+  //Total Ongkir
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal_sekarang $jam_sekarang', 'Penjualan Kredit - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[pendapatan_ongkir]', '0', '$ongkir', 'Penjualan', '$nomor_faktur','1', '$user')");
 
 } 
 
@@ -266,11 +281,15 @@ echo $ppn_input;
   $pajak = $total_tax;
 
  //Total Penjualan
-        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[total_penjualan]', '0', '$total_penjualan', 'Penjualan', '$nomor_faktur','1', '$user')");
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Kredit - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[total_penjualan]', '0', '$total_penjualan', 'Penjualan', '$nomor_faktur','1', '$user')");
+
+ //Total Ongkir
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal_sekarang $jam_sekarang', 'Penjualan Kredit - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[pendapatan_ongkir]', '0', '$ongkir', 'Penjualan', '$nomor_faktur','1', '$user')");
+
 
 if ($pajak != "" || $pajak != 0) {
   //PAJAK
-        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[pajak_jual]', '0', '$pajak', 'Penjualan', '$nomor_faktur','1', '$user')");
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Kredit - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[pajak_jual]', '0', '$pajak', 'Penjualan', '$nomor_faktur','1', '$user')");
 }
 
   }
@@ -281,12 +300,15 @@ else {
   $pajak = $tax;
 echo $ppn_input;
  //Total Penjualan
-        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[total_penjualan]', '0', '$total_penjualan', 'Penjualan', '$nomor_faktur','1', '$user')");
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Kredit - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[total_penjualan]', '0', '$total_penjualan', 'Penjualan', '$nomor_faktur','1', '$user')");
+
+//Total Ongkir
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal_sekarang $jam_sekarang', 'Penjualan Kredit - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[pendapatan_ongkir]', '0', '$ongkir', 'Penjualan', '$nomor_faktur','1', '$user')");
 
 
 if ($pajak != "" || $pajak != 0) {
 //PAJAK
-        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[pajak_jual]', '0', '$pajak', 'Penjualan', '$nomor_faktur','1', '$user')");
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Kredit - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[pajak_jual]', '0', '$pajak', 'Penjualan', '$nomor_faktur','1', '$user')");
 }
 
 
@@ -295,7 +317,7 @@ if ($pajak != "" || $pajak != 0) {
 
 if ($potongan != "" || $potongan != 0 ) {
 //POTONGAN
-        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Tunai - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[potongan_jual]', '$potongan', '0', 'Penjualan', '$nomor_faktur','1', '$user')");
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal $jam_sekarang', 'Penjualan Kredit - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[potongan_jual]', '$potongan', '0', 'Penjualan', '$nomor_faktur','1', '$user')");
 }
 
 
