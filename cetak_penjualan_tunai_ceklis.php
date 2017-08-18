@@ -139,7 +139,7 @@ foreach ($faktur_kirim as $faktur_kirims) {
                     
                 </tbody>
             </table> 
-         <b>Keterangan:</b>
+         <b>Keterangan: <?php echo $data_penjualan['keterangan'];?></b>
         </div>
         </div>
         <!-- div item -->

@@ -1034,6 +1034,7 @@ $(document).ready(function(){
                     $(nRow).attr('class', "pilih_order");
                     $(nRow).attr('data-order', aData[0]);
                     $(nRow).attr('data-total', aData[7]);
+                    $(nRow).attr('data-keterangan', aData[8]);
                     $(nRow).attr('data-konsumen', aData[4]);
                     $(nRow).attr('data-alamat', aData[10]);
                     $(nRow).attr('data-market', aData[11]);
@@ -1071,6 +1072,11 @@ $(document).ready(function(){
 
           document.getElementById("alamat_konsumen").value = $(this).attr('data-alamat');
           $('#alamat_konsumen').attr('readonly', true);
+
+
+          document.getElementById("keterangan").value = $(this).attr('data-keterangan');
+          $('#keterangan').attr('readonly', true);
+
 
           document.getElementById("kd_pelanggan").value = $(this).attr('data-market');
           $('#kd_pelanggan').prop('disabled', true).trigger("chosen:updated");
