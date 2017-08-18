@@ -1864,6 +1864,21 @@ $(document).ready(function(){
 <script>
 
 
+    shortcut.add("f2", function() {
+        // Do something
+        $("#kode_barang").trigger('chosen:updated');
+        $("#kode_barang").trigger('chosen:open');
+
+    });
+
+
+    shortcut.add("f1", function() {
+        // Do something
+        $("#cari_produk_penjualan").click();
+
+    });
+
+
     shortcut.add("f10", function() {
         // Do something
         $("#order").click();

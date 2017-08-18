@@ -3971,8 +3971,8 @@ $(document).ready(function(){
 <script> 
     shortcut.add("f2", function() {
         // Do something
-
-        $("#kode_barang").focus();
+        $("#kode_barang").trigger('chosen:updated');
+        $("#kode_barang").trigger('chosen:open');
 
     });
 

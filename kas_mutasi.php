@@ -371,7 +371,7 @@ $(document).ready(function(){
 			$.post('cek_jumlah_kas.php', {dari_akun: dari_akun}, function(data) {
 			/*optional stuff to do after success */
 			
-			$("#jumlah_kas1").val(tandaPemisahTitik(data));
+			$("#jumlah_kas1").val(data);
 			});
 			
 			});
