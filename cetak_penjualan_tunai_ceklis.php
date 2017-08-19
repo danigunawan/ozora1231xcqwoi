@@ -24,7 +24,7 @@ foreach ($faktur_kirim as $faktur_kirims) {
       $query_update_status = $db->query("UPDATE penjualan SET status_cetak = '1' WHERE no_faktur = '$faktur_kirims' ");
 
 
-    $query_penjualan = $db->query("SELECT nama_konsumen, alamat_konsumen, keterangan, invoice_marketplace, no_telpon_konsumen,kode_toko,kode_ekspedisi FROM penjualan  WHERE no_faktur = '$faktur_kirims'");
+    $query_penjualan = $db->query("SELECT nama_konsumen, alamat_konsumen, keterangan, invoice_marketplace, no_telpon_konsumen,kode_toko,kode_ekspedisi FROM penjualan  WHERE no_faktur = '$faktur_kirims' ORDER BY CONCAT(tanggal,' ',jam) DESC ");
     $data_penjualan = mysqli_fetch_array($query_penjualan);
 
       $manggil_nama_toko = $db->query("SELECT id,nama_toko,no_toko FROM toko WHERE id = '$data_penjualan[kode_toko]' ");
