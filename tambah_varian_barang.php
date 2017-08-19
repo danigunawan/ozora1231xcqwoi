@@ -189,9 +189,33 @@ $(document).ready(function(){
        	var harga_beli = $("#harga_beli").val();
        	var harga_jual = $(this).val();
        
-       		if (harga_jual < harga_beli) {
-       			alert("Harga Jual Lebih Rendah dari harga Beli");
+       		if (parseInt(harga_jual) < parseInt(harga_beli)) {
+       			alert("Harga Jual 1 Lebih Rendah dari harga Beli");
+       			$("#harga_jual").val();
        		}
+
+       });
+	  	
+	  	$("#harga_jual_2").blur(function(){
+       	var harga_beli = $("#harga_beli").val();
+       	var harga_jual = $(this).val();
+       
+       		if (parseInt(harga_jual) < parseInt(harga_beli)) {
+       			alert("Harga Jual 2 Lebih Rendah dari harga Beli");
+       			$("#harga_jual_2").val();
+       		}
+       		
+       });
+	  	
+	  	$("#harga_jual_3").blur(function(){
+       	var harga_beli = $("#harga_beli").val();
+       	var harga_jual = $(this).val();
+       
+       		if (parseInt(harga_jual) < parseInt(harga_beli)) {
+       			alert("Harga Jual 3 Lebih Rendah dari harga Beli");
+       			$("#harga_jual_3").val();
+       		}
+       		
        });
 
 	   $(".selectize").selectize({
@@ -199,8 +223,7 @@ $(document).ready(function(){
              create: true
         });
 
-});
-     
+}); 
 </script>
 
 <?php 
