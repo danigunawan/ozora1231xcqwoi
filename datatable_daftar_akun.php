@@ -418,7 +418,7 @@ while( $row = mysqli_fetch_array($query) ) {  // preparing an array
 
                                       $nestedData[] = "<p>".$data_daftar_akun_if["kode_daftar_akun"]."</p>";
 
-                                      $nestedData[] = "<p class='padding-75 edit-nama' data-id='".$data_daftar_akun_if['id']."'><span id='text-nama-". $data_daftar_akun_if['id'] ."'>". $data_daftar_akun_if['nama_daftar_akun'] ."</span><input type='hidden' id='input-nama-".$data_daftar_akun_if['id']."' value='".$data_daftar_akun_if['nama_daftar_akun']."' class='input_nama_akun' data-id='".$data_daftar_akun_if['id']."' autofocus=''></p>";
+                                      $nestedData[] = "<p class='padding-75 edit-nama-daftar' data-id='".$data_daftar_akun_if['id']."'><span id='text-nama-daftar". $data_daftar_akun_if['id'] ."'>". $data_daftar_akun_if['nama_daftar_akun'] ."</span><input type='hidden' id='input-nama-daftar".$data_daftar_akun_if['id']."' value='".$data_daftar_akun_if['nama_daftar_akun']."' class='input_nama_akun' data-id='".$data_daftar_akun_if['id']."' autofocus=''></p>";
             
                                   //TAMPIL KATEGORI AKUN (KOLOM KLASIFIKASI)
                                         $kategori_akun = "<p class='edit-kategori-akun' data-id='".$data_daftar_akun_if['id']."'><span id='text-kategori-".$data_daftar_akun_if['id']."'>". $data_daftar_akun_if['kategori_akun'] ."</span>

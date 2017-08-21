@@ -351,13 +351,13 @@ if ($grup_akun['grup_akun_tambah'] > 0){
 // EDIT KOLOM GROUP AKUN
 
     //NAMA AKUN
-      $(document).on("dblclick",".edit-nama",function(){
+      $(document).on("dblclick",".edit-nama-daftar",function(){
 
           var id = $(this).attr("data-id");
 
-          $("#text-nama-"+id+"").hide();
+          $("#text-nama-daftar"+id+"").hide();
 
-          $("#input-nama-"+id+"").attr("type", "text");
+          $("#input-nama-daftar"+id+"").attr("type", "text");
 
       });
 

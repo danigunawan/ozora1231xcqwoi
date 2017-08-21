@@ -23,7 +23,6 @@ foreach ($faktur_kirim as $faktur_kirims) {
 
       $query_update_status = $db->query("UPDATE penjualan SET status_cetak = '1' WHERE no_faktur = '$faktur_kirims' ");
 
-
     $query_penjualan = $db->query("SELECT nama_konsumen, alamat_konsumen, keterangan, invoice_marketplace, no_telpon_konsumen,kode_toko,kode_ekspedisi FROM penjualan  WHERE no_faktur = '$faktur_kirims' ORDER BY CONCAT(tanggal,' ',jam) DESC ");
     $data_penjualan = mysqli_fetch_array($query_penjualan);
 
@@ -49,6 +48,13 @@ foreach ($faktur_kirim as $faktur_kirims) {
 .iosSlider .slider {
   width: 100%;
   height: 100%;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around;
 }
 
 .iosSlider .slider .item {
@@ -56,7 +62,10 @@ foreach ($faktur_kirim as $faktur_kirims) {
   width: 50%;
   padding-right: 10px;
   border-style: solid;
+  word-break: break-all;
   }
+
+ 
 </style>
 
 <?php if ($faktur_kirims > 0): ?>
