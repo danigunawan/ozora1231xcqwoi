@@ -91,7 +91,7 @@ $row_piutang = mysqli_num_rows($pilih);
       if ($row_retur > 0 || $row_piutang > 0) {
 
 
-      $nestedData[] = "<button class='btn btn-danger btn-alert-hapus' data-id='".$row['id']."' data-subtotal='".$row['subtotal']."' data-faktur='".$row['no_faktur']."' data-kode='".$row['kode_barang']."'><span class='glyphicon glyphicon-trash'></span> Hapus </button>";
+      $nestedData[] = "<button class='btn btn-danger btn-alert-hapus btn-sm' data-id='".$row['id']."' data-subtotal='".$row['subtotal']."' data-faktur='".$row['no_faktur']."' data-kode='".$row['kode_barang']."'><span class='glyphicon glyphicon-trash'></span> Hapus </button>";
     }
     else{
       $nestedData[] = "<button class='btn btn-danger btn-hapus-tbs btn-sm' data-id='". $row['id'] ."' data-subtotal='".$row['subtotal']."' data-kode-barang='". $row['kode_barang'] ."' data-barang='". $row['nama_barang'] ."'><span class='glyphicon glyphicon-trash'> </span> Hapus </button>";
