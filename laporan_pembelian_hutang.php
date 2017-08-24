@@ -40,7 +40,6 @@ include 'db.php';
       <th style="background-color: #4CAF50; color: white;"> Nomor Faktur </th>
       <th style="background-color: #4CAF50; color: white;"> Suplier </th>
       <th style="background-color: #4CAF50; color: white;"> Nilai Faktur </th>
-      <th style="background-color: #4CAF50; color: white;"> Potongan </th>
       <th style="background-color: #4CAF50; color: white;"> Dibayar </th>
       <th style="background-color: #4CAF50; color: white;"> Nilai Hutang </th>
       <th style="background-color: #4CAF50; color: white;"> Status </th>
@@ -84,7 +83,6 @@ include 'db.php';
 			<th style="background-color: #4CAF50; color: white;"> Nomor Faktur </th>
 			<th style="background-color: #4CAF50; color: white;"> Suplier </th>
 			<th style="background-color: #4CAF50; color: white;"> Nilai Faktur </th>
-			<th style="background-color: #4CAF50; color: white;"> Potongan </th>
       <th style="background-color: #4CAF50; color: white;"> Dibayar </th>
 			<th style="background-color: #4CAF50; color: white;"> Nilai Hutang </th>
       <th style="background-color: #4CAF50; color: white;"> Status </th>
