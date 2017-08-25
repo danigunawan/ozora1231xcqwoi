@@ -90,21 +90,21 @@ $total_bayar = $data_sum_dari_penjualan['tunai_penjualan'] +  $data_sum_dari_det
             <tbody>
             <?php
 
-          $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit,dp.nama_konsumen FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 ");
+          $query_penjualan = $db->query("SELECT dp.id,pel.nama_pelanggan,dp.tanggal,dp.tanggal_jt, DATEDIFF(dp.tanggal_jt,DATE(NOW())) AS usia_piutang ,dp.no_faktur,dp.kode_pelanggan,dp.total,dp.jam,dp.sales,dp.status,dp.potongan,dp.tax,dp.sisa,dp.kredit,dp.nama_konsumen, dp.nilai_kredit, dp.tunai FROM penjualan dp LEFT JOIN pelanggan pel ON dp.kode_pelanggan = pel.kode_pelanggan WHERE dp.tanggal >= '$dari_tanggal' AND dp.tanggal <= '$sampai_tanggal' AND dp.kredit != 0 ");
                   while ($data_penjualan = mysqli_fetch_array($query_penjualan))
 
                   {
 
-$query_detail_pembayaran_piutang = $db->query("SELECT SUM(jumlah_bayar) + SUM(potongan) AS total_bayar FROM detail_pembayaran_piutang WHERE no_faktur_penjualan = '$data_penjualan[no_faktur]' ");
-$data_pembayaran_piutang = mysqli_fetch_array($query_detail_pembayaran_piutang);
-$jumlah_data_detail_pembayaran_piutang = mysqli_num_rows($query_detail_pembayaran_piutang);
-
-$sum_dp = $db->query("SELECT SUM(tunai) AS tunai_penjualan FROM penjualan WHERE no_faktur = '$data_penjualan[no_faktur]' ");
-$data_sum = mysqli_fetch_array($sum_dp);
-$tunai_penjualan = $data_sum['tunai_penjualan'];
+                $query_detail_pembayaran_piutang = $db->query("SELECT SUM(jumlah_bayar) + SUM(potongan) AS total_bayar FROM detail_pembayaran_piutang WHERE no_faktur_penjualan = '$data_penjualan[no_faktur]' ");
+                $data_pembayaran_piutang = mysqli_fetch_array($query_detail_pembayaran_piutang);
+                $jumlah_data_detail_pembayaran_piutang = mysqli_num_rows($query_detail_pembayaran_piutang);
 
 
-$tot_bayar = $data_pembayaran_piutang['total_bayar'] + $tunai_penjualan;
+
+                $tot_bayar = $data_pembayaran_piutang['total_bayar'] + $data_penjualan['tunai'];
+
+                $sisa_kredit = $data_penjualan['nilai_kredit'] - $data_pembayaran_piutang['total_bayar'];
+
 
                   echo "<tr>
                   <td>". $data_penjualan['no_faktur'] ."</td>
@@ -115,16 +115,15 @@ $tot_bayar = $data_pembayaran_piutang['total_bayar'] + $tunai_penjualan;
                   <td>". $data_penjualan['tanggal_jt'] ."</td>
                   <td align='right'>". rp($data_penjualan['usia_piutang']) ." Hari</td>
                   <td align='right'>". rp($data_penjualan['total']) ."</td>";
-                  if ($jumlah_data_detail_pembayaran_piutang > 0)
-                  {
-                      echo "<td align='right'>". rp($tot_bayar) ."</td>";
+                  echo "<td align='right'>". rp($tot_bayar) ."</td>";
+                 
+                  if ($sisa_kredit < 0 ) {
+                  echo"<td align='right'> 0 </td>";
                   }
-                  else
-                  {
-                    echo 0;
+                  else {
+                    echo"<td align='right'> ".rp($sisa_kredit)."</td>";
                   }
-                  echo "<td align='right'>". rp($data_penjualan['kredit']) ."</td>
-                  </tr>";
+                  echo"</tr>";
 
 
                   }
