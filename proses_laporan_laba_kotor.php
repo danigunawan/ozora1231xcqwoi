@@ -34,16 +34,13 @@ $requestData= $_REQUEST;
 $columns = array( 
 // datatable column index  => database column name
 	0 =>'no_faktur', 
-	1 => 'kode_barang',
-	2 => 'nama_barang',
-	3 => 'jumlah_barang',
-	4 => 'satuan',
-	5 => 'harga',
-	6 => 'subtotal',
-	7 => 'potongan',
-	8 => 'tax',
-	9 => 'hpp',
-	10 => 'sisa'
+	1 => 'tanggal',
+	2 => 'pelanggan',
+	3 => 'subtotal',
+	4 => 'total_pokok',
+	5 => 'laba_kotor',
+	6 => 'diskon',
+	7 => 'laba_jual'
 );
 
 // getting total number records without any search
@@ -99,7 +96,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
       $nestedData[] = $row['kode_pelanggan']." - ".$row['nama_pelanggan'];
       $nestedData[] = rp($subtotal);
       $nestedData[] = rp($cek_sum_hpp['total_hpp']);
-      $nestedData[] = rp($laba_kotor);
+      // $nestedData[] = rp($laba_kotor);
       $nestedData[] = rp($row['potongan']);
       $nestedData[] = rp($laba_jual);
 	
@@ -114,7 +111,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
       $nestedData[] = "";
       $nestedData[] = "<p style='color:red'>".rp($total_subtotal)."</p>";
       $nestedData[] = "<p style='color:red'>".rp($total_total_pokok)."</p>";
-      $nestedData[] = "<p style='color:red'>".rp($total_laba_kotor)."</p>";
+      // $nestedData[] = "<p style='color:red'>".rp($total_laba_kotor)."</p>";
       $nestedData[] = "<p style='color:red'>".rp($total_diskon)."</p>";
       $nestedData[] = "<p style='color:red'>".rp($total_laba_jual)."</p>";
   

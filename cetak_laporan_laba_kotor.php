@@ -88,7 +88,7 @@ $penjualan = $db->query("SELECT p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tang
 			<th class="table1" style="text-align: center; width: 5%"> Kode Pelanggan</th>
 			<th class="table1" style="text-align: center; width: 5%"> Penjualan </th>
 			<th class="table1" style="text-align: center; width: 5%"> Hpp </th>
-			<th class="table1" style="text-align: center; width: 5%"> Subtotal </th>
+			<!--th class="table1" style="text-align: center; width: 5%"> Subtotal </th-->
 			<th class="table1" style="text-align: center; width: 5%"> Diskon </th>
 			<th class="table1" style="text-align: center; width: 5%"> Laba Jual </th>
 			
@@ -134,9 +134,9 @@ $penjualan = $db->query("SELECT p.id,p.no_faktur,p.total,p.kode_pelanggan,p.tang
 			echo "<tr>
 			<td class='table1' style='text-align: center'>". $data_penjualan['no_faktur'] ."</td>
 			<td class='table1' style='text-align: center'>". $data_penjualan['tanggal'] ."</td>
-			<td class='table1' style='text-align: center'>". $data_penjualan['kode_pelanggan'] ." - ". $data_penjualan['nama_pelanggan'] ."</td>
-			<td class='table1' style='text-align: right'>". rp($subtotal) ."</td>
-			<td class='table1' style='text-align: right'>". rp($cek_sum_hpp['total_hpp']) ."</td>
+			<td class='table1' style='text-align: center'>". $data_penjualan['kode_pelanggan'] ." - ". $data_penjualan['nama_pelanggan'] ."</td>";
+			// <td class='table1' style='text-align: right'>". rp($subtotal) ."</td>
+			echo"<td class='table1' style='text-align: right'>". rp($cek_sum_hpp['total_hpp']) ."</td>
 			<td class='table1' style='text-align: right'>". rp($laba_kotor) ."</td>
 			<td class='table1' style='text-align: right'>". rp($data_penjualan['potongan']) ."</td>
 			<td class='table1' style='text-align: right'>". rp($laba_jual) ."</td>
