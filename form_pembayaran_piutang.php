@@ -416,13 +416,18 @@ mysqli_close($db);
       var kredit = $("#kredit").val();
       var potongan_penjualan = $("#potongan_penjualan").val();
       var hasil_potongan = potongan_penjualan - kredit;
- 
+      var jumlah_bayar =  kredit - potongan_penjualan;
+  
             
       if (hasil_potongan > 0 )
       {
-      alert("Potongan Anda Melebihi Sisa");
-      $("#potongan_penjualan").val('');
+        alert("Potongan Anda Melebihi Sisa");
+        $("#potongan_penjualan").val('');
+        $("#jumlah_bayar").val(kredit);
 
+      }else{
+
+        $("#jumlah_bayar").val(jumlah_bayar);
       }
       
       });
