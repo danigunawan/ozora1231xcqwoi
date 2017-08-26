@@ -8,8 +8,6 @@ include 'sanitasi.php';
 
 
 $id_barang =  angkadoang($_GET['id']);
-$kode_barang =  stringdoang($_GET['kode_barang']);
-
 $query_barang = $db->query("SELECT b.nama_barang,b.berkaitan_dgn_stok,b.kategori,s.nama AS satuan,s.id AS id_satuan ,gudang,suplier,limit_stok,over_stok FROM barang b INNER JOIN satuan s ON b.satuan = s.id WHERE b.id = '$id_barang'");
 $data_barang = mysqli_fetch_array($query_barang);
 ?>
@@ -36,7 +34,8 @@ $data_barang = mysqli_fetch_array($query_barang);
 		<div class="row">
 			<div class="form-group col-sm-6">
 				 <label for="kode_barang">Kode Produk</label>
-				<input type="text" name="kode_barang" id="kode_barang" readonly="" class="form-control" autofocus="" value="<?php echo $kode_barang; ?>">
+				<input type="text" name="kode_barang" id="kode_barang" class="form-control" 
+				autofocus="" required="">
 			</div>
 			<div class="form-group col-sm-6">
 			 <label for="nama_barang">Nama Produk</label>

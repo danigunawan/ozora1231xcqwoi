@@ -213,7 +213,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData[] = $row["nama_barang"];
 
 if ($row['id_varian_ukuran'] == "" AND $row['id_varian_warna'] == "") {
-    $nestedData[] = "<a href='tambah_varian_barang.php?id=". $row['id']."&kode_barang=".$row['kode_barang']."' class='btn btn-primary' target='blank'> Varian</a>";
+    $nestedData[] = "<a href='tambah_varian_barang.php?id=". $row['id']."' class='btn btn-primary' target='blank'> Varian</a>";
  }
  else{
     $nestedData[] = "";
