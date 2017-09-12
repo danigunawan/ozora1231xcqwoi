@@ -330,6 +330,9 @@ if ($potongan != "" || $potongan != 0 ) {
               $sisa_kredit = angkadoang($_POST['kredit']);
               $cara_bayar = stringdoang($_POST['cara_bayar']);
               $pembayaran = angkadoang($_POST['pembayaran']);
+              if ($pembayaran == "") {
+                $pembayaran = 0;
+              }
               $sales = stringdoang($_POST['sales']);
               $ppn_input = stringdoang($_POST['ppn_input']);
               $user =  $_SESSION['user_name'];
@@ -358,7 +361,8 @@ $total_tax = $jumlah_tax['total_tax'];
     $select_kode_pelanggan = $db->query("SELECT nama_pelanggan FROM pelanggan WHERE kode_pelanggan = '$kode_pelanggan'");
     $ambil_kode_pelanggan = mysqli_fetch_array($select_kode_pelanggan);
 
-$total_piutang = intval($total2) - intval($potongan) + intval($ongkir);
+
+$total_piutang = (intval($total2) - intval($potongan) + intval($ongkir)) - intval($pembayaran);
 
 //PERSEDIAAN    
         $insert_jurnal = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal_sekarang $jam_sekarang', 'Penjualan Piutang - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[persediaan]', '0', '$total_hpp', 'Penjualan', '$no_faktur','1', '$user')");
