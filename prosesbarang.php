@@ -66,7 +66,7 @@ $stmt->execute();
         $c->setCache('produk');
         
         // menyimpan data barang ke cache
-        $c->store($data_id_barang['kode_barang'], array(
+        $c->store($kode_barang, array(
           'kode_barang' => $kode_barang,
           'nama_barang' => $nama_barang,
           'harga_beli' => $harga_beli,
