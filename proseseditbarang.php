@@ -2,8 +2,9 @@
 	// memasukan file db.php
     include 'sanitasi.php';
     include 'db.php';
+    include 'cache.class.php';
     // mengrim data dengan menggunakan metode POST
-    $id = stringdoang($_POST['id']);
+    $id = angkadoang($_POST['id']);
 
 
 
@@ -30,6 +31,31 @@
            $over_stok = angkadoang($_POST['over_stok']);
 
         $query->execute();
+
+$data_barang = $db->query("SELECT kode_barang FROM barang WHERE id = '$id'")->fetch_array();
+
+
+
+        $c = new Cache();
+        $c->setCache('produk');
+        
+        // menyimpan data barang ke cache
+        $c->store($data_barang['kode_barang'], array(
+          'kode_barang' => $data_barang['kode_barang'],
+          'nama_barang' => $nama_barang,
+          'harga_beli' => $harga_beli,
+          'harga_jual' => $harga_jual,
+          'harga_jual2' => $harga_jual_2,
+          'harga_jual3' => $harga_jual_3,
+          'kategori' => $kategori,
+          'suplier' => $suplier,
+          'limit_stok' => $limit_stok,
+          'over_stok' => $over_stok,
+          'berkaitan_dgn_stok' => $tipe,
+          'status' => $status,
+          'satuan' => $satuan,
+          'id' => $id,
+          ));
 
 if (!$query) 
 {
