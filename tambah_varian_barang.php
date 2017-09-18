@@ -34,7 +34,8 @@ $data_barang = mysqli_fetch_array($query_barang);
 		<div class="row">
 			<div class="form-group col-sm-6">
 				 <label for="kode_barang">Kode Produk</label>
-				<input type="text" name="kode_barang" id="kode_barang" class="form-control" autofocus="">
+				<input type="text" name="kode_barang" id="kode_barang" class="form-control" 
+				autofocus="" required="">
 			</div>
 			<div class="form-group col-sm-6">
 			 <label for="nama_barang">Nama Produk</label>

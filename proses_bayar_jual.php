@@ -38,8 +38,7 @@ if ($cek_jumlah_bulan == 1) {
  $v_bulan_terakhir = mysqli_fetch_array($bulan_terakhir);
 
 //ambil nomor  dari penjualan terakhir
-$no_terakhir = $db->query("SELECT no_faktur FROM penjualan ORDER BY id DESC LIMIT 1");
- $v_no_terakhir = mysqli_fetch_array($no_terakhir);
+$v_no_terakhir = $db->query("SELECT no_faktur FROM penjualan ORDER BY id DESC LIMIT 1")->fetch_array();
 $ambil_nomor = substr($v_no_terakhir['no_faktur'],0,-8);
 
 /*jika bulan terakhir dari penjualan tidak sama dengan bulan sekarang, 
@@ -56,7 +55,7 @@ echo $no_faktur = "1/JL/".$data_bulan_terakhir."/".$tahun_terakhir;
  else
  {
 
-$nomor = 1 + $ambil_nomor ;
+$nomor = 1 + intval($ambil_nomor);
 
 echo $no_faktur = $nomor."/JL/".$data_bulan_terakhir."/".$tahun_terakhir;
 
@@ -195,7 +194,7 @@ $query_tbs = $db->query("SELECT no_faktur_order,SUM(jumlah_barang) AS jumlah_bar
               $ppn_input = stringdoang($_POST['ppn_input']);
               $user =  $_SESSION['user_name'];
 
-              $pj_total = $total - ($potongan + $tax);
+              $pj_total = intval($total) - (intval($potongan) + intval($tax)) ;
 
 
               $_SESSION['no_faktur']=$no_faktur;
@@ -331,11 +330,14 @@ if ($potongan != "" || $potongan != 0 ) {
               $sisa_kredit = angkadoang($_POST['kredit']);
               $cara_bayar = stringdoang($_POST['cara_bayar']);
               $pembayaran = angkadoang($_POST['pembayaran']);
+              if ($pembayaran == "") {
+                $pembayaran = 0;
+              }
               $sales = stringdoang($_POST['sales']);
               $ppn_input = stringdoang($_POST['ppn_input']);
               $user =  $_SESSION['user_name'];
               
-              $pj_total = $total - ($potongan + $tax);
+              $pj_total = intval($total) - (intval($potongan) + intval($tax));
 
               $_SESSION['no_faktur']=$no_faktur;
               
@@ -360,6 +362,7 @@ $total_tax = $jumlah_tax['total_tax'];
     $ambil_kode_pelanggan = mysqli_fetch_array($select_kode_pelanggan);
 
 
+$total_piutang = (intval($total2) - intval($potongan) + intval($ongkir)) - intval($pembayaran);
 
 //PERSEDIAAN    
         $insert_jurnal = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal_sekarang $jam_sekarang', 'Penjualan Piutang - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[persediaan]', '0', '$total_hpp', 'Penjualan', '$no_faktur','1', '$user')");
@@ -372,7 +375,7 @@ $total_tax = $jumlah_tax['total_tax'];
         $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal_sekarang $jam_sekarang', 'Penjualan Piutang - $ambil_kode_pelanggan[nama_pelanggan]', '$cara_bayar', '$pembayaran', '0', 'Penjualan', '$no_faktur','1', '$user')");
 
  //PIUTANG
-        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal_sekarang $jam_sekarang', 'Penjualan Piutang - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[pembayaran_kredit]', '$sisa_kredit', '0', 'Penjualan', '$no_faktur','1', '$user')");
+        $insert_juranl = $db->query("INSERT INTO jurnal_trans (nomor_jurnal,waktu_jurnal,keterangan_jurnal,kode_akun_jurnal,debit,kredit,jenis_transaksi,no_faktur,approved,user_buat) VALUES ('".no_jurnal()."', '$tanggal_sekarang $jam_sekarang', 'Penjualan Piutang - $ambil_kode_pelanggan[nama_pelanggan]', '$ambil_setting[pembayaran_kredit]', '$total_piutang', '0', 'Penjualan', '$no_faktur','1', '$user')");
 
 
 if ($ppn_input == "Non") {

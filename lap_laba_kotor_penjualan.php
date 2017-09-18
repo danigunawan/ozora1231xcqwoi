@@ -36,11 +36,11 @@ include 'db.php';
               <th  style="background-color: #4CAF50; color: white;"> Nomor Transaksi </th>
               <th  style="background-color: #4CAF50; color: white;"> Tanggal </th>
               <th  style="background-color: #4CAF50; color: white;"> Kode Pelanggan</th>
-              <th  style="background-color: #4CAF50; color: white;"> Sub Total </th>
-              <th  style="background-color: #4CAF50; color: white;"> Total Pokok </th>
-              <th  style="background-color: #4CAF50; color: white;"> Laba Kotor </th>
+              <th  style="background-color: #4CAF50; color: white;"> Penjualan </th>
+              <th  style="background-color: #4CAF50; color: white;"> HPP </th>
+              <!--th  style="background-color: #4CAF50; color: white;"> Laba Kotor </th-->
               <th  style="background-color: #4CAF50; color: white;"> Diskon Faktur </th>
-              <th  style="background-color: #4CAF50; color: white;"> Laba Jual </th>        
+              <th  style="background-color: #4CAF50; color: white;"> Laba Kotor </th>        
             
             </thead>
 
