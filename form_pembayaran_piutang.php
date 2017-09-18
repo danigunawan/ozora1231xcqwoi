@@ -757,29 +757,25 @@ $(".chosen").chosen({no_results_text: "Maaf, Data Tidak Ada!"});
 <script type="text/javascript">
                                
 //fungsi hapus data 
-    $(".btn-hapus").click(function(){
+    $(document).on("click",".btn-hapus",function(){
     var jumlah_bayar = $(this).attr("data-jumlah-bayar");
     var id = $(this).attr("data-id");
-    var total = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#totalbayar").val()))));
 
-   if (total == '') 
-      
-      {
-        total = 0;
-      }
-    
-    else if(jumlah_bayar   == '')
-      {
-        jumlah_bayar   = 0;
-      };
-       
-       var subtotal = parseInt(total,10) - parseInt(jumlah_bayar  ,10);
-                                  
-                                  
-    if (subtotal == 0) 
-      {
-        subtotal = 0;
-      }
+
+   var total = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#totalbayar").val()))));
+
+      if (total == ''){
+            total = 0;
+          };
+      if(jumlah_bayar   == ''){
+            jumlah_bayar   = 0;
+          };
+
+      var subtotal = parseInt(total) - parseInt(jumlah_bayar);
+
+      if (subtotal == 0){
+            subtotal = 0;
+          }
 
       $("#totalbayar").val(tandaPemisahTitik(subtotal));
 
@@ -797,7 +793,7 @@ $(".chosen").chosen({no_results_text: "Maaf, Data Tidak Ada!"});
     
   
  //fungsi edit data 
-        $(".btn-edit-tbs").click(function(){
+        $(document).on("click",".btn-edit-tbs",function(){
         
         $("#modal_edit").modal('show');
         var jumlah_lama = $(this).attr("data-jumlah-bayar");
