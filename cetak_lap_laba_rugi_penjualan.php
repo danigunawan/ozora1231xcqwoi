@@ -1,17 +1,20 @@
 <?php 
-
+include 'header.php';
 include 'sanitasi.php';
 include 'db.php';
 
-$dari_tanggal = stringdoang($_POST['dari_tanggal']);
-$sampai_tanggal = stringdoang($_POST['sampai_tanggal']);
+$dari_tanggal = stringdoang($_GET['dari_tanggal']);
+$sampai_tanggal = stringdoang($_GET['sampai_tanggal']);
 
+    $query1 = $db->query("SELECT * FROM perusahaan ");
+    $data1 = mysqli_fetch_array($query1);
 
-?>
+ ?>
+
 
 <style type="text/css">
-  
-  .span {
+	
+	.span {
     text-align: right;
 }
 
@@ -22,9 +25,32 @@ $sampai_tanggal = stringdoang($_POST['sampai_tanggal']);
  float: right;
 }
 
-</style>  
+</style>
 
-<div class="container">
+ <div class="container">
+
+    <div class="row"><!--row1-->
+        <div class="col-sm-">
+        </div>
+        <div class="col-sm-2">
+                <img src='save_picture/<?php echo $data1['foto']; ?>' class='img-rounded' alt='Cinque Terre' width='130' height='110`'> 
+        </div><!--penutup colsm2-->
+
+        <div class="col-sm-8">
+                 <center> <h2> <b> <?php echo $data1['nama_perusahaan']; ?> </b> </h2> 
+                 <p> <?php echo $data1['alamat_perusahaan']; ?> </p> 
+                 <p> No.Telp:<?php echo $data1['no_telp']; ?> </p> 
+
+<hr>
+                 <h3>LAPORAN LABA RUGI</h3>
+                 </center>
+                 
+        </div><!--penutup colsm5-->
+        
+    </div><!--penutup row1-->
+
+
+<hr>
 
 <h3><center><b>PERIODE TANGGAL <?php echo tanggal($dari_tanggal); ?> s/d <?php echo tanggal($sampai_tanggal); ?></b></center></h3>
 <hr>
@@ -39,16 +65,16 @@ $total_pendapatan = 0;
 
 while($data = mysqli_fetch_array($select))
 {
-  echo "<h4><b>". $data['kode_grup_akun'] ." ".$data['nama_grup_akun']."</b></h4>"; 
+	echo "<h4><b>". $data['kode_grup_akun'] ." ".$data['nama_grup_akun']."</b></h4>"; 
 
-  
+	
 
 $total_pendapatan_nilai = 0;
 
-$select_grup_akun = $db->query("SELECT kode_grup_akun, nama_grup_akun FROM grup_akun WHERE kategori_akun = 'Pendapatan' AND tipe_akun = 'Akun Header' AND parent= '$data[kode_grup_akun]'  ORDER BY kode_grup_akun ");
+$select_grup_akun = $db->query("SELECT kode_grup_akun, nama_grup_akun FROM grup_akun WHERE kategori_akun = 'Pendapatan' AND tipe_akun = 'Akun Header' AND parent= '$data[kode_grup_akun]' ");
 while ($datagrup_akun = mysqli_fetch_array($select_grup_akun))
 {
-  echo "<h4 style='padding-left:25px'><b>" .$datagrup_akun['kode_grup_akun']." ".$datagrup_akun['nama_grup_akun'] ."</b></h4>";
+	echo "<h4 style='padding-left:25px'><b>" .$datagrup_akun['kode_grup_akun']." ".$datagrup_akun['nama_grup_akun'] ."</b></h4>";
   $total_pendapatan_jual = 0;
 
   $total_nilai_pendapatan = $db->query("SELECT SUM(j.kredit) - SUM(j.debit) AS total_pendapatan FROM daftar_akun da INNER JOIN jurnal_trans j  ON da.kode_daftar_akun = j.kode_akun_jurnal WHERE da.grup_akun= '$datagrup_akun[kode_grup_akun]' AND date(j.waktu_jurnal) >= '$dari_tanggal' AND date(j.waktu_jurnal) <= '$sampai_tanggal' GROUP BY j.kode_akun_jurnal");
@@ -59,7 +85,7 @@ while ($datagrup_akun = mysqli_fetch_array($select_grup_akun))
 
 $total_pendapatan_nilai = $total_pendapatan_nilai + $data_nilai['total_pendapatan'];
 
-$select_daftar_akun = $db->query("SELECT da.grup_akun, da.kode_daftar_akun, da.nama_daftar_akun, SUM(j.kredit) - SUM(j.debit) AS total FROM daftar_akun da INNER JOIN jurnal_trans j  ON da.kode_daftar_akun = j.kode_akun_jurnal WHERE da.kategori_akun = 'Pendapatan' AND (da.tipe_akun = 'Pendapatan Penjualan' OR da.tipe_akun = 'Pendapatan Diluar Usaha') AND da.grup_akun= '$datagrup_akun[kode_grup_akun]' AND date(j.waktu_jurnal) >= '$dari_tanggal' AND date(j.waktu_jurnal) <= '$sampai_tanggal' GROUP BY j.kode_akun_jurnal ORDER BY da.kode_daftar_akun ");
+$select_daftar_akun = $db->query("SELECT da.grup_akun, da.kode_daftar_akun, da.nama_daftar_akun, SUM(j.kredit) - SUM(j.debit) AS total FROM daftar_akun da INNER JOIN jurnal_trans j  ON da.kode_daftar_akun = j.kode_akun_jurnal WHERE da.kategori_akun = 'Pendapatan' AND (da.tipe_akun = 'Pendapatan Penjualan' OR da.tipe_akun = 'Pendapatan Diluar Usaha') AND da.grup_akun= '$datagrup_akun[kode_grup_akun]' AND date(j.waktu_jurnal) >= '$dari_tanggal' AND date(j.waktu_jurnal) <= '$sampai_tanggal' GROUP BY j.kode_akun_jurnal");
 
 
 
@@ -151,21 +177,21 @@ else{
 $select = $db->query("SELECT kode_grup_akun, nama_grup_akun FROM grup_akun WHERE kategori_akun = 'HPP' AND tipe_akun = 'Akun Header' AND parent= '-' ");
 
 
-  $total_hpp = 0;
+	$total_hpp = 0;
 
 while($data = mysqli_fetch_array($select))
 {
 
 
-  echo "<h4><b>". $data['kode_grup_akun'] ." ".$data['nama_grup_akun']." </b></h4>";
+	echo "<h4><b>". $data['kode_grup_akun'] ." ".$data['nama_grup_akun']." </b></h4>";
 
 
 
 $select_grup_akun = $db->query("SELECT kode_grup_akun, nama_grup_akun FROM grup_akun WHERE kategori_akun = 'HPP' AND tipe_akun = 'Akun Header' AND parent= '$data[kode_grup_akun]' ");
 while ($datagrup_akun = mysqli_fetch_array($select_grup_akun))
 {
-  $subtotal_hpp = 0;
-  echo "<h4 style='padding-left:25px'><b>" .$datagrup_akun['kode_grup_akun']." ".$datagrup_akun['nama_grup_akun'] ."</b></h4>";
+	$subtotal_hpp = 0;
+	echo "<h4 style='padding-left:25px'><b>" .$datagrup_akun['kode_grup_akun']." ".$datagrup_akun['nama_grup_akun'] ."</b></h4>";
 
 $select_daftar_akun = $db->query("SELECT da.kode_daftar_akun, da.nama_daftar_akun, SUM(j.debit) - SUM(j.kredit) AS total FROM daftar_akun da INNER JOIN jurnal_trans j  ON da.kode_daftar_akun = j.kode_akun_jurnal WHERE da.kategori_akun = 'HPP' AND da.tipe_akun = 'Harga Pokok Penjualan' AND da.grup_akun= '$datagrup_akun[kode_grup_akun]' AND date(j.waktu_jurnal) >= '$dari_tanggal' AND date(j.waktu_jurnal) <= '$sampai_tanggal' GROUP BY j.kode_akun_jurnal ");
 
@@ -195,7 +221,7 @@ else{
 
 $subtotal_hpp = $subtotal_hpp + $datadaftar_akun['total'];
 
-  
+	
 }
 
 
@@ -275,6 +301,7 @@ else{
 </table>
 ";
 }
+
 
 
 
@@ -383,8 +410,11 @@ else {
 
 ?>
 
+
+<script>
+$(document).ready(function(){
+  window.print();
+});
+</script>
+
 </div> <!-- / DIV CARD_BLOCK-->
-
- <a href='cetak_lap_laba_rugi_penjualan.php?dari_tanggal=<?php echo $dari_tanggal;?>&sampai_tanggal=<?php echo $sampai_tanggal; ?>' target="blank" id="cetak_lap" class='btn btn-info'><i class='fa fa-print'> </i> Cetak Laba rugi </a>
-
-</div> <!-- / container -->

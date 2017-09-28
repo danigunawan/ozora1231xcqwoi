@@ -196,11 +196,11 @@ $kode_barang = stringdoang($kode_barang);
 
 
 //total barang 2
-            $total_2 = $jumlah_penjualan + $jumlah_item_keluar + $jumlah_retur_pembelian;
+            $total_2 = intval($jumlah_penjualan) + intval($jumlah_item_keluar) + intval($jumlah_retur_pembelian);
 
 
 
-            $stok_barang = $total_1 - $total_2;
+            $stok_barang = intval($total_1) - intval($total_2);
   
   return $stok_barang;
 
@@ -253,7 +253,7 @@ $nomor_jurnal = "1/JR/".$data_bulan_terakhir."/".$tahun_terakhir;
  else
  {
 
-$nomor_jurnal = 1 + $ambil_nomor_jurnal ;
+$nomor_jurnal = 1 + intval($ambil_nomor_jurnal);
 
 $nomor_jurnal = $nomor_jurnal."/JR/".$data_bulan_terakhir."/".$tahun_terakhir;
 
@@ -311,7 +311,7 @@ $nomor_faktur_jurnal = "1/JM/".$data_bulan_terakhir."/".$tahun_terakhir;
  else
  {
 
-$nomor_faktur_jurnal = 1 + $ambil_nomor_jurnal ;
+$nomor_faktur_jurnal = 1 + intval($ambil_nomor_jurnal);
 
 $nomor_faktur_jurnal = $nomor_faktur_jurnal."/JM/".$data_bulan_terakhir."/".$tahun_terakhir;
 
@@ -368,7 +368,7 @@ $nomor_faktur_stok_awal = "1/SA/".$data_bulan_terakhir."/".$tahun_terakhir;
  else
  {
 
-$nomor_faktur_stok_awal = 1 + $ambil_nomor_jurnal ;
+$nomor_faktur_stok_awal = 1 + intval($ambil_nomor_jurnal);
 
 $nomor_faktur_stok_awal = $nomor_faktur_stok_awal."/SA/".$data_bulan_terakhir."/".$tahun_terakhir;
 
