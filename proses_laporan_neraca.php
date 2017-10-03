@@ -467,7 +467,7 @@ $num_row_modal = mysqli_num_rows($select_daftar_akun);
 
 $total_modal = 0;
 
-$sum_total_laba_brjalan = $db->query("SELECT da.kode_daftar_akun, da.nama_daftar_akun, SUM(j.kredit) - SUM(j.debit) AS total FROM daftar_akun da INNER JOIN jurnal_trans j ON da.kode_daftar_akun = j.kode_akun_jurnal WHERE ( da.kategori_akun = 'Biaya' AND da.tipe_akun = 'Beban Operasional') OR ( da.kategori_akun = 'Pendapatan' AND da.tipe_akun = 'Pendapatan Penjualan') OR(da.kategori_akun = 'HPP' AND da.tipe_akun = 'Harga Pokok Penjualan') OR ( da.kategori_akun = 'Pendapatan' AND da.tipe_akun = 'Pendapatan Diluar Usaha') AND date(j.waktu_jurnal) >= '$dari_tanggal' AND date(j.waktu_jurnal) <= '$sampai_tanggal'");
+$sum_total_laba_brjalan = $db->query("SELECT da.kode_daftar_akun, da.nama_daftar_akun, SUM(j.kredit) - SUM(j.debit) AS total FROM daftar_akun da INNER JOIN jurnal_trans j ON da.kode_daftar_akun = j.kode_akun_jurnal WHERE (( da.kategori_akun = 'Biaya' AND da.tipe_akun = 'Beban Operasional') OR ( da.kategori_akun = 'Pendapatan' AND da.tipe_akun = 'Pendapatan Penjualan') OR(da.kategori_akun = 'HPP' AND da.tipe_akun = 'Harga Pokok Penjualan') OR ( da.kategori_akun = 'Pendapatan' AND da.tipe_akun = 'Pendapatan Diluar Usaha')) AND date(j.waktu_jurnal) >= '$dari_tanggal' AND date(j.waktu_jurnal) <= '$sampai_tanggal'");
 $data_laba = mysqli_fetch_array($sum_total_laba_brjalan);
 
 $total_laba_tahun_berjalan = $data_laba['total'];
