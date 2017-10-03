@@ -15,11 +15,11 @@ include 'sanitasi.php';
  $query = $db->query("SELECT SUM(subtotal) AS total_penjualan FROM tbs_penjualan WHERE session_id = '$session_id'");
  $data = mysqli_fetch_array($query);
  $total = $data['total_penjualan'];
- $total_sub = ($total - $diskon) + $pajak + $ongkir;
+ $total_sub = (is_numeric($total) - is_numeric($diskon)) + is_numeric($pajak) + is_numeric($ongkir);
 
  $sub_total = round($total_sub);
 
-if ($sub_total == $total_akhir) {
+if (is_numeric($sub_total) == is_numeric($total_akhir)) {
 		echo "1";
 	}
 	else{

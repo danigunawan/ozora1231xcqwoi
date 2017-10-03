@@ -138,8 +138,8 @@ $session_id = session_id();
 <div class="col-sm-2">
     <label> Level Harga </label><br>
   <select style="font-size:15px; height:35px" type="text" name="level_harga" id="level_harga" class="form-control chosen" required="">
-  <option value="Level 1">Marketplace</option>
-  <option value="Level 2">Admin</option> 
+  <option value="Level 1">WA</option>
+  <option value="Level 2">Marketplace</option> 
   <option value="Level 3"></option> 
 
 
@@ -1034,6 +1034,7 @@ $(document).ready(function(){
                     $(nRow).attr('class', "pilih_order");
                     $(nRow).attr('data-order', aData[0]);
                     $(nRow).attr('data-total', aData[7]);
+                    $(nRow).attr('data-keterangan', aData[8]);
                     $(nRow).attr('data-konsumen', aData[4]);
                     $(nRow).attr('data-alamat', aData[10]);
                     $(nRow).attr('data-market', aData[11]);
@@ -1071,6 +1072,11 @@ $(document).ready(function(){
 
           document.getElementById("alamat_konsumen").value = $(this).attr('data-alamat');
           $('#alamat_konsumen').attr('readonly', true);
+
+
+          document.getElementById("keterangan").value = $(this).attr('data-keterangan');
+          $('#keterangan').attr('readonly', true);
+
 
           document.getElementById("kd_pelanggan").value = $(this).attr('data-market');
           $('#kd_pelanggan').prop('disabled', true).trigger("chosen:updated");
@@ -3971,8 +3977,8 @@ $(document).ready(function(){
 <script> 
     shortcut.add("f2", function() {
         // Do something
-
-        $("#kode_barang").focus();
+        $("#kode_barang").trigger('chosen:updated');
+        $("#kode_barang").trigger('chosen:open');
 
     });
 

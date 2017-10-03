@@ -172,9 +172,9 @@
     <div class="col-sm-1">
       <label> Level Harga </label><br>
       <select style="font-size:15px; height:35px" type="text" name="level_harga" id="level_harga" class="form-control chosen" required="" >
-        <option value="Level 1">Level 1</option>
-        <option value="Level 2">Level 2</option>
-        <option value="Level 3">Level 3</option>
+        <option value="Level 1">WA</option>
+        <option value="Level 2">Marketplace</option>
+        <option value="Level 3"></option>
       </select>
     </div>    
   

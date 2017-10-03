@@ -132,7 +132,7 @@ $ambil_kode_pelanggan = mysqli_fetch_array($select_kode_pelanggan);
                 echo "1";
             
             // buat prepared statements
-            $stmt2 = $db->prepare("UPDATE penjualan SET no_faktur = ?, kode_gudang = ?, kode_pelanggan = ?, kode_toko = ?, invoice_marketplace = ?, nama_konsumen = ?, no_telpon_konsumen = ?, alamat_konsumen = ?, kode_ekspedisi = ?, total = ?, tanggal = ?, jam = ?, user = ?, sales = ?, status = 'Lunas', potongan = ?, potongan_persen = ? , tax = ?, sisa = ?, kredit='0', cara_bayar = ?, tunai = ?, status_jual_awal = 'Tunai', ppn = ? , ongkir = ? WHERE no_faktur = ?");
+            $stmt2 = $db->prepare("UPDATE penjualan SET no_faktur = ?, kode_gudang = ?, kode_pelanggan = ?, kode_toko = ?, invoice_marketplace = ?, nama_konsumen = ?, no_telpon_konsumen = ?, alamat_konsumen = ?, kode_ekspedisi = ?, total = ?, tanggal = ?, jam = ?, user = ?, sales = ?, status = 'Lunas', potongan = ?, potongan_persen = ? , tax = ?, sisa = ?, kredit='0', nilai_kredit='0' , cara_bayar = ?, tunai = ?, status_jual_awal = 'Tunai', ppn = ? , ongkir = ? WHERE no_faktur = ?");
             
             
             // hubungkan "data" dengan prepared statements
@@ -232,12 +232,12 @@ if ($potongan != "" || $potongan != 0 ) {
             {
 
             echo "2";
-            $stmt2 = $db->prepare("UPDATE penjualan SET no_faktur = ?,  kode_gudang = ?, kode_pelanggan = ?, kode_toko = ?,invoice_marketplace = ?,nama_konsumen = ?, no_telpon_konsumen = ?, alamat_konsumen = ?, kode_ekspedisi = ?, total = ?, tanggal = ?, jam = ?, tanggal_jt = ?, user = ?, sales = ?, status = 'Piutang', potongan = ?,potongan_persen = ? , tax = ?, sisa = '0', kredit = ?, cara_bayar = ?, tunai = ?, status_jual_awal = 'Kredit', ppn = ? , ongkir = ? WHERE no_faktur = ?");
+            $stmt2 = $db->prepare("UPDATE penjualan SET no_faktur = ?,  kode_gudang = ?, kode_pelanggan = ?, kode_toko = ?,invoice_marketplace = ?,nama_konsumen = ?, no_telpon_konsumen = ?, alamat_konsumen = ?, kode_ekspedisi = ?, total = ?, tanggal = ?, jam = ?, tanggal_jt = ?, user = ?, sales = ?, status = 'Piutang', potongan = ?,potongan_persen = ? , tax = ?, sisa = '0', kredit = ?, nilai_kredit = ?, cara_bayar = ?, tunai = ?, status_jual_awal = 'Kredit', ppn = ? , ongkir = ? WHERE no_faktur = ?");
             
             
             // hubungkan "data" dengan prepared statements
-            $stmt2->bind_param("sssssssssisssssisiisisis", 
-            $nomor_faktur, $kode_gudang, $kode_pelanggan,$kode_toko, $invoice_marketplace,  $nama_konsumen, $no_telpon_konsumen,$alamat_konsumen, $kode_ekspedisi, $total , $tanggal, $jam_sekarang, $tanggal_jt, $user, $sales, $potongan, $potongan_persen , $tax, $sisa_kredit, $cara_bayar, $pembayaran, $ppn_input,  $ongkir, $nomor_faktur);
+            $stmt2->bind_param("sssssssssisssssisiiisisis", 
+            $nomor_faktur, $kode_gudang, $kode_pelanggan,$kode_toko, $invoice_marketplace,  $nama_konsumen, $no_telpon_konsumen,$alamat_konsumen, $kode_ekspedisi, $total , $tanggal, $jam_sekarang, $tanggal_jt, $user, $sales, $potongan, $potongan_persen , $tax, $sisa_kredit,$sisa_kredit, $cara_bayar, $pembayaran, $ppn_input,  $ongkir, $nomor_faktur);
             
 
             

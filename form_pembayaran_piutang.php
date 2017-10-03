@@ -277,8 +277,8 @@
       <th> Tanggal Jatuh Tempo </th>
       <th> Kredit </th>
       <th> Potongan </th>
-      <th> Total</th>
-      <th> Jumlah Bayar </th>
+      <th> Jumlah Bayar </th>      
+      <th> Sisa Kredit</th>
       <th> Hapus </th>
       <th> Edit </th>
       
@@ -295,6 +295,8 @@
       while ($data1 = mysqli_fetch_array($perintah))
       {
 
+        $sisa_kredit = $data1['kredit'] - ($data1['jumlah_bayar'] + $data1['potongan']);
+
         // menampilkan data
       echo "<tr class='tr-id-".$data1['id']."'>
       <td>". $data1['no_faktur_penjualan'] ."</td>
@@ -302,9 +304,8 @@
       <td>". $data1['tanggal_jt'] ."</td>
       <td>". rp($data1['kredit']) ."</td>
       <td>". rp($data1['potongan']) ."</td>
-      <td>". rp($data1['total']) ."</td>
-      <td>". rp($data1['jumlah_bayar']) ."</td>
-      
+      <td>". rp($data1['jumlah_bayar']) ."</td>      
+      <td>". rp($sisa_kredit) ."</td>
 
       <td> <button class='btn btn-danger btn-hapus' data-id='". $data1['id'] ."' data-faktur='". $data1['no_faktur_penjualan'] ."' data-piutang='". $data1['kredit'] ."' data-jumlah-bayar='". $data1['jumlah_bayar'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> </td> 
 
@@ -416,13 +417,18 @@ mysqli_close($db);
       var kredit = $("#kredit").val();
       var potongan_penjualan = $("#potongan_penjualan").val();
       var hasil_potongan = potongan_penjualan - kredit;
- 
+      var jumlah_bayar =  kredit - potongan_penjualan;
+  
             
       if (hasil_potongan > 0 )
       {
-      alert("Potongan Anda Melebihi Sisa");
-      $("#potongan_penjualan").val('');
+        alert("Potongan Anda Melebihi Sisa");
+        $("#potongan_penjualan").val('');
+        $("#jumlah_bayar").val(kredit);
 
+      }else{
+
+        $("#jumlah_bayar").val(jumlah_bayar);
       }
       
       });
@@ -466,14 +472,6 @@ mysqli_close($db);
         };
         var subtotal = parseInt(total,10) + parseInt(jumlah_bayar,10);
       
-      $("#totalbayar").val(jumlah_bayar);
-      $("#total").val(total_kredit);
-      $("#potongan1").val(potongan);
-      $("#faktur").val(no_faktur_penjualan); 
-      $("#kredit").val(kredit);
-      $("#jumlah_bayar").val('');
-      $("#potongan_penjualan").val('');
-      
       if (hasil > 0 )
       {
 
@@ -489,6 +487,7 @@ mysqli_close($db);
       } 
       else if (jumlah_bayar == ""){
       alert("Jumlah Bayar Harus Diisi");
+      $("#jumlah_bayar").focus();
       }
       else if (kode_pelanggan == ""){
       alert("Kode Marketplace Harus Dipilih");
@@ -757,29 +756,25 @@ $(".chosen").chosen({no_results_text: "Maaf, Data Tidak Ada!"});
 <script type="text/javascript">
                                
 //fungsi hapus data 
-    $(".btn-hapus").click(function(){
+    $(document).on("click",".btn-hapus",function(){
     var jumlah_bayar = $(this).attr("data-jumlah-bayar");
     var id = $(this).attr("data-id");
-    var total = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#totalbayar").val()))));
 
-   if (total == '') 
-      
-      {
-        total = 0;
-      }
-    
-    else if(jumlah_bayar   == '')
-      {
-        jumlah_bayar   = 0;
-      };
-       
-       var subtotal = parseInt(total,10) - parseInt(jumlah_bayar  ,10);
-                                  
-                                  
-    if (subtotal == 0) 
-      {
-        subtotal = 0;
-      }
+
+   var total = bersihPemisah(bersihPemisah(bersihPemisah(bersihPemisah($("#totalbayar").val()))));
+
+      if (total == ''){
+            total = 0;
+          };
+      if(jumlah_bayar   == ''){
+            jumlah_bayar   = 0;
+          };
+
+      var subtotal = parseInt(total) - parseInt(jumlah_bayar);
+
+      if (subtotal == 0){
+            subtotal = 0;
+          }
 
       $("#totalbayar").val(tandaPemisahTitik(subtotal));
 
@@ -797,7 +792,7 @@ $(".chosen").chosen({no_results_text: "Maaf, Data Tidak Ada!"});
     
   
  //fungsi edit data 
-        $(".btn-edit-tbs").click(function(){
+        $(document).on("click",".btn-edit-tbs",function(){
         
         $("#modal_edit").modal('show');
         var jumlah_lama = $(this).attr("data-jumlah-bayar");

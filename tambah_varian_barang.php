@@ -34,7 +34,8 @@ $data_barang = mysqli_fetch_array($query_barang);
 		<div class="row">
 			<div class="form-group col-sm-6">
 				 <label for="kode_barang">Kode Produk</label>
-				<input type="text" name="kode_barang" id="kode_barang" class="form-control" autofocus="">
+				<input type="text" name="kode_barang" id="kode_barang" class="form-control" 
+				autofocus="" required="">
 			</div>
 			<div class="form-group col-sm-6">
 			 <label for="nama_barang">Nama Produk</label>
@@ -189,9 +190,33 @@ $(document).ready(function(){
        	var harga_beli = $("#harga_beli").val();
        	var harga_jual = $(this).val();
        
-       		if (harga_jual < harga_beli) {
-       			alert("Harga Jual Lebih Rendah dari harga Beli");
+       		if (parseInt(harga_jual) < parseInt(harga_beli)) {
+       			alert("Harga Jual 1 Lebih Rendah dari harga Beli");
+       			$("#harga_jual").val();
        		}
+
+       });
+	  	
+	  	$("#harga_jual_2").blur(function(){
+       	var harga_beli = $("#harga_beli").val();
+       	var harga_jual = $(this).val();
+       
+       		if (parseInt(harga_jual) < parseInt(harga_beli)) {
+       			alert("Harga Jual 2 Lebih Rendah dari harga Beli");
+       			$("#harga_jual_2").val();
+       		}
+       		
+       });
+	  	
+	  	$("#harga_jual_3").blur(function(){
+       	var harga_beli = $("#harga_beli").val();
+       	var harga_jual = $(this).val();
+       
+       		if (parseInt(harga_jual) < parseInt(harga_beli)) {
+       			alert("Harga Jual 3 Lebih Rendah dari harga Beli");
+       			$("#harga_jual_3").val();
+       		}
+       		
        });
 
 	   $(".selectize").selectize({
@@ -199,8 +224,7 @@ $(document).ready(function(){
              create: true
         });
 
-});
-     
+}); 
 </script>
 
 <?php 
