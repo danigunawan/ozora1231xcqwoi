@@ -1,4 +1,4 @@
-  <?php include_once 'session_login.php';
+<?php include_once 'session_login.php';
  
 
 // memasukan file session login,  header, navbar, db.php,
@@ -744,7 +744,6 @@ tr:nth-child(even){background-color: #f2f2f2}
         <div class="col-sm-6">
             <label style="font-size:15px"> <b> Cara Bayar (F4) </b> </label><br>
                       <select type="text" name="cara_bayar" id="carabayar1" class="form-control" required=""  style="font-size: 15px" >
-                      <option value=""> Silahkan Pilih </option>
                          <?php 
                          
                          
