@@ -53,7 +53,7 @@ while ($data_penjualan = mysqli_fetch_array($query_penjualan)) {
 
 	//nilai persediaan di jurnal 
 
-	$query_nilai_persediaan_jurnal = $db->query("SELECT kredit AS nilai_persediaan FROM jurnal_trans WHERE kode_akun_jurnal = '1-1301' AND no_faktur = '$data_penjualan[no_faktur]'");
+	$query_nilai_persediaan_jurnal = $db->query("SELECT kredit AS nilai_persediaan FROM jurnal_trans WHERE kode_akun_jurnal = '106.001' AND no_faktur = '$data_penjualan[no_faktur]'");
 	$data_nilai_persediaan_jurnal = mysqli_fetch_array($query_nilai_persediaan_jurnal);
 	// nilai persediaan di hpp keluar 
 	$query_nilai_persediaan_hpp_keluar = $db->query("SELECT SUM(total_nilai) AS nilai_persediaan FROM hpp_keluar WHERE no_faktur = '$data_penjualan[no_faktur]'");
