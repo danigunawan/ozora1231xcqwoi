@@ -196,7 +196,6 @@
                       
                       <label> Cara Bayar </label><br>
                       <select type="text" name="cara_bayar" id="carabayar1" class="form-control"  required="" style="font-size: 16px" >
-                      <option> Silahkan Pilih </option>
                       <?php 
                       
                       

@@ -380,7 +380,6 @@ $nilai_ppn = $data_default_ppn['nilai_ppn'];
         <div class="col-sm-6">          
           <label> Cara Bayar (F4) </label><br>
             <b><select type="text" name="cara_bayar" id="carabayar1" class="form-control chosen"  required="" style="font-size: 16px" ></b>
-            <b><option value=""> Silahkan Pilih </option></b>
               <?php 
 
                  $sett_akun = $db->query("SELECT sa.kas, da.nama_daftar_akun FROM setting_akun sa INNER JOIN daftar_akun da ON sa.kas = da.kode_daftar_akun");
