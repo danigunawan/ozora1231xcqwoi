@@ -44,7 +44,7 @@ while ($data_penjualan = mysqli_fetch_array($query_penjualan)) {
 
 	if ($data_jurnal_penjualan['jumlah_jurnal'] < 2) {
 		# code...
-		$db->query("UPDATE penjualan SET keterangan = 'Edit Otomatis Jurnal' WHERE no_faktur = '$data_penjualan[no_faktur]'");
+		$db->query("UPDATE penjualan SET kode_meja = 'Edit Otomatis Jurnal' WHERE no_faktur = '$data_penjualan[no_faktur]'");
 	}
 
 	$selisih_debit_kredit = $data_jurnal_penjualan['total_debit'] - $data_jurnal_penjualan['total_kredit'];
@@ -70,7 +70,7 @@ while ($data_penjualan = mysqli_fetch_array($query_penjualan)) {
 		$status_balance = 'Tidak Balance';
 		$status_balance_persediaan = 'Tidak Balance';
 
-		$db->query("UPDATE penjualan SET keterangan = 'Edit Otomatis Jurnal Karena Tidak Balance' WHERE no_faktur = '$data_penjualan[no_faktur]'");
+		$db->query("UPDATE penjualan SET kode_meja = 'Edit Otomatis Jurnal Karena Tidak Balance' WHERE no_faktur = '$data_penjualan[no_faktur]'");
 
 	}
 	echo "<tr>

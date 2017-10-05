@@ -258,8 +258,8 @@ $no_faktur_penjualan = $data50['no_faktur_penjualan'];
       <th> Tanggal Jatuh Tempo </th>
       <th> Kredit </th>
       <th> Potongan </th>
-      <th> Total</th>
       <th> Jumlah Bayar </th>
+      <th> Sisa Kredit</th>
       <th> Hapus </th>
       <th> Edit </th>
       
@@ -280,7 +280,6 @@ $no_faktur_penjualan = $data50['no_faktur_penjualan'];
     <div class="card card-block">
  <label> Cara Bayar </label><br>
           <select type="text" name="cara_bayar" id="carabayar1" class="form-control" required="" >
-          <option value=""> --SILAHKAN PILIH-- </option>
              <?php 
              $sett_akun = $db->query("SELECT sa.kas, da.nama_daftar_akun FROM setting_akun sa INNER JOIN daftar_akun da ON sa.kas = da.kode_daftar_akun");
              $data_sett = mysqli_fetch_array($sett_akun);

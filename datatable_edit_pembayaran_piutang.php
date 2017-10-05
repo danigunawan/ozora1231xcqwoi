@@ -59,6 +59,7 @@ $data = array();
 while( $row=mysqli_fetch_array($query) ) {  // preparing an array
   $nestedData=array(); 
 
+    $sisa_kredit = $row['kredit'] - ($row['jumlah_bayar'] + $row['potongan']);
 
 
       $nestedData[] = $row["no_faktur_pembayaran"];
@@ -67,8 +68,8 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
       $nestedData[] = $row["tanggal_jt"];
       $nestedData[] = "<p  align='right'>".rp($row["kredit"])."</p>";
       $nestedData[] = "<p style='font-size:15px' align='right'> ".rp($row["potongan"])." </span> </p>";
-      $nestedData[] = "<p style='font-size:15px' align='right'> ".rp($row["total"])." </span> </p>";
       $nestedData[] = "<p style='font-size:15px' align='right'> ".rp($row["jumlah_bayar"])." </span> </p>";
+      $nestedData[] = "<p style='font-size:15px' align='right'> ".rp($sisa_kredit)." </span> </p>";
 
 
 

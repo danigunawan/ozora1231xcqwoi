@@ -157,7 +157,7 @@ tr:nth-child(even){background-color: #f2f2f2}
           var dataTable = $('#table_lap_penjualan_rekap').DataTable( {
           "processing": true,
           "serverSide": true,
-          "info": false,
+          "info": true,
           "ajax":{
             url :"datatable_lap_penjualan_rekap.php", // json datasource
            	"data": function ( d ) {
