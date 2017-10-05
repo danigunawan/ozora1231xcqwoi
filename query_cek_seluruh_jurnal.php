@@ -142,7 +142,7 @@ while ($data_pembelian = mysqli_fetch_array($query_pembelian)) {
 
 	//nilai persediaan di jurnal 
 
-	$query_nilai_persediaan_jurnal = $db->query("SELECT debit AS nilai_persediaan FROM jurnal_trans WHERE kode_akun_jurnal = '1-1301' AND no_faktur = '$data_pembelian[no_faktur]'");
+	$query_nilai_persediaan_jurnal = $db->query("SELECT debit AS nilai_persediaan FROM jurnal_trans WHERE kode_akun_jurnal = '106.001' AND no_faktur = '$data_pembelian[no_faktur]'");
 	$data_nilai_persediaan_jurnal = mysqli_fetch_array($query_nilai_persediaan_jurnal);
 	// nilai persediaan di hpp keluar 
 	$query_nilai_persediaan_hpp_masuk = $db->query("SELECT SUM(total_nilai) AS nilai_persediaan FROM hpp_masuk WHERE no_faktur = '$data_pembelian[no_faktur]'");
@@ -156,7 +156,7 @@ while ($data_pembelian = mysqli_fetch_array($query_pembelian)) {
 		# code...
 		$status_balance_persediaan = 'Tidak Balance';
 
-		$update_persediaan_jurnal = $db->query("UPDATE jurnal_trans SET debit = $data_nilai_persediaan_hpp_masuk[nilai_persediaan] WHERE kode_akun_jurnal = '1-1301' AND no_faktur = '$data_pembelian[no_faktur]' ");
+		$update_persediaan_jurnal = $db->query("UPDATE jurnal_trans SET debit = $data_nilai_persediaan_hpp_masuk[nilai_persediaan] WHERE kode_akun_jurnal = '106.001' AND no_faktur = '$data_pembelian[no_faktur]' ");
 
 
 	}
@@ -230,7 +230,7 @@ while ($data_retur_pembelian = mysqli_fetch_array($query_retur_pembelian)) {
 
 	//nilai persediaan di jurnal 
 
-	$query_nilai_persediaan_jurnal = $db->query("SELECT kredit AS nilai_persediaan FROM jurnal_trans WHERE kode_akun_jurnal = '1-1301' AND no_faktur = '$data_retur_pembelian[no_faktur]'");
+	$query_nilai_persediaan_jurnal = $db->query("SELECT kredit AS nilai_persediaan FROM jurnal_trans WHERE kode_akun_jurnal = '106.001' AND no_faktur = '$data_retur_pembelian[no_faktur]'");
 	$data_nilai_persediaan_jurnal = mysqli_fetch_array($query_nilai_persediaan_jurnal);
 
 	// nilai persediaan di hpp keluar 
@@ -246,7 +246,7 @@ while ($data_retur_pembelian = mysqli_fetch_array($query_retur_pembelian)) {
 		# code...
 		$status_balance_persediaan = 'Tidak Balance';
 
-		$update_persediaan_jurnal = $db->query("UPDATE jurnal_trans SET kredit = $data_nilai_persediaan_hpp_keluar[nilai_persediaan] WHERE kode_akun_jurnal = '1-1301' AND no_faktur = '$data_retur_pembelian[no_faktur]' ");
+		$update_persediaan_jurnal = $db->query("UPDATE jurnal_trans SET kredit = $data_nilai_persediaan_hpp_keluar[nilai_persediaan] WHERE kode_akun_jurnal = '106.001' AND no_faktur = '$data_retur_pembelian[no_faktur]' ");
 
 
 	}
@@ -321,7 +321,7 @@ while ($data_retur_penjualan = mysqli_fetch_array($query_retur_penjualan)) {
 
 	//nilai persediaan di jurnal 
 
-	$query_nilai_persediaan_jurnal = $db->query("SELECT debit AS nilai_persediaan FROM jurnal_trans WHERE kode_akun_jurnal = '1-1301' AND no_faktur = '$data_retur_penjualan[no_faktur]'");
+	$query_nilai_persediaan_jurnal = $db->query("SELECT debit AS nilai_persediaan FROM jurnal_trans WHERE kode_akun_jurnal = '106.001' AND no_faktur = '$data_retur_penjualan[no_faktur]'");
 	$data_nilai_persediaan_jurnal = mysqli_fetch_array($query_nilai_persediaan_jurnal);
 
 	// nilai persediaan di hpp masuk 
@@ -337,7 +337,7 @@ while ($data_retur_penjualan = mysqli_fetch_array($query_retur_penjualan)) {
 		# code...
 		$status_balance_persediaan = 'Tidak Balance';
 
-		$update_persediaan_jurnal = $db->query("UPDATE jurnal_trans SET debit = $data_nilai_persediaan_hpp_masuk[nilai_persediaan] WHERE kode_akun_jurnal = '1-1301' AND no_faktur = '$data_retur_penjualan[no_faktur]' ");
+		$update_persediaan_jurnal = $db->query("UPDATE jurnal_trans SET debit = $data_nilai_persediaan_hpp_masuk[nilai_persediaan] WHERE kode_akun_jurnal = '106.001' AND no_faktur = '$data_retur_penjualan[no_faktur]' ");
 
 
 	}
@@ -397,7 +397,7 @@ while ($data_item_keluar = mysqli_fetch_array($query_item_keluar)) {
 
 	//nilai persediaan di jurnal 
 
-	$query_nilai_persediaan_jurnal = $db->query("SELECT kredit AS nilai_persediaan FROM jurnal_trans WHERE kode_akun_jurnal = '1-1301' AND no_faktur = '$data_item_keluar[no_faktur]'");
+	$query_nilai_persediaan_jurnal = $db->query("SELECT kredit AS nilai_persediaan FROM jurnal_trans WHERE kode_akun_jurnal = '106.001' AND no_faktur = '$data_item_keluar[no_faktur]'");
 	$data_nilai_persediaan_jurnal = mysqli_fetch_array($query_nilai_persediaan_jurnal);
 	// nilai persediaan di hpp keluar 
 	$query_nilai_persediaan_hpp_keluar = $db->query("SELECT SUM(total_nilai) AS nilai_persediaan FROM hpp_keluar WHERE no_faktur = '$data_item_keluar[no_faktur]'");
@@ -414,9 +414,9 @@ while ($data_item_keluar = mysqli_fetch_array($query_item_keluar)) {
 		$status_balance = 'Tidak Balance';
 		$status_balance_persediaan = 'Tidak Balance';
 
-		$db->query("UPDATE jurnal_trans SET debit = '$data_nilai_persediaan_hpp_keluar[nilai_persediaan]' WHERE no_faktur = '$data_item_keluar[no_faktur]' AND kode_akun_jurnal = '5-2202' ");
+		$db->query("UPDATE jurnal_trans SET debit = '$data_nilai_persediaan_hpp_keluar[nilai_persediaan]' WHERE no_faktur = '$data_item_keluar[no_faktur]' AND kode_akun_jurnal = '505.003' ");
 
-		$db->query("UPDATE jurnal_trans SET kredit = '$data_nilai_persediaan_hpp_keluar[nilai_persediaan]' WHERE no_faktur = '$data_item_keluar[no_faktur]' AND kode_akun_jurnal = '1-1301' ");
+		$db->query("UPDATE jurnal_trans SET kredit = '$data_nilai_persediaan_hpp_keluar[nilai_persediaan]' WHERE no_faktur = '$data_item_keluar[no_faktur]' AND kode_akun_jurnal = '106.001' ");
 
 	}
 	echo "<tr>
