@@ -23,8 +23,8 @@ $no_faktur_penjualan = $data50['no_faktur_penjualan'];
       <th> Tanggal Jatuh Tempo </th>
       <th> Kredit </th>
       <th> Potongan </th>
-      <th> Total</th>
       <th> Jumlah Bayar </th>
+      <th> Sisa Kredit </th>
       <th> Hapus </th>
       <th> Edit </th>
       
@@ -41,18 +41,19 @@ $no_faktur_penjualan = $data50['no_faktur_penjualan'];
       while ($data1 = mysqli_fetch_array($perintah))
       {
 
+        $sisa_kredit = $data1['kredit'] - ($data1['jumlah_bayar'] + $data1['potongan']);
+
         // menampilkan data
-      echo "<tr>
+      echo "<tr class='tr-id-".$data1['id']."'>
       <td>". $data1['no_faktur_penjualan'] ."</td>
       <td>". $data1['tanggal'] ."</td>
       <td>". $data1['tanggal_jt'] ."</td>
       <td>". rp($data1['kredit']) ."</td>
       <td>". rp($data1['potongan']) ."</td>
-      <td>". rp($data1['total']) ."</td>
-      <td>". rp($data1['jumlah_bayar']) ."</td>
-      
+      <td>". rp($data1['jumlah_bayar']) ."</td>      
+      <td>". rp($sisa_kredit) ."</td>
 
-      <td> <button class='btn btn-danger btn-hapus' data-id='". $data1['id'] ."' data-faktur='". $data1['no_faktur_penjualan'] ."' data-piutang='". $data1['kredit'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> </td> 
+      <td> <button class='btn btn-danger btn-hapus' data-id='". $data1['id'] ."' data-faktur='". $data1['no_faktur_penjualan'] ."' data-piutang='". $data1['kredit'] ."' data-jumlah-bayar='". $data1['jumlah_bayar'] ."'> <span class='glyphicon glyphicon-trash'> </span> Hapus </button> </td> 
 
       <td> <button class='btn btn-success btn-edit-tbs' data-id='". $data1['id'] ."' data-kredit='". $data1['kredit'] ."' data-jumlah-bayar='". $data1['jumlah_bayar'] ."' data-no-faktur-penjualan='". $data1['no_faktur_penjualan'] ."' data-potongan='". $data1['potongan'] ."'> <span class='glyphicon glyphicon-edit'> </span> Edit </button> </td>
       </tr>";

@@ -7,6 +7,7 @@ include 'sanitasi.php';
 $dari_tanggal = stringdoang($_POST['dari_tanggal']);
 $sampai_tanggal = stringdoang($_POST['sampai_tanggal']);
 
+
 $total_akhir_kotor = 0;
 $total_potongan = 0;
 $total_tax = 0;
@@ -15,6 +16,9 @@ $total_jual = 0;
 $total_tunai = 0;
 $total_sisa = 0;
 $total_kredit = 0;
+
+$totalFiltered = 0;
+$totalData = 0;
 
 
 	$query_sum_total = $db->query("SELECT SUM(tunai) as tunai,SUM(total) as total,SUM(potongan) as potongan ,SUM(tax) as tax,SUM(sisa) as sisa,SUM(kredit) as kredit, SUM(ongkir) as ongkir FROM penjualan WHERE tanggal >= '$dari_tanggal' AND tanggal <= '$sampai_tanggal' ");
@@ -60,12 +64,11 @@ $sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_
 $sql.=" WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal'";
 
 $query=mysqli_query($conn, $sql) or die("eror 1");
-$totalData = mysqli_num_rows($query);
-$totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
-	
-$sql = " SELECT b.kategori,pel.nama_pelanggan,pel.kode_pelanggan AS code_card,p.tunai,p.id,p.tanggal,p.no_faktur,p.kode_pelanggan,p.total,p.jam,p.user,p.status,p.potongan,p.tax,p.sisa,p.kredit,p.nama_konsumen, t.nama_toko,p.ongkir ";
-$sql.="FROM penjualan p INNER JOIN pelanggan pel ON p.kode_pelanggan = pel.kode_pelanggan INNER JOIN detail_penjualan dp ON p.no_faktur = dp.no_faktur INNER JOIN barang b ON dp.kode_barang = b.kode_barang INNER JOIN toko t ON p.kode_toko = t.id";
-$sql.=" WHERE p.tanggal >= '$dari_tanggal' AND p.tanggal <= '$sampai_tanggal' AND 1=1";
+
+while( $row_data=mysqli_fetch_array($query) ) {
+
+	$totalData = $totalData + 1; 
+} // preparing an array
 
 
 if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
@@ -79,7 +82,8 @@ if( !empty($requestData['search']['value']) ) {   // if there is a search parame
 
 }
 $query=mysqli_query($conn, $sql) or die("eror 2");
-$totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result. 
+
+while( $row_filter=mysqli_fetch_array($query) ) {$totalFiltered = $totalFiltered + 1; } // preparing an array
 
 
 $sql.= " GROUP BY p.no_faktur ORDER BY p.no_faktur DESC LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
@@ -90,10 +94,9 @@ $query=mysqli_query($conn, $sql) or die("eror 3");
 $data = array();
 while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	$nestedData=array();
-
+		
 
                 $total_kotor_jual = $row['total'] + $row['potongan'];
-
 
 				//menampilkan data
 				$nestedData[] = $row['no_faktur'];

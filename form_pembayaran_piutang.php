@@ -146,7 +146,6 @@
           <div class="form-group col-sm-4">
           <label> Cara Bayar </label><br>
           <select type="text" name="cara_bayar" id="carabayar1" class="form-control" >
-          <option value="" selected="">Pilih Cara Bayar</option>
           
              <?php  
              
