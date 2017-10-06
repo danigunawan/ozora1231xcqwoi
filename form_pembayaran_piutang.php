@@ -607,30 +607,32 @@ $(document).ready(function(){
    var potongan1 = $("#potongan1").val();
    var faktur = $("#faktur").val();
 
+
+
    
-     $("#carabayar1").val(cara_bayar);
-     $("#totalbayar").val('');
-     $("#potongan1").val(potongan);
      $("#faktur").val(no_faktur_penjualan); 
 
       //metode POST untuk mengirim dari file cek_jumlah_kas.php ke dalam variabel "dari akun"
       $.post('cek_tbs_pembayaran_piutang.php', function(data) {
         /*optional stuff to do after success */
         console.log(data)
-if (cara_bayar == "")
+
+ if (kode_pelanggan == "")
   {
-  
-  alert("Cara Bayar Harus Di Isi");
-  
-  }
-  
-  else if (kode_pelanggan == "")
-  {
-  alert("Kode Marketplace Harus Di Isi");
+    alert("Kode Marketplace Harus Di Isi");
+      $("#kd_pelanggan").trigger("chosen:updated");
+      $("#kd_pelanggan").trigger("chosen:open");
   }
   else if(data == 0)  
   {
      alert("Penjualan Harus Di Isi"); 
+  }
+  else if (totalbayar == 0 || totalbayar == '') {
+
+    alert("Total Bayar 0, Tunggu Sebentar!"); 
+    window.location.href="form_pembayaran_piutang.php";
+
+
   }
 
 
